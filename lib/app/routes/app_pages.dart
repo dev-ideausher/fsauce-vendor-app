@@ -1,0 +1,133 @@
+import 'package:get/get.dart';
+
+import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
+import '../modules/addItemDetails/views/add_item_details_view.dart';
+import '../modules/changePassword/bindings/change_password_binding.dart';
+import '../modules/changePassword/views/change_password_view.dart';
+import '../modules/changePassword/views/verify_account_view.dart';
+import '../modules/changePasswordProfile/bindings/change_password_profile_binding.dart';
+import '../modules/changePasswordProfile/views/change_password_profile_view.dart';
+import '../modules/editResturantDetails/bindings/edit_resturant_details_binding.dart';
+import '../modules/editResturantDetails/views/edit_resturant_details_view.dart';
+import '../modules/enableLocation/bindings/enable_location_binding.dart';
+import '../modules/enableLocation/views/enable_location_view.dart';
+import '../modules/featuresAndTimings/bindings/features_and_timings_binding.dart';
+import '../modules/featuresAndTimings/views/features_and_timings_view.dart';
+import '../modules/helpAndSupportScreen/bindings/help_and_support_screen_binding.dart';
+import '../modules/helpAndSupportScreen/views/help_and_support_screen_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/menuPage/bindings/menu_page_binding.dart';
+import '../modules/menuPage/views/menu_page_view.dart';
+import '../modules/navBar/bindings/nav_bar_binding.dart';
+import '../modules/navBar/views/nav_bar_view.dart';
+import '../modules/onboarding/bindings/onboarding_binding.dart';
+import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/profileDetails/bindings/profile_details_binding.dart';
+import '../modules/profileDetails/views/profile_details_view.dart';
+import '../modules/profileSetup/bindings/profile_setup_binding.dart';
+import '../modules/profileSetup/views/profile_setup_view.dart';
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
+import '../modules/verification/bindings/verification_binding.dart';
+import '../modules/verification/views/verification_view.dart';
+
+part 'app_routes.dart';
+
+class AppPages {
+  AppPages._();
+
+  static const INITIAL = Routes.ONBOARDING;
+
+  static final routes = [
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ONBOARDING,
+      page: () => const OnboardingView(),
+      binding: OnboardingBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP,
+      page: () => const SignupView(),
+      binding: SignupBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFICATION,
+      page: () => const VerificationView(),
+      binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => const ChangePasswordVerifyView(),
+      binding: ChangePasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_SETUP,
+      page: () => const ProfileSetupView(),
+      binding: ProfileSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.ENABLE_LOCATION,
+      page: () => const EnableLocationView(),
+      binding: EnableLocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.NAV_BAR,
+      page: () => const NavBarView(),
+      binding: NavBarBinding(),
+    ),
+    GetPage(
+      name: _Paths.MENU_PAGE,
+      page: () => const MenuPageView(),
+      binding: MenuPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_ITEM_DETAILS,
+      page: () => const AddItemDetailsView(),
+      binding: AddItemDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_RESTURANT_DETAILS,
+      page: () => const EditResturantDetailsView(),
+      binding: EditResturantDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD_PROFILE,
+      page: () => const ChangePasswordProfileView(),
+      binding: ChangePasswordProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.HELP_AND_SUPPORT_SCREEN,
+      page: () => const HelpAndSupportScreenView(),
+      binding: HelpAndSupportScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_DETAILS,
+      page: () => const ProfileDetailsView(),
+      binding: ProfileDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.FEATURES_AND_TIMINGS,
+      page: () => const FeaturesAndTimingsView(),
+      binding: FeaturesAndTimingsBinding(),
+    ),
+  ];
+}

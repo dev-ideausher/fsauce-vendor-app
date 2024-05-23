@@ -1,0 +1,40 @@
+name: fsauce_vendor_app
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=3.3.4 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  flutter:
+    sdk: flutter
+  get_storage: ^2.1.1
+  dio: ^5.4.3+1
+  google_fonts: ^6.2.1
+  new_version_plus: ^0.0.11
+  lottie: ^3.1.2
+  flutter_svg: ^2.0.10+1
+  encrypt: ^5.0.3
+  tuple: ^2.0.2
+  crypto: ^3.0.3
+  cached_network_image: ^3.3.1
+  url_launcher: ^6.2.6
+  firebase_auth: ^4.19.5
+  flutter_facebook_auth: ^6.0.4
+  stacked_firebase_auth: ^2.20.0
+  firebase_core: ^2.31.0
+  easy_stepper: ^0.8.5
+  dotted_border: ^2.0.0
+  r_dotted_line_border: ^0.1.1
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/svgs/
