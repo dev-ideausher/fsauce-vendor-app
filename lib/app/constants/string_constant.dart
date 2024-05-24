@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class StringConstant {
   static const String welcome = "Welcome";
   static const String homeSearch = "Search “restaurant , food , job”";
@@ -251,5 +253,43 @@ class StringConstant {
   static const String scanRedemptionRecord = "Scan Redemption Record";
   static const String pushNotifications = "Push Notifications";
   static const String featuresTimings = "Features & Timings";
+  static const String searchBydate = "Search by date";
+  static const String viewScanningHistory = "View scanning history";
+  static const String scanHistory = "Scan History";
+  static const String dateAndTime = "Date & Time";
+  static const String typeOfRedemption = "Type of Redemption";
+  static const String activeOffers = "Active Offers";
+  static const String activeOffer = "Active Offer";
+  static const String inactiveOffers = "Inactive Offers";
+  static const String inactiveOffer = "Inactivate Offer";
+  static const String inactiveOfferSub =
+      "Are you sure you want to inactivate this offer ?";
+  static const String edit = "Edit";
+  static const String deleteOffer = "Delete Offer";
+  static const String deleteOfferSub =
+      "Are you sure you want to delete this offer ?";
+  static const String activeOfferSub =
+      "Are you sure you want to activate this offer ?";
+  static const String editVipOffer = "Edit VIP Offers";
+  static const String vipOfferTitle = "VIP Offer Title";
+  static const String enterTitle = "Enter title";
+  static const String typeOfOffer = "Type of Offer";
+  static const String normalOffer = "Normal Offer";
+  static const String validFor = "Valid For";
+  static const String dineIn = "Dine-In";
+  static const String takeAway = "Take-away";
+  static const String validTill = "Valid Till";
+  static const String enterValidTill = "Enter valid till";
+  static const String vipOfferDescription = "VIP Offer Description";
+  static const String enterTermsAndConditions = "Enter terms & conditions";
+
+  static const String scheduleDateAndTime = "Schedule Date & Time";
+  static const String enterDate = "Enter date";
+  static const String enterTime = "Enter Time";
+  static const String create = "Create";
+  static const String vipOfferCreatedSuccessfully =
+      "VIP Offer created successfully !";
+  static const String vipOfferEditedSuccessfully =
+      "VIP Offer Edited successfully !";
   // static const String
 }

@@ -110,7 +110,7 @@ class ProfileView extends GetView<ProfileController> {
               10.kheightBox,
               ProfileOption(
                 svgPath: ImageConstant.scanRedump,
-                onTap: () {},
+                onTap: controller.gotoScanRedemptionRecord,
                 text: StringConstant.scanRedemptionRecord,
               ),
               10.kheightBox,

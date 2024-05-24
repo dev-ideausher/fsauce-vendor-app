@@ -2,11 +2,15 @@ import 'package:get/get.dart';
 
 import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
 import '../modules/addItemDetails/views/add_item_details_view.dart';
+import '../modules/allPhotosAndVideos/bindings/all_photos_and_videos_binding.dart';
+import '../modules/allPhotosAndVideos/views/all_photos_and_videos_view.dart';
 import '../modules/changePassword/bindings/change_password_binding.dart';
 import '../modules/changePassword/views/change_password_view.dart';
 import '../modules/changePassword/views/verify_account_view.dart';
 import '../modules/changePasswordProfile/bindings/change_password_profile_binding.dart';
 import '../modules/changePasswordProfile/views/change_password_profile_view.dart';
+import '../modules/createOrEditVipOffer/bindings/create_or_edit_vip_offer_binding.dart';
+import '../modules/createOrEditVipOffer/views/create_or_edit_vip_offer_view.dart';
 import '../modules/editResturantDetails/bindings/edit_resturant_details_binding.dart';
 import '../modules/editResturantDetails/views/edit_resturant_details_view.dart';
 import '../modules/enableLocation/bindings/enable_location_binding.dart';
@@ -31,17 +35,23 @@ import '../modules/profileDetails/bindings/profile_details_binding.dart';
 import '../modules/profileDetails/views/profile_details_view.dart';
 import '../modules/profileSetup/bindings/profile_setup_binding.dart';
 import '../modules/profileSetup/views/profile_setup_view.dart';
+import '../modules/scanHistory/bindings/scan_history_binding.dart';
+import '../modules/scanHistory/views/scan_history_view.dart';
+import '../modules/scanRedemptionRecord/bindings/scan_redemption_record_binding.dart';
+import '../modules/scanRedemptionRecord/views/scan_redemption_record_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/verification/bindings/verification_binding.dart';
 import '../modules/verification/views/verification_view.dart';
+import '../modules/vipOffers/bindings/vip_offers_binding.dart';
+import '../modules/vipOffers/views/vip_offers_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.ONBOARDING;
+  static const INITIAL = Routes.NAV_BAR;
 
   static final routes = [
     GetPage(
@@ -128,6 +138,31 @@ class AppPages {
       name: _Paths.FEATURES_AND_TIMINGS,
       page: () => const FeaturesAndTimingsView(),
       binding: FeaturesAndTimingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_PHOTOS_AND_VIDEOS,
+      page: () => const AllPhotosAndVideosView(),
+      binding: AllPhotosAndVideosBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCAN_REDEMPTION_RECORD,
+      page: () => const ScanRedemptionRecordView(),
+      binding: ScanRedemptionRecordBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCAN_HISTORY,
+      page: () => const ScanHistoryView(),
+      binding: ScanHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIP_OFFERS,
+      page: () => const VipOffersView(),
+      binding: VipOffersBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_OR_EDIT_VIP_OFFER,
+      page: () => const CreateOrEditVipOfferView(),
+      binding: CreateOrEditVipOfferBinding(),
     ),
   ];
 }

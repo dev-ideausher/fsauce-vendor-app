@@ -20,6 +20,11 @@ abstract class Routes {
   static const HELP_AND_SUPPORT_SCREEN = _Paths.HELP_AND_SUPPORT_SCREEN;
   static const PROFILE_DETAILS = _Paths.PROFILE_DETAILS;
   static const FEATURES_AND_TIMINGS = _Paths.FEATURES_AND_TIMINGS;
+  static const ALL_PHOTOS_AND_VIDEOS = _Paths.ALL_PHOTOS_AND_VIDEOS;
+  static const SCAN_REDEMPTION_RECORD = _Paths.SCAN_REDEMPTION_RECORD;
+  static const SCAN_HISTORY = _Paths.SCAN_HISTORY;
+  static const VIP_OFFERS = _Paths.VIP_OFFERS;
+  static const CREATE_OR_EDIT_VIP_OFFER = _Paths.CREATE_OR_EDIT_VIP_OFFER;
 }
 
 abstract class _Paths {
@@ -41,4 +46,9 @@ abstract class _Paths {
   static const HELP_AND_SUPPORT_SCREEN = '/help-and-support-screen';
   static const PROFILE_DETAILS = '/profile-details';
   static const FEATURES_AND_TIMINGS = '/features-and-timings';
+  static const ALL_PHOTOS_AND_VIDEOS = '/all-photos-and-videos';
+  static const SCAN_REDEMPTION_RECORD = '/scan-redemption-record';
+  static const SCAN_HISTORY = '/scan-history';
+  static const VIP_OFFERS = '/vip-offers';
+  static const CREATE_OR_EDIT_VIP_OFFER = '/create-or-edit-vip-offer';
 }

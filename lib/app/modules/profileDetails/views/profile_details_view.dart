@@ -106,7 +106,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
             10.kheightBox,
             ProfileOption(
               svgPath: ImageConstant.imageIcon2,
-              onTap: () {},
+              onTap: controller.gotoAllPhotosAndVideos,
               text: StringConstant.allPhotosAndVideos,
             ),
             10.kheightBox,

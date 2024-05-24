@@ -28,5 +28,9 @@ class ProfileDetailsController extends GetxController {
     Get.toNamed(Routes.FEATURES_AND_TIMINGS);
   }
 
+  void gotoAllPhotosAndVideos() {
+    Get.toNamed(Routes.ALL_PHOTOS_AND_VIDEOS);
+  }
+
   void increment() => count.value++;
 }

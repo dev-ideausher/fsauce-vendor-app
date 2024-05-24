@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
+import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
+import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
+import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
+import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
+
+import 'package:get/get.dart';
+
+import '../controllers/all_photos_and_videos_controller.dart';
+
+class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
+  const AllPhotosAndVideosView({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: StringConstant.allPhotosAndVideos,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.kw),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  StringConstant.restaurantImageAndVideos,
+                  style: TextStyleUtil.manrope14w500(),
+                ),
+                Text(
+                  "*",
+                  style: TextStyleUtil.manrope14w500(color: context.primary01),
+                )
+              ],
+            ),
+            6.kheightBox,
+            Container(
+              height: 160.kh,
+              width: 100.w,
+              decoration: BoxDecoration(
+                  border: Border.all(color: context.black07),
+                  borderRadius: BorderRadius.circular(8.kw),
+                  color: context.loginSignupTextfieldColor),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.file_upload_outlined),
+                    2.kwidthBox,
+                    Text(
+                      StringConstant.uploadPhotosAndVideos,
+                      style:
+                          TextStyleUtil.manrope14w400(color: context.black03),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Spacer(),
+            CustomRedElevatedButton(
+                buttonText: StringConstant.save,
+                height: 56.kh,
+                width: 100.w,
+                onPressed: Get.back),
+            10.kheightBox,
+          ],
+        ),
+      ),
+    );
+  }
+}

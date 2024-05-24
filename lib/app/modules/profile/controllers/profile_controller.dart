@@ -34,6 +34,10 @@ class ProfileController extends GetxController {
     Get.toNamed(Routes.HELP_AND_SUPPORT_SCREEN);
   }
 
+  void gotoScanRedemptionRecord() {
+    Get.toNamed(Routes.SCAN_REDEMPTION_RECORD);
+  }
+
   void showLogoutDialog() {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.confirmLogout,
