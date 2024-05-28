@@ -64,5 +64,7 @@ class VipOffersController extends GetxController {
     Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [true]);
   }
 
+  
+
   void increment() => count.value++;
 }

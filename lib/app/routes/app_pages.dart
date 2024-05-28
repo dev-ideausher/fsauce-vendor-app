@@ -23,6 +23,10 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/loyalty/bindings/loyalty_binding.dart';
+import '../modules/loyalty/views/loyalty_view.dart';
+import '../modules/loyaltyCardPreview/bindings/loyalty_card_preview_binding.dart';
+import '../modules/loyaltyCardPreview/views/loyalty_card_preview_view.dart';
 import '../modules/menuPage/bindings/menu_page_binding.dart';
 import '../modules/menuPage/views/menu_page_view.dart';
 import '../modules/navBar/bindings/nav_bar_binding.dart';
@@ -163,6 +167,16 @@ class AppPages {
       name: _Paths.CREATE_OR_EDIT_VIP_OFFER,
       page: () => const CreateOrEditVipOfferView(),
       binding: CreateOrEditVipOfferBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOYALTY,
+      page: () => const LoyaltyView(),
+      binding: LoyaltyBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOYALTY_CARD_PREVIEW,
+      page: () => const LoyaltyCardPreviewView(),
+      binding: LoyaltyCardPreviewBinding(),
     ),
   ];
 }

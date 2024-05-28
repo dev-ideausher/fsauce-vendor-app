@@ -25,6 +25,8 @@ abstract class Routes {
   static const SCAN_HISTORY = _Paths.SCAN_HISTORY;
   static const VIP_OFFERS = _Paths.VIP_OFFERS;
   static const CREATE_OR_EDIT_VIP_OFFER = _Paths.CREATE_OR_EDIT_VIP_OFFER;
+  static const LOYALTY = _Paths.LOYALTY;
+  static const LOYALTY_CARD_PREVIEW = _Paths.LOYALTY_CARD_PREVIEW;
 }
 
 abstract class _Paths {
@@ -51,4 +53,6 @@ abstract class _Paths {
   static const SCAN_HISTORY = '/scan-history';
   static const VIP_OFFERS = '/vip-offers';
   static const CREATE_OR_EDIT_VIP_OFFER = '/create-or-edit-vip-offer';
+  static const LOYALTY = '/loyalty';
+  static const LOYALTY_CARD_PREVIEW = '/loyalty-card-preview';
 }

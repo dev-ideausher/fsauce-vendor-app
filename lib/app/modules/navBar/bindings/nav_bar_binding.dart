@@ -1,3 +1,4 @@
+import 'package:fsauce_vendor_app/app/modules/loyalty/controllers/loyalty_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
@@ -21,6 +22,10 @@ class NavBarBinding extends Bindings {
 
     Get.lazyPut<VipOffersController>(
       () => VipOffersController(),
+    );
+
+    Get.lazyPut<LoyaltyController>(
+      () => LoyaltyController(),
     );
   }
 }

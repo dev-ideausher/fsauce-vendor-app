@@ -60,6 +60,8 @@ class ImageConstant {
   static String pushNotificaion = "assets/svgs/pusn_notification.svg";
   static String scanRedump = "assets/svgs/scan_red.svg";
   static String imageIcon2 = "assets/svgs/image_icon2.svg";
+  static String colorPicker = "assets/svgs/color_picker.svg";
+  static String qrIcon = "assets/svgs/qr-code.svg";
 
 //PNGs
   static String pngNewsBanner = 'assets/images/news_banner.png';

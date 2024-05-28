@@ -8,6 +8,7 @@ class StringConstant {
   static const String exploreCuisines = "Explore Cuisines";
   static const String restaurantsNearYou = "Restaurants near you";
   static const String loyaltyCards = "Loyalty Cards";
+  static const String loyaltyCard = "Loyalty Card";
   static const String off = "% off";
   static const String cardOff = "% card offer";
   static const String addCard = "Add Card";
@@ -291,5 +292,21 @@ class StringConstant {
       "VIP Offer created successfully !";
   static const String vipOfferEditedSuccessfully =
       "VIP Offer Edited successfully !";
+
+  static const String cardDetails = "Card Details";
+  static const String offerTitle = "Offer Title";
+  static const String enterOfferTitle = "Enter offer title";
+  static const String numberOfStamps = "Number of Stamps";
+  static const String selectNumberOfStamps = "Select number of stamps";
+  static const String cardBackground = "Card Background";
+
+  static const String backgroundColor = "Background Color";
+
+  static const String pickBackgroundColor = "Pick Background Color";
+  static const String textColor = "Text Color";
+  static const String stampDesign = "Stamp Design";
+  static const String stampColor = "Stamp Color";
+  static const String previewCard = "Preview Card";
+  static const String history = "History";
   // static const String
 }
