@@ -116,7 +116,7 @@ class ProfileView extends GetView<ProfileController> {
               10.kheightBox,
               ProfileOption(
                 svgPath: ImageConstant.pushNotificaion,
-                onTap: () {},
+                onTap: controller.gotoPushNotification,
                 text: StringConstant.pushNotifications,
               ),
               ProfileOption(

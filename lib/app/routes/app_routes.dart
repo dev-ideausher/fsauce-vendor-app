@@ -27,6 +27,13 @@ abstract class Routes {
   static const CREATE_OR_EDIT_VIP_OFFER = _Paths.CREATE_OR_EDIT_VIP_OFFER;
   static const LOYALTY = _Paths.LOYALTY;
   static const LOYALTY_CARD_PREVIEW = _Paths.LOYALTY_CARD_PREVIEW;
+  static const LOYALTY_CARDS = _Paths.LOYALTY_CARDS;
+  static const JOBS = _Paths.JOBS;
+  static const JOB_EDIT_OR_ADD = _Paths.JOB_EDIT_OR_ADD;
+  static const PUSH_NOTIFICATION = _Paths.PUSH_NOTIFICATION;
+  static const CREATE_PUSH_NOTIFICATION = _Paths.CREATE_PUSH_NOTIFICATION;
+  static const RATING_AND_FEEDBACK_MANAGEMENT =
+      _Paths.RATING_AND_FEEDBACK_MANAGEMENT;
 }
 
 abstract class _Paths {
@@ -55,4 +62,11 @@ abstract class _Paths {
   static const CREATE_OR_EDIT_VIP_OFFER = '/create-or-edit-vip-offer';
   static const LOYALTY = '/loyalty';
   static const LOYALTY_CARD_PREVIEW = '/loyalty-card-preview';
+  static const LOYALTY_CARDS = '/loyalty-cards';
+  static const JOBS = '/jobs';
+  static const JOB_EDIT_OR_ADD = '/job-edit-or-add';
+  static const PUSH_NOTIFICATION = '/push-notification';
+  static const CREATE_PUSH_NOTIFICATION = '/create-push-notification';
+  static const RATING_AND_FEEDBACK_MANAGEMENT =
+      '/rating-and-feedback-management';
 }

@@ -341,7 +341,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                       buttonText: StringConstant.save,
                       width: 100.w,
                       height: 56.kh,
-                      onPressed: () {}),
+                      onPressed: Get.back),
                   10.kheightBox,
                   CustomRedElevatedButtonWithBorder(
                       buttonText: StringConstant.previewCard,

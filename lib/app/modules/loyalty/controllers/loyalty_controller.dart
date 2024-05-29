@@ -23,7 +23,7 @@ class LoyaltyController extends GetxController {
     super.onClose();
   }
 
-  final backgroundColor = Color(0xffFFFFFF).obs;
+  final backgroundColor = Color.fromARGB(255, 10, 27, 255).obs;
 
   void openBackgroundColorpalet() {
     Get.dialog(ColorPickerDialog(

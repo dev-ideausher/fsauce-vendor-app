@@ -46,5 +46,9 @@ class ProfileController extends GetxController {
         onNoTap: Get.back));
   }
 
+  void gotoPushNotification() {
+    Get.toNamed(Routes.PUSH_NOTIFICATION);
+  }
+
   void increment() => count.value++;
 }

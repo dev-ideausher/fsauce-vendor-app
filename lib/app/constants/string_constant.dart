@@ -28,6 +28,7 @@ class StringConstant {
   static const String price = "Price";
   static const String pound = "£";
   static const String clearAll = "Clear All";
+  static const String clear = "Clear";
   static const String apply = "Apply";
   static const String selectLocation = "Select Location";
   static const String locationHintText = "Type your location, landmark...";
@@ -308,5 +309,41 @@ class StringConstant {
   static const String stampColor = "Stamp Color";
   static const String previewCard = "Preview Card";
   static const String history = "History";
+  static const String activeCard = "Active Card";
+  static const String inactiveCard = "Inactive Card";
+  static const String addNedJob = "Add New Job";
+  static const String jobTitle = "Job Title";
+  static const String enterJobTitle = "Enter Job Title";
+  static const String salaryOffered = "Salary Offered";
+  static const String perYear = "per year";
+  static const String minSalaryOffered = "Min. salary offered";
+  static const String maxSalaryOffered = "Max. salary offered";
+  static const String lastDateToApply = "Last Date to Apply";
+  static const String enterLastDateToApply = "Enter Last Date to Apply";
+  static const String newJobCreatedSuccessfully =
+      "New job created successfully !";
+  static const String editJobDetails = "Edit Job Details";
+  static const String searchNotifications = "Search “notifications”";
+  static const String inactivateNotification = "Inactivate Notification";
+  static const String deleteNotification = "Delete Notification";
+  static const String active = "Active";
+  static const String inactive = "Inactive";
+  static const String inactiveNotificationSub =
+      "Are you sure you want to inactivate this notification ?";
+  static const String deleteNotificationSub =
+      "Are you sure you want to delete this notification ?";
+  static const String activateNotification = "Activate Notification";
+  static const String activateNotificationSub =
+      "Are you sure you want to activate this notification ?";
+  static const String createPushNotification = "Create Push Notification";
+  static const String notificationTitle = "Notification Title";
+  static const String scheduleDate = "Schedule Date";
+  static const String enterScheduleDate = "Enter schedule date";
+  static const String ratingAndFeedbackManagement =
+      "Rating & Feedback Management";
+  static const String deleteReview = "Delete Review";
+  static const String deleteReviewSub =
+      "Are you sure you want to delete this review ?";
+
   // static const String
 }

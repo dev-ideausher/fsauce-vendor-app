@@ -11,6 +11,8 @@ import '../modules/changePasswordProfile/bindings/change_password_profile_bindin
 import '../modules/changePasswordProfile/views/change_password_profile_view.dart';
 import '../modules/createOrEditVipOffer/bindings/create_or_edit_vip_offer_binding.dart';
 import '../modules/createOrEditVipOffer/views/create_or_edit_vip_offer_view.dart';
+import '../modules/createPushNotification/bindings/create_push_notification_binding.dart';
+import '../modules/createPushNotification/views/create_push_notification_view.dart';
 import '../modules/editResturantDetails/bindings/edit_resturant_details_binding.dart';
 import '../modules/editResturantDetails/views/edit_resturant_details_view.dart';
 import '../modules/enableLocation/bindings/enable_location_binding.dart';
@@ -21,12 +23,18 @@ import '../modules/helpAndSupportScreen/bindings/help_and_support_screen_binding
 import '../modules/helpAndSupportScreen/views/help_and_support_screen_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jobEditOrAdd/bindings/job_edit_or_add_binding.dart';
+import '../modules/jobEditOrAdd/views/job_edit_or_add_view.dart';
+import '../modules/jobs/bindings/jobs_binding.dart';
+import '../modules/jobs/views/jobs_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/loyalty/bindings/loyalty_binding.dart';
 import '../modules/loyalty/views/loyalty_view.dart';
 import '../modules/loyaltyCardPreview/bindings/loyalty_card_preview_binding.dart';
 import '../modules/loyaltyCardPreview/views/loyalty_card_preview_view.dart';
+import '../modules/loyaltyCards/bindings/loyalty_cards_binding.dart';
+import '../modules/loyaltyCards/views/loyalty_cards_view.dart';
 import '../modules/menuPage/bindings/menu_page_binding.dart';
 import '../modules/menuPage/views/menu_page_view.dart';
 import '../modules/navBar/bindings/nav_bar_binding.dart';
@@ -39,6 +47,10 @@ import '../modules/profileDetails/bindings/profile_details_binding.dart';
 import '../modules/profileDetails/views/profile_details_view.dart';
 import '../modules/profileSetup/bindings/profile_setup_binding.dart';
 import '../modules/profileSetup/views/profile_setup_view.dart';
+import '../modules/pushNotification/bindings/push_notification_binding.dart';
+import '../modules/pushNotification/views/push_notification_view.dart';
+import '../modules/ratingAndFeedbackManagement/bindings/rating_and_feedback_management_binding.dart';
+import '../modules/ratingAndFeedbackManagement/views/rating_and_feedback_management_view.dart';
 import '../modules/scanHistory/bindings/scan_history_binding.dart';
 import '../modules/scanHistory/views/scan_history_view.dart';
 import '../modules/scanRedemptionRecord/bindings/scan_redemption_record_binding.dart';
@@ -55,7 +67,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.NAV_BAR;
+  static const INITIAL = Routes.RATING_AND_FEEDBACK_MANAGEMENT;
 
   static final routes = [
     GetPage(
@@ -177,6 +189,36 @@ class AppPages {
       name: _Paths.LOYALTY_CARD_PREVIEW,
       page: () => const LoyaltyCardPreviewView(),
       binding: LoyaltyCardPreviewBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOYALTY_CARDS,
+      page: () => const LoyaltyCardsView(),
+      binding: LoyaltyCardsBinding(),
+    ),
+    GetPage(
+      name: _Paths.JOBS,
+      page: () => const JobsView(),
+      binding: JobsBinding(),
+    ),
+    GetPage(
+      name: _Paths.JOB_EDIT_OR_ADD,
+      page: () => const JobEditOrAddView(),
+      binding: JobEditOrAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.PUSH_NOTIFICATION,
+      page: () => const PushNotificationView(),
+      binding: PushNotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_PUSH_NOTIFICATION,
+      page: () => const CreatePushNotificationView(),
+      binding: CreatePushNotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.RATING_AND_FEEDBACK_MANAGEMENT,
+      page: () => const RatingAndFeedbackManagementView(),
+      binding: RatingAndFeedbackManagementBinding(),
     ),
   ];
 }
