@@ -149,7 +149,7 @@ class RatingAndFeedbackManagementView
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Sam Smith",
+                                    "Sam Smith ",
                                     style: TextStyleUtil.manrope14w600(),
                                   ),
                                   2.kheightBox,
