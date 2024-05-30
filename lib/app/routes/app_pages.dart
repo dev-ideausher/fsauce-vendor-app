@@ -39,6 +39,8 @@ import '../modules/menuPage/bindings/menu_page_binding.dart';
 import '../modules/menuPage/views/menu_page_view.dart';
 import '../modules/navBar/bindings/nav_bar_binding.dart';
 import '../modules/navBar/views/nav_bar_view.dart';
+import '../modules/notifications/bindings/notifications_binding.dart';
+import '../modules/notifications/views/notifications_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -67,7 +69,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.RATING_AND_FEEDBACK_MANAGEMENT;
+  static const INITIAL = Routes.NAV_BAR;
 
   static final routes = [
     GetPage(
@@ -219,6 +221,11 @@ class AppPages {
       name: _Paths.RATING_AND_FEEDBACK_MANAGEMENT,
       page: () => const RatingAndFeedbackManagementView(),
       binding: RatingAndFeedbackManagementBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATIONS,
+      page: () => const NotificationsView(),
+      binding: NotificationsBinding(),
     ),
   ];
 }

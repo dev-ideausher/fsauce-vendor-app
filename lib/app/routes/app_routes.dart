@@ -34,6 +34,7 @@ abstract class Routes {
   static const CREATE_PUSH_NOTIFICATION = _Paths.CREATE_PUSH_NOTIFICATION;
   static const RATING_AND_FEEDBACK_MANAGEMENT =
       _Paths.RATING_AND_FEEDBACK_MANAGEMENT;
+  static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
 }
 
 abstract class _Paths {
@@ -69,4 +70,5 @@ abstract class _Paths {
   static const CREATE_PUSH_NOTIFICATION = '/create-push-notification';
   static const RATING_AND_FEEDBACK_MANAGEMENT =
       '/rating-and-feedback-management';
+  static const NOTIFICATIONS = '/notifications';
 }

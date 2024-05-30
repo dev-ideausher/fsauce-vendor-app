@@ -43,7 +43,7 @@ class StringConstant {
   static const String seeMore = "See more";
   static const String overview = "Overview";
   static const String menu = "Menu";
-  static const String jobs = "Jods";
+  static const String jobs = "Jobs";
   static const String vipOffers = "VIP Offers";
   static const String ratingAndReview = "Rating & Reviews";
   static const String rateAndReview = "Rate and Review";
@@ -344,6 +344,17 @@ class StringConstant {
   static const String deleteReview = "Delete Review";
   static const String deleteReviewSub =
       "Are you sure you want to delete this review ?";
+  static const String scanQRCode = "Scan QR Code";
+  static const String scanQrSub = "Scan QR code provided by the\ncustomers.";
+  static const String week = "Week";
+  static const String month = "Month";
+  static const String year = "Year";
+  static const totalStamCollected = "Total Stamps\nCollected";
+  static const totalRewardsRedeemed = "Total Rewards\nRedeemed";
+  static const String totalCouponRedemption = "Total Coupon\nRedemption";
+  static const String couponAnalysis = "Coupon Analysis";
+  static const String stampscollected = "Stamps collected";
+  static const String rewardsRedeemed = "Rewards Redeemed";
 
   // static const String
 }

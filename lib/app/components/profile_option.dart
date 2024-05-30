@@ -13,6 +13,7 @@ class ProfileOption extends StatelessWidget {
   final String svgPath;
   final String text;
   final Function onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

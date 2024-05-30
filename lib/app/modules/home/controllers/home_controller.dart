@@ -1,3 +1,5 @@
+import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
+import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -17,6 +19,14 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void showLocationBottomSheet() {
+    Get.bottomSheet(const LocationBottomSheet());
+  }
+
+  void gotoNotifications() {
+    Get.toNamed(Routes.NOTIFICATIONS);
   }
 
   void increment() => count.value++;
