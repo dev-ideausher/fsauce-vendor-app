@@ -102,53 +102,56 @@ class HomeView extends GetView<HomeController> {
               padding: EdgeInsets.symmetric(horizontal: 16.kw),
               child: Column(
                 children: [
-                  Container(
-                    height: 103.kh,
-                    width: 100.w,
-                    padding: EdgeInsets.all(16.kw),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2,
-                          color: context.borderColor1.withOpacity(0.5),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              StringConstant.scanQRCode,
-                              style: TextStyleUtil.manrope18w600(),
-                            ),
-                            5.kheightBox,
-                            Text(
-                              StringConstant.scanQrSub,
-                              style: TextStyleUtil.manrope14w400(),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        CommonImageView(
-                          svgPath: ImageConstant.scanQr,
-                        ),
-                      ],
+                  InkWell(
+                    onTap: controller.gotoScanQr,
+                    child: Container(
+                      height: 103.kh,
+                      width: 100.w,
+                      padding: EdgeInsets.all(16.kw),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 2,
+                            color: context.borderColor1.withOpacity(0.5),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                StringConstant.scanQRCode,
+                                style: TextStyleUtil.manrope18w600(),
+                              ),
+                              5.kheightBox,
+                              Text(
+                                StringConstant.scanQrSub,
+                                style: TextStyleUtil.manrope14w400(),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          CommonImageView(
+                            svgPath: ImageConstant.scanQr,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   10.kheightBox,
                   ProfileOption(
                     svgPath: ImageConstant.jobs,
-                    onTap: () {},
+                    onTap: controller.gotoJobsScreen,
                     text: StringConstant.jobs,
                   ),
                   10.kheightBox,
                   ProfileOption(
                     svgPath: ImageConstant.rating,
-                    onTap: () {},
+                    onTap: controller.gotoRestaurantDetatils,
                     text: StringConstant.restaurantDetails,
                   ),
                   20.kheightBox,

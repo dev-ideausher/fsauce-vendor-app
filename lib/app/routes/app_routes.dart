@@ -35,6 +35,7 @@ abstract class Routes {
   static const RATING_AND_FEEDBACK_MANAGEMENT =
       _Paths.RATING_AND_FEEDBACK_MANAGEMENT;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
+  static const QR_SCAN = _Paths.QR_SCAN;
 }
 
 abstract class _Paths {
@@ -71,4 +72,5 @@ abstract class _Paths {
   static const RATING_AND_FEEDBACK_MANAGEMENT =
       '/rating-and-feedback-management';
   static const NOTIFICATIONS = '/notifications';
+  static const QR_SCAN = '/qr-scan';
 }

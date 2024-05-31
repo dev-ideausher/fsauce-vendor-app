@@ -51,6 +51,8 @@ import '../modules/profileSetup/bindings/profile_setup_binding.dart';
 import '../modules/profileSetup/views/profile_setup_view.dart';
 import '../modules/pushNotification/bindings/push_notification_binding.dart';
 import '../modules/pushNotification/views/push_notification_view.dart';
+import '../modules/qrScan/bindings/qr_scan_binding.dart';
+import '../modules/qrScan/views/qr_scan_view.dart';
 import '../modules/ratingAndFeedbackManagement/bindings/rating_and_feedback_management_binding.dart';
 import '../modules/ratingAndFeedbackManagement/views/rating_and_feedback_management_view.dart';
 import '../modules/scanHistory/bindings/scan_history_binding.dart';
@@ -226,6 +228,11 @@ class AppPages {
       name: _Paths.NOTIFICATIONS,
       page: () => const NotificationsView(),
       binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.QR_SCAN,
+      page: () => const QrScanView(),
+      binding: QrScanBinding(),
     ),
   ];
 }

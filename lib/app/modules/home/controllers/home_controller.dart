@@ -29,5 +29,17 @@ class HomeController extends GetxController {
     Get.toNamed(Routes.NOTIFICATIONS);
   }
 
+  void gotoScanQr() {
+    Get.toNamed(Routes.QR_SCAN);
+  }
+
+  void gotoJobsScreen() {
+    Get.toNamed(Routes.JOBS);
+  }
+
+  void gotoRestaurantDetatils() {
+    Get.toNamed(Routes.RATING_AND_FEEDBACK_MANAGEMENT);
+  }
+
   void increment() => count.value++;
 }

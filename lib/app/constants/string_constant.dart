@@ -355,6 +355,9 @@ class StringConstant {
   static const String couponAnalysis = "Coupon Analysis";
   static const String stampscollected = "Stamps collected";
   static const String rewardsRedeemed = "Rewards Redeemed";
+  static const String scanQrHeading = "Scan the Loyalty QR / Digital Card QR";
+  static const String scanQrSubHeading =
+      "Scan the loyalty QR / Digital Card provided by\nthe users.";
 
   // static const String
 }

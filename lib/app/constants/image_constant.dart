@@ -66,6 +66,7 @@ class ImageConstant {
   static String scanQr = "assets/svgs/scan_qr.svg";
   static String jobs = "assets/svgs/jobs.svg";
   static String rating = "assets/svgs/rating_icon.svg";
+  static String qrScan = "assets/svgs/qr_scan.svg";
 
 //PNGs
   static String pngNewsBanner = 'assets/images/news_banner.png';
