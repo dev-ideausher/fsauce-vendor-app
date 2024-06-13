@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1024425421871",
+    "project_id": "foodsauciety",
+    "storage_bucket": "foodsauciety.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024425421871:android:c70395f53c8c8093766ada",
+        "android_client_info": {
+          "package_name": "com.iu.fsauce_vendor_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs9czzdqGrR6r9Jpn4ATwdNUtS7LzvvrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

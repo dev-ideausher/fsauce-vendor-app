@@ -53,7 +53,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                     height: 56.kh,
                     width: 100.w,
                     onPressed: controller.stepCount.value < 2
-                        ? controller.increment
+                        ? controller.gotoNextStep
                         : controller.gotoEnableLocationScreen),
                 30.kheightBox,
               ],

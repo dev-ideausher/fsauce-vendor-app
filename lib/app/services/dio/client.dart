@@ -141,4 +141,5 @@ class DioClient {
       rethrow;
     }
   }
+  // DioClient class continued...
 }

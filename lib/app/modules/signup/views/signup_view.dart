@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
@@ -6,13 +7,11 @@ import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
-import 'package:get/get.dart';
-
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   const SignupView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +49,7 @@ class SignupView extends GetView<SignupController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          controller: controller.emailController,
                           decoration: InputDecoration(
                             hintText: StringConstant.enterEmailId,
                             hintStyle: TextStyleUtil.manrope14w400(
@@ -82,6 +82,7 @@ class SignupView extends GetView<SignupController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          controller: controller.passwordController,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                                 onPressed: () {},
@@ -105,7 +106,7 @@ class SignupView extends GetView<SignupController> {
                   buttonText: StringConstant.signup,
                   height: 56.kh,
                   width: 100.w,
-                  onPressed: controller.gotoVerificationScreen),
+                  onPressed: controller.signup),
               20.kheightBox,
               Row(
                 children: [
@@ -134,48 +135,57 @@ class SignupView extends GetView<SignupController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.appleLogo,
-                        width: 24,
+                  GestureDetector(
+                    onTap: controller.signupWithApple,
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.appleLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.facebookLogo,
-                        width: 24,
+                  GestureDetector(
+                    onTap: controller.signupWithFacebook,
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.facebookLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.googleLogo,
-                        width: 24,
+                  GestureDetector(
+                    onTap: controller.signupWithGoogle,
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.googleLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   )
@@ -192,7 +202,7 @@ class SignupView extends GetView<SignupController> {
                     ),
                   ),
                   InkWell(
-                    // onTap: controller.gotoLoginScreen,
+                    onTap: controller.replaceSignupWithLogin,
                     child: Text(
                       StringConstant.login,
                       style: TextStyleUtil.manrope14w600(

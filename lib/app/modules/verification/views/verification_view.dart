@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/signup/controllers/signup_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/verification/views/verification_done_screen.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -52,7 +53,7 @@ class VerificationView extends GetView<VerificationController> {
                 ),
                 6.kheightBox,
                 Text(
-                  "joysarkar8171@gmail.com",
+                  Get.find<SignupController>().emailController.text,
                   style: TextStyleUtil.manrope16w500(),
                 ),
                 90.kheightBox,
@@ -66,9 +67,7 @@ class VerificationView extends GetView<VerificationController> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Get.to(const VerificationDoneScreen());
-                      },
+                      onTap: controller.resendVerificationEmail,
                       child: Text(
                         StringConstant.resend,
                         style: TextStyleUtil.manrope14w600(

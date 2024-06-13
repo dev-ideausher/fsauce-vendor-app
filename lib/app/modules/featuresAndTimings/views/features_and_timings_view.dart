@@ -90,6 +90,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
               "Sunday"
             ].map((e) => FilterAnimatedOption(
                   title: e,
+                  controller: FilterOptionController(),
                 ))
           ],
         ),

@@ -12,6 +12,7 @@ class CustomTextBox extends StatelessWidget {
     required this.hintText,
     this.border,
     this.suffixOnPressed,
+    this.controller,
   });
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -19,6 +20,7 @@ class CustomTextBox extends StatelessWidget {
   final Function? suffixOnPressed;
   final BoxBorder? border;
   final String hintText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class CustomTextBox extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextFormField(
+              controller: controller,
               maxLines: null,
               decoration: InputDecoration(
                 hintText: hintText,

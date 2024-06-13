@@ -7,8 +7,9 @@ class CustomRedElevatedButton extends StatelessWidget {
   final String buttonText;
   final double width;
   final double height;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget? leadingIcon;
+  final Color? buttonColor;
 
   const CustomRedElevatedButton({
     super.key,
@@ -17,6 +18,7 @@ class CustomRedElevatedButton extends StatelessWidget {
     required this.width,
     required this.onPressed,
     this.leadingIcon,
+    this.buttonColor,
   });
 
   @override
@@ -27,7 +29,7 @@ class CustomRedElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: context.primary01,
+          backgroundColor: buttonColor ?? context.primary01,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28.0),
           ),
@@ -36,9 +38,10 @@ class CustomRedElevatedButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (leadingIcon != null) leadingIcon!,
-            6.kwidthBox,
-            Text(buttonText,
-                style: TextStyleUtil.manrope16w500(color: Colors.white)),
+            if (leadingIcon != null) 6.kwidthBox,
+            if (buttonText.isNotEmpty)
+              Text(buttonText,
+                  style: TextStyleUtil.manrope16w500(color: Colors.white)),
           ],
         ),
       ),

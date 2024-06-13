@@ -23,7 +23,10 @@ class AppInterceptors extends Interceptor {
     isOverlayLoader ? DialogHelper.showLoading() : null;
     await Helpers.validateToken(
       onSuccess: () {
-        options.headers = {"token": Get.find<GetStorageService>().encjwToken};
+        options.headers = {
+          "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
+          "type": "app"
+        };
         super.onRequest(options, handler);
       },
     );
@@ -113,7 +116,7 @@ class Helpers {
         showMySnackbar(
             msg: "Session Expired. Please Login Again", title: 'Error');
         Get.find<GetStorageService>().logout();
-        Get.offAllNamed(Routes.SPLASH);
+        Get.offAllNamed(Routes.ONBOARDING);
         return false;
       }
     }

@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"foodsauciety","appId":"1:1024425421871:android:c70395f53c8c8093766ada","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"foodsauciety","configurations":{"android":"1:1024425421871:android:c70395f53c8c8093766ada","ios":"1:1024425421871:ios:d96c42f26afec122766ada"}}}}}}

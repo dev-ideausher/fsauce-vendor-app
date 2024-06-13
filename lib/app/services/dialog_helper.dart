@@ -9,14 +9,14 @@ class DialogHelper {
       WillPopScope(
         child: SizedBox(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 60.h),
               Center(
                 child: Container(
                     height: 80.kh,
                     width: 80.kh,
                     decoration: BoxDecoration(
-                      color: Get.context!.brandColor1,
+                      color: Get.context!.primary01,
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20.0.kh),
@@ -24,7 +24,9 @@ class DialogHelper {
                     ),
                     padding: EdgeInsets.all(12.kh),
                     child: const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                     )),
               ),
               // message != null ? SizedBox(height: 8.kh) : const SizedBox(),

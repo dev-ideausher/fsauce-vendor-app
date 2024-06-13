@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -43,7 +44,7 @@ class Auth extends GetxService {
         .then((value) async {
       await handleGetContact();
     });
-    print('EmailPass : ${await result.user?.getIdToken()}');
+    // print('EmailPass : ${await result.user?.getIdToken()}');
   }
 
   createEmailPass({required String email, required String pass}) async {
@@ -52,7 +53,7 @@ class Auth extends GetxService {
         .then((value) async {
       await handleGetContact();
     });
-    print('EmailPass : ${await result.user?.getIdToken()}');
+    // print('EmailPass : ${await result.user?.getIdToken()}');
   }
 
 //phone number with country code
@@ -61,6 +62,14 @@ class Auth extends GetxService {
       phoneNumber: phoneno,
       onCodeSent: (verificationId) => print(verificationId),
     );
+  }
+
+  sendVerificationMail() async {
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+  }
+
+  sendResetPasswordMail({required String email}) async {
+    await auth.sendResetPasswordLink(email);
   }
 
   verifyMobileOtp({required String otp}) async {

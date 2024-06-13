@@ -81,7 +81,7 @@ abstract class Versionk {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Release Note:',
-                style: TextStyleUtil.textNimbusSanLStyleS14Wregular(
+                style: TextStyleUtil.manrope14w500(
                   color: Colors.black,
                 ),
                 textAlign: TextAlign.left,

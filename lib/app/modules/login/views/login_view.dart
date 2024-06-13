@@ -50,6 +50,7 @@ class LoginView extends GetView<LoginController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          controller: controller.emailController,
                           decoration: InputDecoration(
                             hintText: StringConstant.enterEmailId,
                             hintStyle: TextStyleUtil.manrope14w400(
@@ -82,6 +83,7 @@ class LoginView extends GetView<LoginController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          controller: controller.passwordController,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                                 onPressed: () {},
@@ -104,7 +106,7 @@ class LoginView extends GetView<LoginController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: controller.gotoChangePasswordScreen,
+                      onPressed: controller.gotoForgotPasswordScreen,
                       child: Text(
                         StringConstant.forgotPassword,
                         style: TextStyleUtil.manrope14w400(
@@ -118,7 +120,7 @@ class LoginView extends GetView<LoginController> {
                   buttonText: StringConstant.login,
                   height: 56.kh,
                   width: 100.w,
-                  onPressed: () {}),
+                  onPressed: controller.login),
               20.kheightBox,
               Row(
                 children: [
@@ -207,7 +209,7 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                       InkWell(
-                        onTap: controller.gotoSignupScreen,
+                        onTap: controller.replaceLoginWithSignup,
                         child: Text(
                           StringConstant.createAccount,
                           style: TextStyleUtil.manrope14w600(

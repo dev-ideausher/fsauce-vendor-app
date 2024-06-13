@@ -358,6 +358,8 @@ class StringConstant {
   static const String scanQrHeading = "Scan the Loyalty QR / Digital Card QR";
   static const String scanQrSubHeading =
       "Scan the loyalty QR / Digital Card provided by\nthe users.";
+  static const String parking = "Parking";
+  static const String wifi = "Wi-fi";
 
   // static const String
 }

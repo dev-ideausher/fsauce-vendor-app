@@ -40,7 +40,7 @@ class EnableLocationView extends GetView<EnableLocationController> {
                 buttonText: StringConstant.allowAccess,
                 height: 56.kh,
                 width: 100.w,
-                onPressed: controller.gotoNavBar),
+                onPressed: controller.requestLocationPermission),
             20.kheightBox,
           ],
         ),

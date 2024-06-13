@@ -65,6 +65,7 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: controller.emailController,
                         decoration: InputDecoration(
                           hintText: StringConstant.enterEmailId,
                           hintStyle: TextStyleUtil.manrope14w400(
@@ -82,7 +83,7 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
                 buttonText: StringConstant.continuee,
                 height: 56.kh,
                 width: 100.w,
-                onPressed: controller.gotoChangePasswordScreen),
+                onPressed: controller.sendResetPasswordLink),
             20.kheightBox,
           ]),
         ));
