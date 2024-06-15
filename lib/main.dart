@@ -29,7 +29,9 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       locale: const Locale('en', 'US'),
       // translationsKeys: AppTranslation.translations,
-      initialRoute: AppPages.INITIAL,
+      initialRoute: Get.find<GetStorageService>().encjwToken.isEmpty
+          ? AppPages.INITIAL
+          : Routes.NAV_BAR,
       initialBinding: HomeBinding(),
       getPages: AppPages.routes,
     ),
@@ -38,4 +40,5 @@ Future<void> main() async {
 
 Future<void> initGetServices() async {
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
+  print(Get.find<GetStorageService>().encjwToken);
 }

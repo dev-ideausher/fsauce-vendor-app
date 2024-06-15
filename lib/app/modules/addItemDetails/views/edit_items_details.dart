@@ -2,27 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/category_model.dart';
+import 'package:fsauce_vendor_app/app/models/menu_item_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
 
-import '../controllers/add_item_details_controller.dart';
-
-class AddItemDetailsView extends GetView<AddItemDetailsController> {
-  const AddItemDetailsView({Key? key}) : super(key: key);
+class EditMenuItem extends StatelessWidget {
+  const EditMenuItem({super.key, required this.menuItem});
+  final MenuItemModel menuItem;
   @override
   Widget build(BuildContext context) {
+    MenuPageController menuController = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(title: StringConstant.addItemDetails),
+      appBar: const CustomAppBar(title: StringConstant.editItemDetails),
       body: Padding(
         padding: EdgeInsets.all(16.kw),
         child: Column(
@@ -42,7 +41,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
             6.kheightBox,
             Obx(
               () => InkWell(
-                onTap: Get.find<MenuPageController>().pickImage,
+                onTap: Get.find<MenuPageController>().pickEditImage,
                 child: Container(
                   height: 160.kh,
                   width: 100.w,
@@ -51,27 +50,27 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                       borderRadius: BorderRadius.circular(8.kw),
                       color: context.loginSignupTextfieldColor),
                   child: Center(
-                    child: Get.find<MenuPageController>()
-                            .itemImage
-                            .value
-                            .isNotEmpty
-                        ? Image.file(
-                            File(
-                                Get.find<MenuPageController>().itemImage.value),
-                            fit: BoxFit.cover,
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.file_upload_outlined),
-                              2.kwidthBox,
-                              Text(
-                                StringConstant.uploadPhoto,
-                                style: TextStyleUtil.manrope14w400(
-                                    color: context.black03),
+                    child: menuController.itemEditImage.value.isNotEmpty
+                        ? Image.file(File(menuController.itemEditImage.value))
+                        : menuController.itemImageUrl.value.isNotEmpty
+                            ? Image.network(
+                                Get.find<MenuPageController>()
+                                    .itemImageUrl
+                                    .value,
+                                fit: BoxFit.cover,
                               )
-                            ],
-                          ),
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.file_upload_outlined),
+                                  2.kwidthBox,
+                                  Text(
+                                    StringConstant.uploadPhoto,
+                                    style: TextStyleUtil.manrope14w400(
+                                        color: context.black03),
+                                  )
+                                ],
+                              ),
                   ),
                 ),
               ),
@@ -145,7 +144,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
             ),
             10.kheightBox,
             CustomTextField(
-                controller: Get.find<MenuPageController>().itemNameController,
+                controller: menuController.editMenuItemController,
                 fillColor: context.black07,
                 hintText: StringConstant.enterHere),
             Spacer(),
@@ -154,11 +153,8 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                 height: 56.kh,
                 buttonText: StringConstant.save,
                 onPressed: () async {
-                  bool status =
-                      await Get.find<MenuPageController>().addMenuItem();
-                  if (status) {
-                    Navigator.pop(context);
-                  }
+                  await Get.find<MenuPageController>().editItem(menu: menuItem);
+                  Navigator.pop(context);
                 }),
             20.kheightBox,
           ],

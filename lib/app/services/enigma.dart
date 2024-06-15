@@ -7,7 +7,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 
 String passphrase = 'password';
 
-String? encryptAESCryptoJS(String plainText) {
+String encryptAESCryptoJS(String plainText) {
   try {
     final salt = genRandomWithNonZero(8);
     var keyndIV = deriveKeyAndIV(passphrase, salt);
@@ -23,15 +23,15 @@ String? encryptAESCryptoJS(String plainText) {
   } catch (error) {
     print(error);
   }
-  return null;
+  return "";
 }
 
-String? decryptAESCryptoJS(String encrypted) {
+String decryptAESCryptoJS(String encrypted) {
   try {
     Uint8List encryptedBytesWithSalt = base64.decode(encrypted);
 
     Uint8List encryptedBytes =
-    encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
+        encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
     final salt = encryptedBytesWithSalt.sublist(8, 16);
     var keyndIV = deriveKeyAndIV(passphrase, salt);
     final key = encrypt.Key(keyndIV.item1);
@@ -40,12 +40,12 @@ String? decryptAESCryptoJS(String encrypted) {
     final encrypter = encrypt.Encrypter(
         encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: "PKCS7"));
     final decrypted =
-    encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
+        encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
     return decrypted;
   } catch (error) {
     print(error);
   }
-  return null;
+  return "";
 }
 
 Tuple2<Uint8List, Uint8List> deriveKeyAndIV(String passphrase, Uint8List salt) {

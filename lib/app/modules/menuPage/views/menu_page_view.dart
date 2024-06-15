@@ -38,25 +38,19 @@ class MenuPageView extends GetView<MenuPageController> {
         ),
         body: Padding(
           padding: EdgeInsets.only(top: 16.kh, left: 16.kw, right: 16.kw),
-          child: const SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                RestaurantMenu(
-                  options: ["dad", "dadso", "da", "dad"],
-                  title: "Vegetarian Pizza",
+          child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Obx(
+                () => Column(
+                  children: [
+                    ...controller.categories.value.map(
+                      (e) => RestaurantMenu(
+                        category: e,
+                      ),
+                    )
+                  ],
                 ),
-                RestaurantMenu(
-                  options: ["dad", "dadso", "da", "dad"],
-                  title: "Non-Vegetarian Pizza",
-                ),
-                RestaurantMenu(
-                  options: ["dad", "dadso", "da", "dad"],
-                  title: "Sides",
-                ),
-              ],
-            ),
-          ),
+              )),
         ));
   }
 }

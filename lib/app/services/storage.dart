@@ -14,16 +14,13 @@ class GetStorageService extends GetxService {
 
   // we are utilisig encrypt class we decrypt once we read and encrypt before write.
 
-  String get encjwToken => decryptAESCryptoJS(_runData.read('jwToken')) ?? '';
+  String get encjwToken => (_runData.read('jwToken')) ?? '';
 
-  set encjwToken(String val) =>
-      _runData.write('jwToken', encryptAESCryptoJS(val));
+  set encjwToken(String val) => _runData.write('jwToken', (val));
 
-  String get getFirebaseUid =>
-      decryptAESCryptoJS(_runData.read('firebaseUid')) ?? '';
+  String get getFirebaseUid => (_runData.read('firebaseUid')) ?? '';
 
-  set setFirebaseUid(String val) =>
-      _runData.write('firebaseUid', encryptAESCryptoJS(val));
+  set setFirebaseUid(String val) => _runData.write('firebaseUid', (val));
 
   void logout() {
     _runData.erase();

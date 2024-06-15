@@ -30,6 +30,7 @@ class StringConstant {
   static const String clearAll = "Clear All";
   static const String clear = "Clear";
   static const String apply = "Apply";
+  static const String success = "Success";
   static const String selectLocation = "Select Location";
   static const String locationHintText = "Type your location, landmark...";
   static const String or = "Or";
@@ -360,6 +361,13 @@ class StringConstant {
       "Scan the loyalty QR / Digital Card provided by\nthe users.";
   static const String parking = "Parking";
   static const String wifi = "Wi-fi";
+  static const String enterHowToApply = "Enter how to apply";
+  static const String howTOApply = "How to Apply";
+  static const String error = "Error";
+  static const String editJob = "Edit Job";
+  static const String deleteJob = "Delete Job";
+  static const String deleteJobSub =
+      "Are you sure you want to delete this job ?";
 
   // static const String
 }

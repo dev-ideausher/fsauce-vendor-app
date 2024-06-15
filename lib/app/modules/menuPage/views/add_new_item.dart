@@ -3,6 +3,7 @@ import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart'
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/category_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -67,15 +68,20 @@ class AddNewItem extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                    child: DropdownButtonFormField<String>(
+                    child: DropdownButtonFormField<CategoryModel>(
                   style: TextStyleUtil.manrope16w400(),
-                  value: "Side",
-                  onChanged: (val) {},
-                  items: <String>["Side", "non-veg"]
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
+                  value: Get.find<MenuPageController>().addItemSelectedCategory,
+                  onChanged: (val) {
+                    Get.find<MenuPageController>()
+                        .changeSelectedCategory(category: val!);
+                  },
+                  items: Get.find<MenuPageController>()
+                      .categories
+                      .map<DropdownMenuItem<CategoryModel>>(
+                          (CategoryModel value) {
+                    return DropdownMenuItem<CategoryModel>(
                       value: value,
-                      child: Text(value),
+                      child: Text(value.name),
                     );
                   }).toList(),
                   icon: const Icon(Icons.keyboard_arrow_down_rounded),
@@ -101,7 +107,7 @@ class AddNewItem extends StatelessWidget {
                 width: 43.w,
                 height: 56.kh,
                 buttonText: StringConstant.cancel,
-                onPressed: () {},
+                onPressed: Get.back,
               ),
               CustomRedElevatedButton(
                   width: 43.w,

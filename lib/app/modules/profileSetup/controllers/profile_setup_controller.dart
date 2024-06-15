@@ -13,6 +13,7 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/dio/client.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -65,8 +66,28 @@ class ProfileSetupController extends GetxController {
 
   Future<bool> updateVendor() async {
     List<Timing> timings = timingControllers.entries
-        .map<Timing>((entry) =>
-            Timing(day: entry.key, isActive: entry.value.isActivated))
+        .map<Timing>((entry) => Timing(
+              day: entry.key,
+              isActive: entry.value.isActivated,
+              closeTime: DateFormat('hh:mm a').format(
+                DateTime(
+                  0,
+                  0,
+                  0,
+                  entry.value.closingTime.hour,
+                  entry.value.closingTime.minute,
+                ),
+              ),
+              startTime: DateFormat('hh:mm a').format(
+                DateTime(
+                  0,
+                  0,
+                  0,
+                  entry.value.openingTime.hour,
+                  entry.value.openingTime.minute,
+                ),
+              ),
+            ))
         .toList();
 
     var response = await APIManager.updateVendor(

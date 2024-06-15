@@ -50,43 +50,52 @@ class RestaurantDetails {
       };
 
   RestaurantDetails copyWith({
-    required String restaurantName,
-    required String restaurantLogo,
-    required String restaurantBanner,
-    required String location,
-    required int avgPrice,
-    required String description,
-    required List<String> features,
-    required List<Timing> timing,
-    required List<String> media,
+    String? restaurantName,
+    String? restaurantLogo,
+    String? restaurantBanner,
+    String? location,
+    int? avgPrice,
+    String? description,
+    List<String>? features,
+    List<Timing>? timing,
+    List<String>? media,
   }) =>
       RestaurantDetails(
-          restaurantName: restaurantName,
-          restaurantLogo: restaurantLogo,
-          restaurantBanner: restaurantBanner,
-          location: location,
-          avgPrice: avgPrice,
-          description: description,
-          features: features,
-          timing: timing,
-          media: media);
+        restaurantName: restaurantName ?? this.restaurantName,
+        restaurantLogo: restaurantLogo ?? this.restaurantLogo,
+        restaurantBanner: restaurantBanner ?? this.restaurantBanner,
+        location: location ?? this.location,
+        avgPrice: avgPrice ?? this.avgPrice,
+        description: description ?? this.description,
+        features: features ?? this.features,
+        timing: timing ?? this.timing,
+        media: media ?? this.media,
+      );
 }
 
 class Timing {
   String day;
+  String startTime;
+  String closeTime;
   bool isActive;
 
   Timing({
     required this.day,
+    required this.startTime,
+    required this.closeTime,
     required this.isActive,
   });
 
   Timing.fromJson(Map<String, dynamic> json)
       : day = json['day'],
+        startTime = json['startTime'],
+        closeTime = json['closeTime'],
         isActive = json['isActive'];
 
   Map<String, dynamic> toJson() => {
         'day': day,
+        'startTime': startTime,
+        'closeTime': closeTime,
         'isActive': isActive,
       };
 }

@@ -1,16 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/category_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
-class AddCategory extends StatelessWidget {
-  const AddCategory({super.key});
+class EditCategory extends StatelessWidget {
+  const EditCategory({super.key, required this.category});
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class AddCategory extends StatelessWidget {
           ),
           20.kheightBox,
           Text(
-            StringConstant.addNewCategory,
+            StringConstant.editCategory,
             style: TextStyleUtil.manrope18w600(color: context.black01),
           ),
           20.kheightBox,
@@ -51,7 +54,7 @@ class AddCategory extends StatelessWidget {
           ),
           10.kheightBox,
           CustomTextField(
-              controller: Get.find<MenuPageController>().addCategoryController,
+              controller: Get.find<MenuPageController>().editCategoryController,
               fillColor: context.black07,
               hintText: StringConstant.enterHere),
           10.kheightBox,
@@ -63,13 +66,16 @@ class AddCategory extends StatelessWidget {
                 width: 43.w,
                 height: 56.kh,
                 buttonText: StringConstant.cancel,
-                onPressed: () {},
+                onPressed: Get.back,
               ),
               CustomRedElevatedButton(
                   width: 43.w,
                   height: 56.kh,
                   buttonText: StringConstant.next,
-                  onPressed: Get.find<MenuPageController>().addCategory),
+                  onPressed: () {
+                    Get.find<MenuPageController>()
+                        .editCategory(category: category);
+                  }),
             ],
           ),
           20.kheightBox,

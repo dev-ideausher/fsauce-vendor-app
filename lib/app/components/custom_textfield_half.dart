@@ -14,6 +14,7 @@ class CustomTextFieldHalf extends StatelessWidget {
     this.controller,
     this.border,
     this.suffixOnPressed,
+    this.keyboardType,
   });
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -23,6 +24,7 @@ class CustomTextFieldHalf extends StatelessWidget {
   final String hintText;
   final BoxBorder? border;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,8 @@ class CustomTextFieldHalf extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextField(
+              controller: controller,
+              keyboardType: keyboardType,
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyleUtil.manrope14w400(color: context.black04),

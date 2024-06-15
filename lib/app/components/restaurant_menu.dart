@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/category_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -8,9 +9,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 class RestaurantMenu extends StatefulWidget {
-  const RestaurantMenu({super.key, required this.title, required this.options});
-  final String title;
-  final List<String> options;
+  const RestaurantMenu({super.key, required this.category});
+  final CategoryModel category;
 
   @override
   State<RestaurantMenu> createState() => _RestaurantMenuState();
@@ -57,15 +57,20 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                   onSelected: (item) => handleClick(item),
                   itemBuilder: (context) => [
                     PopupMenuItem<int>(
-                        onTap:
-                            Get.find<MenuPageController>().onEditCategoryClick,
+                        onTap: () {
+                          Get.find<MenuPageController>()
+                              .onEditCategoryClick(category: widget.category);
+                        },
                         value: 1,
                         child: Text(
                           StringConstant.editCategory,
                           style: TextStyleUtil.manrope14w400(),
                         )),
                     PopupMenuItem<int>(
-                        onTap: Get.find<MenuPageController>().deleteCategory,
+                        onTap: () {
+                          Get.find<MenuPageController>()
+                              .deleteCategory(id: widget.category.id);
+                        },
                         value: 1,
                         child: Text(
                           StringConstant.deleteCategory,
@@ -82,10 +87,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
           childrenPadding: EdgeInsets.only(
               left: 10.kw, right: 10.kw, bottom: 10.kw), // Adjust padding here
           title: Text(
-            widget.title,
+            widget.category.name,
             style: TextStyleUtil.manrope16w600(color: context.black01),
           ),
-          children: widget.options
+          children: widget.category.menu
               .map(
                 (e) => Container(
                   padding:
@@ -98,7 +103,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                   child: Row(
                     children: [
                       Text(
-                        "Farmhouse",
+                        e.name,
                         style: TextStyleUtil.manrope14w500(),
                       ),
                       const Spacer(),
@@ -106,9 +111,9 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         borderRadius: BorderRadius.circular(8.kw),
                         child: CommonImageView(
                           height: 50.kh,
+                          width: 50.kh,
                           fit: BoxFit.cover,
-                          url:
-                              "https://www.vegrecipesofindia.com/wp-content/uploads/2018/05/paneer-pizza-recipe-1-500x500.jpg",
+                          url: e.image,
                         ),
                       ),
                       5.kwidthBox,
@@ -117,15 +122,21 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         onSelected: (item) => handleClick(item),
                         itemBuilder: (context) => [
                           PopupMenuItem<int>(
-                              onTap: Get.find<MenuPageController>()
-                                  .gotoEditItemDetailsScreen,
+                              onTap: () {
+                                Get.find<MenuPageController>()
+                                    .gotoEditItemDetailsScreen(
+                                        menuItem: e, category: widget.category);
+                              },
                               value: 1,
                               child: Text(
                                 StringConstant.editItem,
                                 style: TextStyleUtil.manrope14w400(),
                               )),
                           PopupMenuItem<int>(
-                              onTap: Get.find<MenuPageController>().deleteItem,
+                              onTap: () {
+                                Get.find<MenuPageController>()
+                                    .deleteItem(menuItem: e);
+                              },
                               value: 1,
                               child: Text(
                                 StringConstant.deleteItem,

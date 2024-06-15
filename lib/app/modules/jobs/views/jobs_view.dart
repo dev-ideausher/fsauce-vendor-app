@@ -3,20 +3,20 @@ import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/jobEditOrAdd/controllers/job_edit_or_add_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/jobs_controller.dart';
 
 class JobsView extends GetView<JobsController> {
-  const JobsView({Key? key}) : super(key: key);
+  const JobsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: StringConstant.jobs,
       ),
       floatingActionButton: Container(
@@ -25,19 +25,50 @@ class JobsView extends GetView<JobsController> {
         decoration:
             BoxDecoration(shape: BoxShape.circle, color: context.primary01),
         child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 30.kw,
-            ),
-            onPressed: controller.gotoAddJobPage),
+          padding: EdgeInsets.zero,
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 30.kw,
+          ),
+          onPressed: controller.gotoAddJobPage,
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 10.kh, left: 16.kw, right: 16.kw),
-        child: Column(
-            children: [1, 2, 3, 4]
-                .map((e) => Container(
+        child: Obx(() {
+          if (controller.jobs.isEmpty &&
+              controller.isLoading.value &&
+              controller.currentPage != 1) {
+            return Center(
+                child: CircularProgressIndicator(
+              color: context.primary01,
+            ));
+          } else {
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (!controller.isLoading.value &&
+                    scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent) {
+                  controller.fetchJobs();
+                }
+                return false;
+              },
+              child: ListView.builder(
+                itemCount: controller.jobs.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == controller.jobs.length) {
+                    return controller.isMoreDataAvailable.value
+                        ? Center(
+                            child: controller.currentPage != 1
+                                ? CircularProgressIndicator(
+                                    color: context.primary01,
+                                  )
+                                : null)
+                        : Container();
+                  } else {
+                    final job = controller.jobs[index];
+                    return Container(
                       height: 128.kh,
                       width: 100.w,
                       padding: EdgeInsets.symmetric(
@@ -46,12 +77,14 @@ class JobsView extends GetView<JobsController> {
                       ),
                       margin: EdgeInsets.only(bottom: 16.kh),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.kw),
-                          border: Border(
-                              bottom: BorderSide(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.kw),
+                        border: Border(
+                          bottom: BorderSide(
                             color: context.black07,
-                          ))),
+                          ),
+                        ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -59,16 +92,36 @@ class JobsView extends GetView<JobsController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Sous Chef",
+                                job.title ?? "",
                                 style: TextStyleUtil.manrope16w600(),
                               ),
-                              IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: controller.gotoEditJobPage,
-                                  icon: CommonImageView(
-                                    svgPath: ImageConstant.editPen,
-                                    height: 20,
-                                  )),
+                              PopupMenuButton<int>(
+                                color: Colors.white,
+                                onSelected: (item) => {},
+                                itemBuilder: (context) => [
+                                  PopupMenuItem<int>(
+                                      onTap: () {
+                                        Get.find<JobEditOrAddController>()
+                                            .gotoEditJobPage(job);
+                                      },
+                                      value: 1,
+                                      child: Text(
+                                        StringConstant.editJob,
+                                        style: TextStyleUtil.manrope14w400(),
+                                      )),
+                                  PopupMenuItem<int>(
+                                      onTap: () {
+                                        controller.deleteJob(id: job.id);
+                                      },
+                                      value: 1,
+                                      child: Text(
+                                        StringConstant.deleteJob,
+                                        style: TextStyleUtil.manrope14w400(
+                                          color: context.primary01,
+                                        ),
+                                      )),
+                                ],
+                              )
                             ],
                           ),
                           Row(
@@ -78,7 +131,7 @@ class JobsView extends GetView<JobsController> {
                               ),
                               8.kwidthBox,
                               Text(
-                                "£26T–50Tper year",
+                                "£${job.minSalary}–${job.maxSalary} per year",
                                 style: TextStyleUtil.manrope16w400(),
                               ),
                             ],
@@ -96,16 +149,21 @@ class JobsView extends GetView<JobsController> {
                                       style: TextStyleUtil.manrope14w400(),
                                     ),
                                     const Icon(
-                                        Icons.keyboard_arrow_down_outlined)
+                                        Icons.keyboard_arrow_down_outlined),
                                   ],
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    ))
-                .toList()),
+                    );
+                  }
+                },
+              ),
+            );
+          }
+        }),
       ),
     );
   }

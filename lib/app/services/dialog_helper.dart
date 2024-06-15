@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:get/get.dart';
 import 'colors.dart';
 import 'responsive_size.dart';
@@ -39,6 +40,26 @@ class DialogHelper {
       barrierDismissible: false,
       barrierColor: const Color(0xff141A31).withOpacity(.4),
       useSafeArea: true,
+    );
+  }
+
+  static void showError(String message) {
+    Get.snackbar(
+      StringConstant.error,
+      message,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: const Color(0xffCC1728),
+      colorText: Colors.white,
+    );
+  }
+
+  static void showSuccess(String message) {
+    Get.snackbar(
+      StringConstant.success,
+      message,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: const Color(0xffCC1728),
+      colorText: Colors.white,
     );
   }
 
