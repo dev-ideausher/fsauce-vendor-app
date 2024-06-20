@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -13,10 +14,13 @@ class DealsOfTheDayCard extends StatelessWidget {
       {super.key,
       required this.onClick,
       required this.width,
-      required this.isActive});
+      required this.isActive,
+        required this.coupon,
+      });
   final Function onClick;
   final double width;
   final bool isActive;
+  final Coupon coupon;
   void handleClick(int item) {
     switch (item) {
       case 0:
@@ -27,7 +31,7 @@ class DealsOfTheDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 164.kh,
+      height: 178.kh,
       width: width,
       padding: EdgeInsets.only(top: 10.kh),
       decoration: BoxDecoration(
@@ -56,12 +60,12 @@ class DealsOfTheDayCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Flat 20% OFF ",
+                      coupon.title,
                       style: TextStyleUtil.manrope16w600(),
                     ),
                     SizedBox(
                       width: 40.w,
-                      child: const Text("Save upto £20 with this coupon."),
+                      child: Text(coupon.description),
                     )
                   ],
                 ),
@@ -82,16 +86,20 @@ class DealsOfTheDayCard extends StatelessWidget {
                                   style: TextStyleUtil.manrope14w400(),
                                 )),
                             PopupMenuItem<int>(
-                                onTap: Get.find<VipOffersController>()
-                                    .showInactiveDialog,
+                                onTap: () {
+                                  Get.find<VipOffersController>()
+                                      .showInactiveDialog(coupon);
+                                },
                                 value: 1,
                                 child: Text(
                                   StringConstant.inactiveOffer,
                                   style: TextStyleUtil.manrope14w400(),
                                 )),
                             PopupMenuItem<int>(
-                                onTap: Get.find<VipOffersController>()
-                                    .showDeleteDialog,
+                                onTap: () {
+                                  Get.find<VipOffersController>()
+                                      .showDeleteDialog(coupon);
+                                },
                                 value: 1,
                                 child: Text(
                                   StringConstant.deleteOffer,
@@ -117,8 +125,10 @@ class DealsOfTheDayCard extends StatelessWidget {
                                   style: TextStyleUtil.manrope14w400(),
                                 )),
                             PopupMenuItem<int>(
-                                onTap: Get.find<VipOffersController>()
-                                    .showActiveDialog,
+                                onTap: () {
+                                  Get.find<VipOffersController>()
+                                      .showActiveDialog(coupon);
+                                },
                                 value: 1,
                                 child: Text(
                                   StringConstant.activeOffer,

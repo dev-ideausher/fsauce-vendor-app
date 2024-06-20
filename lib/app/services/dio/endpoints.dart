@@ -20,6 +20,13 @@ class Endpoints {
   static const String deleteJob = "vendor/job/deleteJob";
   static const String editJob = "vendor/job/editJob";
 
+  //coupon endpoints
+  static const String addCoupon = "vendor/coupon/addCoupon";
+  static const String getCouponList = "vendor/coupon/getCouponList?";
+  static const String getCoupon = "/vendor/coupon/getOneCoupon?id=";
+  static const String editCoupon = "vendor/coupon/editCoupon";
+  static const String deleteCoupon = "/vendor/coupon/deleteCoupon?id=";
+
   // receiveTimeout
   static const int receiveTimeout = 15000;
 

@@ -369,5 +369,8 @@ class StringConstant {
   static const String deleteJobSub =
       "Are you sure you want to delete this job ?";
 
+  static const String noCoupons = "No coupons";
+  static const String anErrorOccurred = "An error occurred!";
+
   // static const String
 }

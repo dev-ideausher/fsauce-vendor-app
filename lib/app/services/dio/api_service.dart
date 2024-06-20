@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'client.dart';
 import 'endpoints.dart';
@@ -89,7 +90,6 @@ class APIManager {
   }
 
   //add job
-
   static Future<Response> addNewJob({
     required String title,
     required String description,
@@ -110,7 +110,6 @@ class APIManager {
   }
 
   //get jobs
-
   static Future<Response> getJobs(
       {required String page, required String limit}) async {
     return await DioClient(Dio(),
@@ -146,6 +145,62 @@ class APIManager {
       "maxSalary": maxSalary,
       "howToApply": howToApply
     });
+  }
+
+  //Post Coupon
+  static Future<Response> addCoupon({
+    required String title,
+    required String typeOfOffer,
+    required String validFor,
+    required String validTill,
+    required String description,
+    required List<String> termsAndConditions,
+    required bool isActive,
+  }) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(Endpoints.addCoupon, data: {
+          'title': title,
+      'typeOfOffer': typeOfOffer,
+      'validFor': validFor,
+      'validTill': validTill,
+      'description': description,
+      'termsAndConditions': termsAndConditions,
+      'isActive': isActive,
+    },);
+  }
+
+  //Get Coupon list
+  static Future<Response> getCouponList({int page = 1, int limit = 5, bool status = true}) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get("${Endpoints.getCouponList}status=$status&page=$page&limit=$limit");
+  }
+
+  //Get coupon
+  static Future<Response> getCoupon(String id) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get("${Endpoints.getCoupon}$id");
+  }
+
+  //Edit coupon list
+  static Future<Response> editCoupon(Coupon coupon, bool isActive) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(Endpoints.editCoupon, data: {
+      'title': coupon.title,
+      'typeOfOffer': coupon.typeOfOffer,
+      'validFor': coupon.validFor,
+      'validTill': coupon.validTill,
+      'description': coupon.description,
+      'termsAndConditions': coupon.termsAndConditions,
+      'isActive': isActive,
+      'id': coupon.id,
+      },
+    );
+  }
+
+  //Delete Coupon
+  static Future<Map<String, dynamic>> deleteCoupon(String id) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete("${Endpoints.deleteCoupon}$id");
   }
 
 //file upload

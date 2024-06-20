@@ -1,7 +1,9 @@
 import 'package:fsauce_vendor_app/app/components/confirmation_dialog.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
@@ -42,7 +44,10 @@ class ProfileController extends GetxController {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.confirmLogout,
         subTitle: StringConstant.confirmLogoutSub,
-        onYesTap: () {},
+        onYesTap: () {
+          Get.find<GetStorageService>().logout();
+          Get.offAllNamed(Routes.LOGIN);
+        },
         onNoTap: Get.back));
   }
 

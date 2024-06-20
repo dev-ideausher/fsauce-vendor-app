@@ -25,7 +25,7 @@ class AppInterceptors extends Interceptor {
       onSuccess: () {
         options.headers = {
           "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
-          "type": "app"
+          // "type": "app"
         };
         super.onRequest(options, handler);
       },
@@ -54,18 +54,18 @@ class AppInterceptors extends Interceptor {
       debugPrint(e.toString());
     }
 
-    // try {
-    //   print('${err.response?.statusCode}\n${err.response!.data['message']}');
-    //   if (err.response?.statusCode == 500 &&
-    //       err.response!.data['message'] ==
-    //           'Firebase ID token has expired. Get a fresh ID token from your client app and try again (auth/id-token-expired). See https://firebase.google.com/docs/auth/admin/verify-id-tokens for details on how to retrieve an ID token.') {
-    //     if (await refreshToken()) {
-    //       return handler.resolve(await retry(err.requestOptions));
-    //     }
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+    try {
+      print('${err.response?.statusCode}\n${err.response!.data['message']}');
+      if (err.response?.statusCode == 500 &&
+          err.response!.data['message'] ==
+              'Firebase ID token has expired. Get a fresh ID token from your client app and try again (auth/id-token-expired). See https://firebase.google.com/docs/auth/admin/verify-id-tokens for details on how to retrieve an ID token.') {
+        if (await refreshToken()) {
+          return handler.resolve(await retry(err.requestOptions));
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
     return handler.next;
   }
@@ -81,18 +81,18 @@ class AppInterceptors extends Interceptor {
         options: options);
   }
 
-  // Future<bool> refreshToken() async {
-  //   try {
-  //     Get.find<GetStorageService>().setEncjwToken =
-  //         (await FirebaseAuth.instance.currentUser?.getIdToken(true))!;
-  //     print('hello from app_interceptor : ${true}');
-  //     return true;
-  //   } catch (e) {
-  //     print('hello from app_interceptor : ${false}');
+  Future<bool> refreshToken() async {
+    try {
+      Get.find<GetStorageService>().encjwToken =
+          (await FirebaseAuth.instance.currentUser?.getIdToken(true))!;
+      print('hello from app_interceptor : ${true}');
+      return true;
+    } catch (e) {
+      print('hello from app_interceptor : ${false}');
 
-  //     return false;
-  //   }
-  // }
+      return false;
+    }
+  }
 }
 
 class Helpers {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -9,7 +10,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class DealsBottomSheet extends GetView<VipOffersController> {
-  const DealsBottomSheet({super.key});
+  final Coupon coupon;
+  const DealsBottomSheet({required this.coupon, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +73,13 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Flat 20% OFF ",
+                            coupon.title,
                             style: TextStyleUtil.manrope16w600(),
                           ),
                           SizedBox(
                             width: 40.w,
                             child:
-                                const Text("Save upto £20 with this coupon."),
+                                 Text(coupon.description),
                           )
                         ],
                       ),
@@ -109,13 +111,7 @@ class DealsBottomSheet extends GetView<VipOffersController> {
             style: TextStyleUtil.manrope16w500(),
           ),
           20.kheightBox,
-          ...[
-            "Valid for dine-in only",
-            "Valid till 31st March 2024",
-            "Minimum purchase of £80 required. ",
-            "Minimum purchase of £80 required. ",
-            "Coupon cannot be clubbed with other offers.",
-          ].map((e) => Padding(
+          ...coupon.termsAndConditions.map((e) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.kh),
                 child: Row(
                   children: [
