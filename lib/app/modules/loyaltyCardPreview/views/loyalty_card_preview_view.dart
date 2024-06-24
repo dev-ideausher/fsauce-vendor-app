@@ -20,7 +20,7 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: StringConstant.loyaltyCard,
         ),
         body: SingleChildScrollView(
@@ -30,10 +30,12 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
               children: [
                 LoyaltyCard(
                     brandName: "Domino's",
-                    offer: "Buy 4 get 1 free",
+                    offer: Get.find<LoyaltyController>().cardTitleController.text,
                     brandColor:
                         Get.find<LoyaltyController>().backgroundColor.value,
-                    onAddPressed: () {},
+                    onAddPressed: () {
+                      //ToDo: on Add Pressed.
+                    },
                     width: 100.w,
                     brandLogo:
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png"),

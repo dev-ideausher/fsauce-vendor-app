@@ -68,7 +68,7 @@ class Coupon {
         typeOfOffer: json['typeOfOffer']?.toString() ?? "Default type of offer",
         validFor: json['validFor']?.toString() ?? 'Default valid for date',
         validTill: json['validTill']?.toString() ?? 'Default valid till date',
-        description: json['validTill']?.toString() ?? 'Default valid till date',
+        description: json['description']?.toString() ?? 'Default description',
         id: json['_id'],
         isActive: json['isActive'],
         termsAndConditions: arr0);

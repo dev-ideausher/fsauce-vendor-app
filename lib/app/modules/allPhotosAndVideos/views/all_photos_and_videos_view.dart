@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -15,7 +18,7 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: StringConstant.allPhotosAndVideos,
       ),
       body: Padding(
@@ -34,26 +37,78 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                 )
               ],
             ),
-            6.kheightBox,
-            Container(
-              height: 160.kh,
-              width: 100.w,
-              decoration: BoxDecoration(
-                  border: Border.all(color: context.black07),
-                  borderRadius: BorderRadius.circular(8.kw),
-                  color: context.loginSignupTextfieldColor),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.file_upload_outlined),
-                    2.kwidthBox,
-                    Text(
-                      StringConstant.uploadPhotosAndVideos,
-                      style:
-                          TextStyleUtil.manrope14w400(color: context.black03),
-                    )
-                  ],
+            12.kheightBox,
+            Obx((){
+              if(controller.restaurantUploads.isNotEmpty){
+                return SizedBox(
+                  height: 250.kh,
+                  width: double.infinity,
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index){
+                        return CommonImageView(
+                          url: controller.restaurantUploads[index],
+                        );
+                      },
+                      separatorBuilder: (ctx, index){
+                        return 8.kheightBox;
+                      }, itemCount: controller.restaurantUploads.length),
+                );
+              }
+              else{
+                return Container();
+              }
+            }),
+            12.kheightBox,
+            Obx((){
+              if(controller.selectedFiles.isNotEmpty){
+                return SizedBox(
+                  height: 250.kh,
+                  width: double.infinity,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index){
+                        return Image.file(
+                            File(controller.selectedFiles[index]),
+                          fit: BoxFit.contain,
+                        );
+                      },
+                      separatorBuilder: (ctx, index){
+                        return 8.kheightBox;
+                      }, itemCount: controller.selectedFiles.length),
+                );
+              }
+              else{
+                return Container();
+              }
+            }),
+            12.kheightBox,
+            InkWell(
+              onTap: () {
+                controller.pickMultipleFiles();
+              },
+              child: Container(
+                height: 160.kh,
+                width: 100.w,
+                decoration: BoxDecoration(
+                    border: Border.all(color: context.black07),
+                    borderRadius: BorderRadius.circular(8.kw),
+                    color: context.loginSignupTextfieldColor),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.file_upload_outlined),
+                      2.kwidthBox,
+                      Text(
+                        StringConstant.uploadPhotosAndVideos,
+                        style:
+                            TextStyleUtil.manrope14w400(color: context.black03),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -62,7 +117,9 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                 buttonText: StringConstant.save,
                 height: 56.kh,
                 width: 100.w,
-                onPressed: Get.back),
+                onPressed: () {
+                  controller.uploadAllImagesAndVideos();
+                }),
             10.kheightBox,
           ],
         ),

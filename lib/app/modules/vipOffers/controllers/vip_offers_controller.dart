@@ -13,7 +13,7 @@ class VipOffersController extends GetxController {
   final count = 0.obs;
   RxList<Coupon> couponsList = <Coupon>[].obs;
   RxList<Coupon> inactiveCouponList = <Coupon>[].obs;
-  Rx<Coupon> selectedCoupon = Coupon(title: 'title', typeOfOffer: 'typeOfOffer', validFor: '', validTill: 'validTill', description: 'description', termsAndConditions: ['termsAndConditions'], id: 'id', isActive: true).obs;
+  Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true).obs;
 
   @override
   void onInit() {
@@ -93,7 +93,8 @@ class VipOffersController extends GetxController {
     Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [false]);
   }
 
-  void gotoEditVipOffer() {
+  void gotoEditVipOffer(Coupon coupon) {
+    selectedCoupon.value = coupon;
     Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [true]);
   }
   void increment() => count.value++;

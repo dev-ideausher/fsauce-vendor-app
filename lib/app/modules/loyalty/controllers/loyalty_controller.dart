@@ -1,13 +1,25 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
+import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
+import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/modules/loyalty/views/loyalty_view.dart';
+import 'package:fsauce_vendor_app/app/modules/loyaltyCards/controllers/loyalty_cards_controller.dart';
+import 'package:fsauce_vendor_app/app/modules/loyaltyCards/views/active_loyalty_cards.dart';
+import 'package:fsauce_vendor_app/app/modules/loyaltyCards/views/inactive_loyalty_cards.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
+import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 
 class LoyaltyController extends GetxController {
   //TODO: Implement LoyaltyController
 
-  final count = 0.obs;
+  TextEditingController cardTitleController = TextEditingController();
+  int noOfStamps = 1;
+
   @override
   void onInit() {
     super.onInit();
@@ -20,7 +32,45 @@ class LoyaltyController extends GetxController {
 
   @override
   void onClose() {
+    cardTitleController.dispose();
     super.onClose();
+  }
+
+  Future<void> createLoyaltyCard() async{
+    if(cardTitleController.text.isEmpty){
+      DialogHelper.showError(StringConstant.offerTitleErrorMsg);
+    }
+    else if(backgroundColor.value.toString().isEmpty){
+      DialogHelper.showError(StringConstant.bgColorCannotBeEmpty);
+    }
+    else if(textColor.value.toString().isEmpty){
+      DialogHelper.showError(StringConstant.textColorCannotBeEmpty);
+    }
+    else if(stampBackgroundColor.value.toString().isEmpty){
+      DialogHelper.showError(StringConstant.stampBGErrorMsg);
+    }
+    else if(stampTextColor.value.toString().isEmpty){
+      DialogHelper.showError(StringConstant.stampColorErrorMsg);
+    }
+
+    var response = await APIManager.addLoyaltyCard(
+        title: cardTitleController.text,
+        noOfStamps: noOfStamps,
+        cardBackgroundColor: backgroundColor.value.toString(),
+        cardTextColor: textColor.value.toString(),
+        stampBackgroundColor: stampBackgroundColor.value.toString(),
+        stampColor: stampTextColor.value.toString(),
+        vendor: "66728075a065bac72ace0f09",
+        isActive: false
+    );
+    if(response.data['status']){
+      Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
+      DialogHelper.showSuccess(StringConstant.loyaltyAddedMessage);
+      Get.find<LoyaltyCardsController>().getLoyaltyCards();
+      Get.back();
+    } else if(!response.data['status']){
+      DialogHelper.showError(StringConstant.anErrorOccurred);
+    }
   }
 
   final backgroundColor = Color.fromARGB(255, 10, 27, 255).obs;
@@ -70,6 +120,4 @@ class LoyaltyController extends GetxController {
   void gotoPreviewScreen() {
     Get.toNamed(Routes.LOYALTY_CARD_PREVIEW);
   }
-
-  void increment() => count.value++;
 }

@@ -312,10 +312,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   height: 56.kh,
                   width: 100.w,
                   onPressed: () {
-                    controller.addCoupon().then((bool value) {
-                      value ? controller.showUpdatedBottomSheet
-                          : controller.showCreatedBottomSheet;
-                    });
+                    Get.arguments[0] ? controller.editCoupon(false) : controller.addCoupon();
                   },
                       ),
               30.kheightBox,

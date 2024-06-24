@@ -18,143 +18,147 @@ class LoyaltyCardsView extends GetView<LoyaltyCardsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          StringConstant.loyaltyCard,
-          style: TextStyleUtil.manrope18w600(),
-        ),
-        leading: const SizedBox(),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 7),
-            child: IconButton(
-                onPressed: controller.gotoEditLoyaltyPage,
-                icon: CommonImageView(
-                  svgPath: ImageConstant.editPen,
-                  height: 20,
-                )),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.kw),
-          child: DefaultTabController(
-            length: 2,
-            child: Column(
-              children: [
-                TabBar(
-                  indicatorColor: context.primary01,
-                  labelStyle: TextStyleUtil.manrope14w500(),
-                  labelColor: context.primary01,
-                  tabs: const <Widget>[
-                    Tab(
-                      text: StringConstant.activeCard,
-                    ),
-                    Tab(
-                      text: StringConstant.inactiveCard,
-                    ),
-                  ],
-                ),
-                20.kheightBox,
-                SizedBox(
-                  height: MediaQuery.of(context)
-                      .size
-                      .height, // Ensure TabBarView has constraints
-                  child: TabBarView(
-                    children: [
-                      SingleChildScrollView(
-                        // Add SingleChildScrollView to ensure scrolling within each tab
-                        child: Column(
-                          children: [
-                            LoyaltyCard(
-                              brandName: "Domino's",
-                              offer: "Buy 4 get 1 free",
-                              brandColor: Get.find<LoyaltyController>()
-                                  .backgroundColor
-                                  .value,
-                              onAddPressed: () {},
-                              width: 100.w,
-                              brandLogo:
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-                            ),
-                            20.kheightBox,
-                            SizedBox(
-                              width: 100.w,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Divider(
-                                      color: context.borderColor1,
-                                    ),
-                                  ),
-                                  6.kwidthBox,
-                                  Text(
-                                    StringConstant.and,
-                                    style: TextStyleUtil.manrope12w400(),
-                                  ),
-                                  6.kwidthBox,
-                                  Expanded(
-                                    child: Divider(
-                                      color: context.borderColor1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            20.kheightBox,
-                            LoyaltyReviewCard(),
-                            10.kheightBox,
-                          ],
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          LoyaltyCard(
-                            brandName: "Domino's",
-                            offer: "Buy 4 get 1 free",
-                            brandColor: Get.find<LoyaltyController>()
-                                .backgroundColor
-                                .value,
-                            onAddPressed: () {},
-                            width: 100.w,
-                            brandLogo:
-                                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-                          ),
-                          10.kheightBox,
-                          LoyaltyCard(
-                            brandName: "Domino's",
-                            offer: "Buy 4 get 1 free",
-                            brandColor: Get.find<LoyaltyController>()
-                                .backgroundColor
-                                .value,
-                            onAddPressed: () {},
-                            width: 100.w,
-                            brandLogo:
-                                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-                          ),
-                          10.kheightBox,
-                          LoyaltyCard(
-                            brandName: "Domino's",
-                            offer: "Buy 4 get 1 free",
-                            brandColor: Get.find<LoyaltyController>()
-                                .backgroundColor
-                                .value,
-                            onAddPressed: () {},
-                            width: 100.w,
-                            brandLogo:
-                                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-                          ),
-                        ],
-                      ), // Center widget to ensure it's properly constrained
-                    ],
-                  ),
-                ),
-              ],
-            ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            StringConstant.loyaltyCard,
+            style: TextStyleUtil.manrope18w600(),
           ),
+          bottom: TabBar(
+            indicatorColor: context.primary01,
+            labelStyle: TextStyleUtil.manrope14w500(),
+            labelColor: context.primary01,
+            tabs: const <Widget>[
+              Tab(
+                text: StringConstant.activeCard,
+              ),
+              Tab(
+                text: StringConstant.inactiveCard,
+              ),
+            ],
+          ),
+          leading: const SizedBox(),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 7),
+              child: IconButton(
+                  onPressed: controller.gotoEditLoyaltyPage,
+                  icon: CommonImageView(
+                    svgPath: ImageConstant.editPen,
+                    height: 20,
+                  )),
+            )
+          ],
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16.kw),
+          child: TabBarView(
+              children: controller.tabs,
+          )
+          // DefaultTabController(
+          //   length: 2,
+          //   child: Column(
+          //     children: [
+          //       20.kheightBox,
+          //       SizedBox(
+          //         height: MediaQuery.of(context)
+          //             .size
+          //             .height, // Ensure TabBarView has constraints
+          //         child: TabBarView(
+          //           children: [
+          //             SingleChildScrollView(
+          //               // Add SingleChildScrollView to ensure scrolling within each tab
+          //               child: Column(
+          //                 children: [
+          //                   LoyaltyCard(
+          //                     brandName: "Domino's",
+          //                     offer: "Buy 4 get 1 free",
+          //                     brandColor: Get.find<LoyaltyController>()
+          //                         .backgroundColor
+          //                         .value,
+          //                     onAddPressed: () {},
+          //                     width: 100.w,
+          //                     brandLogo:
+          //                     "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
+          //                   ),
+          //                   20.kheightBox,
+          //                   SizedBox(
+          //                     width: 100.w,
+          //                     child: Row(
+          //                       children: [
+          //                         Expanded(
+          //                           child: Divider(
+          //                             color: context.borderColor1,
+          //                           ),
+          //                         ),
+          //                         6.kwidthBox,
+          //                         Text(
+          //                           StringConstant.and,
+          //                           style: TextStyleUtil.manrope12w400(),
+          //                         ),
+          //                         6.kwidthBox,
+          //                         Expanded(
+          //                           child: Divider(
+          //                             color: context.borderColor1,
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   20.kheightBox,
+          //                   LoyaltyReviewCard(),
+          //                   10.kheightBox,
+          //                 ],
+          //               ),
+          //             ),
+          //             Column(
+          //               children: [
+          //                 LoyaltyCard(
+          //                   brandName: "Domino's",
+          //                   offer: "Buy 4 get 1 free",
+          //                   brandColor: Get.find<LoyaltyController>()
+          //                       .backgroundColor
+          //                       .value,
+          //                   onAddPressed: () {},
+          //                   width: 100.w,
+          //                   brandLogo:
+          //                   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
+          //                 ),
+          //                 10.kheightBox,
+          //                 LoyaltyCard(
+          //                   brandName: "Domino's",
+          //                   offer: "Buy 4 get 1 free",
+          //                   brandColor: Get.find<LoyaltyController>()
+          //                       .backgroundColor
+          //                       .value,
+          //                   onAddPressed: () {},
+          //                   width: 100.w,
+          //                   brandLogo:
+          //                   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
+          //                 ),
+          //                 10.kheightBox,
+          //                 LoyaltyCard(
+          //                   brandName: "Domino's",
+          //                   offer: "Buy 4 get 1 free",
+          //                   brandColor: Get.find<LoyaltyController>()
+          //                       .backgroundColor
+          //                       .value,
+          //                   onAddPressed: () {},
+          //                   width: 100.w,
+          //                   brandLogo:
+          //                   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
+          //                 ),
+          //               ],
+          //             ), // Center widget to ensure it's properly constrained
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ),
       ),
     );

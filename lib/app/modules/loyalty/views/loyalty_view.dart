@@ -62,6 +62,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                   ),
                   10.kheightBox,
                   CustomTextField(
+                    controller: controller.cardTitleController,
                       fillColor: context.loginSignupTextfieldColor,
                       border: Border.all(color: context.black07),
                       hintText: StringConstant.enterOfferTitle),
@@ -90,7 +91,11 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         Expanded(
                             child: DropdownButtonFormField<String>(
                           style: TextStyleUtil.manrope16w400(),
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            if(val != null){
+                              controller.noOfStamps = int.parse(val);
+                            }
+                          },
                           items: <String>["1", "2", "3", "4", "5", "6"]
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
@@ -341,7 +346,9 @@ class LoyaltyView extends GetView<LoyaltyController> {
                       buttonText: StringConstant.save,
                       width: 100.w,
                       height: 56.kh,
-                      onPressed: Get.back),
+                      onPressed: () {
+                        controller.createLoyaltyCard();
+                      }),
                   10.kheightBox,
                   CustomRedElevatedButtonWithBorder(
                       buttonText: StringConstant.previewCard,

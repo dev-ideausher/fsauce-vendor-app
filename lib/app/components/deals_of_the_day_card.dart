@@ -78,8 +78,10 @@ class DealsOfTheDayCard extends StatelessWidget {
                           onSelected: (item) => handleClick(item),
                           itemBuilder: (context) => [
                             PopupMenuItem<int>(
-                                onTap: Get.find<VipOffersController>()
-                                    .gotoEditVipOffer,
+                                onTap: () {
+                                  Get.find<VipOffersController>()
+                                      .gotoEditVipOffer(coupon);
+                                },
                                 value: 1,
                                 child: Text(
                                   StringConstant.edit,
@@ -117,8 +119,10 @@ class DealsOfTheDayCard extends StatelessWidget {
                           onSelected: (item) => handleClick(item),
                           itemBuilder: (context) => [
                             PopupMenuItem<int>(
-                                onTap: Get.find<VipOffersController>()
-                                    .gotoEditVipOffer,
+                                onTap: () {
+                                    Get.find<VipOffersController>()
+                                        .gotoEditVipOffer(coupon);
+                                  },
                                 value: 1,
                                 child: Text(
                                   StringConstant.edit,

@@ -24,17 +24,18 @@ class CreateOrEditVipOfferController extends GetxController {
 
   List<String> typeOfOffers = [
     "Deal of the day",
-    "Normal Offer"
+    "Normal offer"
   ];
 
   List<String> validForOptions = [
     "Dine-In",
-    "Take-away"
+    "Take Away"
   ];
 
   @override
   void onInit() {
     super.onInit();
+    getSelectedCouponDetails();
   }
 
   @override
@@ -48,6 +49,21 @@ class CreateOrEditVipOfferController extends GetxController {
     titleController.dispose();
     descriptionController.dispose();
     termsAndConditionsController.dispose();
+    validTillDateController.dispose();
+    scheduleDateController.dispose();
+    scheduleTimeController.dispose();
+  }
+
+  void getSelectedCouponDetails(){
+    Coupon coupon = Get.find<VipOffersController>().selectedCoupon.value;
+    if(Get.arguments[0]){
+      titleController.text = coupon.title;
+      descriptionController.text = coupon.description;
+      validTillDateController.text = coupon.validTill.substring(0, 10);
+      termsAndConditionsController.text = coupon.termsAndConditions.join(" ");
+      selectedTypeOfOffer.value = typeOfOffers.indexOf(coupon.typeOfOffer);
+      selectedValidForOption.value = validForOptions.indexOf(coupon.validFor);
+    }
   }
 
   void showCreatedBottomSheet() {
@@ -85,8 +101,8 @@ class CreateOrEditVipOfferController extends GetxController {
     try{
       var response = await APIManager.addCoupon(
         title: titleController.text,
-        typeOfOffer: "Normal offer",
-        validFor: "Dine-In",
+        typeOfOffer: typeOfOffers[selectedTypeOfOffer.value],
+        validFor: validForOptions[selectedValidForOption.value],
         validTill: validTillDateController.text,
         description: descriptionController.text,
         termsAndConditions: [termsAndConditionsController.text],
@@ -94,11 +110,13 @@ class CreateOrEditVipOfferController extends GetxController {
       );
       if (response.data['status']) {
         Get.find<VipOffersController>().getCoupons();
-        DialogHelper.showSuccess("Item added successfully");
+        DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);
+        showCreatedBottomSheet();
         titleController.text = '';
         validTillDateController.text = '';
         descriptionController.text = '';
         termsAndConditionsController.text = '';
+        Get.back();
         return true;
       }
       return false;
@@ -108,7 +126,7 @@ class CreateOrEditVipOfferController extends GetxController {
     }
   }
 
-  Future<bool> editCoupon() async {
+  Future<bool> editCoupon(bool isActive) async {
     if (titleController.text
         .trim()
         .isEmpty) {
@@ -127,26 +145,33 @@ class CreateOrEditVipOfferController extends GetxController {
       DialogHelper.showError("Terms and conditions can't be empty");
       return false;
     }
-    // try{
-    //   // var response = await APIManager.editCoupon(Coupon(
-    //   //     title: titleController.text,
-    //   //     typeOfOffer: 'Normal offer',
-    //   //     validFor: 'Dine-In',
-    //   //     validTill: validTillDateController.text,
-    //   //     description: descriptionController.text,
-    //   //     termsAndConditions: [termsAndConditionsController.text]
-    //   // )
-    //   );
-    //   if (response.data['status']) {
-    //     DialogHelper.showSuccess("Item added successfully");
-    //     return true;
-    //   }
-    //   return false;
-    // } catch(e){
-    //   print("Error: $e");
-    //   rethrow;
-    // }
-    return false;
+    try{
+      var response = await APIManager.editCoupon(
+          Coupon(title: titleController.text,
+              typeOfOffer: typeOfOffers[selectedTypeOfOffer.value],
+              validFor: validForOptions[selectedValidForOption.value],
+              validTill: validTillDateController.text,
+              description: descriptionController.text,
+              termsAndConditions: termsAndConditionsController.text.split('\n'),
+              id: Get.find<VipOffersController>().selectedCoupon.value.id,
+              isActive: isActive
+          ), true
+      );
+      if (response.data['status']) {
+        Get.find<VipOffersController>().getCoupons();
+        DialogHelper.showSuccess(StringConstant.vipOfferEditedSuccessfully);
+        showUpdatedBottomSheet();
+        titleController.text = '';
+        validTillDateController.text = '';
+        descriptionController.text = '';
+        termsAndConditionsController.text = '';
+        return true;
+      }
+      return false;
+    } catch(e){
+      print("Error: $e");
+      rethrow;
+    }
   }
 
   void increment() => count.value++;

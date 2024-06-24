@@ -1,12 +1,34 @@
+import 'package:flutter/cupertino.dart';
+import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
+import '';
 
 class ProfileDetailsController extends GetxController {
   //TODO: Implement ProfileDetailsController
 
-  final count = 0.obs;
+  Rx<RestaurantDetails> restaurantDetails = RestaurantDetails(
+      restaurantName: '',
+      restaurantLogo: '',
+      restaurantBanner: '',
+      location: '',
+      avgPrice: 0,
+      description: '',
+      features: [],
+      timing: [],
+      media: []
+  ).obs;
+
+  void getRestaurantDetails() async{
+    var response = await APIManager.getVendor();
+    restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+    print("Below is the list of media urls of the restaurant.");
+  }
+
   @override
   void onInit() {
+    getRestaurantDetails();
     super.onInit();
   }
 
@@ -31,6 +53,4 @@ class ProfileDetailsController extends GetxController {
   void gotoAllPhotosAndVideos() {
     Get.toNamed(Routes.ALL_PHOTOS_AND_VIDEOS);
   }
-
-  void increment() => count.value++;
 }

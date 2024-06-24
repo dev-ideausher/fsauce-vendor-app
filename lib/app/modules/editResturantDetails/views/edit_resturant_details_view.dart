@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
@@ -46,6 +48,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                 ),
                 6.kheightBox,
                 CustomTextField(
+                  controller: controller.restaurantNameController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterRestaurantName),
@@ -68,8 +71,23 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   style: TextStyleUtil.manrope14w500(color: context.black03),
                 ),
                 6.kheightBox,
+                Obx(() {
+                  if(controller.selectedLogoImage.isNotEmpty){
+                    return Image.file(
+                        width: 100.w,
+                        height: 100.kh,
+                        File(controller.selectedLogoImage.value),
+                      fit: BoxFit.contain,
+                    );
+                  } else{
+                    return Container();
+                  }
+                }),
+                6.kheightBox,
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    controller.pickLogo();
+                  },
                   child: Container(
                     width: 100.w,
                     height: 100.kh,
@@ -127,25 +145,43 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   ],
                 ),
                 6.kheightBox,
-                Container(
-                  height: 160.kh,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: context.black07),
-                      borderRadius: BorderRadius.circular(8.kw),
-                      color: context.loginSignupTextfieldColor),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.file_upload_outlined),
-                        2.kwidthBox,
-                        Text(
-                          StringConstant.uploadPhoto,
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        )
-                      ],
+                Obx(() {
+                  if(controller.selectedBannerImage.isNotEmpty){
+                    return Image.file(
+                        height: 160.kh,
+                        width: 100.w,
+                        File(controller.selectedBannerImage.value),
+                      fit: BoxFit.contain,
+                    );
+                  } else{
+                    return Container();
+                  }
+                }),
+                6.kheightBox,
+                InkWell(
+                  onTap: () {
+                    controller.pickBanner();
+                  },
+                  child: Container(
+                    height: 160.kh,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: context.black07),
+                        borderRadius: BorderRadius.circular(8.kw),
+                        color: context.loginSignupTextfieldColor),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.file_upload_outlined),
+                          2.kwidthBox,
+                          Text(
+                            StringConstant.uploadPhoto,
+                            style: TextStyleUtil.manrope14w400(
+                                color: context.black03),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -165,6 +201,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                 ),
                 10.kheightBox,
                 CustomTextField(
+                  controller: controller.addressController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterAddress),
@@ -184,6 +221,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                 ),
                 10.kheightBox,
                 CustomTextField(
+                  controller: controller.averagePriceController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterAddress),
@@ -198,6 +236,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                 ),
                 10.kheightBox,
                 CustomTextField(
+                  controller: controller.descriptionController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterDescription),
@@ -206,7 +245,9 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     buttonText: StringConstant.save,
                     height: 56.kh,
                     width: 100.w,
-                    onPressed: Get.back),
+                    onPressed: () {
+                      controller.updateDetails();
+                    }),
                 16.kheightBox,
                 CustomRedElevatedButtonWithBorder(
                     buttonText: StringConstant.deleteAccount,

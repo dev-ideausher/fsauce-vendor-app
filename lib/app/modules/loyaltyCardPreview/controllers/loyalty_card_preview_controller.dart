@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 class LoyaltyCardPreviewController extends GetxController {
   //TODO: Implement LoyaltyCardPreviewController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +17,4 @@ class LoyaltyCardPreviewController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

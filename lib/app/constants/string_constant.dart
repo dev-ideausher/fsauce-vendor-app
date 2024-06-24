@@ -371,6 +371,26 @@ class StringConstant {
 
   static const String noCoupons = "No coupons";
   static const String anErrorOccurred = "An error occurred!";
+  static const String resNameEmpty = "Restaurant name cannot be empty!";
+  static const String addressNameEmpty = "Address cannot be empty!";
+  static const String avgPriceEmpty = "Average price cannot be empty!";
+  static const String detailsUpdatedSuccessfully = "Details updated successfully!";
+  static const String imagesAndVideosSavedSuccessfully = "All images and videos saved successfully";
+  static const String selectedLogoImageEmpty = "Logo cannot be empty";
+  static const String selectedBannerImageEmpty = "Banner image cannot be empty";
+  static const String logoImageUploadError = "An error occurred while uploading logo";
+  static const String bannerImageUploadError = "An error occurred while uploading banner image";
+  static const String uploadAllImagesError = "An error occurred while uploading all images and videos";
+  static const String noFilesSelected = "No files selected!";
+  static const String featuresAndTimingsAddedSuccessfully = "Features and Timings added successfully!";
+  static const String couldntGetLoyaltyCards = "Couldn't get loyalty cards!";
+  static const String noLoyaltyCardsYet = "No loyalty cards yet!";
+  static const String offerTitleErrorMsg = "Offer title cannot be empty!";
+  static const String bgColorCannotBeEmpty = "Background color cannot be empty!";
+  static const String textColorCannotBeEmpty = "Text color cannot be empty!";
+  static const String stampBGErrorMsg = "Stamp background color cannot be empty!";
+  static const String stampColorErrorMsg = "Stamp color cannot be empty!";
+  static const String loyaltyCardCreatedSuccessfully = "Loyalty Card created successfully!";
 
   // static const String
 }
