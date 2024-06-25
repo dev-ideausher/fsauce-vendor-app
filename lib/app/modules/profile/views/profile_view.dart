@@ -3,6 +3,7 @@ import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/profile_option.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -13,6 +14,7 @@ import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +46,30 @@ class ProfileView extends GetView<ProfileController> {
                     2.kheightBox,
                     ClipRRect(
                       borderRadius: BorderRadius.circular(44),
-                      child: CommonImageView(
+                      child: Obx(() {
+                        return CommonImageView(
                           height: 88,
                           width: 88,
                           fit: BoxFit.cover,
-                          url:
-                              "https://w7.pngwing.com/pngs/870/682/png-transparent-domino-s-pizza-logo-domino-s-pizza-pizza-delivery-logo-pizza-domino-s-pizza-pizza-pizza-pizza-delivery.png"),
+                          url: //"https://w7.pngwing.com/pngs/870/682/png-transparent-domino-s-pizza-logo-domino-s-pizza-pizza-delivery-logo-pizza-domino-s-pizza-pizza-pizza-pizza-delivery.png"
+                          Get
+                              .find<HomeController>()
+                              .restaurantDetails
+                              .value
+                              .restaurantLogo,
+                        );
+                      }),
                     ),
-                    Text(
-                      "Domino’s Pizza",
-                      style: TextStyleUtil.manrope16w600(),
-                    ),
+                    Obx(() {
+                      return Text(
+                        Get
+                            .find<HomeController>()
+                            .restaurantDetails
+                            .value
+                            .restaurantName,
+                        style: TextStyleUtil.manrope16w600(),
+                      );
+                    }),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

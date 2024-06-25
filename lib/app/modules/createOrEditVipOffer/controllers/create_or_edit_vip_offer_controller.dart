@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 class CreateOrEditVipOfferController extends GetxController {
   //TODO: Implement CreateOrEditVipOfferController
 
-  final count = 0.obs;
-
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController termsAndConditionsController = TextEditingController();
@@ -23,13 +21,13 @@ class CreateOrEditVipOfferController extends GetxController {
   RxInt selectedValidForOption = 0.obs;
 
   List<String> typeOfOffers = [
-    "Deal of the day",
-    "Normal offer"
+    StringConstant.dealOfTheDay,
+    StringConstant.normalOfferCoupon,
   ];
 
   List<String> validForOptions = [
-    "Dine-In",
-    "Take Away"
+    StringConstant.dineIn,
+    StringConstant.takeAwayCoupon,
   ];
 
   @override
@@ -116,6 +114,8 @@ class CreateOrEditVipOfferController extends GetxController {
         validTillDateController.text = '';
         descriptionController.text = '';
         termsAndConditionsController.text = '';
+        selectedTypeOfOffer.value = 0;
+        selectedValidForOption.value = 0;
         Get.back();
         return true;
       }
@@ -165,6 +165,8 @@ class CreateOrEditVipOfferController extends GetxController {
         validTillDateController.text = '';
         descriptionController.text = '';
         termsAndConditionsController.text = '';
+        selectedTypeOfOffer.value = 0;
+        selectedValidForOption.value = 0;
         return true;
       }
       return false;
@@ -173,6 +175,4 @@ class CreateOrEditVipOfferController extends GetxController {
       rethrow;
     }
   }
-
-  void increment() => count.value++;
 }

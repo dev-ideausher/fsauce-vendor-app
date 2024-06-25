@@ -391,6 +391,11 @@ class StringConstant {
   static const String stampBGErrorMsg = "Stamp background color cannot be empty!";
   static const String stampColorErrorMsg = "Stamp color cannot be empty!";
   static const String loyaltyCardCreatedSuccessfully = "Loyalty Card created successfully!";
+  static const String imageUploadError = "Error uploading image";
+  static const String dealOfTheDay = "Deal of the day";
+  static const String normalOfferCoupon = "Normal offer";
+  static const String takeAwayCoupon = "Take Away";
+
 
   // static const String
 }

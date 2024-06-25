@@ -1,6 +1,7 @@
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/profileDetails/controllers/profile_details_controller.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
@@ -27,9 +28,8 @@ class AllPhotosAndVideosController extends GetxController {
   RxList<String> restaurantUploads = <String>[].obs;
 
   void getRestaurantUploads(){
-    Get.find<ProfileDetailsController>().getRestaurantDetails();
-    restaurantUploads.value = Get.find<ProfileDetailsController>().restaurantDetails.value.media;
-    print("Here are the photos of the restaurant: ${restaurantUploads.length}");
+    Get.find<HomeController>().getRestaurantDetails();
+    restaurantUploads.value = Get.find<HomeController>().restaurantDetails.value.media;
   }
 
   Future<void> pickMultipleFiles() async {
@@ -37,7 +37,6 @@ class AllPhotosAndVideosController extends GetxController {
     final List<XFile>? pickedFiles = await picker.pickMultiImage();
 
     if (pickedFiles != null) {
-      print("picked file: ${pickedFiles.first.path}");
       for(XFile file in pickedFiles){
         selectedFiles.add(file.path);
       }
@@ -45,14 +44,13 @@ class AllPhotosAndVideosController extends GetxController {
   }
 
   Future<void> uploadAllImagesAndVideos() async{
-    print("Trying to upload images and videos");
     if(selectedFiles.isNotEmpty){
       for(String selectedImage in selectedFiles){
         var response = await APIManager.uploadFile(filePath: selectedImage);
         if(!response.data['status']){
-          DialogHelper.showError('Image upload error!');
+          DialogHelper.showError(StringConstant.imageUploadError);
         } else if(response.data['status']){
-          uploadedFilesUrl.add(response.data);
+          uploadedFilesUrl.add(response.data['data']);
         }
       }
       saveAllImagesAndVideos();
@@ -62,8 +60,7 @@ class AllPhotosAndVideosController extends GetxController {
   }
 
   Future<void> saveAllImagesAndVideos() async{
-    print("Trying to save images and videos");
-    RestaurantDetails details = Get.find<ProfileDetailsController>().restaurantDetails.value;
+    RestaurantDetails details = Get.find<HomeController>().restaurantDetails.value;
     if(uploadedFilesUrl.isNotEmpty){
       var response = await APIManager.updateVendor(
           restaurantDetails: RestaurantDetails(
@@ -75,13 +72,14 @@ class AllPhotosAndVideosController extends GetxController {
             description: details.description,
             features: details.features,
             timing: details.timing,
-            media: [uploadedFilesUrl.first],
+            media: List.from(uploadedFilesUrl)..addAll(details.media),
           )
       );
       if(response.data["status"]){
-        Get.find<ProfileDetailsController>().getRestaurantDetails();
+        Get.back();
         Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.imagesAndVideosSavedSuccessfully));
         selectedFiles.clear();
+        Get.find<HomeController>().getRestaurantDetails();
       }
       else if(!response.data["status"]){
         DialogHelper.showError(StringConstant.anErrorOccurred);

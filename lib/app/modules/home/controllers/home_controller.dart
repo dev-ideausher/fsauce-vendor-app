@@ -1,18 +1,38 @@
+import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
-  final count = 0.obs;
+  Rx<RestaurantDetails> restaurantDetails = RestaurantDetails(
+      restaurantName: '',
+      restaurantLogo: '',
+      restaurantBanner: '',
+      location: '',
+      avgPrice: 0,
+      description: '',
+      features: [],
+      timing: [],
+      media: []
+  ).obs;
+
+  void getRestaurantDetails() async{
+    var response = await APIManager.getVendor();
+    restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+  }
+
   @override
   void onInit() {
+    getRestaurantDetails();
     super.onInit();
   }
 
   @override
   void onReady() {
+    getRestaurantDetails();
     super.onReady();
   }
 
@@ -40,6 +60,4 @@ class HomeController extends GetxController {
   void gotoRestaurantDetatils() {
     Get.toNamed(Routes.RATING_AND_FEEDBACK_MANAGEMENT);
   }
-
-  void increment() => count.value++;
 }

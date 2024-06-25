@@ -18,6 +18,7 @@ class InactiveOffersView extends GetView<VipOffersController> {
             return DealsOfTheDayCard(
                 width: 100.w,
                 isActive: false,
+                isNormalOffer: controller.inactiveCouponList[index].typeOfOffer == 'Normal offer',
                 coupon: controller.inactiveCouponList[index],
                 onClick: () {
                   controller.selectedCoupon.value =

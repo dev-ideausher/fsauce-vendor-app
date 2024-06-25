@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/notification_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 import '../controllers/notifications_controller.dart';
@@ -13,6 +14,20 @@ class NotificationsView extends GetView<NotificationsController> {
     return Scaffold(
         appBar: const CustomAppBar(
           title: StringConstant.notifications,
+        ),
+        floatingActionButton: Container(
+          height: 41.kh,
+          width: 41.kw,
+          decoration:
+          BoxDecoration(shape: BoxShape.circle, color: context.primary01),
+          child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 30.kw,
+              ),
+              onPressed: () {}),
         ),
         body: Container(
           height: 100.h,

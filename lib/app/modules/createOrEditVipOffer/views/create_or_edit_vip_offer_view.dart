@@ -73,7 +73,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                           title: StringConstant.dealsOfTheDay,
                           isSelected: controller.typeOfOffers.elementAt(
                               controller.selectedTypeOfOffer.value) ==
-                              StringConstant.dealsOfTheDay),
+                              StringConstant.dealOfTheDay),
                     ),
                     16.kwidthBox,
                     InkWell(
@@ -84,7 +84,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                           title: StringConstant.normalOffer,
                           isSelected: controller.typeOfOffers.elementAt(
                               controller.selectedTypeOfOffer.value) ==
-                              StringConstant.normalOffer),
+                              StringConstant.normalOfferCoupon),
                     )
                   ],
                 );
@@ -124,7 +124,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       child: SelectContainer(
                           title: StringConstant.takeAway, isSelected: controller.validForOptions.elementAt(
                           controller.selectedValidForOption.value) ==
-                          StringConstant.takeAway),
+                          StringConstant.takeAwayCoupon),
                     )
                   ],
                 );

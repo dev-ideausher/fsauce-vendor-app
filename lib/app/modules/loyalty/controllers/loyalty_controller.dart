@@ -14,6 +14,7 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 
+
 class LoyaltyController extends GetxController {
   //TODO: Implement LoyaltyController
 
@@ -56,7 +57,7 @@ class LoyaltyController extends GetxController {
     var response = await APIManager.addLoyaltyCard(
         title: cardTitleController.text,
         noOfStamps: noOfStamps,
-        cardBackgroundColor: backgroundColor.value.toString(),
+        cardBackgroundColor: backgroundColor.value.value.toString(),
         cardTextColor: textColor.value.toString(),
         stampBackgroundColor: stampBackgroundColor.value.toString(),
         stampColor: stampTextColor.value.toString(),
@@ -64,10 +65,10 @@ class LoyaltyController extends GetxController {
         isActive: false
     );
     if(response.data['status']){
+      Get.back();
       Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
       DialogHelper.showSuccess(StringConstant.loyaltyAddedMessage);
       Get.find<LoyaltyCardsController>().getLoyaltyCards();
-      Get.back();
     } else if(!response.data['status']){
       DialogHelper.showError(StringConstant.anErrorOccurred);
     }

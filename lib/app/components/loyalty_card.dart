@@ -4,16 +4,18 @@ import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/services/gradients.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class LoyaltyCard extends StatelessWidget {
-  const LoyaltyCard(
-      {super.key,
-      required this.brandName,
-      required this.offer,
-      required this.brandColor,
-      required this.onAddPressed,
-      required this.width,
-      required this.brandLogo});
+  const LoyaltyCard({super.key,
+    required this.brandName,
+    required this.offer,
+    required this.brandColor,
+    required this.onAddPressed,
+    required this.width,
+    required this.brandLogo});
+
   final String brandName;
   final String offer;
   final String brandLogo;

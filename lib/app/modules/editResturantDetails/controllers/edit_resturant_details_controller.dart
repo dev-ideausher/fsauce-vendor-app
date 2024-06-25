@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/allPhotosAndVideos/controllers/all_photos_and_videos_controller.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/profileDetails/controllers/profile_details_controller.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
@@ -46,7 +47,7 @@ class EditResturantDetailsController extends GetxController {
   }
 
   void getInitialRestaurantDetails(){
-    RestaurantDetails details = Get.find<ProfileDetailsController>().restaurantDetails.value;
+    RestaurantDetails details = Get.find<HomeController>().restaurantDetails.value;
     restaurantNameController.text = details.restaurantName;
     addressController.text = details.location;
     averagePriceController.text = details.avgPrice.toString();
@@ -94,9 +95,9 @@ class EditResturantDetailsController extends GetxController {
                 location: addressController.text,
                 avgPrice: int.parse(averagePriceController.text),
                 description: descriptionController.text,
-                features: Get.find<ProfileDetailsController>().restaurantDetails.value.features,
-                timing: Get.find<ProfileDetailsController>().restaurantDetails.value.timing,
-                media: Get.find<ProfileDetailsController>().restaurantDetails.value.media,
+                features: Get.find<HomeController>().restaurantDetails.value.features,
+                timing: Get.find<HomeController>().restaurantDetails.value.timing,
+                media: Get.find<HomeController>().restaurantDetails.value.media,
               )
           );
           if(response.data["status"]){
@@ -105,7 +106,7 @@ class EditResturantDetailsController extends GetxController {
             averagePriceController.text = "";
             descriptionController.text = "";
             DialogHelper.showSuccess(StringConstant.detailsUpdatedSuccessfully);
-            Get.find<ProfileDetailsController>().getRestaurantDetails();
+            Get.find<HomeController>().getRestaurantDetails();
           }
           else if(!response.data["status"]){
             DialogHelper.showError(StringConstant.anErrorOccurred);

@@ -14,8 +14,10 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    controller.getRestaurantDetails();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -29,7 +31,7 @@ class HomeView extends GetView<HomeController> {
                     height: 155.kh,
                     width: 100.w,
                     padding:
-                        EdgeInsets.only(top: 79.kh, left: 16.kw, right: 16.kw),
+                    EdgeInsets.only(top: 79.kh, left: 16.kw, right: 16.kw),
                     decoration: BoxDecoration(
                       color: context.primary02,
                       borderRadius: BorderRadius.only(
@@ -53,29 +55,38 @@ class HomeView extends GetView<HomeController> {
                                       style: TextStyleUtil.manrope24w600(
                                           color: Colors.white),
                                     ),
-                                    Text(
-                                      " Domino's",
-                                      style: TextStyleUtil.manrope24w600(
-                                          color: Colors.white),
-                                    ),
+                                    4.kwidthBox,
+                                    Obx(() {
+                                      return Text(
+                                        controller.restaurantDetails.value
+                                            .restaurantName,
+                                        style: TextStyleUtil.manrope24w600(
+                                            color: Colors.white),
+                                      );
+                                    }),
                                   ],
                                 ),
                                 InkWell(
-                                  onTap: Get.find<HomeController>()
+                                  onTap: Get
+                                      .find<HomeController>()
                                       .showLocationBottomSheet,
                                   child: Row(
                                     children: [
                                       CommonImageView(
                                         svgPath: ImageConstant.locationIcon,
                                       ),
-                                      Text(
-                                        " 8/101 Nicholson St, Camp Hill EC1A 1AE",
-                                        style: TextStyleUtil.manrope14w400(
-                                          color: Colors.white,
-                                          textDecoration:
-                                              TextDecoration.underline,
-                                        ),
-                                      ),
+                                      4.kwidthBox,
+                                      Obx(() {
+                                        return Text(
+                                          controller.restaurantDetails.value
+                                              .location,
+                                          style: TextStyleUtil.manrope14w400(
+                                            color: Colors.white,
+                                            textDecoration:
+                                            TextDecoration.underline,
+                                          ),
+                                        );
+                                      }),
                                     ],
                                   ),
                                 ),
@@ -83,7 +94,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                             IconButton(
                               onPressed:
-                                  Get.find<HomeController>().gotoNotifications,
+                              Get
+                                  .find<HomeController>()
+                                  .gotoNotifications,
                               padding: const EdgeInsets.all(0),
                               icon: CommonImageView(
                                 svgPath: ImageConstant.notificationIcon,
@@ -172,7 +185,7 @@ class HomeView extends GetView<HomeController> {
                             dividerColor: Colors.transparent,
                             indicator: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.circular(50), // Creates border
+                              BorderRadius.circular(50), // Creates border
                               color: Colors.white,
                             ),
                             tabs: [
@@ -208,8 +221,8 @@ class HomeView extends GetView<HomeController> {
                         ),
                         SizedBox(
                           height:
-                              100.h - 200, // Set a fixed height for TabBarView
-                          child: TabBarView(
+                          100.h - 200, // Set a fixed height for TabBarView
+                          child: const TabBarView(
                             children: [
                               SingleChildScrollView(child: AnalysisScreen()),
                               SingleChildScrollView(child: AnalysisScreen()),

@@ -17,6 +17,7 @@ class ActiveOffersView extends GetView<VipOffersController> {
           itemBuilder: (ctx, index) {
             return DealsOfTheDayCard(
                 width: 100.w,
+                isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
                 isActive: true,
                 coupon: controller.couponsList[index],
                 onClick: () {

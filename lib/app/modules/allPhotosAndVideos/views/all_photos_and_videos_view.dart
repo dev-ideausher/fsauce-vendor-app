@@ -23,7 +23,7 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.kw),
-        child: Column(
+        child: ListView(
           children: [
             Row(
               children: [

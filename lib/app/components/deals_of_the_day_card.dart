@@ -16,11 +16,13 @@ class DealsOfTheDayCard extends StatelessWidget {
       required this.width,
       required this.isActive,
         required this.coupon,
+        required this.isNormalOffer
       });
   final Function onClick;
   final double width;
   final bool isActive;
   final Coupon coupon;
+  final bool isNormalOffer;
   void handleClick(int item) {
     switch (item) {
       case 0:
@@ -31,7 +33,7 @@ class DealsOfTheDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 178.kh,
+      height: isNormalOffer ? 148.kh : 178.kh,
       width: width,
       padding: EdgeInsets.only(top: 10.kh),
       decoration: BoxDecoration(
@@ -44,6 +46,7 @@ class DealsOfTheDayCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          isNormalOffer? Container() :
           CommonImageView(
             svgPath: ImageConstant.dealOfDay,
           ),

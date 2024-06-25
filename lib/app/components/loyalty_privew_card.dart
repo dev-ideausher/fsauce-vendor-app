@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/loyalty/controllers/loyalty_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -16,7 +17,10 @@ class LoyaltyReviewCard extends StatelessWidget {
       width: 100.w,
       padding: EdgeInsets.all(16.kw),
       decoration: BoxDecoration(
-          color: Get.find<LoyaltyController>().backgroundColor.value,
+          color: Get
+              .find<LoyaltyController>()
+              .backgroundColor
+              .value,
           borderRadius: BorderRadius.circular(12.kw)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,17 +32,25 @@ class LoyaltyReviewCard extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8.kw)),
             child: Center(
-              child: CommonImageView(
-                url:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-              ),
+              child: Obx(() {
+                return CommonImageView(
+                  url: Get
+                      .find<HomeController>()
+                      .restaurantDetails
+                      .value
+                      .restaurantLogo,
+                  //"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
+                );
+              }),
             ),
           ),
           10.kheightBox,
-          Text(
-            "Domino's Pizza",
-            style: TextStyleUtil.manrope24w700(color: Colors.white),
-          ),
+          Obx(() {
+            return Text(
+              Get.find<HomeController>().restaurantDetails.value.restaurantName,
+              style: TextStyleUtil.manrope24w700(color: Colors.white),
+            );
+          }),
           40.kheightBox,
           Text(
             "2 orders left to get reward",

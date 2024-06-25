@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.d
 import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/profileDetails/controllers/profile_details_controller.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
@@ -33,9 +34,9 @@ class FeaturesAndTimingsController extends GetxController {
   };
 
   void getFeaturesAndTimings() {
-    Get.find<ProfileDetailsController>().getRestaurantDetails();
+    // Get.find<HomeController>().getRestaurantDetails();
     RestaurantDetails details =
-        Get.find<ProfileDetailsController>().restaurantDetails.value;
+        Get.find<HomeController>().restaurantDetails.value;
     if (details.timing.isNotEmpty) {
       for (Timing timing in details.timing) {
         timingControllers.forEach((String e, FilterOptionController optionController){
@@ -133,9 +134,9 @@ class FeaturesAndTimingsController extends GetxController {
               ),
             ))
         .toList();
-    Get.find<ProfileDetailsController>().getRestaurantDetails();
+    Get.find<HomeController>().getRestaurantDetails();
     RestaurantDetails details =
-        Get.find<ProfileDetailsController>().restaurantDetails.value;
+        Get.find<HomeController>().restaurantDetails.value;
     var response = await APIManager.updateVendor(
         restaurantDetails: RestaurantDetails(
       restaurantName: details.restaurantName,
@@ -149,7 +150,7 @@ class FeaturesAndTimingsController extends GetxController {
       media: details.media,
     ));
     if (response.data['status']) {
-      Get.find<ProfileDetailsController>().getRestaurantDetails();
+      Get.find<HomeController>().getRestaurantDetails();
       Get.back();
       DialogHelper.showSuccess(
           StringConstant.featuresAndTimingsAddedSuccessfully);

@@ -22,6 +22,7 @@ class LoyaltyCardsController extends GetxController {
   Future<void> getLoyaltyCards() async{
     var response = await APIManager.getLoyaltyCards(status: true);
     if(response.data['status']){
+      activeLoyaltyCards.value = [];
       for(Map<String, dynamic> card in response.data['data']){
         activeLoyaltyCards.add(LoyaltyCardModel.fromJson(card));
       }
@@ -31,6 +32,7 @@ class LoyaltyCardsController extends GetxController {
 
     var cardsResponse = await APIManager.getLoyaltyCards(status: false);
     if(cardsResponse.data['status']){
+      inActiveLoyaltyCards.value = [];
       for(Map<String, dynamic> card in cardsResponse.data['data']){
         inActiveLoyaltyCards.add(LoyaltyCardModel.fromJson(card));
       }
