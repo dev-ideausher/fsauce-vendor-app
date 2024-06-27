@@ -1,3 +1,8 @@
+import 'package:fsauce_vendor_app/app/modules/subscription/bindings/subscription_binding.dart';
+import 'package:fsauce_vendor_app/app/modules/subscription/views/card_details_view.dart';
+import 'package:fsauce_vendor_app/app/modules/subscription/views/payment_methods_view.dart';
+import 'package:fsauce_vendor_app/app/modules/subscription/views/purchase_plan_view.dart';
+import 'package:fsauce_vendor_app/app/modules/subscription/views/subscription_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
@@ -233,6 +238,26 @@ class AppPages {
       name: _Paths.QR_SCAN,
       page: () => const QrScanView(),
       binding: QrScanBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBSCRIPTION,
+      page: () => const SubscriptionView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.PURCHASEPLAN,
+      page: () => PurchasePlanView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENTDETAILS,
+      page: () => PaymentMethodsView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARDDETAILS,
+      page: () => CardDetailsView(),
+      binding: SubscriptionBinding(),
     ),
   ];
 }

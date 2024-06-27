@@ -1,6 +1,7 @@
 class ImageConstant {
 //SVGs
   static String svgLogo = 'assets/images/logo.svg';
+  static const String pngSubscriptionImg = 'assets/pngs/subscription_icon.png';
   static String locationIcon = "assets/svgs/location_icon.svg";
   static String notificationIcon = "assets/svgs/notifications.svg";
   static String searchIcon = "assets/svgs/search_icon.svg";

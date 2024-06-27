@@ -395,7 +395,40 @@ class StringConstant {
   static const String dealOfTheDay = "Deal of the day";
   static const String normalOfferCoupon = "Normal offer";
   static const String takeAwayCoupon = "Take Away";
+  static const String subscriptions = "Subscriptions";
+  static const String buySubscriptionText = "Buy subscription plan to avail exclusive features.";
+  static const String plansAvailableText = "Silver, Gold and Platinum Plans Available";
+  static const String silverPlan = "Silver Plan";
+  static const String goldPlan = "Gold Plan";
+  static const String platinumPlan = "Platinum Plan";
+  static const List<String> planDetails = [
+    "Access to basic analytics",
+    "Have access to job creations",
+    "Have access to coupon creation"
+  ];
 
+  static const String purchasePlan = "Purchase Plan";
+  static const String paymentMethod = "Payment method";
+  static const String change = "Change";
+  static const String razorPay = "Razor Pay";
+  static const String promotions = "Promotions";
+  static const String addPromoCode = "Add promo code";
+  static const String billingDetails = "Billing Details";
+  static const String totalAmount = "Total Amount";
+  static const String promoCode = "Promo Code";
+  static const String totalPayable = "Total payable";
+  static const String savedCards = "Saved Cards";
+  static const String addPaymentMethods = "Add Payment Methods";
+  static const String creditDebitCard = "Credit / Debit card";
+  static const String applePay = "Apple Pay";
+  static const String googlePay = "Google Pay";
+  static const String addNewCard = "Add new card";
+  static const String cardNumber = "Card Number";
+  static const String expires = "Expires";
+  static const String cvv = "CVV";
+  static const String nameOnCard = "Name on Card";
+  static const String membershipPurchaseSuccess = "Membership Purchased Successfully!";
+  static const String cardSavedSuccessfully = "Card details saved!";
 
   // static const String
 }

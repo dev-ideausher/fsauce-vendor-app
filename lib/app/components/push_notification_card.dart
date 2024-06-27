@@ -13,7 +13,7 @@ class PushNotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 137.kh,
+      height: 142.kh,
       width: 100.w,
       margin: EdgeInsets.only(bottom: 10.kh),
       padding: const EdgeInsets.only(left: 12, right: 6, top: 16, bottom: 16),

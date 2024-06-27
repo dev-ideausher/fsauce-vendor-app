@@ -134,6 +134,38 @@ class ProfileView extends GetView<ProfileController> {
                 onTap: controller.gotoPushNotification,
                 text: StringConstant.pushNotifications,
               ),
+              10.kheightBox,
+          InkWell(
+            onTap: () {
+              controller.gotoSubscriptionScreen();
+            },
+            child: Container(
+              height: 56.kh,
+              width: 100.w,
+              padding: EdgeInsets.symmetric(horizontal: 20.kw),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border(bottom: BorderSide(color: context.borderColor2))),
+              child: Row(
+                children: [
+                  Icon(Icons.monetization_on_outlined, color: context.primary01, size: 22.kh,),
+                  16.kwidthBox,
+                  Text(
+                    StringConstant.subscriptions,
+                    style: TextStyleUtil.manrope14w400(),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 20,
+                    color: context.black01,
+                  )
+                ],
+              ),
+            ),
+          ),
+              10.kheightBox,
               ProfileOption(
                 svgPath: ImageConstant.helpAndSupport,
                 onTap: controller.gotoHelpAndSupportScreen,

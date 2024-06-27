@@ -36,6 +36,10 @@ abstract class Routes {
       _Paths.RATING_AND_FEEDBACK_MANAGEMENT;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
   static const QR_SCAN = _Paths.QR_SCAN;
+  static const SUBSCRIPTION = _Paths.SUBSCRIPTION;
+  static const PURCHASEPLAN = _Paths.PURCHASEPLAN;
+  static const PAYMENTDETAILS = _Paths.PAYMENTDETAILS;
+  static const CARDDETAILS = _Paths.CARDDETAILS;
 }
 
 abstract class _Paths {
@@ -73,4 +77,8 @@ abstract class _Paths {
       '/rating-and-feedback-management';
   static const NOTIFICATIONS = '/notifications';
   static const QR_SCAN = '/qr-scan';
+  static const SUBSCRIPTION = '/subscription';
+  static const PURCHASEPLAN = '/purchase-plan';
+  static const PAYMENTDETAILS = '/payment-details';
+  static const CARDDETAILS = '/card-details';
 }

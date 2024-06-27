@@ -32,6 +32,10 @@ class ProfileController extends GetxController {
     Get.toNamed(Routes.CHANGE_PASSWORD_PROFILE);
   }
 
+  void gotoSubscriptionScreen() {
+    Get.toNamed(Routes.SUBSCRIPTION);
+  }
+
   void gotoHelpAndSupportScreen() {
     Get.toNamed(Routes.HELP_AND_SUPPORT_SCREEN);
   }
