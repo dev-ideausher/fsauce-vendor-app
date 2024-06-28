@@ -40,6 +40,7 @@ abstract class Routes {
   static const PURCHASEPLAN = _Paths.PURCHASEPLAN;
   static const PAYMENTDETAILS = _Paths.PAYMENTDETAILS;
   static const CARDDETAILS = _Paths.CARDDETAILS;
+  static const SPLASHVIEW = _Paths.SPLASHVIEW;
 }
 
 abstract class _Paths {
@@ -81,4 +82,5 @@ abstract class _Paths {
   static const PURCHASEPLAN = '/purchase-plan';
   static const PAYMENTDETAILS = '/payment-details';
   static const CARDDETAILS = '/card-details';
+  static const SPLASHVIEW = '/splash-view';
 }

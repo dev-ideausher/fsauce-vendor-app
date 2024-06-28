@@ -429,6 +429,8 @@ class StringConstant {
   static const String nameOnCard = "Name on Card";
   static const String membershipPurchaseSuccess = "Membership Purchased Successfully!";
   static const String cardSavedSuccessfully = "Card details saved!";
+  static const String theFood = "THE FOOD";
+  static const String sauceity = "SAUCEITY";
 
   // static const String
 }

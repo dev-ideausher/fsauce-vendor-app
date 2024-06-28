@@ -69,10 +69,10 @@ class EditResturantDetailsController extends GetxController {
     if(averagePriceController.text.trim().isEmpty){
       DialogHelper.showError(StringConstant.avgPriceEmpty);
     }
-    if(selectedLogoImage.isEmpty){
+    if(selectedLogoImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantLogo.isEmpty){
       DialogHelper.showError(StringConstant.selectedLogoImageEmpty);
     }
-    if(selectedBannerImage.isEmpty){
+    if(selectedBannerImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantBanner.isEmpty){
       DialogHelper.showError(StringConstant.selectedBannerImageEmpty);
     }
     else{

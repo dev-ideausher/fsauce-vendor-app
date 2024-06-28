@@ -18,6 +18,7 @@ class NavBarController extends GetxController {
   //TODO: Implement NavBarController
 
   var selectedTab = BottomTab.home.obs;
+
   var pages = {
     BottomTab.home: const HomeView(),
     BottomTab.menu: const MenuPageView(),

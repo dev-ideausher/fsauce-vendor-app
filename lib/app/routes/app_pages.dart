@@ -1,3 +1,4 @@
+import 'package:fsauce_vendor_app/app/modules/splash/view/splash_view.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/bindings/subscription_binding.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/views/card_details_view.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/views/payment_methods_view.dart';
@@ -66,6 +67,7 @@ import '../modules/scanRedemptionRecord/bindings/scan_redemption_record_binding.
 import '../modules/scanRedemptionRecord/views/scan_redemption_record_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/splash/binding/splash_binding.dart';
 import '../modules/verification/bindings/verification_binding.dart';
 import '../modules/verification/views/verification_view.dart';
 import '../modules/vipOffers/bindings/vip_offers_binding.dart';
@@ -76,7 +78,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.ONBOARDING;
+  static const INITIAL = Routes.SPLASHVIEW;
 
   static final routes = [
     GetPage(
@@ -212,6 +214,7 @@ class AppPages {
     GetPage(
       name: _Paths.JOB_EDIT_OR_ADD,
       page: () => const JobEditOrAddView(),
+      arguments: [],
       binding: JobEditOrAddBinding(),
     ),
     GetPage(
@@ -258,6 +261,11 @@ class AppPages {
       name: _Paths.CARDDETAILS,
       page: () => CardDetailsView(),
       binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASHVIEW,
+      page: () => SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }

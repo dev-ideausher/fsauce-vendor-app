@@ -9,12 +9,15 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart'; // Add Dio import if not already present
 
 class JobsController extends GetxController {
+
   final count = 0.obs;
   final RxList<Job> jobs = <Job>[].obs;
   int currentPage = 1;
   final int limit = 10;
   var isLoading = false.obs;
   var isMoreDataAvailable = true.obs;
+
+  RxBool toEdit = false.obs;
 
   @override
   void onInit() {
@@ -32,8 +35,8 @@ class JobsController extends GetxController {
     super.onClose();
   }
 
-  void showJobsBottomSheet() {
-    Get.bottomSheet(JobsDetailsBottomSheet());
+  void showJobsBottomSheet(Job job) {
+    Get.bottomSheet(JobsDetailsBottomSheet(job: job));
   }
 
   void gotoAddJobPage() {
@@ -41,6 +44,26 @@ class JobsController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  void updateJobs() async{
+    try {
+      var response = await APIManager.getJobs(
+          page: currentPage.toString(), limit: limit.toString());
+      List<Job> fetchedJobs = (response.data["data"] as List)
+          .map((job) => Job.fromJson(job))
+          .toList();
+
+      if (fetchedJobs.length < limit) {
+        isMoreDataAvailable.value = false;
+      } else {
+        currentPage++;
+      }
+      jobs.value = [];
+      jobs.addAll(fetchedJobs);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void fetchJobs() async {
     if (isLoading.value || !isMoreDataAvailable.value) return;

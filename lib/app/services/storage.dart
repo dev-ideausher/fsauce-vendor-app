@@ -14,6 +14,10 @@ class GetStorageService extends GetxService {
 
   // we are utilisig encrypt class we decrypt once we read and encrypt before write.
 
+  bool get isLoggedIn => _runData.read('isLoggedIn') ?? false;
+
+  set isLoggedIn(bool val) => _runData.write('isLoggedIn', (val));
+
   String get encjwToken => (_runData.read('jwToken')) ?? '';
 
   set encjwToken(String val) => _runData.write('jwToken', (val));

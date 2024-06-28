@@ -5,6 +5,7 @@ import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/loyalty_card.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/loyalty/views/loyalty_view.dart';
 import 'package:fsauce_vendor_app/app/modules/loyaltyCards/controllers/loyalty_cards_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/loyaltyCards/views/active_loyalty_cards.dart';
@@ -54,6 +55,8 @@ class LoyaltyController extends GetxController {
       DialogHelper.showError(StringConstant.stampColorErrorMsg);
     }
 
+    String vendorId = Get.find<HomeController>().vendor;
+
     var response = await APIManager.addLoyaltyCard(
         title: cardTitleController.text,
         noOfStamps: noOfStamps,
@@ -61,8 +64,8 @@ class LoyaltyController extends GetxController {
         cardTextColor: textColor.value.toString(),
         stampBackgroundColor: stampBackgroundColor.value.toString(),
         stampColor: stampTextColor.value.toString(),
-        vendor: "66728075a065bac72ace0f09",
-        isActive: false
+        vendor: vendorId, //"66728075a065bac72ace0f09"
+        isActive: true
     );
     if(response.data['status']){
       Get.back();

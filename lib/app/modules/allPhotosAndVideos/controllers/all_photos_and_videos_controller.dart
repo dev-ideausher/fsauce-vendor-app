@@ -1,4 +1,5 @@
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
+import 'package:fsauce_vendor_app/app/components/confirmation_dialog.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
@@ -30,6 +31,26 @@ class AllPhotosAndVideosController extends GetxController {
   void getRestaurantUploads(){
     Get.find<HomeController>().getRestaurantDetails();
     restaurantUploads.value = Get.find<HomeController>().restaurantDetails.value.media;
+  }
+
+  void confirmDeleteImage(int index){
+    Get.dialog(
+      ConfrimationDialog(
+        onNoTap: Get.back,
+        onYesTap: () async {
+          try {
+            var response = await APIManager.deleteMedia(restaurantUploads[index]);
+            if (response["status"]) {
+              restaurantUploads.removeAt(index);
+            }
+          } catch (e) {
+            DialogHelper.showError("Something went wrong!");
+          }
+        },
+        subTitle: StringConstant.deleteJobSub,
+        title: StringConstant.deleteJob,
+      ),
+    );
   }
 
   Future<void> pickMultipleFiles() async {

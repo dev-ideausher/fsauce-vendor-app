@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fsauce_vendor_app/app/modules/splash/binding/splash_binding.dart';
 import 'package:fsauce_vendor_app/firebase_options.dart';
 
 import 'app/modules/home/bindings/home_binding.dart';
@@ -29,10 +30,11 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       locale: const Locale('en', 'US'),
       // translationsKeys: AppTranslation.translations,
-      initialRoute: Get.find<GetStorageService>().encjwToken.isEmpty
-          ? AppPages.INITIAL
-          : Routes.NAV_BAR,
-      initialBinding: HomeBinding(),
+      initialRoute: Routes.SPLASHVIEW,
+      //Get.find<GetStorageService>().encjwToken.isEmpty
+      //           ? AppPages.INITIAL
+      //           : Routes.NAV_BAR,
+      initialBinding: SplashBinding(),
       getPages: AppPages.routes,
     ),
   ));

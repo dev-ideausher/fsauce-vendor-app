@@ -1,5 +1,6 @@
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
+import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
@@ -19,9 +20,12 @@ class HomeController extends GetxController {
       media: []
   ).obs;
 
+  String vendor = '';
+
   void getRestaurantDetails() async{
     var response = await APIManager.getVendor();
     restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+    vendor = response.data['_id'];
   }
 
   @override

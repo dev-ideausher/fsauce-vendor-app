@@ -4,6 +4,7 @@ import 'package:fsauce_vendor_app/app/components/profile_option.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/analysis_screen.dart';
+import 'package:fsauce_vendor_app/app/modules/navBar/views/nav_bar_view.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';

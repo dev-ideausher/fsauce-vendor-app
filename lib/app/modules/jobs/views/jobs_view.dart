@@ -4,6 +4,7 @@ import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/jobEditOrAdd/controllers/job_edit_or_add_controller.dart';
+import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -31,7 +32,10 @@ class JobsView extends GetView<JobsController> {
             color: Colors.white,
             size: 30.kw,
           ),
-          onPressed: controller.gotoAddJobPage,
+          onPressed: (){
+            controller.toEdit.value = false;
+            Get.toNamed(Routes.JOB_EDIT_OR_ADD, arguments: [false]);
+          },
         ),
       ),
       body: Padding(
@@ -69,7 +73,7 @@ class JobsView extends GetView<JobsController> {
                   } else {
                     final job = controller.jobs[index];
                     return Container(
-                      height: 128.kh,
+                      height: 132.kh,
                       width: 100.w,
                       padding: EdgeInsets.symmetric(
                         vertical: 16.kh,
@@ -101,8 +105,10 @@ class JobsView extends GetView<JobsController> {
                                 itemBuilder: (context) => [
                                   PopupMenuItem<int>(
                                       onTap: () {
+                                        controller.toEdit.value = true;
                                         Get.find<JobEditOrAddController>()
                                             .gotoEditJobPage(job);
+                                        Get.toNamed(Routes.JOB_EDIT_OR_ADD, arguments: [true]);
                                       },
                                       value: 1,
                                       child: Text(
@@ -141,7 +147,9 @@ class JobsView extends GetView<JobsController> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               InkWell(
-                                onTap: controller.showJobsBottomSheet,
+                                onTap: () {
+                                  controller.showJobsBottomSheet(job);
+                                },
                                 child: Row(
                                   children: [
                                     Text(

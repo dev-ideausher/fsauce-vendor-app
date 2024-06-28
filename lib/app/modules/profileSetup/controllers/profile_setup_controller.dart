@@ -166,17 +166,21 @@ class ProfileSetupController extends GetxController {
   void gotoNextStep() async {
     if (stepCount.value == 0) {
       DialogHelper.showLoading();
-      var response1 =
-          await APIManager.uploadFile(filePath: restaurantLogo.value);
-      var response2 =
-          await APIManager.uploadFile(filePath: restaurantLogo.value);
+      try{
+        var response1 =
+        await APIManager.uploadFile(filePath: restaurantLogo.value);
+        var response2 =
+        await APIManager.uploadFile(filePath: restaurantBanner.value);
 
-      restaurantLogoUrl = response1.data["data"];
-      restaurantBannerUrl = response2.data["data"];
+        restaurantLogoUrl = response1.data["data"];
+        restaurantBannerUrl = response2.data["data"];
 
-      print(restaurantBannerUrl);
-      DialogHelper.hideDialog();
-      increment();
+        print(restaurantBannerUrl);
+        DialogHelper.hideDialog();
+        increment();
+      } catch(e) {
+        debugPrint(e.toString());
+      }
     } else {
       increment();
     }

@@ -33,20 +33,24 @@ class ConfrimationDialog extends StatelessWidget {
       shape:
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20.kw)),
       actions: [
-        CustomRedElevatedButtonWithBorder(
-            buttonText: StringConstant.no,
-            height: 40.kh,
-            width: 120.kw,
-            onPressed: () {
-              onNoTap();
-            }),
-        CustomRedElevatedButton(
-            buttonText: StringConstant.yes,
-            height: 40.kh,
-            width: 120.kw,
-            onPressed: () {
-              onYesTap();
-            }),
+        Row(
+          children: <Widget>[
+            CustomRedElevatedButtonWithBorder(
+                buttonText: StringConstant.no,
+                height: 40.kh,
+                width: 120.kw,
+                onPressed: () {
+                  onNoTap();
+                }),
+            CustomRedElevatedButton(
+                buttonText: StringConstant.yes,
+                height: 40.kh,
+                width: 120.kw,
+                onPressed: () {
+                  onYesTap();
+                }),
+          ],
+        ),
       ],
     );
   }

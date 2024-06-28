@@ -8,6 +8,9 @@ class Endpoints {
   static const String onboardVendor = "vendor/onboarding";
   static const String fileUpload = "user/uploadFile";
 
+  //Delete media
+  static const String deleteMedia = "vendor/deleteMedia";
+
   //Vendor end points
   static const String updateVendor = "vendor/updateVendor";
   static const String getVendor = "/vendor/getVendorProfile";

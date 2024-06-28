@@ -14,11 +14,12 @@ import '../controllers/job_edit_or_add_controller.dart';
 
 class JobEditOrAddView extends GetView<JobEditOrAddController> {
   const JobEditOrAddView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: Get.arguments[0]
+        title: controller.toEdit.value
             ? StringConstant.editJob
             : StringConstant.addNedJob,
       ),
@@ -158,7 +159,7 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               height: 56.kh,
               width: 100.w,
               onPressed:
-                  Get.arguments[0] ? controller.editJob : controller.addJob,
+                controller.toEdit.value ? controller.editJob : controller.addJob,
             ),
           ],
         ),

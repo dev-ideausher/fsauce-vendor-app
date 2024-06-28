@@ -48,11 +48,12 @@ class VerificationController extends GetxController {
 
       var response = await APIManager.onboardVendor();
       DialogHelper.hideDialog();
-      if (response.statusCode == 200) {
+      if (response.data['status']) {
+        print(response.data.toString());
         print("vendor onboarded");
         gotoVerificationDoneScreen();
       } else {
-        Get.snackbar("Error", "Something went wrong!");
+        Get.snackbar("Error", response.data['message']);
       }
     }
   }
@@ -74,8 +75,10 @@ class VerificationController extends GetxController {
     Get.toNamed(Routes.PROFILE_SETUP);
   }
 
+  //VerificationDoneScreen
+
   void gotoVerificationDoneScreen() {
-    Get.to(const VerificationDoneScreen());
+    Get.offAll(VerificationDoneScreen());
   }
 
   void increment() => count.value++;

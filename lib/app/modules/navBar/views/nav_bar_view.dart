@@ -90,7 +90,8 @@ class NavBarView extends GetView<NavBarController> {
                 ],
               )),
           body: controller.pages[controller.selectedTab.value],
-        ));
+        )
+    );
   }
 }
 

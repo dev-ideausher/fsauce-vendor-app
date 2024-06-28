@@ -291,6 +291,15 @@ class APIManager {
         .post(Endpoints.fileUpload, data: formData);
   }
 
+  static Future<Map<String, dynamic>> deleteMedia(String url) async{
+    //ToDo: Fetch user id and pass it in data.
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete(Endpoints.deleteMedia, data: {
+          "url": url,
+      "userid": "66615a734bcea93f3056a7c1",
+    });
+  }
+
   //vendor file upload
   static Future<Response> uploadVendorFile({
     required String filePath,

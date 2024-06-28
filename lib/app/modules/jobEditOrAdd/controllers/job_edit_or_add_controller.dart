@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/job_model.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/jobs/controllers/jobs_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
@@ -18,6 +19,18 @@ class JobEditOrAddController extends GetxController {
   final howToApplyController = TextEditingController();
   String id = "";
 
+  RxBool toEdit = false.obs;
+
+  void getToEdit(){
+    toEdit = Get.find<JobsController>().toEdit;
+  }
+
+  @override
+  void onInit(){
+    super.onInit();
+    getToEdit();
+  }
+
   @override
   void onClose() {
     jobTitleController.dispose();
@@ -33,21 +46,25 @@ class JobEditOrAddController extends GetxController {
     if (_validateForm()) {
       try {
         var response = await APIManager.addNewJob(
-            title: jobTitleController.text.trim(),
-            description: descriptionController.text,
-            lastDate: lastDateToApplyController.text,
-            minSalary: int.parse(minSalaryController.text.trim()),
-            maxSalary: int.parse(maxSalaryController.text.trim()),
-            howToApply: howToApplyController.text);
+            title: jobTitleController.text.trim() ?? "Default job title",
+            description: descriptionController.text ?? "Default description",
+            lastDate: lastDateToApplyController.text ?? "Default last date",
+            minSalary: int.parse(minSalaryController.text.trim()) ?? 0,
+            maxSalary: int.parse(maxSalaryController.text.trim()) ?? 0,
+            howToApply: howToApplyController.text ?? "Default how to apply");
         print(response.data);
-        Get.back();
-        Get.bottomSheet(const AddedSuccessfullBottomSheet(
-          subTitle: StringConstant.newJobCreatedSuccessfully,
-        ));
+        if(response.data['status']){
+          JobsController jobsController = Get.find<JobsController>();
+          jobsController.updateJobs();
+          Get.back();
+          Get.bottomSheet(const AddedSuccessfullBottomSheet(
+            subTitle: StringConstant.newJobCreatedSuccessfully,
+          ));
+        }
         // Fetch updated jobs list after adding a new job
-        Get.find<JobsController>().fetchJobs();
       } catch (e) {
-        DialogHelper.showError("Something went wrong!");
+        print("Error occurred while creating new job: ${e.toString()}");
+        DialogHelper.showError(e.toString());
       }
     }
   }
@@ -103,7 +120,6 @@ class JobEditOrAddController extends GetxController {
     descriptionController.text = job.description;
     howToApplyController.text = job.howToApply;
     id = job.id;
-    Get.toNamed(Routes.JOB_EDIT_OR_ADD, arguments: [true]);
   }
 
   void editJob() async {

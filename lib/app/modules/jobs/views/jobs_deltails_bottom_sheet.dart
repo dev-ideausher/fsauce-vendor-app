@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/job_model.dart';
 import 'package:fsauce_vendor_app/app/modules/jobs/controllers/jobs_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -9,7 +10,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class JobsDetailsBottomSheet extends GetView<JobsController> {
-  const JobsDetailsBottomSheet({super.key});
+  final Job job;
+  const JobsDetailsBottomSheet({required this.job, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class JobsDetailsBottomSheet extends GetView<JobsController> {
             ),
             16.kheightBox,
             Text(
-              "Sous Chef",
+              job.title ?? "Sou Chef",
               style: TextStyleUtil.manrope16w600(),
             ),
             10.kheightBox,
@@ -60,7 +62,7 @@ class JobsDetailsBottomSheet extends GetView<JobsController> {
                 ),
                 8.kwidthBox,
                 Text(
-                  "£26T–50Tper year",
+                  "\$ ${job.minSalary} - \$ ${job.maxSalary}" ?? "£26T–50Tper year",
                   style: TextStyleUtil.manrope16w400(color: context.black03),
                 ),
               ],
@@ -73,7 +75,7 @@ class JobsDetailsBottomSheet extends GetView<JobsController> {
                 ),
                 8.kwidthBox,
                 Text(
-                  "Apply by 15 April ",
+                  "Apply by ${job.lastDate.toString().substring(0,10)}",
                   style: TextStyleUtil.manrope16w400(color: context.black03),
                 ),
               ],
@@ -89,17 +91,17 @@ class JobsDetailsBottomSheet extends GetView<JobsController> {
             ),
             6.kheightBox,
             Text(
-              "Join our team as a Sous Chef and showcase your culinary skills in a dynamic environment. Assist in menu creation, daily kitchen operations, and staff supervision. The ideal candidate should have a minimum of 3 years of culinary experience and be passionate about delivering high-quality cuisine.",
+              job.description ?? "Join our team as a Sous Chef and showcase your culinary skills in a dynamic environment. Assist in menu creation, daily kitchen operations, and staff supervision. The ideal candidate should have a minimum of 3 years of culinary experience and be passionate about delivering high-quality cuisine.",
               style: TextStyleUtil.manrope14w400(color: context.black03),
             ),
             16.kheightBox,
             Text(
-              StringConstant.description,
+              StringConstant.howTOApply,
               style: TextStyleUtil.manrope16w600(),
             ),
             6.kheightBox,
             Text(
-              "Interested candidates should submit their resume and cover letter to careers@bistrocentral.com with the subject line Sous Chef Application.",
+              job.howToApply ?? "Interested candidates should submit their resume and cover letter to careers@bistrocentral.com with the subject line Sous Chef Application.",
               style: TextStyleUtil.manrope14w400(color: context.black03),
             )
           ],

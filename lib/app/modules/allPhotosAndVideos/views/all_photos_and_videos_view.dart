@@ -47,8 +47,13 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (ctx, index){
-                        return CommonImageView(
-                          url: controller.restaurantUploads[index],
+                        return InkWell(
+                          onLongPress: () {
+                            controller.confirmDeleteImage(index);
+                          },
+                          child: CommonImageView(
+                            url: controller.restaurantUploads[index],
+                          ),
                         );
                       },
                       separatorBuilder: (ctx, index){
