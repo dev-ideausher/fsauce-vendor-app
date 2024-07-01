@@ -13,7 +13,7 @@ class Endpoints {
 
   //Vendor end points
   static const String updateVendor = "vendor/updateVendor";
-  static const String getVendor = "/vendor/getVendorProfile";
+  static const String getVendor = "vendor/getVendorProfile";
   static const String vendorFileUpload = "vendor/uploadFile";
 
   //Loyalty card end points

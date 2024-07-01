@@ -93,12 +93,12 @@ class ProfileSetupController extends GetxController {
     var response = await APIManager.updateVendor(
         restaurantDetails: RestaurantDetails(
             restaurantName: restaurantNameController.text.trim(),
-            restaurantLogo: restaurantLogo.value,
-            restaurantBanner: restaurantBanner.value,
+            restaurantLogo: restaurantLogoUrl,
+            restaurantBanner: restaurantBannerUrl,
             location: locationController.text.trim(),
             avgPrice: int.parse(averagePriceController.text.trim()),
             description: descriptionController.text.trim(),
-            features: featureItems.map((e) => e.value).toList(),
+            features: selectedFeatures,
             timing: timings,
             media: selectedFilesUrl));
 
@@ -175,7 +175,6 @@ class ProfileSetupController extends GetxController {
         restaurantLogoUrl = response1.data["data"];
         restaurantBannerUrl = response2.data["data"];
 
-        print(restaurantBannerUrl);
         DialogHelper.hideDialog();
         increment();
       } catch(e) {

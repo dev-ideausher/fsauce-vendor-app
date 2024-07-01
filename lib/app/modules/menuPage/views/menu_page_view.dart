@@ -7,6 +7,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../components/empty_widget.dart';
 import '../controllers/menu_page_controller.dart';
 
 class MenuPageView extends GetView<MenuPageController> {
@@ -40,16 +41,28 @@ class MenuPageView extends GetView<MenuPageController> {
           padding: EdgeInsets.only(top: 16.kh, left: 16.kw, right: 16.kw),
           child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              child: Obx(
-                () => Column(
-                  children: [
-                    ...controller.categories.value.map(
-                      (e) => RestaurantMenu(
-                        category: e,
-                      ),
-                    )
-                  ],
-                ),
+              child: Obx( () {
+                if(controller.categories.isNotEmpty){
+                  return Column(
+                    children: [
+                      ...controller.categories.value.map(
+                            (e) => RestaurantMenu(
+                          category: e,
+                        ),
+                      )
+                    ],
+                  );
+                } else {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      EmptyWidget(title: StringConstant.noMenuFound, subTitle: StringConstant.craftMenu),
+                    ],
+                  );
+                }
+              }
               )),
         ));
   }

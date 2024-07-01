@@ -121,6 +121,40 @@ class LoyaltyView extends GetView<LoyaltyController> {
                   Row(
                     children: [
                       Text(
+                        StringConstant.validTill,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  10.kheightBox,
+                  CustomTextField(
+                      controller: controller.validTillDateController,
+                      fillColor: context.loginSignupTextfieldColor,
+                      border: Border.all(color: context.black07),
+                      suffixIcon: Icons.calendar_month,
+                      suffixOnPressed: () {
+                        showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(Duration(days: 2 * 365)),
+
+                        ).then((pickedDate){
+                          if(pickedDate != null){
+                            controller.validTillDateController.text = pickedDate.toString().substring(0, 11);
+                            controller.validTill = pickedDate;
+                          }
+                        });
+                      },
+                      hintText: StringConstant.enterValidTill),
+                  20.kheightBox,
+                  Row(
+                    children: [
+                      Text(
                         StringConstant.cardBackground,
                         style: TextStyleUtil.manrope16w600(),
                       ),

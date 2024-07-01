@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/components/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
@@ -37,7 +38,7 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
             },
             itemCount: controller.inActiveLoyaltyCards.length);
       } else if (controller.inActiveLoyaltyCards.isEmpty) {
-        return const Center(child: Text(StringConstant.noLoyaltyCardsYet));
+        return EmptyWidget(title: StringConstant.noOffersFound, subTitle: StringConstant.createAttractiveOffers);
       } else {
         return const Center(
             child: CircularProgressIndicator(color: Colors.red,));

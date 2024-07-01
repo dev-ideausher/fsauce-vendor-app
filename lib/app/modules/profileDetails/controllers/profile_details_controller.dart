@@ -9,24 +9,6 @@ import '';
 class ProfileDetailsController extends GetxController {
   //TODO: Implement ProfileDetailsController
 
-  // Rx<RestaurantDetails> restaurantDetails = RestaurantDetails(
-  //     restaurantName: '',
-  //     restaurantLogo: '',
-  //     restaurantBanner: '',
-  //     location: '',
-  //     avgPrice: 0,
-  //     description: '',
-  //     features: [],
-  //     timing: [],
-  //     media: []
-  // ).obs;
-  //
-  // void getRestaurantDetails() async{
-  //   var response = await APIManager.getVendor();
-  //   restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
-  //   print("Below is the list of media urls of the restaurant.");
-  // }
-
   @override
   void onInit() {
     Get.find<HomeController>().getRestaurantDetails();

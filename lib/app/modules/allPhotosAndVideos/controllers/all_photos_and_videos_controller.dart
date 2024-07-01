@@ -34,21 +34,24 @@ class AllPhotosAndVideosController extends GetxController {
   }
 
   void confirmDeleteImage(int index){
+    String id = Get.find<HomeController>().vendor;
     Get.dialog(
       ConfrimationDialog(
         onNoTap: Get.back,
         onYesTap: () async {
           try {
-            var response = await APIManager.deleteMedia(restaurantUploads[index]);
+            var response = await APIManager.deleteMedia(restaurantUploads[index], id);
             if (response["status"]) {
-              restaurantUploads.removeAt(index);
+              getRestaurantUploads();
+              restaurantUploads.remove(restaurantUploads[index]);
+              DialogHelper.showSuccess("Deleted Successfully!");
             }
           } catch (e) {
             DialogHelper.showError("Something went wrong!");
           }
         },
-        subTitle: StringConstant.deleteJobSub,
-        title: StringConstant.deleteJob,
+        subTitle: StringConstant.deleteMediaSub,
+        title: StringConstant.deleteMedia,
       ),
     );
   }
@@ -66,8 +69,8 @@ class AllPhotosAndVideosController extends GetxController {
 
   Future<void> uploadAllImagesAndVideos() async{
     if(selectedFiles.isNotEmpty){
-      for(String selectedImage in selectedFiles){
-        var response = await APIManager.uploadFile(filePath: selectedImage);
+      for(int index = 0; index < selectedFiles.length; index++){
+        var response = await APIManager.uploadFile(filePath: selectedFiles[index]);
         if(!response.data['status']){
           DialogHelper.showError(StringConstant.imageUploadError);
         } else if(response.data['status']){

@@ -5,6 +5,8 @@ import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_c
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 
+import '../../../components/empty_widget.dart';
+
 class ActiveOffersView extends GetView<VipOffersController> {
   const ActiveOffersView({super.key});
 
@@ -33,7 +35,8 @@ class ActiveOffersView extends GetView<VipOffersController> {
           itemCount: controller.couponsList.length,
         );
       } else if(controller.couponsList.isEmpty){
-        return const Center(child: Text(StringConstant.noCoupons));
+        return EmptyWidget(title: StringConstant.noOffersFound, subTitle: StringConstant.createAttractiveOffers);
+        // return const Center(child: Text(StringConstant.noCoupons));
       } else{
         return const Center(child: CircularProgressIndicator());
       }

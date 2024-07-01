@@ -4,6 +4,9 @@ class NotificationsController extends GetxController {
   //TODO: Implement NotificationsController
 
   final count = 0.obs;
+
+  RxList<String> notifications = <String>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +21,4 @@ class NotificationsController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

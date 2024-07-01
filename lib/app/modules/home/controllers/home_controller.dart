@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
@@ -24,8 +26,8 @@ class HomeController extends GetxController {
 
   void getRestaurantDetails() async{
     var response = await APIManager.getVendor();
+    vendor = response.data["data"]["_id"];
     restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
-    vendor = response.data['_id'];
   }
 
   @override

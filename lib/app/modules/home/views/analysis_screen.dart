@@ -32,7 +32,7 @@ class AnalysisScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "10",
+                      "0",
                       style:
                           TextStyleUtil.manrope24w700(color: context.primary01),
                     ),
@@ -62,7 +62,7 @@ class AnalysisScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "3",
+                      "0",
                       style:
                           TextStyleUtil.manrope24w700(color: context.primary01),
                     ),
@@ -97,7 +97,7 @@ class AnalysisScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "50",
+                      "0",
                       style:
                           TextStyleUtil.manrope24w700(color: context.primary01),
                     ),
@@ -125,7 +125,7 @@ class AnalysisScreen extends StatelessWidget {
         CouponAnalysisCard(
           title: StringConstant.rewardsRedeemed,
         ),
-        20.kheightBox,
+        270.kheightBox,
       ],
     );
   }

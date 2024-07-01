@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/deals_of_the_day_card.dart';
+import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -33,7 +34,8 @@ class InactiveOffersView extends GetView<VipOffersController> {
           itemCount: controller.inactiveCouponList.length,
         );
       } else if(controller.inactiveCouponList.isEmpty){
-        return const Center(child: Text(StringConstant.noCoupons));
+        return EmptyWidget(title: StringConstant.noOffersFound, subTitle: StringConstant.createAttractiveOffers);
+        // return const Center(child: Text(StringConstant.noCoupons));
       } else{
         return const Center(child: CircularProgressIndicator());
       }

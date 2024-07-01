@@ -21,6 +21,8 @@ class LoyaltyController extends GetxController {
 
   TextEditingController cardTitleController = TextEditingController();
   int noOfStamps = 1;
+  DateTime validTill = DateTime.now();
+  TextEditingController validTillDateController = TextEditingController();
 
   @override
   void onInit() {
@@ -35,6 +37,7 @@ class LoyaltyController extends GetxController {
   @override
   void onClose() {
     cardTitleController.dispose();
+    validTillDateController.dispose();
     super.onClose();
   }
 
@@ -65,6 +68,7 @@ class LoyaltyController extends GetxController {
         stampBackgroundColor: stampBackgroundColor.value.toString(),
         stampColor: stampTextColor.value.toString(),
         vendor: vendorId, //"66728075a065bac72ace0f09"
+        validTill: validTill.toString(),
         isActive: true
     );
     if(response.data['status']){

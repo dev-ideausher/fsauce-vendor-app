@@ -431,6 +431,18 @@ class StringConstant {
   static const String cardSavedSuccessfully = "Card details saved!";
   static const String theFood = "THE FOOD";
   static const String sauceity = "SAUCEITY";
+  static const String deleteMedia = "Delete this media file?";
+  static const String deleteMediaSub = "Are you sure you want to delete this media file?";
+  static const String noOffersFound = "No Offers Found!";
+  static const String createAttractiveOffers = "Create attractive offers with discounts and special deals.";
+  static const String noMenuFound = "No Menu Found!";
+  static const String craftMenu = "Craft a clear menu with appetizers, mains, desserts, and drinks.";
+  static const String noJobsFound = "No Jobs Found!";
+  static const String createJobListings = "Create clear job listings to attract and hire qualified restaurant staff.";
+  static const String noNotificationFound = "No Notifications Found!";
+  static const String pleaseTryAgain = "Please try again after few days.";
+  static const String noDataFound = "No Data Found!";
+
 
   // static const String
 }

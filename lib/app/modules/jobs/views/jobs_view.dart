@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
+import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/jobEditOrAdd/controllers/job_edit_or_add_controller.dart';
@@ -48,7 +49,10 @@ class JobsView extends GetView<JobsController> {
                 child: CircularProgressIndicator(
               color: context.primary01,
             ));
-          } else {
+          } else if(controller.jobs.isEmpty && !controller.isLoading.value){
+            return EmptyWidget(title: StringConstant.noJobsFound, subTitle: StringConstant.createJobListings);
+          }
+          else {
             return NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
                 if (!controller.isLoading.value &&

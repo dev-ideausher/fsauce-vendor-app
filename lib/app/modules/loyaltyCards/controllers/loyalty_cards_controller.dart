@@ -27,7 +27,7 @@ class LoyaltyCardsController extends GetxController {
         activeLoyaltyCards.add(LoyaltyCardModel.fromJson(card));
       }
     } else{
-      DialogHelper.showError(StringConstant.couldntGetLoyaltyCards);
+
     }
 
     var cardsResponse = await APIManager.getLoyaltyCards(status: false);
@@ -37,7 +37,7 @@ class LoyaltyCardsController extends GetxController {
         inActiveLoyaltyCards.add(LoyaltyCardModel.fromJson(card));
       }
     } else{
-      DialogHelper.showError(StringConstant.couldntGetLoyaltyCards);
+
     }
   }
 

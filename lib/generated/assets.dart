@@ -2,9 +2,13 @@
 class Assets {
   Assets._();
 
+  static const String svgFsauceLogo = "assets/svgs/fsauce_logo.svg";
+  static const String svgEmpty = "assets/svgs/empty.svg";
+  static const String svgEmptyNotification = "assets/svgs/empty_notification.svg";
+
   static const String lottiefilesCarUpdate = 'assets/lottiefiles/carUpdate.json';
   static const String lottiefilesInAppUpdate = 'assets/lottiefiles/inAppUpdate.json';
-  static const String pngSubscriptionImg = 'assets/pngs/subscription_icon.png';
+  static const String pngsSubscriptionIcon = 'assets/pngs/subscription_icon.png';
   static const String svgsAppleLogo = 'assets/svgs/apple_logo.svg';
   static const String svgsBackIcon = 'assets/svgs/back_icon.svg';
   static const String svgsColorPicker = 'assets/svgs/color_picker.svg';
@@ -14,12 +18,15 @@ class Assets {
   static const String svgsDislikeIcon = 'assets/svgs/dislike_icon.svg';
   static const String svgsDoneSwipe = 'assets/svgs/done_swipe.svg';
   static const String svgsEditPen = 'assets/svgs/edit_pen.svg';
+  static const String svgsEmpty = 'assets/svgs/empty.svg';
+  static const String svgsEmptyNotification = 'assets/svgs/empty_notification.svg';
   static const String svgsEmptyStar = 'assets/svgs/empty_star.svg';
   static const String svgsEnableLocation = 'assets/svgs/enable_location.gif';
   static const String svgsEnableLocationIcon = 'assets/svgs/enable_location_icon.svg';
   static const String svgsFacebookLogo = 'assets/svgs/facebook_logo.svg';
   static const String svgsFilledStar = 'assets/svgs/filled_star.svg';
   static const String svgsFocusIcon = 'assets/svgs/focus_icon.svg';
+  static const String svgsFsauceLogo = 'assets/svgs/fsauce_logo.svg';
   static const String svgsGetStarted = 'assets/svgs/get_started.svg';
   static const String svgsGoogleLogo = 'assets/svgs/google_logo.svg';
   static const String svgsGroupChatIcon = 'assets/svgs/group_chat_icon.svg';

@@ -237,6 +237,7 @@ class APIManager {
     required String stampColor,
     required String vendor,
     required bool isActive,
+    required String validTill,
   }) async{
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(Endpoints.addLoyaltyCard, data: {
@@ -248,6 +249,7 @@ class APIManager {
       'stampColor': stampColor,
       'vendor': vendor,
       'isActive': isActive,
+      "validTill": validTill,
     },);
   }
 
@@ -291,12 +293,12 @@ class APIManager {
         .post(Endpoints.fileUpload, data: formData);
   }
 
-  static Future<Map<String, dynamic>> deleteMedia(String url) async{
+  static Future<Map<String, dynamic>> deleteMedia(String url, String id) async{
     //ToDo: Fetch user id and pass it in data.
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete(Endpoints.deleteMedia, data: {
           "url": url,
-      "userid": "66615a734bcea93f3056a7c1",
+      "userid": id,
     });
   }
 
