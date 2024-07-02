@@ -8,7 +8,6 @@ import 'package:get_storage/get_storage.dart';
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -55,9 +54,17 @@ class ProfileController extends GetxController {
         onNoTap: Get.back));
   }
 
+  void showDeleteAccountDialog() {
+    Get.dialog(ConfrimationDialog(
+        title: StringConstant.deleteAccount,
+        subTitle: StringConstant.confirmDelAcccountSub,
+        onYesTap: () {
+          //ToDo: Delete account.
+        },
+        onNoTap: Get.back));
+  }
+
   void gotoPushNotification() {
     Get.toNamed(Routes.PUSH_NOTIFICATION);
   }
-
-  void increment() => count.value++;
 }

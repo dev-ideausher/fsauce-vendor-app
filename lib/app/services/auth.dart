@@ -17,11 +17,9 @@ class Auth extends GetxService {
 
   google() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/google_sign_in
-    final result = await auth.signInWithGoogle().then((value) async {
+    await auth.signInWithGoogle().then((value) async {
       await handleGetContact();
     });
-
-    print('Google : ${await result.user?.getIdToken()}');
   }
 
   apple() async {
@@ -81,10 +79,9 @@ class Auth extends GetxService {
 
   facebook() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/flutter_facebook_auth
-    final result = await signInWithFacebook().then((value) async {
+    await signInWithFacebook().then((value) async {
       await handleGetContact();
     });
-    print('Facebook : ${await result.user?.getIdToken()}');
   }
 
   Future<FirebaseAuthenticationResult> signInWithFacebook() async {

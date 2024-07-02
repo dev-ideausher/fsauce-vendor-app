@@ -16,9 +16,11 @@ class EditResturantDetailsController extends GetxController {
   TextEditingController addressController = TextEditingController();
   TextEditingController averagePriceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController cuisineController = TextEditingController();
 
   RxString selectedBannerImage = ''.obs;
   RxString selectedLogoImage = ''.obs;
+  RxString selectedCuisineType = "".obs;
 
   Future<void> pickLogo() async {
     final ImagePicker picker = ImagePicker();
@@ -123,5 +125,6 @@ class EditResturantDetailsController extends GetxController {
     addressController.dispose();
     descriptionController.dispose();
     averagePriceController.dispose();
+    cuisineController.dispose();
   }
 }

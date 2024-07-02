@@ -9,12 +9,16 @@ import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
+import 'package:fsauce_vendor_app/app/modules/ratingAndFeedbackManagement/controllers/rating_and_feedback_management_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
+import 'package:get/get.dart';
 
 class ReviewFilterBottomSheet extends StatelessWidget {
-  const ReviewFilterBottomSheet({super.key});
+  ReviewFilterBottomSheet({super.key});
+
+  final controller = Get.find<RatingAndFeedbackManagementController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +61,10 @@ class ReviewFilterBottomSheet extends StatelessWidget {
                 ),
                 10.kheightBox,
                 RatingBar(
-                  initialRating: 3,
+                  initialRating: controller.selectedRatingFilter.value,
                   direction: Axis.horizontal,
                   //  allowHalfRating: true,
                   itemCount: 5,
-
                   ratingWidget: RatingWidget(
                     full: CommonImageView(
                       svgPath: ImageConstant.filledStar,
@@ -74,7 +77,9 @@ class ReviewFilterBottomSheet extends StatelessWidget {
                     ),
                   ),
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  onRatingUpdate: (rating) {},
+                  onRatingUpdate: (rating) {
+                    controller.selectedRatingFilter.value = rating;
+                  },
                 ),
               ],
             ),
@@ -87,13 +92,19 @@ class ReviewFilterBottomSheet extends StatelessWidget {
                 width: 43.w,
                 height: 56.kh,
                 buttonText: StringConstant.clear,
-                onPressed: () {},
+                onPressed: () {
+                  controller.selectedRatingFilter.value = 0.0;
+                },
               ),
               CustomRedElevatedButton(
                   width: 43.w,
                   height: 56.kh,
                   buttonText: StringConstant.next,
-                  onPressed: () {}),
+                  onPressed: () {
+                    Get.back();
+                    controller.getRatings();
+                    }
+                  ),
             ],
           ),
           20.kheightBox,

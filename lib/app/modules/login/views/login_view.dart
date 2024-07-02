@@ -149,48 +149,63 @@ class LoginView extends GetView<LoginController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.appleLogo,
-                        width: 24,
+                  InkWell(
+                    onTap: () {
+                      controller.loginWithApple();
+                    },
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.appleLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.facebookLogo,
-                        width: 24,
+                  InkWell(
+                    onTap: (){
+                      controller.loginWithFacebook();
+                    },
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.facebookLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    height: 48.kh,
-                    width: 103.kw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kw),
-                        border: Border.all(
-                          color: context.black07,
-                        )),
-                    child: Center(
-                      child: CommonImageView(
-                        svgPath: ImageConstant.googleLogo,
-                        width: 24,
+                  InkWell(
+                    onTap: () {
+                      controller.loginWithGoogle();
+                    },
+                    child: Container(
+                      height: 48.kh,
+                      width: 103.kw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.kw),
+                          border: Border.all(
+                            color: context.black07,
+                          )),
+                      child: Center(
+                        child: CommonImageView(
+                          svgPath: ImageConstant.googleLogo,
+                          width: 24,
+                        ),
                       ),
                     ),
                   )

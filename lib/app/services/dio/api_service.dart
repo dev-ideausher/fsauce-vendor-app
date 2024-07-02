@@ -12,12 +12,13 @@ class APIManager {
   static Future<Response> postApiExample({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.baseUrl, data: jsonEncode(body));
-//onboarding vendor
+
+
   static Future<Response> onboardVendor() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.onboardVendor);
 
-//profileUpdate
+
   static Future<Response> updateVendor({
     required RestaurantDetails restaurantDetails,
   }) async {
@@ -31,18 +32,17 @@ class APIManager {
       'avgPrice': restaurantDetails.avgPrice,
       'description': restaurantDetails.description,
       'features': restaurantDetails.features,
-      'timing': restaurantDetails.timing.map((timing) => timing.toJson()).toList(),
+      'timing':
+          restaurantDetails.timing.map((timing) => timing.toJson()).toList(),
       'media': restaurantDetails.media,
     });
   }
 
-  //Get Vendor
   static Future<Response> getVendor() async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
         .get(Endpoints.getVendor);
   }
 
-  //addCategory
   static Future<Response> addCategory({
     required String categoryName,
   }) async {
@@ -50,15 +50,11 @@ class APIManager {
         .post(Endpoints.addCategory, data: {"name": categoryName});
   }
 
-  //getCategory
-
   static Future<Response> getCategories() async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
       Endpoints.getCategory,
     );
   }
-
-  //deleteCategor
 
   static Future<Map<String, dynamic>> deleteCategory(
       {required String id}) async {
@@ -66,7 +62,6 @@ class APIManager {
         .delete(Endpoints.deleteCategory, queryParameters: {"id": id});
   }
 
-  //edit category
   static Future<Response> editCategory({
     required String categoryName,
     required String id,
@@ -74,8 +69,6 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(Endpoints.editCategory, data: {"id": id, "name": categoryName});
   }
-
-  // add menu item
 
   static Future<Response> addMenuItem({
     required String itemName,
@@ -87,15 +80,11 @@ class APIManager {
             data: {"category": categoryId, "image": imgUrl, "name": itemName});
   }
 
-  //delete menu item
-
   static Future<Map<String, dynamic>> deleteMenuItem(
       {required String id}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete(Endpoints.deleteMenuItem, queryParameters: {"id": id});
   }
-
-  //edit menu item
 
   static Future<Response> editMenuItem({
     required String itemName,
@@ -107,7 +96,6 @@ class APIManager {
             data: {"id": categoryId, "image": imgUrl, "name": itemName});
   }
 
-  //add job
   static Future<Response> addNewJob({
     required String title,
     required String description,
@@ -127,7 +115,6 @@ class APIManager {
     });
   }
 
-  //get jobs
   static Future<Response> getJobs(
       {required String page, required String limit}) async {
     return await DioClient(Dio(),
@@ -136,13 +123,10 @@ class APIManager {
             queryParameters: {"page": page, "limit": limit});
   }
 
-  //delete job
   static Future<Map<String, dynamic>> deleteJob({required String id}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete(Endpoints.deleteJob, queryParameters: {"id": id});
   }
-
-  //edit job
 
   static Future<Response> editJob({
     required String id,
@@ -165,7 +149,6 @@ class APIManager {
     });
   }
 
-  //Post Coupon
   static Future<Response> addCoupon({
     required String title,
     required String typeOfOffer,
@@ -174,60 +157,61 @@ class APIManager {
     required String description,
     required List<String> termsAndConditions,
     required bool isActive,
-  }) async{
+  }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.addCoupon, data: {
-          'title': title,
-      'typeOfOffer': typeOfOffer,
-      'validFor': validFor,
-      'validTill': validTill,
-      'description': description,
-      'termsAndConditions': termsAndConditions,
-      'isActive': isActive,
-    },);
-  }
-
-  //Get Coupon list
-  static Future<Response> getCouponList({int page = 1, int limit = 5, bool status = true}) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .get("${Endpoints.getCouponList}status=$status&page=$page&limit=$limit");
-  }
-
-  //Get coupon
-  static Future<Response> getCoupon(String id) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .get("${Endpoints.getCoupon}$id");
-  }
-
-  //Edit coupon list
-  static Future<Response> editCoupon(Coupon coupon, bool isActive) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.editCoupon, data: {
-      'title': coupon.title,
-      'typeOfOffer': coupon.typeOfOffer,
-      'validFor': coupon.validFor,
-      'validTill': coupon.validTill,
-      'description': coupon.description,
-      'termsAndConditions': coupon.termsAndConditions,
-      'isActive': isActive,
-      'id': coupon.id,
+        .post(
+      Endpoints.addCoupon,
+      data: {
+        'title': title,
+        'typeOfOffer': typeOfOffer,
+        'validFor': validFor,
+        'validTill': validTill,
+        'description': description,
+        'termsAndConditions': termsAndConditions,
+        'isActive': isActive,
       },
     );
   }
 
-  //Delete Coupon
-  static Future<Map<String, dynamic>> deleteCoupon(String id) async{
+  static Future<Response> getCouponList(
+      {int page = 1, int limit = 5, bool status = true}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
+        "${Endpoints.getCouponList}status=$status&page=$page&limit=$limit");
+  }
+
+  static Future<Response> getCoupon(String id) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get("${Endpoints.getCoupon}$id");
+  }
+
+  static Future<Response> editCoupon(Coupon coupon, bool isActive) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(
+      Endpoints.editCoupon,
+      data: {
+        'title': coupon.title,
+        'typeOfOffer': coupon.typeOfOffer,
+        'validFor': coupon.validFor,
+        'validTill': coupon.validTill,
+        'description': coupon.description,
+        'termsAndConditions': coupon.termsAndConditions,
+        'isActive': isActive,
+        'id': coupon.id,
+      },
+    );
+  }
+
+  static Future<Map<String, dynamic>> deleteCoupon(String id) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete("${Endpoints.deleteCoupon}$id");
   }
 
-  //Get loyalty cards
-  static Future<Response> getLoyaltyCards({int page = 1, int limit = 5, bool status = true}) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .get("${Endpoints.getLoyaltyCards}status=$status&page=$page&limit=$limit");
+  static Future<Response> getLoyaltyCards(
+      {int page = 1, int limit = 5, bool status = true}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
+        "${Endpoints.getLoyaltyCards}status=$status&page=$page&limit=$limit");
   }
 
-  //Add loyalty card
   static Future<Response> addLoyaltyCard({
     required String title,
     required int noOfStamps,
@@ -238,46 +222,48 @@ class APIManager {
     required String vendor,
     required bool isActive,
     required String validTill,
-  }) async{
+  }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.addLoyaltyCard, data: {
-      'title': title,
-      'noOfStamps': noOfStamps,
-      'cardBackgroundColor': cardBackgroundColor,
-      'cardTextColor': cardTextColor,
-      'stampBackgroundColor': stampBackgroundColor,
-      'stampColor': stampColor,
-      'vendor': vendor,
-      'isActive': isActive,
-      "validTill": validTill,
-    },);
-  }
-
-  //Edit loyalty card
-  static Future<Response> editLoyaltyCard(LoyaltyCardModel card, bool isActive) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.editCoupon, data: {
-      'title': card.title,
-      'noOfStamps': card.noOfStamps,
-      'cardBackgroundColor': card.cardBackgroundColor,
-      'cardTextColor': card.cardTextColor,
-      'stampBackgroundColor': card.stampBackgroundColor,
-      'stampColor': card.stampColor,
-      'vendor': card.vendor,
-      'isActive': isActive,
-      '_id': card.Id
-    },
+        .post(
+      Endpoints.addLoyaltyCard,
+      data: {
+        'title': title,
+        'noOfStamps': noOfStamps,
+        'cardBackgroundColor': cardBackgroundColor,
+        'cardTextColor': cardTextColor,
+        'stampBackgroundColor': stampBackgroundColor,
+        'stampColor': stampColor,
+        'vendor': vendor,
+        'isActive': isActive,
+        "validTill": validTill,
+      },
     );
   }
 
-  //Delete loyalty card
-  static Future<Map<String, dynamic>> deleteLoyaltyCard(String id) async{
+  static Future<Response> editLoyaltyCard(
+      LoyaltyCardModel card, bool isActive) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(
+      Endpoints.editCoupon,
+      data: {
+        'title': card.title,
+        'noOfStamps': card.noOfStamps,
+        'cardBackgroundColor': card.cardBackgroundColor,
+        'cardTextColor': card.cardTextColor,
+        'stampBackgroundColor': card.stampBackgroundColor,
+        'stampColor': card.stampColor,
+        'vendor': card.vendor,
+        'isActive': isActive,
+        '_id': card.Id
+      },
+    );
+  }
+
+  static Future<Map<String, dynamic>> deleteLoyaltyCard(String id) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete("${Endpoints.delLoyaltyCard}$id");
   }
 
-
-//file upload
   static Future<Response> uploadFile({
     required String filePath,
     Map<String, dynamic>? additionalData,
@@ -293,28 +279,42 @@ class APIManager {
         .post(Endpoints.fileUpload, data: formData);
   }
 
-  static Future<Map<String, dynamic>> deleteMedia(String url, String id) async{
-    //ToDo: Fetch user id and pass it in data.
+  static Future<Map<String, dynamic>> deleteMedia(String url, String id) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete(Endpoints.deleteMedia, data: {
-          "url": url,
+      "url": url,
       "userid": id,
     });
   }
 
-  //vendor file upload
-  static Future<Response> uploadVendorFile({
-    required String filePath,
-    Map<String, dynamic>? additionalData,
-  }) async {
-    final file = await MultipartFile.fromFile(filePath);
-
-    FormData formData = FormData.fromMap({
-      'file': file,
-      ...?additionalData, // Add additional form data if any
-    });
-
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.vendorFileUpload, data: formData);
+  static Future<Response> getRatings(
+      {int rating = 5, required String id}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
+        Endpoints.getRatings, queryParameters: {
+          'id': id,
+      'rating': rating,}
+        );
   }
+
+  static Future<Map<String, dynamic>> deleteRating(String id) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete(Endpoints.deleteRating, queryParameters: {
+      "id": id,
+    });
+  }
+
+  // static Future<Response> uploadVendorFile({
+  //   required String filePath,
+  //   Map<String, dynamic>? additionalData,
+  // }) async {
+  //   final file = await MultipartFile.fromFile(filePath);
+  //
+  //   FormData formData = FormData.fromMap({
+  //     'file': file,
+  //     ...?additionalData, // Add additional form data if any
+  //   });
+  //
+  //   return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+  //       .post(Endpoints.vendorFileUpload, data: formData);
+  // }
 }

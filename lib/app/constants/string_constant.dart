@@ -442,7 +442,24 @@ class StringConstant {
   static const String noNotificationFound = "No Notifications Found!";
   static const String pleaseTryAgain = "Please try again after few days.";
   static const String noDataFound = "No Data Found!";
+  static const String anErrorOccurredWhileGettingRatings = "An error occurred while getting ratings";
+  static const String noRatingsFound = "No Ratings Found!";
 
+  static List<String> cuisineOptions = [
+    "Italian",
+    "Chinese",
+    "North Indian",
+    "Continental",
+    "Japanese",
+    "American",
+  ];
+
+  static const String cuisine = "Cuisine";
+  static const String selectCuisine = "Select Cuisine";
+  static const String streetNameNo = "Street Name/No.";
+  static const String cityTown = "City/Town";
+  static const String postCode = "Post code";
+  static const String confirmDelAcccountSub = "Confirm delete account?";
 
   // static const String
 }

@@ -307,13 +307,9 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterAddress),
                 20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.description,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                  ],
+                Text(
+                  StringConstant.description,
+                  style: TextStyleUtil.manrope14w500(),
                 ),
                 10.kheightBox,
                 CustomTextField(
@@ -321,6 +317,58 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterDescription),
+                10.kheightBox,
+                Row(
+                  children: [
+                    Text(
+                      StringConstant.cuisine,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    Text(
+                      "*",
+                      style:
+                      TextStyleUtil.manrope14w500(color: context.primary01),
+                    )
+                  ],
+                ),
+                10.kheightBox,
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: context.borderColor2),
+                      borderRadius: BorderRadius.circular(8.kw)),
+                  padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: DropdownButtonFormField<String>(
+                            dropdownColor: Colors.white,
+                            style: TextStyleUtil.manrope16w400(),
+                            onChanged: (val) {
+                              if(val != null){
+                                controller.selectedCuisineType.value = val;
+                              }
+                            },
+                            items: StringConstant.cuisineOptions
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(0),
+                              hintText: StringConstant.selectNumberOfStamps,
+                              hintStyle: TextStyleUtil.manrope14w400(
+                                  color: context.black04),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
                 40.kheightBox,
                 CustomRedElevatedButton(
                     buttonText: StringConstant.save,
@@ -329,12 +377,6 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     onPressed: () {
                       controller.updateDetails();
                     }),
-                16.kheightBox,
-                CustomRedElevatedButtonWithBorder(
-                    buttonText: StringConstant.deleteAccount,
-                    width: 100.w,
-                    height: 56.kh,
-                    onPressed: () {}),
                 40.kheightBox,
               ],
             ),

@@ -45,6 +45,7 @@ class LoginController extends GetxController {
       await auth.google();
       gotoHomeScreen();
     } catch (e) {
+      print("Error: ${e.toString()}");
       Get.snackbar('Error', e.toString());
     }
   }

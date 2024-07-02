@@ -18,7 +18,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class ProfileSetupController extends GetxController {
+
   final stepCount = 0.obs;
+  RxString selectedCuisineType = "".obs;
+
   final List<Widget> steps = [
     const StepOne(),
     const StepTwo(),
@@ -38,18 +41,23 @@ class ProfileSetupController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    streetNameController.dispose();
+    locationController.dispose();
+    averagePriceController.dispose();
+    cityNameController.dispose();
+    postCodeController.dispose();
+    descriptionController.dispose();
+    restaurantNameController.dispose();
   }
 
   void gotoEnableLocationScreen() async {
     DialogHelper.showLoading();
 
-    // Create a list of upload futures
     List<Future<void>> uploadFutures = selectedFiles.map((element) async {
       var response = await APIManager.uploadFile(filePath: element);
       selectedFilesUrl.add(response.data["data"]);
     }).toList();
 
-    // Wait for all uploads to complete
     await Future.wait(uploadFutures);
 
     bool isDataUpdated = await updateVendor();
@@ -95,7 +103,8 @@ class ProfileSetupController extends GetxController {
             restaurantName: restaurantNameController.text.trim(),
             restaurantLogo: restaurantLogoUrl,
             restaurantBanner: restaurantBannerUrl,
-            location: locationController.text.trim(),
+            location: streetNameController.text + cityNameController.text + cityNameController.text,
+            //locationController.text.trim()
             avgPrice: int.parse(averagePriceController.text.trim()),
             description: descriptionController.text.trim(),
             features: selectedFeatures,
@@ -114,6 +123,10 @@ class ProfileSetupController extends GetxController {
   TextEditingController locationController = TextEditingController();
   TextEditingController averagePriceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController streetNameController = TextEditingController();
+  TextEditingController cityNameController = TextEditingController();
+  TextEditingController postCodeController = TextEditingController();
+
 
   void increment() => stepCount.value++;
 

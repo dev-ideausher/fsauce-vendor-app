@@ -11,10 +11,13 @@ class Endpoints {
   //Delete media
   static const String deleteMedia = "vendor/deleteMedia";
 
+  //Get Ratings
+  static const String getRatings = "vendor/getRatings?";
+  static const String deleteRating = "vendor/deleteRating?";
+
   //Vendor end points
   static const String updateVendor = "vendor/updateVendor";
   static const String getVendor = "vendor/getVendorProfile";
-  static const String vendorFileUpload = "vendor/uploadFile";
 
   //Loyalty card end points
   static const String addLoyaltyCard = 'vendor/loyaltycard/addLoyaltycard';

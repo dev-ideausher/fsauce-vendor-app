@@ -159,28 +159,6 @@ class StepOne extends StatelessWidget {
             )),
         10.kheightBox,
 
-        // Location
-        Row(
-          children: [
-            Text(
-              StringConstant.location,
-              style: TextStyleUtil.manrope14w500(),
-            ),
-            Text(
-              "*",
-              style: TextStyleUtil.manrope14w500(color: context.primary01),
-            )
-          ],
-        ),
-        6.kheightBox,
-        CustomTextField(
-          fillColor: context.loginSignupTextfieldColor,
-          border: Border.all(color: context.black07),
-          controller: controller.locationController,
-          hintText: StringConstant.enterLocation,
-        ),
-        10.kheightBox,
-
         // Average Price for 2
         Row(
           children: [
@@ -223,6 +201,105 @@ class StepOne extends StatelessWidget {
           border: Border.all(color: context.black07),
           controller: controller.descriptionController,
           hintText: StringConstant.enterDescription,
+        ),
+        10.kheightBox,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+              border: Border.all(color: context.borderColor2),
+              borderRadius: BorderRadius.circular(8.kw)),
+          padding: EdgeInsets.symmetric(horizontal: 10.kw),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                  child: DropdownButtonFormField<String>(
+                    dropdownColor: Colors.white,
+                    style: TextStyleUtil.manrope16w400(),
+                    onChanged: (val) {
+                      if(val != null){
+                        controller.selectedCuisineType.value = val;
+                      }
+                    },
+                    items: StringConstant.cuisineOptions
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(0),
+                      hintText: StringConstant.selectCuisine,
+                      hintStyle: TextStyleUtil.manrope14w400(
+                          color: context.black04),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+        20.kheightBox,
+        Row(
+          children: <Widget>[
+            Text(StringConstant.location, style: TextStyleUtil.manrope18w600(),),
+            4.kwidthBox,
+            const Divider(),
+          ],
+        ),
+        20.kheightBox,
+        Row(
+          children: [
+            Text(StringConstant.streetNameNo, style: TextStyleUtil.manrope14w500(),),
+            Text(
+              "*",
+              style: TextStyleUtil.manrope14w500(color: context.primary01),
+            )
+          ],
+        ),
+        6.kheightBox,
+        CustomTextField(
+          fillColor: context.loginSignupTextfieldColor,
+          border: Border.all(color: context.black07),
+          controller: controller.streetNameController,
+          hintText: StringConstant.enterLocation,
+        ),
+        10.kheightBox,
+        Row(
+          children: [
+            Text(StringConstant.cityTown, style: TextStyleUtil.manrope14w500(),),
+            Text(
+              "*",
+              style: TextStyleUtil.manrope14w500(color: context.primary01),
+            )
+          ],
+        ),
+        6.kheightBox,
+        CustomTextField(
+          fillColor: context.loginSignupTextfieldColor,
+          border: Border.all(color: context.black07),
+          controller: controller.cityNameController,
+          hintText: StringConstant.enterLocation,
+        ),
+        10.kheightBox,
+        Row(
+          children: [
+            Text(StringConstant.postCode, style: TextStyleUtil.manrope14w500(),),
+            Text(
+              "*",
+              style: TextStyleUtil.manrope14w500(color: context.primary01),
+            )
+          ],
+        ),
+        6.kheightBox,
+        CustomTextField(
+          fillColor: context.loginSignupTextfieldColor,
+          border: Border.all(color: context.black07),
+          controller: controller.postCodeController,
+          hintText: StringConstant.enterLocation,
         ),
       ],
     );

@@ -178,6 +178,38 @@ class ProfileView extends GetView<ProfileController> {
                 text: StringConstant.logout,
               ),
               10.kheightBox,
+              InkWell(
+                onTap: () {
+                  //ToDo: Delete Account
+                  controller.showDeleteAccountDialog();
+                },
+                child: Container(
+                  height: 56.kh,
+                  width: 100.w,
+                  padding: EdgeInsets.symmetric(horizontal: 20.kw),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border(bottom: BorderSide(color: context.borderColor2))),
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete_outline, color: context.primary01, size: 22.kh,),
+                      16.kwidthBox,
+                      Text(
+                        StringConstant.deleteAccount,
+                        style: TextStyleUtil.manrope14w400(),
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 20,
+                        color: context.black01,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              10.kheightBox,
             ],
           ),
         ));
