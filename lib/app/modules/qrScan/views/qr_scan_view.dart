@@ -35,7 +35,7 @@ class _QrScanViewState extends State<QrScanView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: StringConstant.scanQRCode),
+      appBar: const CustomAppBar(title: StringConstant.scanQRCode),
       body: Column(
         children: <Widget>[
           Expanded(

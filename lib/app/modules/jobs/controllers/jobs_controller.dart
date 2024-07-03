@@ -10,7 +10,6 @@ import 'package:dio/dio.dart'; // Add Dio import if not already present
 
 class JobsController extends GetxController {
 
-  final count = 0.obs;
   final RxList<Job> jobs = <Job>[].obs;
   int currentPage = 1;
   final int limit = 10;
@@ -42,8 +41,6 @@ class JobsController extends GetxController {
   void gotoAddJobPage() {
     Get.toNamed(Routes.JOB_EDIT_OR_ADD, arguments: [false]);
   }
-
-  void increment() => count.value++;
 
   void updateJobs() async{
     try {
@@ -95,11 +92,10 @@ class JobsController extends GetxController {
     int index = jobs.indexWhere((job) => job.id == updatedJob.id);
     if (index != -1) {
       jobs[index] = updatedJob;
-      jobs.refresh(); // To update the UI
+      jobs.refresh();
     }
   }
 
-  // Method to delete menu item
   void deleteJob({required String id}) {
     Get.dialog(
       ConfrimationDialog(

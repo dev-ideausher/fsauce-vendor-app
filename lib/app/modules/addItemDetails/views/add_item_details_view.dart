@@ -63,7 +63,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.file_upload_outlined),
+                              const Icon(Icons.file_upload_outlined),
                               2.kwidthBox,
                               Text(
                                 StringConstant.uploadPhoto,
@@ -148,7 +148,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                 controller: Get.find<MenuPageController>().itemNameController,
                 fillColor: context.black07,
                 hintText: StringConstant.enterHere),
-            Spacer(),
+            const Spacer(),
             CustomRedElevatedButton(
                 width: 100.w,
                 height: 56.kh,
@@ -157,7 +157,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                   bool status =
                       await Get.find<MenuPageController>().addMenuItem();
                   if (status) {
-                    Navigator.pop(context);
+                    Get.back();
                   }
                 }),
             20.kheightBox,

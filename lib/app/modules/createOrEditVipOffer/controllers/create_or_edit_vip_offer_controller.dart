@@ -65,13 +65,13 @@ class CreateOrEditVipOfferController extends GetxController {
   }
 
   void showCreatedBottomSheet() {
-    Get.bottomSheet(AddedSuccessfullBottomSheet(
+    Get.bottomSheet(const AddedSuccessfullBottomSheet(
       subTitle: StringConstant.vipOfferCreatedSuccessfully,
     ));
   }
 
   void showUpdatedBottomSheet() {
-    Get.bottomSheet(AddedSuccessfullBottomSheet(
+    Get.bottomSheet(const AddedSuccessfullBottomSheet(
       subTitle: StringConstant.vipOfferEditedSuccessfully,
     ));
   }
@@ -97,15 +97,16 @@ class CreateOrEditVipOfferController extends GetxController {
     }
 
     try{
-      var response = await APIManager.addCoupon(
-        title: titleController.text,
-        typeOfOffer: typeOfOffers[selectedTypeOfOffer.value],
-        validFor: validForOptions[selectedValidForOption.value],
-        validTill: validTillDateController.text,
-        description: descriptionController.text,
-        termsAndConditions: [termsAndConditionsController.text],
-        isActive: true,
-      );
+      Map<String, dynamic> data = {
+        "title": titleController.text,
+        "typeOfOffer": typeOfOffers[selectedTypeOfOffer.value],
+        "validFor": validForOptions[selectedValidForOption.value],
+        "validTill": validTillDateController.text,
+        "description": descriptionController.text,
+        "termsAndConditions": [termsAndConditionsController.text],
+        "isActive": true,
+      };
+      var response = await APIManager.addCoupon(data: data);
       if (response.data['status']) {
         Get.find<VipOffersController>().getCoupons();
         DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);

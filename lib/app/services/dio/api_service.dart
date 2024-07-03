@@ -24,18 +24,8 @@ class APIManager {
   }) async {
     print(restaurantDetails.toJson());
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.updateVendor, data: {
-      'restaurantName': restaurantDetails.restaurantName,
-      'restaurantLogo': restaurantDetails.restaurantLogo,
-      'restaurantBanner': restaurantDetails.restaurantBanner,
-      'location': restaurantDetails.location,
-      'avgPrice': restaurantDetails.avgPrice,
-      'description': restaurantDetails.description,
-      'features': restaurantDetails.features,
-      'timing':
-          restaurantDetails.timing.map((timing) => timing.toJson()).toList(),
-      'media': restaurantDetails.media,
-    });
+        .post(Endpoints.updateVendor, data: restaurantDetails.toJson()
+    );
   }
 
   static Future<Response> getVendor() async {
@@ -97,22 +87,10 @@ class APIManager {
   }
 
   static Future<Response> addNewJob({
-    required String title,
-    required String description,
-    required String lastDate,
-    required int minSalary,
-    required int maxSalary,
-    required String howToApply,
+    required Map<String, dynamic> data
   }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.addJob, data: {
-      "title": title,
-      "description": description,
-      "lastDate": lastDate,
-      "minSalary": minSalary,
-      "maxSalary": maxSalary,
-      "howToApply": howToApply
-    });
+        .post(Endpoints.addJob, data: data);
   }
 
   static Future<Response> getJobs(
@@ -129,47 +107,19 @@ class APIManager {
   }
 
   static Future<Response> editJob({
-    required String id,
-    required String title,
-    required String description,
-    required String lastDate,
-    required int minSalary,
-    required int maxSalary,
-    required String howToApply,
+    required Map<String, dynamic> data
   }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.editJob, data: {
-      "id": id,
-      "title": title,
-      "description": description,
-      "lastDate": lastDate,
-      "minSalary": minSalary,
-      "maxSalary": maxSalary,
-      "howToApply": howToApply
-    });
+        .post(Endpoints.editJob, data: data);
   }
 
   static Future<Response> addCoupon({
-    required String title,
-    required String typeOfOffer,
-    required String validFor,
-    required String validTill,
-    required String description,
-    required List<String> termsAndConditions,
-    required bool isActive,
+    required Map<String, dynamic> data
   }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addCoupon,
-      data: {
-        'title': title,
-        'typeOfOffer': typeOfOffer,
-        'validFor': validFor,
-        'validTill': validTill,
-        'description': description,
-        'termsAndConditions': termsAndConditions,
-        'isActive': isActive,
-      },
+      data: data,
     );
   }
 
@@ -189,14 +139,14 @@ class APIManager {
         .post(
       Endpoints.editCoupon,
       data: {
-        'title': coupon.title,
-        'typeOfOffer': coupon.typeOfOffer,
-        'validFor': coupon.validFor,
-        'validTill': coupon.validTill,
-        'description': coupon.description,
-        'termsAndConditions': coupon.termsAndConditions,
-        'isActive': isActive,
-        'id': coupon.id,
+        "title": coupon.title,
+        "typeOfOffer": coupon.typeOfOffer,
+        "validFor": coupon.validFor,
+        "validTill": coupon.validTill,
+        "description": coupon.description,
+        "termsAndConditions": coupon.termsAndConditions,
+        "id": coupon.id,
+        "isActive": isActive
       },
     );
   }
@@ -213,30 +163,12 @@ class APIManager {
   }
 
   static Future<Response> addLoyaltyCard({
-    required String title,
-    required int noOfStamps,
-    required String cardBackgroundColor,
-    required String cardTextColor,
-    required String stampBackgroundColor,
-    required String stampColor,
-    required String vendor,
-    required bool isActive,
-    required String validTill,
+    required Map<String, dynamic> data
   }) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addLoyaltyCard,
-      data: {
-        'title': title,
-        'noOfStamps': noOfStamps,
-        'cardBackgroundColor': cardBackgroundColor,
-        'cardTextColor': cardTextColor,
-        'stampBackgroundColor': stampBackgroundColor,
-        'stampColor': stampColor,
-        'vendor': vendor,
-        'isActive': isActive,
-        "validTill": validTill,
-      },
+      data: data,
     );
   }
 
@@ -245,17 +177,7 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.editCoupon,
-      data: {
-        'title': card.title,
-        'noOfStamps': card.noOfStamps,
-        'cardBackgroundColor': card.cardBackgroundColor,
-        'cardTextColor': card.cardTextColor,
-        'stampBackgroundColor': card.stampBackgroundColor,
-        'stampColor': card.stampColor,
-        'vendor': card.vendor,
-        'isActive': isActive,
-        '_id': card.Id
-      },
+      data: card.toJson()
     );
   }
 
@@ -292,7 +214,8 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
         Endpoints.getRatings, queryParameters: {
           'id': id,
-      'rating': rating,}
+      'rating': rating,
+    }
         );
   }
 
@@ -302,19 +225,4 @@ class APIManager {
       "id": id,
     });
   }
-
-  // static Future<Response> uploadVendorFile({
-  //   required String filePath,
-  //   Map<String, dynamic>? additionalData,
-  // }) async {
-  //   final file = await MultipartFile.fromFile(filePath);
-  //
-  //   FormData formData = FormData.fromMap({
-  //     'file': file,
-  //     ...?additionalData, // Add additional form data if any
-  //   });
-  //
-  //   return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-  //       .post(Endpoints.vendorFileUpload, data: formData);
-  // }
 }

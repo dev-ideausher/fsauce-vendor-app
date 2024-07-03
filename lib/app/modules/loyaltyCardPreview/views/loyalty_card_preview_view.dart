@@ -75,7 +75,7 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                   ),
                 ),
                 20.kheightBox,
-                LoyaltyReviewCard(),
+                const LoyaltyReviewCard(),
                 10.kheightBox,
               ],
             ),

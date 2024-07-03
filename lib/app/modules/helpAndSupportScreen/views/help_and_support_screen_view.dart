@@ -73,11 +73,11 @@ class HelpAndSupportScreenView extends GetView<HelpAndSupportScreenController> {
                     ),
                     10.kwidthBox,
                     Text(
-                      "Send us an e-mail at  ",
+                      StringConstant.sendUsEmail,
                       style: TextStyleUtil.manrope14w500(),
                     ),
                     Text(
-                      "Info@tfs.com",
+                      StringConstant.infoEmail,
                       style:
                           TextStyleUtil.manrope14w500(color: context.primary01),
                     )

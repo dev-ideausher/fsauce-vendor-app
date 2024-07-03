@@ -40,7 +40,7 @@ class MenuPageView extends GetView<MenuPageController> {
         body: Padding(
           padding: EdgeInsets.only(top: 16.kh, left: 16.kw, right: 16.kw),
           child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Obx( () {
                 if(controller.categories.isNotEmpty){
                   return Column(

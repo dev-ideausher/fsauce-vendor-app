@@ -17,7 +17,7 @@ class ScanHistoryView extends GetView<ScanHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: StringConstant.scanHistory,
         ),
         body: SingleChildScrollView(

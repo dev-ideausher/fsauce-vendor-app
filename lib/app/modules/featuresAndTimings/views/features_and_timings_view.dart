@@ -39,7 +39,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
               ),
               8.kheightBox,
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: 8.kh),
                 decoration: BoxDecoration(
                     color: context.loginSignupTextfieldColor,
                     borderRadius: BorderRadius.circular(8.kw),
@@ -66,33 +66,8 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   ),
                   onConfirm: (results) {
                     controller.selectedFeatures = results;
-                    print(results);
                   },
                 ),
-                // DropdownButtonFormField<String>(
-                //   style: TextStyleUtil.manrope16w400(),
-                //   onChanged: (val) {},
-                //   items: <String>[
-                //     StringConstant.male,
-                //     StringConstant.female,
-                //     StringConstant.others
-                //   ].map<DropdownMenuItem<String>>((String value) {
-                //     return DropdownMenuItem<String>(
-                //       value: value,
-                //       child: Text(value),
-                //     );
-                //   }).toList(),
-                //   icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                //   decoration: InputDecoration(
-                //     contentPadding: const EdgeInsets.all(0),
-                //     hintText: StringConstant.enterFeatures,
-                //     hintStyle:
-                //         TextStyleUtil.manrope14w400(color: context.black04),
-                //     border: const OutlineInputBorder(
-                //       borderSide: BorderSide.none,
-                //     ),
-                //   ),
-                // ),
               ),
               10.kheightBox,
               Row(

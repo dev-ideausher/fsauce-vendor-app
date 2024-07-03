@@ -316,7 +316,7 @@ class StringConstant {
   static const String jobTitle = "Job Title";
   static const String enterJobTitle = "Enter Job Title";
   static const String salaryOffered = "Salary Offered";
-  static const String perYear = "per year";
+  static const String perYear = " per year";
   static const String minSalaryOffered = "Min. salary offered";
   static const String maxSalaryOffered = "Max. salary offered";
   static const String lastDateToApply = "Last Date to Apply";
@@ -460,6 +460,32 @@ class StringConstant {
   static const String cityTown = "City/Town";
   static const String postCode = "Post code";
   static const String confirmDelAcccountSub = "Confirm delete account?";
+  static const String permissionDenied = "Permission Denied";
+  static const String locationPermissionDenied = "You have denied location permissions.";
+  static const String sendUsEmail = "Send us an e-mail at  ";
+  static const String infoEmail = "Info@tfs.com";
+  static const String applyBy = "Apply by ";
+  static const String plsEnterValidEmail = "Please enter a valid email";
+  static const String emailPasswordEmpty = "Email and Password cannot be empty";
+  static const String enterCategoryName = "Enter the category name";
+  static const String categoryAddedSuccessfully = "Category added successfully";
+  static const String somethingWentWrong = "Something went wrong!";
+  static const String categoryNameAdded = "Category name already added";
+  static const String itemNameCantBeEmpty = "Item name can't be empty";
+  static const String selectAnImage = "Please select an image";
+  static const String itemAddedSuccessfully = "Item added successfully";
+  static const String deletedSuccessfully = "Deleted Successfully";
+  static const String plsEnterValidMail = "Please enter a valid email";
+  static const String password6characters = "Password must be at least 6 characters long";
+  static const String cardNoEmpty = "Card number cannot be empty";
+  static const String less13 = "Less than 13 digits";
+  static const String onlyNoAllowed = "Only numbers are allowed";
+  static const String expiryDateEmpty = "Expiry date cannot be empty";
+  static const String cvvEmpty = "CVV cannot be empty";
+  static const String cvv3Digits = "CVV should be 3 digits";
+  static const String invalidCvv = "CVV invalid";
+  static const String nameCannotBeEmpty = "Name cannot be empty";
+  static const String verifEmailSent = "Verification email send successfully";
 
   // static const String
 }

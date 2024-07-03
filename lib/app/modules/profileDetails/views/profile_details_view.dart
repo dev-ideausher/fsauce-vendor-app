@@ -44,8 +44,8 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                     borderRadius: BorderRadius.circular(44),
                     child: Obx(() {
                       return CommonImageView(
-                          height: 88,
-                          width: 88,
+                          height: 88.kh,
+                          width: 88.kh,
                           fit: BoxFit.cover,
                           url: //"https://w7.pngwing.com/pngs/870/682/png-transparent-domino-s-pizza-logo-domino-s-pizza-pizza-delivery-logo-pizza-domino-s-pizza-pizza-pizza-pizza-delivery.png"
                           Get
@@ -75,8 +75,8 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                       ),
                       5.kwidthBox,
                       Container(
-                        height: 5,
-                        width: 5,
+                        height: 5.kh,
+                        width: 5.kh,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: context.black01),
                       ),
@@ -88,8 +88,8 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                       ),
                       5.kwidthBox,
                       Container(
-                        height: 5,
-                        width: 5,
+                        height: 5.kh,
+                        width: 5.kh,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: context.black01),
                       ),

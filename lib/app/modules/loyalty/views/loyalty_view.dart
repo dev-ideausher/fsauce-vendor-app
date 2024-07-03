@@ -141,7 +141,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         showDatePicker(
                           context: context,
                           firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(Duration(days: 2 * 365)),
+                          lastDate: DateTime.now().add(const Duration(days: 2 * 365)),
 
                         ).then((pickedDate){
                           if(pickedDate != null){
@@ -419,7 +419,7 @@ class ColorPickerDialog extends StatelessWidget {
               onChanged: onColorChanged,
               initialPicker: Picker.paletteHue,
             ),
-            SizedBox(height: 20),
+            20.kheightBox,
           ],
         ),
       ),

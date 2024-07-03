@@ -68,7 +68,7 @@ class ProfileSetupController extends GetxController {
       print(selectedFilesUrl);
       Get.toNamed(Routes.ENABLE_LOCATION);
     } else {
-      Get.snackbar("Error", "Something went wrong!");
+      Get.snackbar(StringConstant.error, StringConstant.somethingWentWrong);
     }
   }
 

@@ -17,7 +17,7 @@ class CreatePushNotificationView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: StringConstant.createPushNotification,
         ),
         body: Padding(
@@ -63,7 +63,7 @@ class CreatePushNotificationView
                   suffixIcon: Icons.calendar_month,
                   hintText: StringConstant.enterScheduleDate),
               20.kheightBox,
-              Spacer(),
+              const Spacer(),
               CustomRedElevatedButton(
                   buttonText: StringConstant.save,
                   height: 56.kh,

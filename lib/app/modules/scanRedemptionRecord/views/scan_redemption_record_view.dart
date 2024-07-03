@@ -17,7 +17,7 @@ class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: StringConstant.scanRedemptionRecord,
         ),
         body: Padding(
@@ -38,7 +38,7 @@ class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
               ),
               10.kheightBox,
               ...[1, 2, 3, 5].map((e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(bottom: 10.kh),
                     child: InkWell(
                       onTap: controller.gotoScanHistory,
                       child: Container(
@@ -57,8 +57,8 @@ class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
                               svgPath: ImageConstant.scanRedump,
                             ),
                             10.kwidthBox,
-                            Text("10-03-2024"),
-                            Spacer(),
+                            const Text("10-03-2024"),
+                            const Spacer(),
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               color: context.primary01,

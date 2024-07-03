@@ -29,7 +29,6 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                     },
                     width: 100.w,
                     brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
-                  //"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png"
                 );
               });
             },

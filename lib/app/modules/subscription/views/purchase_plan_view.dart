@@ -28,7 +28,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0.kw),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -39,9 +39,9 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                   height: 88.kh,
                   width: MediaQuery.of(context).size.width * 0.9,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.kh),
                     color: Colors.white,
                   ),
                   child: Center(
@@ -78,9 +78,9 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                     height: 56.kh,
                     width: MediaQuery.of(context).size.width * 0.9,
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.kh),
                       color: Colors.white,
                     ),
                     child: Center(
@@ -90,7 +90,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                           Icon(
                             Icons.add,
                             color: context.primary01,
-                            size: 24,
+                            size: 24.kh,
                           ),
                           16.kwidthBox,
                           Expanded(
@@ -109,9 +109,9 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                 Container(
                   height: 166.kh,
                   width: MediaQuery.of(context).size.width * 0.9,
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.kh),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.kh),
                     color: Colors.white,
                   ),
                   child: Column(

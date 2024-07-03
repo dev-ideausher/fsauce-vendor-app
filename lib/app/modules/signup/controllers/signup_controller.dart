@@ -4,6 +4,8 @@ import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/string_constant.dart';
+
 class SignupController extends GetxController {
   final Auth auth = Get.put(Auth()); // Retrieve the Auth service
 
@@ -17,13 +19,13 @@ class SignupController extends GetxController {
 
     if (!_isEmailValid(email)) {
       await DialogHelper.hideDialog();
-      Get.snackbar('Error', 'Please enter a valid email');
+      Get.snackbar(StringConstant.error, StringConstant.plsEnterValidEmail);
       return;
     }
 
     if (!_isPasswordValid(password)) {
       await DialogHelper.hideDialog();
-      Get.snackbar('Error', 'Password must be at least 6 characters long');
+      Get.snackbar(StringConstant.error, StringConstant.password6characters);
       return;
     }
 
@@ -36,11 +38,11 @@ class SignupController extends GetxController {
       } catch (e) {
         await DialogHelper.hideDialog();
         // Handle error (show a message to the user)
-        Get.snackbar('Error', e.toString());
+        Get.snackbar(StringConstant.error, e.toString());
       }
     } else {
       await DialogHelper.hideDialog();
-      Get.snackbar('Error', 'Email and Password cannot be empty');
+      Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
     }
   }
 
@@ -49,7 +51,7 @@ class SignupController extends GetxController {
       await auth.google();
       gotoVerificationScreen();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -58,7 +60,7 @@ class SignupController extends GetxController {
       await auth.facebook();
       gotoVerificationScreen();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -67,7 +69,7 @@ class SignupController extends GetxController {
       await auth.apple();
       gotoVerificationScreen();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -76,7 +78,6 @@ class SignupController extends GetxController {
   }
 
   bool _isEmailValid(String email) {
-    // Basic email validation regex
     final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
     return regex.hasMatch(email);
   }

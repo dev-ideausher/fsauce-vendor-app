@@ -112,7 +112,7 @@ class BottomNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(40),
+      borderRadius: BorderRadius.circular(40.kh),
       onTap: onPressed,
       child: SizedBox(
         width: 60.kw,
@@ -123,7 +123,7 @@ class BottomNavItem extends StatelessWidget {
               icon,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: EdgeInsets.only(top: 4.kh),
               child: Text(label,
                   style: TextStyleUtil.manrope12w500(
                     color: isSelected ? context.primary01 : context.black03,

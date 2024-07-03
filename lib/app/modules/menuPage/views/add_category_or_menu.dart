@@ -50,8 +50,8 @@ class AddCategoryOrMenu extends StatelessWidget {
                     StringConstant.addItem,
                     style: TextStyleUtil.manrope14w500(),
                   ),
-                  Spacer(),
-                  Icon(Icons.keyboard_arrow_right_outlined)
+                  const Spacer(),
+                  const Icon(Icons.keyboard_arrow_right_outlined)
                 ],
               ),
             ),
@@ -74,8 +74,8 @@ class AddCategoryOrMenu extends StatelessWidget {
                     StringConstant.addCategory,
                     style: TextStyleUtil.manrope14w500(),
                   ),
-                  Spacer(),
-                  Icon(Icons.keyboard_arrow_right_outlined)
+                  const Spacer(),
+                  const Icon(Icons.keyboard_arrow_right_outlined)
                 ],
               ),
             ),

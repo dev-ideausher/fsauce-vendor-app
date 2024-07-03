@@ -123,11 +123,11 @@ class HomeView extends GetView<HomeController> {
                       width: 100.w,
                       padding: EdgeInsets.all(16.kw),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 2,
+                            blurRadius: 2.kh,
                             color: context.borderColor1.withOpacity(0.5),
                           ),
                         ],
@@ -148,7 +148,7 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           CommonImageView(
                             svgPath: ImageConstant.scanQr,
                           ),
@@ -178,21 +178,21 @@ class HomeView extends GetView<HomeController> {
                           decoration: BoxDecoration(
                             color: context.primary07,
                             border: Border.all(color: context.primary06),
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20.kh),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 4),
+                          padding: EdgeInsets.symmetric(vertical: 4.kh),
                           child: TabBar(
                             padding: EdgeInsets.zero,
                             dividerColor: Colors.transparent,
                             indicator: BoxDecoration(
                               borderRadius:
-                              BorderRadius.circular(50), // Creates border
+                              BorderRadius.circular(50.kh), // Creates border
                               color: Colors.white,
                             ),
                             tabs: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 4),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.kw, vertical: 4.kh),
                                 child: Text(
                                   StringConstant.week,
                                   style: TextStyleUtil.manrope14w500(
@@ -200,8 +200,8 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 4),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.kw, vertical: 4.kh),
                                 child: Text(
                                   StringConstant.month,
                                   style: TextStyleUtil.manrope14w500(
@@ -209,8 +209,8 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 4),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.kw, vertical: 4.kh),
                                 child: Text(
                                   StringConstant.year,
                                   style: TextStyleUtil.manrope14w500(

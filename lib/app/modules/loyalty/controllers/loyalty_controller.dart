@@ -59,18 +59,18 @@ class LoyaltyController extends GetxController {
     }
 
     String vendorId = Get.find<HomeController>().vendor;
-
-    var response = await APIManager.addLoyaltyCard(
-        title: cardTitleController.text,
-        noOfStamps: noOfStamps,
-        cardBackgroundColor: backgroundColor.value.value.toString(),
-        cardTextColor: textColor.value.toString(),
-        stampBackgroundColor: stampBackgroundColor.value.toString(),
-        stampColor: stampTextColor.value.toString(),
-        vendor: vendorId, //"66728075a065bac72ace0f09"
-        validTill: validTill.toString(),
-        isActive: true
-    );
+    Map<String, dynamic> data = {
+      "title": cardTitleController.text,
+      "noOfStamps": noOfStamps,
+      "cardBackgroundColor": backgroundColor.value.value.toString(),
+      "cardTextColor": textColor.value.toString(),
+      "stampBackgroundColor": stampBackgroundColor.value.toString(),
+      "stampColor": stampTextColor.value.toString(),
+      "vendor": vendorId, //"66728075a065bac72ace0f09"
+      "validTill": validTill.toString(),
+      "isActive": true
+    };
+    var response = await APIManager.addLoyaltyCard(data: data);
     if(response.data['status']){
       Get.back();
       Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));

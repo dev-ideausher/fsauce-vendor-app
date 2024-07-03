@@ -141,7 +141,7 @@ class JobsView extends GetView<JobsController> {
                               ),
                               8.kwidthBox,
                               Text(
-                                "£${job.minSalary}–${job.maxSalary} per year",
+                                "£${job.minSalary}–${job.maxSalary} ${StringConstant.perYear}",
                                 style: TextStyleUtil.manrope16w400(),
                               ),
                             ],

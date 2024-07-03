@@ -26,7 +26,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.kw),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -43,7 +43,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                     height: 58.kh,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white),
                     child: Center(
                       child: ListTile(
@@ -51,7 +51,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                           height: 44.kh,
                           width: 48.kh,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.kh),
                             color: context.black07,
                           ),
                         ),
@@ -88,7 +88,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                     height: 60.kh,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white),
                     child: Center(
                       child: ListTile(
@@ -96,7 +96,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                           height: 44.kh,
                           width: 48.kh,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.kh),
                             color: context.black07,
                           ),
                         ),
@@ -104,7 +104,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                             style: TextStyleUtil.manrope14w500()),
                         trailing: IconButton(
                           onPressed: () {},
-                          icon: const Icon(Icons.arrow_forward_ios, size: 16,),
+                          icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
                         )
                       ),
                     ),
@@ -119,7 +119,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                     height: 60.kh,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white),
                     child: Center(
                       child: ListTile(
@@ -127,7 +127,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                           height: 44.kh,
                           width: 48.kh,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.kh),
                             color: context.black07,
                           ),
                         ),
@@ -135,7 +135,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                             style: TextStyleUtil.manrope14w500()),
                         trailing: IconButton(
                           onPressed: () {},
-                          icon: const Icon(Icons.arrow_forward_ios, size: 16,),
+                          icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
                         )
                       ),
                     ),
@@ -150,7 +150,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                     height: 60.kh,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white),
                     child: Center(
                       child: ListTile(
@@ -158,7 +158,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                           height: 44.kh,
                           width: 48.kh,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.kh),
                             color: context.black07,
                           ),
                         ),
@@ -166,7 +166,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                             style: TextStyleUtil.manrope14w500()),
                         trailing: IconButton(
                           onPressed: () {},
-                          icon: const Icon(Icons.arrow_forward_ios, size: 16,),
+                          icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
                         )
                       ),
                     ),

@@ -27,7 +27,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
           style: TextStyleUtil.manrope18w600(),
         ),
       ),
-      body: Padding(padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: Padding(padding: EdgeInsets.symmetric(horizontal: 16.kh),
         child: SingleChildScrollView(
           child: Form(
             key: controller.formKey,
@@ -55,11 +55,11 @@ class CardDetailsView extends GetView<SubscriptionController>{
                         controller: controller.cardNumberController,
                         validator: (String? val){
                           if(val == null || val.isEmpty){
-                            return "Card number cannot be empty";
+                            return StringConstant.cardNoEmpty;
                           } else if(val.length < 13){
-                            return "Less than 13 digits";
+                            return StringConstant.less13;
                           } else if(!val.isNumericOnly){
-                            return "Only numbers are allowed";
+                            return StringConstant.onlyNoAllowed;
                           }
                           return null;
                         },
@@ -86,7 +86,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                   children: <Widget>[
                     Container(
                       height: 53.kh,
-                      padding: const EdgeInsets.only(left: 12),
+                      padding: EdgeInsets.only(left: 12.kw),
                       width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -100,7 +100,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                             controller: controller.expiresController,
                             validator: (String? val){
                               if(val == null || val.isEmpty){
-                                return "Expiry date cannot be empty";
+                                return StringConstant.expiryDateEmpty;
                               }
                               return null;
                             },
@@ -116,11 +116,11 @@ class CardDetailsView extends GetView<SubscriptionController>{
                     Expanded(child: Container(),),
                     Container(
                       height: 53.kh,
-                      padding: const EdgeInsets.only(left: 12),
+                      padding: EdgeInsets.only(left: 12.kw),
                       width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.kh),
                           border: Border.all(color: context.black05)
                       ),
                       child: Center(
@@ -131,11 +131,11 @@ class CardDetailsView extends GetView<SubscriptionController>{
                             controller: controller.cvvController,
                             validator: (String? val){
                               if(val == null || val.isEmpty){
-                                return "CVV cannot be empty";
+                                return StringConstant.cvvEmpty;
                               } else if(val.length != 3){
-                                return "CVV should be 3 digits";
+                                return StringConstant.cvv3Digits;
                               } else if(!val.isNumericOnly){
-                                return "CVV invalid";
+                                return StringConstant.invalidCvv;
                               }
                               return null;
                             },
@@ -156,11 +156,11 @@ class CardDetailsView extends GetView<SubscriptionController>{
                 16.kheightBox,
                 Container(
                   height: 53.kh,
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 12.kw),
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.kh),
                       border: Border.all(color: context.black05)
                   ),
                   child: Center(
@@ -169,7 +169,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                         controller: controller.nameController,
                         validator: (String? val){
                           if(val == null || val.isEmpty){
-                            return "Name cannot be empty";
+                            return StringConstant.nameCannotBeEmpty;
                           }
                           return null;
                         },

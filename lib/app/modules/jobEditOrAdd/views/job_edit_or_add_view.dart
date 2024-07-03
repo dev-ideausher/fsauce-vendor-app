@@ -75,8 +75,8 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
                   hintText: StringConstant.minSalaryOffered,
                 ),
                 Container(
-                  height: 2,
-                  width: 6,
+                  height: 2.kh,
+                  width: 6.kw,
                   color: context.black03,
                 ),
                 CustomTextFieldHalf(

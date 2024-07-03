@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 class VipOffersController extends GetxController {
   //TODO: Implement VipOffersController
 
-  final count = 0.obs;
   RxList<Coupon> couponsList = <Coupon>[].obs;
   RxList<Coupon> inactiveCouponList = <Coupon>[].obs;
   Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true).obs;
@@ -19,6 +18,16 @@ class VipOffersController extends GetxController {
   void onInit() {
     getCoupons();
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 
   Future<void> getCoupons() async{
@@ -32,17 +41,6 @@ class VipOffersController extends GetxController {
     List responseListData = responseData.data["data"];
     inactiveCouponList.value = [];
     inactiveCouponList.value = responseListData.map((e) => Coupon.fromJson(e)).toList();
-  }
-
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void showDealsBottomSheet() {
@@ -97,5 +95,4 @@ class VipOffersController extends GetxController {
     selectedCoupon.value = coupon;
     Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [true]);
   }
-  void increment() => count.value++;
 }

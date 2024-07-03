@@ -16,6 +16,22 @@ import 'package:intl/src/intl/date_format.dart';
 class FeaturesAndTimingsController extends GetxController {
   //TODO: Implement FeaturesAndTimingsController
 
+  @override
+  void onInit() {
+    getFeaturesAndTimings();
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
   List<MultiSelectItem<String>> featureItems = [
     MultiSelectItem(StringConstant.dineIn, StringConstant.dineIn),
     MultiSelectItem(StringConstant.takeAway, StringConstant.takeAway),
@@ -34,7 +50,6 @@ class FeaturesAndTimingsController extends GetxController {
   };
 
   void getFeaturesAndTimings() {
-    // Get.find<HomeController>().getRestaurantDetails();
     RestaurantDetails details =
         Get.find<HomeController>().restaurantDetails.value;
     if (details.timing.isNotEmpty) {
@@ -159,21 +174,5 @@ class FeaturesAndTimingsController extends GetxController {
     } else {
       DialogHelper.showError(StringConstant.anErrorOccurred);
     }
-  }
-
-  @override
-  void onInit() {
-    getFeaturesAndTimings();
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

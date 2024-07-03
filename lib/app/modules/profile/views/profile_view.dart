@@ -34,9 +34,9 @@ class ProfileView extends GetView<ProfileController> {
                 height: 181.kh,
                 width: 100.w,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.kh),
                   boxShadow: [
-                    BoxShadow(color: context.borderColor1, blurRadius: 16)
+                    BoxShadow(color: context.borderColor1, blurRadius: 16.kh)
                   ],
                   color: Colors.white,
                 ),
@@ -51,8 +51,7 @@ class ProfileView extends GetView<ProfileController> {
                           height: 88,
                           width: 88,
                           fit: BoxFit.cover,
-                          url: //"https://w7.pngwing.com/pngs/870/682/png-transparent-domino-s-pizza-logo-domino-s-pizza-pizza-delivery-logo-pizza-domino-s-pizza-pizza-pizza-pizza-delivery.png"
-                          Get
+                          url: Get
                               .find<HomeController>()
                               .restaurantDetails
                               .value
@@ -80,8 +79,8 @@ class ProfileView extends GetView<ProfileController> {
                         ),
                         5.kwidthBox,
                         Container(
-                          height: 5,
-                          width: 5,
+                          height: 5.kh,
+                          width: 5.kh,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle, color: context.black01),
                         ),
@@ -93,8 +92,8 @@ class ProfileView extends GetView<ProfileController> {
                         ),
                         5.kwidthBox,
                         Container(
-                          height: 5,
-                          width: 5,
+                          height: 5.kh,
+                          width: 5.kh,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle, color: context.black01),
                         ),
@@ -202,7 +201,7 @@ class ProfileView extends GetView<ProfileController> {
                       const Spacer(),
                       Icon(
                         Icons.arrow_forward_ios_rounded,
-                        size: 20,
+                        size: 20.kh,
                         color: context.black01,
                       )
                     ],

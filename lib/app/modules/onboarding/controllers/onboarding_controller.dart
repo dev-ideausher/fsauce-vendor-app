@@ -18,7 +18,7 @@ class OnboardingController extends GetxController {
         curve: Curves.easeInOut,
       );
     } else {
-      // gotoGetStartedScreen();
+
     }
   }
 
@@ -26,11 +26,7 @@ class OnboardingController extends GetxController {
     pageCount.value = n;
   }
 
-  // void gotoGetStartedScreen() {
-  //   Get.to(const GetStartedView());
-  // }
-
-  void gotoSignupScrren() {
+  void gotoSignupScreen() {
     Get.toNamed(Routes.SIGNUP);
   }
 

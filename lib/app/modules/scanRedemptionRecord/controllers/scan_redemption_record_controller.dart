@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 class ScanRedemptionRecordController extends GetxController {
   //TODO: Implement ScanRedemptionRecordController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -23,6 +22,4 @@ class ScanRedemptionRecordController extends GetxController {
   void gotoScanHistory() {
     Get.toNamed(Routes.SCAN_HISTORY);
   }
-
-  void increment() => count.value++;
 }

@@ -21,7 +21,6 @@ class SplashView extends GetView<SplashController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Text(StringConstant.theFood)
                 CommonImageView(
                   svgPath: Assets.svgFsauceLogo,
                   fit: BoxFit.contain,

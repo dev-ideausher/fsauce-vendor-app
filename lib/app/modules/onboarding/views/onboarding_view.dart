@@ -36,7 +36,7 @@ class OnboardingView extends GetView<OnboardingController> {
                       elevation: 4, // adjust elevation as needed
                       backgroundColor: context.primary06, // background color
                     ),
-                    onPressed: controller.gotoSignupScrren,
+                    onPressed: controller.gotoSignupScreen,
                     child: SizedBox(
                       height: 37.kh,
                       width: 77.kw,
@@ -62,11 +62,6 @@ class OnboardingView extends GetView<OnboardingController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // 6.kheightBox,
-                        // CommonImageView(
-                        //   width: 100.w,
-                        //   svgPath: ImageConstant.onboarding1Image1,
-                        // ),
                         30.kheightBox,
                         const Spacer(),
                         Text(
@@ -86,10 +81,6 @@ class OnboardingView extends GetView<OnboardingController> {
                     ),
                     Column(
                       children: [
-                        // CommonImageView(
-                        //   width: 100.w,
-                        //   svgPath: ImageConstant.onboarding1Image2,
-                        // ),
                         30.kheightBox,
                         const Spacer(),
                         Text(
@@ -109,10 +100,6 @@ class OnboardingView extends GetView<OnboardingController> {
                     ),
                     Column(
                       children: [
-                        // CommonImageView(
-                        //   width: 100.w,
-                        //   svgPath: ImageConstant.onboarding1Image3,
-                        // ),
                         30.kheightBox,
                         const Spacer(),
                         Text(
@@ -144,7 +131,7 @@ class OnboardingView extends GetView<OnboardingController> {
               ),
               10.kheightBox,
               CustomRedElevatedButtonWithBorder(
-                onPressed: controller.gotoSignupScrren,
+                onPressed: controller.gotoSignupScreen,
                 buttonText: StringConstant.signup,
                 height: 56.kh,
                 width: 100.w,

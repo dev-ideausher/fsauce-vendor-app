@@ -28,7 +28,7 @@ class LocationBottomSheet extends StatelessWidget {
             height: 5.kh,
             width: 64.kw,
             decoration: BoxDecoration(
-                color: context.black01, borderRadius: BorderRadius.circular(3)),
+                color: context.black01, borderRadius: BorderRadius.circular(3.kh)),
           ),
           20.kheightBox,
           Text(
@@ -48,7 +48,7 @@ class LocationBottomSheet extends StatelessWidget {
                 color: context.black07,
               )),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5.kw),
                 child: Text(
                   StringConstant.or,
                   style: TextStyleUtil.manrope12w500(color: context.black03),

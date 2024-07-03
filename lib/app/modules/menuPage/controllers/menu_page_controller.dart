@@ -15,23 +15,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MenuPageController extends GetxController {
-  // Observable for count
-  final count = 0.obs;
-
-  // Text Editing Controllers
-  TextEditingController editCategoryController = TextEditingController();
-  TextEditingController addCategoryController = TextEditingController();
-  TextEditingController itemNameController = TextEditingController();
-  TextEditingController editMenuItemController = TextEditingController();
-
-  // Observables for categories and items
-  RxList<CategoryModel> categories = <CategoryModel>[].obs;
-  RxString itemImage = "".obs;
-  RxString itemImageUrl = "".obs;
-  final RxString itemEditImage = "".obs;
-
-  // Selected category for adding/editing items
-  CategoryModel? addItemSelectedCategory;
 
   @override
   void onInit() {
@@ -49,24 +32,32 @@ class MenuPageController extends GetxController {
     super.onClose();
   }
 
-  // Method to show add category or item bottom sheet
+  TextEditingController editCategoryController = TextEditingController();
+  TextEditingController addCategoryController = TextEditingController();
+  TextEditingController itemNameController = TextEditingController();
+  TextEditingController editMenuItemController = TextEditingController();
+
+  RxList<CategoryModel> categories = <CategoryModel>[].obs;
+  RxString itemImage = "".obs;
+  RxString itemImageUrl = "".obs;
+  final RxString itemEditImage = "".obs;
+
+  CategoryModel? addItemSelectedCategory;
+
   void shoeAddCategoryOrItem() {
-    Get.bottomSheet(AddCategoryOrMenu());
+    Get.bottomSheet(const AddCategoryOrMenu());
   }
 
-  // Method to show add category bottom sheet
   void onAddCategoryClick() {
     Get.back();
     Get.bottomSheet(const AddCategory());
   }
 
-  // Method to show edit category bottom sheet
   void onEditCategoryClick({required CategoryModel category}) {
     editCategoryController.text = category.name;
     Get.bottomSheet(EditCategory(category: category));
   }
 
-  // Method to edit category
   void editCategory({required CategoryModel category}) async {
     var response = await APIManager.editCategory(
       categoryName: editCategoryController.text.trim(),
@@ -78,7 +69,6 @@ class MenuPageController extends GetxController {
     }
   }
 
-  // Method to delete category
   void deleteCategory({required String id}) async {
     Get.dialog(
       ConfrimationDialog(
@@ -95,7 +85,6 @@ class MenuPageController extends GetxController {
     );
   }
 
-  // Method to delete menu item
   void deleteItem({required MenuItemModel menuItem}) {
     Get.dialog(
       ConfrimationDialog(
@@ -111,19 +100,14 @@ class MenuPageController extends GetxController {
     );
   }
 
-  // Method to navigate to add item details screen
   void gotoAddItemDetailsScreen() {
     Get.back();
     Get.toNamed(Routes.ADD_ITEM_DETAILS, arguments: [false]);
   }
 
-  // Method to increment the count
-  void increment() => count.value++;
-
-  // Method to add category
   void addCategory() async {
     if (addCategoryController.text.isEmpty) {
-      DialogHelper.showError("Enter the category name");
+      DialogHelper.showError(StringConstant.enterCategoryName);
     } else {
       try {
         var response = await APIManager.addCategory(
@@ -134,38 +118,34 @@ class MenuPageController extends GetxController {
           addCategoryController.text = "";
           getCategory();
           Get.back();
-          DialogHelper.showSuccess("Category added successfully");
+          DialogHelper.showSuccess(StringConstant.categoryAddedSuccessfully);
         } else {
-          DialogHelper.showError("Something went wrong!");
+          DialogHelper.showError(StringConstant.somethingWentWrong);
         }
       } catch (e) {
-        DialogHelper.showError("Category name already added");
+        DialogHelper.showError(StringConstant.categoryNameAdded);
       }
     }
   }
 
-  // Method to fetch categories
   Future<void> getCategory() async {
     var response = await APIManager.getCategories();
     List data = response.data["data"];
     categories.value = data.map((e) => CategoryModel.fromJson(e)).toList();
   }
 
-  // Method to show add item bottom sheet
   void showAddItem() {
     Get.back();
     itemImage.value = "";
     itemNameController.text = "";
     addItemSelectedCategory = categories.value[0];
-    Get.bottomSheet(AddNewItem());
+    Get.bottomSheet(const AddNewItem());
   }
 
-  // Method to change selected category
   void changeSelectedCategory({required CategoryModel category}) {
     addItemSelectedCategory = category;
   }
 
-  // Method to pick image
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
@@ -176,14 +156,13 @@ class MenuPageController extends GetxController {
     }
   }
 
-  // Method to add menu item
   Future<bool> addMenuItem() async {
     if (itemNameController.text.trim().isEmpty) {
-      DialogHelper.showError("Item name can't be empty");
+      DialogHelper.showError(StringConstant.itemNameCantBeEmpty);
       return false;
     }
     if (itemImage.value.isEmpty) {
-      DialogHelper.showError("Please select an image");
+      DialogHelper.showError(StringConstant.selectAnImage);
       return false;
     }
     var uploadResponse = await APIManager.uploadFile(filePath: itemImage.value);
@@ -195,14 +174,13 @@ class MenuPageController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      DialogHelper.showSuccess("Item added successfully");
+      DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
       await getCategory();
       return true;
     }
     return false;
   }
 
-  // Method to navigate to edit item details screen
   void gotoEditItemDetailsScreen(
       {required MenuItemModel menuItem, required CategoryModel category}) {
     addItemSelectedCategory = category;
@@ -212,7 +190,6 @@ class MenuPageController extends GetxController {
     Get.to(EditMenuItem(menuItem: menuItem));
   }
 
-  // Method to pick edit image
   Future<void> pickEditImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
@@ -223,10 +200,9 @@ class MenuPageController extends GetxController {
     }
   }
 
-  // Method to edit menu item
   Future<void> editItem({required MenuItemModel menu}) async {
     if (editMenuItemController.text.isEmpty) {
-      DialogHelper.showError("Item name can't be empty!");
+      DialogHelper.showError(StringConstant.itemNameCantBeEmpty);
       return;
     }
     if (itemEditImage.value.isNotEmpty) {

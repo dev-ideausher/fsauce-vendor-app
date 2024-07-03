@@ -3,10 +3,10 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../constants/string_constant.dart';
+
 class EnableLocationController extends GetxController {
   //TODO: Implement EnableLocationController
-
-  final count = 0.obs;
 
   @override
   void onInit() {
@@ -27,8 +27,6 @@ class EnableLocationController extends GetxController {
     Get.toNamed(Routes.NAV_BAR);
   }
 
-  void increment() => count.value++;
-
   Future<void> requestLocationPermission() async {
     PermissionStatus status = await Permission.location.request();
 
@@ -36,7 +34,7 @@ class EnableLocationController extends GetxController {
       gotoNavBar();
     } else {
       Get.snackbar(
-          "Permission Denied", "You have denied location permissions.");
+          StringConstant.permissionDenied, StringConstant.locationPermissionDenied);
     }
   }
 }

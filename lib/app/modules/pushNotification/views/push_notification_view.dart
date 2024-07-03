@@ -24,7 +24,7 @@ class PushNotificationView extends GetView<PushNotificationController> {
     }
 
     return Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: StringConstant.pushNotifications,
         ),
         floatingActionButton: Container(

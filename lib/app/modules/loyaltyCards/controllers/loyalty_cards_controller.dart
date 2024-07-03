@@ -11,9 +11,25 @@ import 'package:get/get.dart';
 class LoyaltyCardsController extends GetxController {
   //TODO: Implement LoyaltyCardsController
 
+  @override
+  void onInit() {
+    getLoyaltyCards();
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
   List<Widget> tabs = [
-    ActiveLoyaltyCards(),
-    InactiveLoyaltyCards(),
+    const ActiveLoyaltyCards(),
+    const InactiveLoyaltyCards(),
   ];
 
   RxList<LoyaltyCardModel> activeLoyaltyCards = <LoyaltyCardModel>[].obs;
@@ -39,22 +55,6 @@ class LoyaltyCardsController extends GetxController {
     } else{
 
     }
-  }
-
-  @override
-  void onInit() {
-    getLoyaltyCards();
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void gotoEditLoyaltyPage() {

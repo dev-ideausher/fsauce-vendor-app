@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 class HelpAndSupportScreenController extends GetxController {
   //TODO: Implement HelpAndSupportScreenController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +17,4 @@ class HelpAndSupportScreenController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

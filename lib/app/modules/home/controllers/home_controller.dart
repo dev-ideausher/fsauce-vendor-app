@@ -10,6 +10,23 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
+  @override
+  void onInit() {
+    getRestaurantDetails();
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    getRestaurantDetails();
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
   Rx<RestaurantDetails> restaurantDetails = RestaurantDetails(
       restaurantName: '',
       restaurantLogo: '',
@@ -28,23 +45,6 @@ class HomeController extends GetxController {
     var response = await APIManager.getVendor();
     vendor = response.data["data"]["_id"];
     restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
-  }
-
-  @override
-  void onInit() {
-    getRestaurantDetails();
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    getRestaurantDetails();
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void showLocationBottomSheet() {

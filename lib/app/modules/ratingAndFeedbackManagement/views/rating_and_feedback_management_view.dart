@@ -123,8 +123,8 @@ class RatingAndFeedbackManagementView
                                 Get.bottomSheet(ReviewFilterBottomSheet());
                               },
                               child: Container(
-                                height: 37,
-                                width: 100,
+                                height: 37.kh,
+                                width: 100.kw,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(color: context.black07)),
@@ -137,7 +137,7 @@ class RatingAndFeedbackManagementView
                                           color: context.black02),
                                     ),
                                     8.kwidthBox,
-                                    Icon(Icons.filter_list_sharp)
+                                    const Icon(Icons.filter_list_sharp)
                                   ],
                                 ),
                               ),
@@ -168,9 +168,9 @@ class RatingAndFeedbackManagementView
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 4),
+                                      padding: EdgeInsets.only(top: 4.kh),
                                       child: PopupMenuButton<int>(
                                         color: Colors.white,
                                         itemBuilder: (context) =>

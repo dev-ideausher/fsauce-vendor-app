@@ -114,15 +114,15 @@ class AnalysisScreen extends StatelessWidget {
           ],
         ),
         20.kheightBox,
-        CouponAnalysisCard(
+        const CouponAnalysisCard(
           title: StringConstant.couponAnalysis,
         ),
         20.kheightBox,
-        CouponAnalysisCard(
+        const CouponAnalysisCard(
           title: StringConstant.stampscollected,
         ),
         20.kheightBox,
-        CouponAnalysisCard(
+        const CouponAnalysisCard(
           title: StringConstant.rewardsRedeemed,
         ),
         270.kheightBox,

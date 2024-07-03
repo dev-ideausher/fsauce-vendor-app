@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/urls.dart';
 import 'package:fsauce_vendor_app/app/modules/verification/views/verification_done_screen.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
@@ -12,7 +13,6 @@ import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
-  final count = 0.obs;
   Timer? _timer;
   final Auth auth = Get.put(Auth());
 
@@ -34,7 +34,7 @@ class VerificationController extends GetxController {
   }
 
   void _startEmailVerificationCheck() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       await _checkEmailVerified();
     });
   }
@@ -63,11 +63,11 @@ class VerificationController extends GetxController {
       DialogHelper.showLoading();
       await auth.sendVerificationMail();
       await DialogHelper.hideDialog();
-      Get.snackbar("Success", "Verification email send successfully");
+      Get.snackbar(StringConstant.success, StringConstant.verifEmailSent);
       _checkEmailVerified();
     } catch (e) {
       await DialogHelper.hideDialog();
-      Get.snackbar("Error", e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -78,8 +78,6 @@ class VerificationController extends GetxController {
   //VerificationDoneScreen
 
   void gotoVerificationDoneScreen() {
-    Get.offAll(VerificationDoneScreen());
+    Get.offAll(const VerificationDoneScreen());
   }
-
-  void increment() => count.value++;
 }

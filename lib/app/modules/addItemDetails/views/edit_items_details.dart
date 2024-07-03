@@ -62,7 +62,7 @@ class EditMenuItem extends StatelessWidget {
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.file_upload_outlined),
+                                  const Icon(Icons.file_upload_outlined),
                                   2.kwidthBox,
                                   Text(
                                     StringConstant.uploadPhoto,
@@ -147,14 +147,14 @@ class EditMenuItem extends StatelessWidget {
                 controller: menuController.editMenuItemController,
                 fillColor: context.black07,
                 hintText: StringConstant.enterHere),
-            Spacer(),
+            const Spacer(),
             CustomRedElevatedButton(
                 width: 100.w,
                 height: 56.kh,
                 buttonText: StringConstant.save,
                 onPressed: () async {
                   await Get.find<MenuPageController>().editItem(menu: menuItem);
-                  Navigator.pop(context);
+                  Get.back();
                 }),
             20.kheightBox,
           ],

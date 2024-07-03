@@ -38,10 +38,10 @@ class RatingAndFeedbackManagementController extends GetxController {
             var response = await APIManager.deleteRating(id);
             if (response["status"]) {
               getRatings();
-              DialogHelper.showSuccess("Deleted Successfully!");
+              DialogHelper.showSuccess(StringConstant.deletedSuccessfully);
             }
           } catch (e) {
-            DialogHelper.showError("Something went wrong!");
+            DialogHelper.showError(StringConstant.somethingWentWrong);
           }
         },
         onNoTap: Get.back));

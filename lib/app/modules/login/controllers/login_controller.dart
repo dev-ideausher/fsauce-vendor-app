@@ -8,6 +8,8 @@ import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/string_constant.dart';
+
 class LoginController extends GetxController {
   final Auth auth = Get.put(Auth()); // Retrieve the Auth service
 
@@ -21,7 +23,7 @@ class LoginController extends GetxController {
 
     if (!_isEmailValid(email)) {
       await DialogHelper.hideDialog();
-      Get.snackbar('Error', 'Please enter a valid email');
+      Get.snackbar(StringConstant.error, StringConstant.plsEnterValidEmail);
       return;
     }
 
@@ -32,11 +34,11 @@ class LoginController extends GetxController {
         gotoHomeScreen();
       } catch (e) {
         await DialogHelper.hideDialog();
-        Get.snackbar('Error', e.toString());
+        Get.snackbar(StringConstant.error, e.toString());
       }
     } else {
       await DialogHelper.hideDialog();
-      Get.snackbar('Error', 'Email and Password cannot be empty');
+      Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
     }
   }
 
@@ -45,8 +47,8 @@ class LoginController extends GetxController {
       await auth.google();
       gotoHomeScreen();
     } catch (e) {
-      print("Error: ${e.toString()}");
-      Get.snackbar('Error', e.toString());
+      print("Error : ${e.toString()}");
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -55,7 +57,7 @@ class LoginController extends GetxController {
       await auth.facebook();
       gotoHomeScreen();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 
@@ -64,7 +66,7 @@ class LoginController extends GetxController {
       await auth.apple();
       gotoHomeScreen();
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(StringConstant.error, e.toString());
     }
   }
 

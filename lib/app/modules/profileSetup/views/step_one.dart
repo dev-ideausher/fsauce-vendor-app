@@ -141,7 +141,7 @@ class StepOne extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.file_upload_outlined),
+                            const Icon(Icons.file_upload_outlined),
                             2.kwidthBox,
                             Text(
                               StringConstant.uploadPhoto,

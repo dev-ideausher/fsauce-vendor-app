@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class PushNotificationController extends GetxController {
   //TODO: Implement PushNotificationController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -49,6 +48,4 @@ class PushNotificationController extends GetxController {
   void createPushNotification() {
     Get.toNamed(Routes.CREATE_PUSH_NOTIFICATION);
   }
-
-  void increment() => count.value++;
 }

@@ -11,19 +11,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class JobEditOrAddController extends GetxController {
-  final jobTitleController = TextEditingController();
-  final minSalaryController = TextEditingController();
-  final maxSalaryController = TextEditingController();
-  final lastDateToApplyController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final howToApplyController = TextEditingController();
-  String id = "";
-
-  RxBool toEdit = false.obs;
-
-  void getToEdit(){
-    toEdit = Get.find<JobsController>().toEdit;
-  }
 
   @override
   void onInit(){
@@ -42,17 +29,32 @@ class JobEditOrAddController extends GetxController {
     super.onClose();
   }
 
+  final jobTitleController = TextEditingController();
+  final minSalaryController = TextEditingController();
+  final maxSalaryController = TextEditingController();
+  final lastDateToApplyController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final howToApplyController = TextEditingController();
+  String id = "";
+
+  RxBool toEdit = false.obs;
+
+  void getToEdit(){
+    toEdit = Get.find<JobsController>().toEdit;
+  }
+
   void addJob() async {
     if (_validateForm()) {
       try {
-        var response = await APIManager.addNewJob(
-            title: jobTitleController.text.trim() ?? "Default job title",
-            description: descriptionController.text ?? "Default description",
-            lastDate: lastDateToApplyController.text ?? "Default last date",
-            minSalary: int.parse(minSalaryController.text.trim()) ?? 0,
-            maxSalary: int.parse(maxSalaryController.text.trim()) ?? 0,
-            howToApply: howToApplyController.text ?? "Default how to apply");
-        print(response.data);
+        Map<String, dynamic> data = {
+          "title" : jobTitleController.text.trim() ?? "Default job title",
+          "description": descriptionController.text ?? "Default description",
+          "lastDate": lastDateToApplyController.text ?? "Default last date",
+          "minSalary": int.parse(minSalaryController.text.trim()) ?? 0,
+          "maxSalary": int.parse(maxSalaryController.text.trim()) ?? 0,
+          "howToApply": howToApplyController.text ?? "Default how to apply"
+        };
+        var response = await APIManager.addNewJob(data: data);
         if(response.data['status']){
           JobsController jobsController = Get.find<JobsController>();
           jobsController.updateJobs();
@@ -125,17 +127,16 @@ class JobEditOrAddController extends GetxController {
   void editJob() async {
     if (_validateForm()) {
       try {
-        var response = await APIManager.editJob(
-            id: id,
-            title: jobTitleController.text.trim(),
-            description: descriptionController.text,
-            lastDate: lastDateToApplyController.text,
-            minSalary: int.parse(minSalaryController.text.trim()),
-            maxSalary: int.parse(maxSalaryController.text.trim()),
-            howToApply: howToApplyController.text);
-        print(response.data);
-
-        // Find the instance of JobsController and update the job in the list
+        Map<String, dynamic> data = {
+          "id": id,
+          "title": jobTitleController.text.trim(),
+          "description": descriptionController.text,
+          "lastDate": lastDateToApplyController.text,
+          "minSalary": int.parse(minSalaryController.text.trim()),
+          "maxSalary": int.parse(maxSalaryController.text.trim()),
+          "howToApply": howToApplyController.text
+        };
+        var response = await APIManager.editJob(data: data);
         JobsController jobsController = Get.find<JobsController>();
         Job updatedJob = Job(
           id: id,

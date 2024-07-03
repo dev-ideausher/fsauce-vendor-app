@@ -75,7 +75,7 @@ class JobsDetailsBottomSheet extends GetView<JobsController> {
                 ),
                 8.kwidthBox,
                 Text(
-                  "Apply by ${job.lastDate.toString().substring(0,10)}",
+                  StringConstant.applyBy + job.lastDate.toString().substring(0,10),
                   style: TextStyleUtil.manrope16w400(color: context.black03),
                 ),
               ],
