@@ -19,6 +19,10 @@ class Endpoints {
   static const String updateVendor = "vendor/updateVendor";
   static const String getVendor = "vendor/getVendorProfile";
 
+  //Notification end points
+  static const String addNotification = "vendor/addNotification";
+  static const String getNotification = "vendor/getNotification";
+
   //Loyalty card end points
   static const String addLoyaltyCard = 'vendor/loyaltycard/addLoyaltycard';
   static const String getLoyaltyCards = 'vendor/loyaltycard/getLoyaltycardList?';

@@ -486,6 +486,10 @@ class StringConstant {
   static const String invalidCvv = "CVV invalid";
   static const String nameCannotBeEmpty = "Name cannot be empty";
   static const String verifEmailSent = "Verification email send successfully";
+  static const String notificationSentSuccessfully = "Notification sent successfully";
+  static const String titleEmpty = "Title cannot be empty!";
+  static const String scheduledDateEmpty = "Scheduled date cannot be empty!";
+  static const String noNotificationsCreated = "No notifications created";
 
   // static const String
 }

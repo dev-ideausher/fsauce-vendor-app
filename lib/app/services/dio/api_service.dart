@@ -225,4 +225,18 @@ class APIManager {
       "id": id,
     });
   }
+
+  static Future<Response> addPushNotification({
+    required Map<String, dynamic> data
+  }) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(
+      Endpoints.addNotification,
+      data: data,
+    );
+  }
+
+  static Future<Response> getNotifications() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getNotification);
+  }
 }

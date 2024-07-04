@@ -39,6 +39,7 @@ class CreatePushNotificationView
               ),
               10.kheightBox,
               CustomTextField(
+                controller: controller.titleController,
                   fillColor: context.loginSignupTextfieldColor,
                   border: Border.all(color: context.black07),
                   hintText: StringConstant.enterTitle),
@@ -58,9 +59,23 @@ class CreatePushNotificationView
               ),
               10.kheightBox,
               CustomTextField(
+                  controller: controller.scheduledDateController,
                   fillColor: context.loginSignupTextfieldColor,
                   border: Border.all(color: context.black07),
                   suffixIcon: Icons.calendar_month,
+                  suffixOnPressed: () {
+                    showDatePicker(
+                      context: context,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 2 * 365)),
+
+                    ).then((pickedDate){
+                      if(pickedDate != null){
+                        controller.selectedDate.value = pickedDate;
+                        controller.scheduledDateController.text = pickedDate.toString().substring(0, 11);
+                      }
+                    });
+                  },
                   hintText: StringConstant.enterScheduleDate),
               20.kheightBox,
               const Spacer(),
