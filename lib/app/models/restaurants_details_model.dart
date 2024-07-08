@@ -1,3 +1,6 @@
+import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
+import 'package:fsauce_vendor_app/app/models/feature_model.dart';
+
 class RestaurantDetails {
   String restaurantName;
   String restaurantLogo;
@@ -5,9 +8,10 @@ class RestaurantDetails {
   String location;
   int avgPrice;
   String description;
-  List<String> features;
+  List<FeatureModel> features;
   List<Timing> timing;
   List<String> media;
+  List<CuisineModel> cuisine;
 
   RestaurantDetails({
     required this.restaurantName,
@@ -19,6 +23,7 @@ class RestaurantDetails {
     required this.features,
     required this.timing,
     required this.media,
+    required this.cuisine,
   });
 
   RestaurantDetails.fromJson(Map<String, dynamic> json)
@@ -29,12 +34,17 @@ class RestaurantDetails {
         avgPrice = json['avgPrice'],
         description = json['description'],
         features =
-            json['features'] != null ? List<String>.from(json['features']) : [],
+            json['features'] != null
+                ? (json['features'] as List)
+                .map((featureJson) => FeatureModel.fromJson(featureJson))
+                .toList() : [],
         timing = json['timing'] != null
             ? (json['timing'] as List)
                 .map((timingJson) => Timing.fromJson(timingJson))
                 .toList()
             : [],
+        cuisine = json['cuisine'] != null
+                  ? (json['cuisine'] as List).map((cuisineJson) => CuisineModel.fromJson(cuisineJson)).toList() : [],
         media = json['media'] != null ? List<String>.from(json['media']) : [];
 
   Map<String, dynamic> toJson() => {
@@ -44,9 +54,10 @@ class RestaurantDetails {
         'location': location,
         'avgPrice': avgPrice,
         'description': description,
-        'features': features,
+        'features': features.map((e) => e.toJson()).toList(),
         'timing': timing.map((timing) => timing.toJson()).toList(),
         'media': media,
+        'cuisine': cuisine.map((e) => e.toJson()).toList(),
       };
 
   RestaurantDetails copyWith({
@@ -56,9 +67,10 @@ class RestaurantDetails {
     String? location,
     int? avgPrice,
     String? description,
-    List<String>? features,
+    List<FeatureModel>? features,
     List<Timing>? timing,
     List<String>? media,
+    List<CuisineModel>? cuisine,
   }) =>
       RestaurantDetails(
         restaurantName: restaurantName ?? this.restaurantName,
@@ -70,6 +82,7 @@ class RestaurantDetails {
         features: features ?? this.features,
         timing: timing ?? this.timing,
         media: media ?? this.media,
+        cuisine: cuisine ?? this.cuisine,
       );
 }
 

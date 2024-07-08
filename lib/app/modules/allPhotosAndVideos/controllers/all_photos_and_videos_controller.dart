@@ -97,6 +97,7 @@ class AllPhotosAndVideosController extends GetxController {
             features: details.features,
             timing: details.timing,
             media: List.from(uploadedFilesUrl)..addAll(details.media),
+            cuisine: details.cuisine
           )
       );
       if(response.data["status"]){

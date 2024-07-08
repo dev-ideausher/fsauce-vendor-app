@@ -83,7 +83,9 @@ class CreatePushNotificationView
                   buttonText: StringConstant.save,
                   height: 56.kh,
                   width: 100.w,
-                  onPressed: Get.back)
+                  onPressed: () {
+                    controller.addNotification();
+                  })
             ],
           ),
         ));

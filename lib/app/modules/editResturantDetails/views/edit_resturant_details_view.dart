@@ -16,6 +16,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
+import '../../../models/cuisine_model.dart';
 import '../controllers/edit_resturant_details_controller.dart';
 
 class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
@@ -113,12 +114,12 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   }
                 }),
                 Obx(() {
-                  if(Get
+                  if (Get
                       .find<HomeController>()
                       .restaurantDetails
                       .value
                       .restaurantLogo
-                      .isEmpty){
+                      .isEmpty) {
                     return InkWell(
                       onTap: () {
                         controller.pickLogo();
@@ -165,7 +166,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                       ),
                     );
-                  } else{
+                  } else {
                     return IconButton(onPressed: () {
                       controller.pickLogo();
                     }, icon: const Icon(Icons.edit));
@@ -340,32 +341,38 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: DropdownButtonFormField<String>(
-                            dropdownColor: Colors.white,
-                            style: TextStyleUtil.manrope16w400(),
-                            onChanged: (val) {
-                              if(val != null){
-                                controller.selectedCuisineType.value = val;
-                              }
-                            },
-                            items: StringConstant.cuisineOptions
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(0),
-                              hintText: StringConstant.selectNumberOfStamps,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                          child: Obx(() {
+                            return DropdownButtonFormField<CuisineModel>(
+                              dropdownColor: Colors.white,
+                              style: TextStyleUtil.manrope16w400(),
+                              onChanged: (val) {
+                                if (val != null) {
+                                  controller.initialCuisineModels.value = [];
+                                  controller.initialCuisineModels.add(val);
+                                  controller.selectedCuisine.value = val;
+                                }
+                              },
+                              items: controller.cuisines
+                                  .map<DropdownMenuItem<CuisineModel>>((
+                                  CuisineModel value) {
+                                return DropdownMenuItem<CuisineModel>(
+                                  value: value,
+                                  child: Text(value.name!),
+                                );
+                              }).toList(),
+                              icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded),
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(0),
+                                hintText: StringConstant.selectCuisine,
+                                hintStyle: TextStyleUtil.manrope14w400(
+                                    color: context.black04),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
                               ),
-                            ),
-                          )),
+                            );
+                          })),
                     ],
                   ),
                 ),

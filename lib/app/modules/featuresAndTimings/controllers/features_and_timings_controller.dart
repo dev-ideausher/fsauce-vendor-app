@@ -13,11 +13,19 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:intl/src/intl/date_format.dart';
 
+import '../../../models/feature_model.dart';
+
 class FeaturesAndTimingsController extends GetxController {
   //TODO: Implement FeaturesAndTimingsController
 
+  RxList<FeatureModel> features = <FeatureModel>[].obs;
+  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
+
+  RxList<FeatureModel> selectedFeatures = <FeatureModel>[].obs;
+
   @override
   void onInit() {
+    getFeatures();
     getFeaturesAndTimings();
     super.onInit();
   }
@@ -31,13 +39,31 @@ class FeaturesAndTimingsController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  List<MultiSelectItem<String>> featureItems = [
-    MultiSelectItem(StringConstant.dineIn, StringConstant.dineIn),
-    MultiSelectItem(StringConstant.takeAway, StringConstant.takeAway),
-    MultiSelectItem(StringConstant.parking, StringConstant.parking),
-    MultiSelectItem(StringConstant.wifi, StringConstant.wifi),
-  ];
+  
+  Future<void> getFeatures() async{
+    RestaurantDetails details =
+        Get.find<HomeController>().restaurantDetails.value;
+    if (details.features.isNotEmpty) {
+      selectedFeatures.value = [];
+      for(FeatureModel feature in details.features){
+        selectedFeatures.add(feature);
+      }
+    }
+    print(selectedFeatures.length);
+    try{
+      var response = await APIManager.getFeatures();
+      if(response.data['status']){
+        List<dynamic> data = response.data['data'];
+        features.value = [];
+        features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
+        multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
+      } else{
+        DialogHelper.showError(response.data['message']);
+      }
+    } catch(error){
+      DialogHelper.showError(error.toString());
+    }
+  }
 
   Map<String, FilterOptionController> timingControllers = {
     "Monday": FilterOptionController(),
@@ -115,14 +141,7 @@ class FeaturesAndTimingsController extends GetxController {
         });
       }
     }
-    if (details.features.isNotEmpty) {
-      details.features.forEach((String feature) {
-        selectedFeatures.add(feature);
-      });
-    }
   }
-
-  List<String> selectedFeatures = [];
 
   Future<void> updateFeaturesAndTimings() async {
     List<Timing> timings = timingControllers.entries
@@ -160,9 +179,10 @@ class FeaturesAndTimingsController extends GetxController {
       location: details.location,
       avgPrice: details.avgPrice,
       description: details.description,
-      features: featureItems.map((e) => e.value).toList(),
+      features: selectedFeatures,
       timing: timings,
       media: details.media,
+          cuisine: details.cuisine,
     ));
     if (response.data['status']) {
       Get.find<HomeController>().getRestaurantDetails();

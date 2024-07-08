@@ -9,6 +9,8 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../models/cuisine_model.dart';
+
 class EditResturantDetailsController extends GetxController {
   //TODO: Implement EditResturantDetailsController
 
@@ -21,6 +23,10 @@ class EditResturantDetailsController extends GetxController {
   RxString selectedBannerImage = ''.obs;
   RxString selectedLogoImage = ''.obs;
   RxString selectedCuisineType = "".obs;
+  RxList<CuisineModel> initialCuisineModels = <CuisineModel>[].obs;
+  RxList<CuisineModel> cuisines = <CuisineModel>[].obs;
+  Rx<CuisineModel> selectedCuisine = CuisineModel(id: "id", name: "name").obs;
+  List<DropdownMenuItem<CuisineModel>> cuisineOptions = <DropdownMenuItem<CuisineModel>>[];
 
   Future<void> pickLogo() async {
     final ImagePicker picker = ImagePicker();
@@ -44,8 +50,24 @@ class EditResturantDetailsController extends GetxController {
 
   @override
   void onInit() {
+    getCuisines();
     getInitialRestaurantDetails();
     super.onInit();
+  }
+
+  Future<void> getCuisines() async{
+    try{
+      var response = await APIManager.getCuisines();
+      if(response.data['status']){
+        List<dynamic> data = response.data['data'];
+        cuisines.value = [];
+        cuisines.value = data.map((e) => CuisineModel.fromJson(e)).toList();
+      } else{
+        DialogHelper.showError(response.data['message']);
+      }
+    } catch(error){
+      DialogHelper.showError(error.toString());
+    }
   }
 
   void getInitialRestaurantDetails(){
@@ -54,6 +76,7 @@ class EditResturantDetailsController extends GetxController {
     addressController.text = details.location;
     averagePriceController.text = details.avgPrice.toString();
     descriptionController.text = details.description;
+    initialCuisineModels.value = details.cuisine;
   }
 
   @override
@@ -100,6 +123,7 @@ class EditResturantDetailsController extends GetxController {
                 features: Get.find<HomeController>().restaurantDetails.value.features,
                 timing: Get.find<HomeController>().restaurantDetails.value.timing,
                 media: Get.find<HomeController>().restaurantDetails.value.media,
+                cuisine: initialCuisineModels,
               )
           );
           if(response.data["status"]){

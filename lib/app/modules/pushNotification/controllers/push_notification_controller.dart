@@ -15,11 +15,12 @@ class PushNotificationController extends GetxController {
   Future<void> getNotifications() async{
     try{
       var response = await APIManager.getNotifications();
-      var data = response.data['data'];
+      List<dynamic> data = response.data['data'];
       notificationList.value = [];
       notificationList.value = data.map((e) => PushNotification.fromJson(e)).toList();
     } catch(e){
-      DialogHelper.showError(StringConstant.error);
+      print(e.toString());
+      DialogHelper.showError(e.toString());
     }
   }
 

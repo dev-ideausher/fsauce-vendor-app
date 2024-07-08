@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/views/step_one.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/views/step_three.dart';
@@ -17,10 +18,15 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
+import '../../../models/feature_model.dart';
+
 class ProfileSetupController extends GetxController {
 
   final stepCount = 0.obs;
-  RxString selectedCuisineType = "".obs;
+  RxList<CuisineModel> selectedCuisines = <CuisineModel>[].obs;
+  RxList<FeatureModel> features = <FeatureModel>[].obs;
+  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
+  RxList<CuisineModel> cuisineModels = <CuisineModel>[].obs;
 
   final List<Widget> steps = [
     const StepOne(),
@@ -30,6 +36,8 @@ class ProfileSetupController extends GetxController {
 
   @override
   void onInit() {
+    getFeatures();
+    getCuisines();
     super.onInit();
   }
 
@@ -48,6 +56,37 @@ class ProfileSetupController extends GetxController {
     postCodeController.dispose();
     descriptionController.dispose();
     restaurantNameController.dispose();
+  }
+
+  Future<void> getFeatures() async{
+    try{
+      var response = await APIManager.getFeatures();
+      if(response.data['status']){
+        List<dynamic> data = response.data['data'];
+        features.value = [];
+        features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
+        multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
+      } else{
+        DialogHelper.showError(response.data['message']);
+      }
+    } catch(error){
+      DialogHelper.showError(error.toString());
+    }
+  }
+
+  Future<void> getCuisines() async{
+    try{
+      var response = await APIManager.getCuisines();
+      if(response.data['status']){
+        List<dynamic> data = response.data['data'];
+        cuisineModels.value = [];
+        cuisineModels.value = data.map((e) => CuisineModel.fromJson(e)).toList();
+      } else{
+        DialogHelper.showError(response.data['message']);
+      }
+    } catch(error){
+      DialogHelper.showError(error.toString());
+    }
   }
 
   void gotoEnableLocationScreen() async {
@@ -109,7 +148,9 @@ class ProfileSetupController extends GetxController {
             description: descriptionController.text.trim(),
             features: selectedFeatures,
             timing: timings,
-            media: selectedFilesUrl));
+            media: selectedFilesUrl,
+          cuisine: selectedCuisines,
+        ));
 
     if (response.statusCode == 200) {
       return true;
@@ -157,7 +198,7 @@ class ProfileSetupController extends GetxController {
     "Sunday": FilterOptionController(),
   };
 
-  List<String> selectedFeatures = [];
+  RxList<FeatureModel> selectedFeatures = <FeatureModel>[].obs;
 
   RxList<String> selectedFiles = <String>[].obs;
 

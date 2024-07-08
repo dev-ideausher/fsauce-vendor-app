@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
@@ -36,7 +37,8 @@ class HomeController extends GetxController {
       description: '',
       features: [],
       timing: [],
-      media: []
+      media: [],
+    cuisine: [CuisineModel(id: "", name: "")],
   ).obs;
 
   String vendor = '';
@@ -44,6 +46,7 @@ class HomeController extends GetxController {
   void getRestaurantDetails() async{
     var response = await APIManager.getVendor();
     vendor = response.data["data"]["_id"];
+    print("vendor id: $vendor");
     restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
   }
 

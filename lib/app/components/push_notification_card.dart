@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/push_notification_model.dart';
 import 'package:fsauce_vendor_app/app/modules/pushNotification/controllers/push_notification_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -7,7 +8,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 class PushNotificationCard extends StatelessWidget {
-  const PushNotificationCard({super.key, required this.isActivate});
+  PushNotification notification;
+  PushNotificationCard({super.key, required this.isActivate, required this.notification});
   final bool isActivate;
 
   @override
@@ -26,7 +28,7 @@ class PushNotificationCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Don’t miss the offer. Get 15 days free trial now. Valid till 15th Feb.",
+                  notification.title!,
                   style: TextStyleUtil.manrope14w500(),
                 ),
               ),
@@ -64,12 +66,12 @@ class PushNotificationCard extends StatelessWidget {
               )
             ],
           ),
-          Text(
-            "Feb 27, 2022, 23:57",
-            style: TextStyleUtil.manrope14w400(
-              color: context.black03,
-            ),
-          ),
+          // Text(
+          //   "Feb 27, 2022, 23:57",
+          //   style: TextStyleUtil.manrope14w400(
+          //     color: context.black03,
+          //   ),
+          // ),
           Spacer(),
           Container(
             height: 26,

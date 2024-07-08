@@ -59,15 +59,16 @@ class PushNotificationView extends GetView<PushNotificationController> {
                         hintText: StringConstant.searchNotifications),
                   ),
                   20.kheightBox,
-                  const PushNotificationCard(
-                    isActivate: true,
-                  ),
-                  const PushNotificationCard(
-                    isActivate: false,
-                  ),
-                  const PushNotificationCard(
-                    isActivate: false,
-                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                      itemBuilder: (ctx, index){
+                    return PushNotificationCard(
+                      isActivate: true,
+                      notification: controller.notificationList[index],
+                    );
+                  }, separatorBuilder: (ctx, index){
+                    return 10.kheightBox;
+                  }, itemCount: controller.notificationList.length)
                 ],
               ),
             );

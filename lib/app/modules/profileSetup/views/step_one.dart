@@ -11,13 +11,15 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
+import '../../../models/cuisine_model.dart';
+
 class StepOne extends StatelessWidget {
   const StepOne({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ProfileSetupController controller =
-        Get.find<ProfileSetupController>();
+    Get.find<ProfileSetupController>();
 
     return Column(
       children: [
@@ -61,7 +63,8 @@ class StepOne extends StatelessWidget {
           style: TextStyleUtil.manrope14w500(color: context.black03),
         ),
         6.kheightBox,
-        Obx(() => InkWell(
+        Obx(() =>
+            InkWell(
               onTap: () => controller.pickImage(controller.restaurantLogo),
               child: Container(
                 width: 100.w,
@@ -76,38 +79,38 @@ class StepOne extends StatelessWidget {
                 ),
                 child: controller.restaurantLogo.value.isEmpty
                     ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.file_upload_outlined),
-                          10.kheightBox,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                StringConstant.uploadFile,
-                                style: TextStyleUtil.manrope14w500(
-                                    color: context.primary01),
-                              ),
-                              4.kwidthBox,
-                              Text(
-                                StringConstant.or,
-                                style: TextStyleUtil.manrope14w500(
-                                    color: context.black04),
-                              ),
-                              4.kwidthBox,
-                              Text(
-                                StringConstant.selectFile,
-                                style: TextStyleUtil.manrope14w500(
-                                    color: context.primary01),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.file_upload_outlined),
+                    10.kheightBox,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          StringConstant.uploadFile,
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        ),
+                        4.kwidthBox,
+                        Text(
+                          StringConstant.or,
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.black04),
+                        ),
+                        4.kwidthBox,
+                        Text(
+                          StringConstant.selectFile,
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        ),
+                      ],
+                    )
+                  ],
+                )
                     : Image.file(
-                        File(controller.restaurantLogo.value),
-                        fit: BoxFit.contain,
-                      ),
+                  File(controller.restaurantLogo.value),
+                  fit: BoxFit.contain,
+                ),
               ),
             )),
         10.kheightBox,
@@ -126,7 +129,8 @@ class StepOne extends StatelessWidget {
           ],
         ),
         6.kheightBox,
-        Obx(() => InkWell(
+        Obx(() =>
+            InkWell(
               onTap: () => controller.pickImage(controller.restaurantBanner),
               child: Container(
                 height: 160.kh,
@@ -138,23 +142,23 @@ class StepOne extends StatelessWidget {
                 ),
                 child: controller.restaurantBanner.value.isEmpty
                     ? Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.file_upload_outlined),
-                            2.kwidthBox,
-                            Text(
-                              StringConstant.uploadPhoto,
-                              style: TextStyleUtil.manrope14w400(
-                                  color: context.black03),
-                            )
-                          ],
-                        ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.file_upload_outlined),
+                      2.kwidthBox,
+                      Text(
+                        StringConstant.uploadPhoto,
+                        style: TextStyleUtil.manrope14w400(
+                            color: context.black03),
                       )
+                    ],
+                  ),
+                )
                     : Image.file(
-                        File(controller.restaurantBanner.value),
-                        fit: BoxFit.cover,
-                      ),
+                  File(controller.restaurantBanner.value),
+                  fit: BoxFit.cover,
+                ),
               ),
             )),
         10.kheightBox,
@@ -203,49 +207,66 @@ class StepOne extends StatelessWidget {
           hintText: StringConstant.enterDescription,
         ),
         10.kheightBox,
+        Row(
+          children: [
+            Text(
+              StringConstant.cuisine,
+              style: TextStyleUtil.manrope14w500(),
+            ),
+            Text(
+              "*",
+              style: TextStyleUtil.manrope14w500(color: context.primary01),
+            )
+          ],
+        ),
+        10.kheightBox,
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+              color: Colors.white,
               border: Border.all(color: context.borderColor2),
               borderRadius: BorderRadius.circular(8.kw)),
           padding: EdgeInsets.symmetric(horizontal: 10.kw),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                  child: DropdownButtonFormField<String>(
-                    dropdownColor: Colors.white,
-                    style: TextStyleUtil.manrope16w400(),
-                    onChanged: (val) {
-                      if(val != null){
-                        controller.selectedCuisineType.value = val;
-                      }
-                    },
-                    items: StringConstant.cuisineOptions
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(0),
-                      hintText: StringConstant.selectCuisine,
-                      hintStyle: TextStyleUtil.manrope14w400(
-                          color: context.black04),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
+              Obx(() {
+                return Expanded(
+                    child: DropdownButtonFormField<CuisineModel>(
+                      dropdownColor: Colors.white,
+                      style: TextStyleUtil.manrope16w400(),
+                      onChanged: (val) {
+                        if (val != null) {
+                          controller.selectedCuisines.add(val);
+                        }
+                      },
+                      items: controller.cuisineModels
+                          .map<DropdownMenuItem<CuisineModel>>((
+                          CuisineModel value) {
+                        return DropdownMenuItem<CuisineModel>(
+                          value: value,
+                          child: Text(value.name!),
+                        );
+                      }).toList(),
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(0),
+                        hintText: StringConstant.selectCuisine,
+                        hintStyle: TextStyleUtil.manrope14w400(
+                            color: context.black04),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                    ),
-                  )),
+                    ));
+              }),
             ],
           ),
         ),
         20.kheightBox,
         Row(
           children: <Widget>[
-            Text(StringConstant.location, style: TextStyleUtil.manrope18w600(),),
+            Text(
+              StringConstant.location, style: TextStyleUtil.manrope18w600(),),
             4.kwidthBox,
             const Divider(),
           ],
@@ -253,7 +274,8 @@ class StepOne extends StatelessWidget {
         20.kheightBox,
         Row(
           children: [
-            Text(StringConstant.streetNameNo, style: TextStyleUtil.manrope14w500(),),
+            Text(StringConstant.streetNameNo,
+              style: TextStyleUtil.manrope14w500(),),
             Text(
               "*",
               style: TextStyleUtil.manrope14w500(color: context.primary01),
@@ -270,7 +292,8 @@ class StepOne extends StatelessWidget {
         10.kheightBox,
         Row(
           children: [
-            Text(StringConstant.cityTown, style: TextStyleUtil.manrope14w500(),),
+            Text(
+              StringConstant.cityTown, style: TextStyleUtil.manrope14w500(),),
             Text(
               "*",
               style: TextStyleUtil.manrope14w500(color: context.primary01),
@@ -287,7 +310,8 @@ class StepOne extends StatelessWidget {
         10.kheightBox,
         Row(
           children: [
-            Text(StringConstant.postCode, style: TextStyleUtil.manrope14w500(),),
+            Text(
+              StringConstant.postCode, style: TextStyleUtil.manrope14w500(),),
             Text(
               "*",
               style: TextStyleUtil.manrope14w500(color: context.primary01),

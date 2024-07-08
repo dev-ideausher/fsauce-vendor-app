@@ -26,8 +26,10 @@ class CreatePushNotificationController extends GetxController {
         if(response.data['status']){
           DialogHelper.showSuccess(StringConstant.notificationSentSuccessfully);
           Get.find<PushNotificationController>().getNotifications();
+          Get.find<PushNotificationController>().notificationList.add(notification);
+          Get.back();
         } else{
-          DialogHelper.showError(StringConstant.error);
+          DialogHelper.showError(response.data['message']);
         }
       } catch(e){
         DialogHelper.showError(e.toString());
@@ -48,6 +50,7 @@ class CreatePushNotificationController extends GetxController {
   @override
   void onClose() {
     titleController.dispose();
+    scheduledDateController.dispose();
     super.onClose();
   }
 }

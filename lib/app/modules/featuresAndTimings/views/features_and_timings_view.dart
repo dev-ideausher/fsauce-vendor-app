@@ -9,11 +9,15 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 
+import '../../../models/feature_model.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/features_and_timings_controller.dart';
 
 class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
   const FeaturesAndTimingsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,8 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                    style: TextStyleUtil.manrope14w500(
+                        color: context.primary01),
                   )
                 ],
               ),
@@ -44,9 +49,9 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                     color: context.loginSignupTextfieldColor,
                     borderRadius: BorderRadius.circular(8.kw),
                     border: Border.all(color: context.black07)),
-                child: MultiSelectDialogField(
+                child: MultiSelectDialogField<FeatureModel>(
                   initialValue: controller.selectedFeatures,
-                  items: controller.featureItems,
+                  items: controller.multiSelectFeatures,
                   title: Text(
                     StringConstant.enterFeatures,
                     style: TextStyleUtil.manrope16w400(),
@@ -62,12 +67,13 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   ),
                   buttonText: Text(
                     StringConstant.enterFeatures,
-                    style: TextStyleUtil.manrope14w400(color: context.black04),
+                    style: TextStyleUtil.manrope14w400(color: context
+                        .black04),
                   ),
                   onConfirm: (results) {
-                    controller.selectedFeatures = results;
+                    controller.selectedFeatures.addAll(results);
                   },
-                ),
+                )
               ),
               10.kheightBox,
               Row(
@@ -78,7 +84,8 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                    style: TextStyleUtil.manrope14w500(
+                        color: context.primary01),
                   )
                 ],
               ),
@@ -91,7 +98,8 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                 "Friday",
                 "Saturday",
                 "Sunday"
-              ].map((e) => FilterAnimatedOption(
+              ].map((e) =>
+                  FilterAnimatedOption(
                     title: e,
                     controller: controller.timingControllers[e]!,
                   )),

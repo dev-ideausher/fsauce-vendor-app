@@ -11,6 +11,10 @@ class Endpoints {
   //Delete media
   static const String deleteMedia = "vendor/deleteMedia";
 
+  //get features.
+  static const String getFeatures = "vendor/getFeatures";
+  static const String getCuisine = "vendor/getCuisines";
+
   //Get Ratings
   static const String getRatings = "vendor/getRatings?";
   static const String deleteRating = "vendor/deleteRating?";
