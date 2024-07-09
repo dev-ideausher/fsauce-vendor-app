@@ -126,6 +126,7 @@ class OnboardingView extends GetView<OnboardingController> {
               CustomRedElevatedButton(
                 onPressed: controller.gotoLoginScreen,
                 buttonText: StringConstant.login,
+                textStyle: TextStyleUtil.manrope16w500(color: Colors.white),
                 height: 56.kh,
                 width: 100.w,
               ),
@@ -133,6 +134,7 @@ class OnboardingView extends GetView<OnboardingController> {
               CustomRedElevatedButtonWithBorder(
                 onPressed: controller.gotoSignupScreen,
                 buttonText: StringConstant.signup,
+                textStyle: TextStyleUtil.manrope16w500(color: context.primary01),
                 height: 56.kh,
                 width: 100.w,
               ),

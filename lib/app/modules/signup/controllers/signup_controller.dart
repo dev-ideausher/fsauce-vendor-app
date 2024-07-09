@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
@@ -11,6 +13,37 @@ class SignupController extends GetxController {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  RxBool isApple = false.obs;
+  RxBool passwordVisible = false.obs;
+  RxBool isSignupEnabled = false.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getOS();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+  void getOS(){
+    if(Platform.isAndroid){
+      isApple.value = false;
+    } else if(Platform.isIOS){
+      isApple.value = true;
+    }
+  }
+
+  void togglePasswordVisible(){
+    passwordVisible.value = !passwordVisible.value;
+  }
 
   void signup() async {
     DialogHelper.showLoading();
@@ -74,7 +107,7 @@ class SignupController extends GetxController {
   }
 
   void gotoVerificationScreen() {
-    Get.toNamed(Routes.VERIFICATION);
+    Get.offAllNamed(Routes.VERIFICATION);
   }
 
   bool _isEmailValid(String email) {

@@ -10,6 +10,7 @@ class CustomRedElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget? leadingIcon;
   final Color? buttonColor;
+  final TextStyle? textStyle;
 
   const CustomRedElevatedButton({
     super.key,
@@ -19,6 +20,7 @@ class CustomRedElevatedButton extends StatelessWidget {
     required this.onPressed,
     this.leadingIcon,
     this.buttonColor,
+    this.textStyle,
   });
 
   @override
@@ -39,9 +41,11 @@ class CustomRedElevatedButton extends StatelessWidget {
           children: [
             if (leadingIcon != null) leadingIcon!,
             if (leadingIcon != null) 6.kwidthBox,
-            if (buttonText.isNotEmpty)
+            if (buttonText.isNotEmpty && textStyle == null)
               Text(buttonText,
                   style: TextStyleUtil.manrope16w500(color: Colors.white)),
+            if(buttonText.isNotEmpty && textStyle != null)
+              Text(buttonText, style: textStyle,)
           ],
         ),
       ),

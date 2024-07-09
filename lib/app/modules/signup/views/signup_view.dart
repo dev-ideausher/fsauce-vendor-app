@@ -49,6 +49,13 @@ class SignupView extends GetView<SignupController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          onChanged: (val) {
+                            if (val.isEmpty) {
+                              controller.isSignupEnabled.value = false;
+                            } else {
+                              controller.isSignupEnabled.value = true;
+                            }
+                          },
                           controller: controller.emailController,
                           decoration: InputDecoration(
                             hintText: StringConstant.enterEmailId,
@@ -81,40 +88,56 @@ class SignupView extends GetView<SignupController> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
-                          controller: controller.passwordController,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.remove_red_eye_rounded,
-                                  size: 18.kw,
-                                )),
-                            hintText: StringConstant.enterPassword,
-                            hintStyle: TextStyleUtil.manrope14w400(
-                                color: context.black04),
-                            border: InputBorder.none,
-                          ),
-                        ),
+                        child: Obx(() {
+                          return TextField(
+                            onChanged: (val) {
+                              if (val.isEmpty) {
+                                controller.isSignupEnabled.value = false;
+                              } else {
+                                controller.isSignupEnabled.value = true;
+                              }
+                            },
+                            obscureText: controller.passwordVisible.value,
+                            controller: controller.passwordController,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    controller.togglePasswordVisible();
+                                  },
+                                  icon: Icon(
+                                    Icons.remove_red_eye_rounded,
+                                    size: 18.kw,
+                                  )),
+                              hintText: StringConstant.enterPassword,
+                              hintStyle: TextStyleUtil.manrope14w400(
+                                  color: context.black04),
+                              border: InputBorder.none,
+                            ),
+                          );
+                        }),
                       ),
                     ],
                   ),
                 ),
               ),
               30.kheightBox,
-              CustomRedElevatedButton(
-                  buttonText: StringConstant.signup,
-                  height: 56.kh,
-                  width: 100.w,
-                  onPressed: controller.signup),
+              Obx(() {
+                return CustomRedElevatedButton(
+                    buttonText: StringConstant.signup,
+                    height: 56.kh,
+                    width: 100.w,
+                    textStyle: controller.isSignupEnabled.value ? null : TextStyleUtil.manrope16w500(color: context.black03),
+                    buttonColor: controller.isSignupEnabled.value ? context.primary01 : context.primary06,
+                    onPressed: controller.isSignupEnabled.value ? controller.signup : () {});
+              }),
               20.kheightBox,
               Row(
                 children: [
                   Expanded(
                       child: Divider(
-                    color: context.black07,
-                    thickness: 1.5,
-                  )),
+                        color: context.black07,
+                        thickness: 1.5,
+                      )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -126,71 +149,82 @@ class SignupView extends GetView<SignupController> {
                   ),
                   Expanded(
                       child: Divider(
-                    color: context.black07,
-                    thickness: 1.5,
-                  )),
+                        color: context.black07,
+                        thickness: 1.5,
+                      )),
                 ],
               ),
               20.kheightBox,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: controller.signupWithApple,
-                    child: Container(
-                      height: 48.kh,
-                      width: 103.kw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.kw),
-                          border: Border.all(
-                            color: context.black07,
-                          )),
-                      child: Center(
-                        child: CommonImageView(
-                          svgPath: ImageConstant.appleLogo,
-                          width: 24,
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: controller.isApple.value
+                      ? MainAxisAlignment.spaceBetween
+                      : MainAxisAlignment.center,
+                  children: [
+                    Obx(() {
+                      if (controller.isApple.value) {
+                        return GestureDetector(
+                          onTap: controller.signupWithApple,
+                          child: Container(
+                            height: 48.kh,
+                            width: 103.kw,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.kw),
+                                border: Border.all(
+                                  color: context.black07,
+                                )),
+                            child: Center(
+                              child: CommonImageView(
+                                svgPath: ImageConstant.appleLogo,
+                                width: 24,
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return 0.kwidthBox;
+                      }
+                    }),
+                    GestureDetector(
+                      onTap: controller.signupWithFacebook,
+                      child: Container(
+                        height: 48.kh,
+                        width: 103.kw,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.kw),
+                            border: Border.all(
+                              color: context.black07,
+                            )),
+                        child: Center(
+                          child: CommonImageView(
+                            svgPath: ImageConstant.facebookLogo,
+                            width: 24,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: controller.signupWithFacebook,
-                    child: Container(
-                      height: 48.kh,
-                      width: 103.kw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.kw),
-                          border: Border.all(
-                            color: context.black07,
-                          )),
-                      child: Center(
-                        child: CommonImageView(
-                          svgPath: ImageConstant.facebookLogo,
-                          width: 24,
+                    controller.isApple.value ? Container() : 20.kwidthBox,
+                    GestureDetector(
+                      onTap: controller.signupWithGoogle,
+                      child: Container(
+                        height: 48.kh,
+                        width: 103.kw,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.kw),
+                            border: Border.all(
+                              color: context.black07,
+                            )),
+                        child: Center(
+                          child: CommonImageView(
+                            svgPath: ImageConstant.googleLogo,
+                            width: 24,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: controller.signupWithGoogle,
-                    child: Container(
-                      height: 48.kh,
-                      width: 103.kw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.kw),
-                          border: Border.all(
-                            color: context.black07,
-                          )),
-                      child: Center(
-                        child: CommonImageView(
-                          svgPath: ImageConstant.googleLogo,
-                          width: 24,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                    )
+                  ],
+                );
+              }),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

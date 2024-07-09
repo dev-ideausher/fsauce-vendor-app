@@ -7,6 +7,7 @@ class CustomRedElevatedButtonWithBorder extends StatelessWidget {
   final double width;
   final VoidCallback onPressed;
   final double height;
+  final TextStyle? textStyle;
 
   const CustomRedElevatedButtonWithBorder({
     super.key,
@@ -14,6 +15,7 @@ class CustomRedElevatedButtonWithBorder extends StatelessWidget {
     required this.width,
     required this.height,
     required this.onPressed,
+    this.textStyle,
   });
 
   @override
@@ -35,7 +37,7 @@ class CustomRedElevatedButtonWithBorder extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: TextStyle(
+          style: textStyle ?? TextStyle(
             color: context.primary01, // Set the text color to black01
             fontSize: 16.0,
           ),

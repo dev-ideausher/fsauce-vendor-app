@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/models/login_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
@@ -15,6 +17,41 @@ class LoginController extends GetxController {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  RxBool isApple = false.obs;
+  RxBool passwordVisible = false.obs;
+  RxBool isLoginEnabled = false.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getOS();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    passwordController.dispose();
+    emailController.dispose();
+  }
+
+  void getOS(){
+    if(Platform.isAndroid){
+      isApple.value = false;
+    } else if(Platform.isIOS){
+      isApple.value = true;
+    }
+  }
+
+  void toggleIsEnabled(){
+    isLoginEnabled.value = !isLoginEnabled.value;
+  }
+
+  void togglePasswordVisible(){
+    passwordVisible.value = !passwordVisible.value;
+  }
 
   void login() async {
     DialogHelper.showLoading();
