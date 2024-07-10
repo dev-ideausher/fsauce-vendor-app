@@ -22,8 +22,10 @@ class SplashView extends GetView<SplashController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CommonImageView(
-                  svgPath: Assets.svgFsauceLogo,
+                  imagePath: Assets.FsauceLogo,
                   fit: BoxFit.contain,
+                  height: 500.kh,
+                  width: 500.kh,
                 )
               ],
             )

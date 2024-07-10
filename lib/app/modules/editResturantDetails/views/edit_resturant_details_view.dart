@@ -343,6 +343,9 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       Expanded(
                           child: Obx(() {
                             return DropdownButtonFormField<CuisineModel>(
+                              // value: controller.cuisines.firstWhere((
+                              //     CuisineModel cuisine) =>
+                              // cuisine == controller.initialCuisineModels.first),
                               dropdownColor: Colors.white,
                               style: TextStyleUtil.manrope16w400(),
                               onChanged: (val) {
@@ -372,7 +375,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                                 ),
                               ),
                             );
-                          })),
+                          })
+                      ),
                     ],
                   ),
                 ),

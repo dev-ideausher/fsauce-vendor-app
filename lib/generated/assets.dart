@@ -2,12 +2,9 @@
 class Assets {
   Assets._();
 
-  static const String svgFsauceLogo = "assets/svgs/fsauce_logo.svg";
-  static const String svgEmpty = "assets/svgs/empty.svg";
-  static const String svgEmptyNotification = "assets/svgs/empty_notification.svg";
-
   static const String lottiefilesCarUpdate = 'assets/lottiefiles/carUpdate.json';
   static const String lottiefilesInAppUpdate = 'assets/lottiefiles/inAppUpdate.json';
+  static const String FsauceLogo = 'assets/pngs/fsauce_logo.png';
   static const String pngsSubscriptionIcon = 'assets/pngs/subscription_icon.png';
   static const String svgsAppleLogo = 'assets/svgs/apple_logo.svg';
   static const String svgsBackIcon = 'assets/svgs/back_icon.svg';

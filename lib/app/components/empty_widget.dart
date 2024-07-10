@@ -17,7 +17,7 @@ class EmptyWidget extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CommonImageView(
-          svgPath: Assets.svgEmpty
+          svgPath: Assets.svgsEmpty
         ),
         10.kheightBox,
         Text(title, style: TextStyleUtil.manrope24w600()),

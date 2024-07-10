@@ -17,6 +17,7 @@ class SignupController extends GetxController {
   RxBool isApple = false.obs;
   RxBool passwordVisible = false.obs;
   RxBool isSignupEnabled = false.obs;
+  RxBool termsAndConditionsChecked = false.obs;
 
   @override
   void onInit() {
@@ -117,6 +118,10 @@ class SignupController extends GetxController {
 
   bool _isPasswordValid(String password) {
     return password.length >= 6;
+  }
+
+  void goToTermsAndConditions(){
+    Get.toNamed(Routes.TERMSANDCONDITIONS);
   }
 
   void replaceSignupWithLogin() {

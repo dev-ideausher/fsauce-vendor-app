@@ -29,9 +29,9 @@ class ProfileSetupController extends GetxController {
   RxList<CuisineModel> cuisineModels = <CuisineModel>[].obs;
 
   final List<Widget> steps = [
-    const StepOne(),
-    const StepTwo(),
-    const StepThree()
+    StepOne(),
+    StepTwo(),
+    StepThree()
   ];
 
   @override

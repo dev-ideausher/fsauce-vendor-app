@@ -33,7 +33,7 @@ class Endpoints {
   static const String editLoyaltyCard = 'vendor/loyaltycard/editLoyaltycard';
   static const String delLoyaltyCard = 'vendor/loyaltycard/deleteLoyaltyCard?id=';
   static const String getOneLoyaltyCard = 'vendor/loyaltycard/getOneLoyaltycard?id=';
-
+  static const String scanLoyaltyCard = 'v1/vendor/loyaltycard/scanLoyaltyCard';
 
   static const String addCategory = "vendor/menu/addCategory";
   static const String getCategory = "vendor/menu/getCategory";

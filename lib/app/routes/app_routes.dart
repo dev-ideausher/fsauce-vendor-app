@@ -41,6 +41,7 @@ abstract class Routes {
   static const PAYMENTDETAILS = _Paths.PAYMENTDETAILS;
   static const CARDDETAILS = _Paths.CARDDETAILS;
   static const SPLASHVIEW = _Paths.SPLASHVIEW;
+  static const TERMSANDCONDITIONS = _Paths.TERMSANDCONDITIONS;
 }
 
 abstract class _Paths {
@@ -83,4 +84,5 @@ abstract class _Paths {
   static const PAYMENTDETAILS = '/payment-details';
   static const CARDDETAILS = '/card-details';
   static const SPLASHVIEW = '/splash-view';
+  static const TERMSANDCONDITIONS = '/terms-conditions';
 }

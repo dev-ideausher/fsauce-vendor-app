@@ -490,6 +490,10 @@ class StringConstant {
   static const String titleEmpty = "Title cannot be empty!";
   static const String scheduledDateEmpty = "Scheduled date cannot be empty!";
   static const String noNotificationsCreated = "No notifications created";
+  static const String failedToScanQR = "Failed to scan QR";
+  static const String sendResetPasswordLink = "Send reset password link";
+  static const String resetPassword = "Reset password";
+  static const String resetPasswordLinkEmail = "We will send a reset password link to the email id below.";
 
   // static const String
 }

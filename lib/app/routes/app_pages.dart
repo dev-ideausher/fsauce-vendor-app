@@ -67,6 +67,7 @@ import '../modules/scanRedemptionRecord/bindings/scan_redemption_record_binding.
 import '../modules/scanRedemptionRecord/views/scan_redemption_record_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/signup/views/terms_conditions_view.dart';
 import '../modules/splash/binding/splash_binding.dart';
 import '../modules/verification/bindings/verification_binding.dart';
 import '../modules/verification/views/verification_view.dart';
@@ -85,6 +86,11 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.TERMSANDCONDITIONS,
+      page: () => TermsConditionsView(),
+      binding: SignupBinding(),
     ),
     GetPage(
       name: _Paths.ONBOARDING,

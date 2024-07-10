@@ -72,7 +72,7 @@ class VerificationController extends GetxController {
   }
 
   void gotoProfileSetupScreen() {
-    Get.toNamed(Routes.PROFILE_SETUP);
+    Get.offAllNamed(Routes.PROFILE_SETUP);
   }
 
   //VerificationDoneScreen

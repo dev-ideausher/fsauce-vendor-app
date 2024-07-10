@@ -11,7 +11,8 @@ class ChangePasswordController extends GetxController {
 
   Auth auth = Get.put(Auth());
 
-  final count = 0.obs;
+  RxBool isEmailEmpty = true.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -25,6 +26,7 @@ class ChangePasswordController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    emailController.dispose();
   }
 
   void sendResetPasswordLink() {
@@ -38,6 +40,4 @@ class ChangePasswordController extends GetxController {
   void gotoChangePasswordScreen() {
     Get.to(const ChangePasswordView());
   }
-
-  void increment() => count.value++;
 }

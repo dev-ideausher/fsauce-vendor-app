@@ -126,9 +126,13 @@ class SignupView extends GetView<SignupController> {
                     buttonText: StringConstant.signup,
                     height: 56.kh,
                     width: 100.w,
-                    textStyle: controller.isSignupEnabled.value ? null : TextStyleUtil.manrope16w500(color: context.black03),
-                    buttonColor: controller.isSignupEnabled.value ? context.primary01 : context.primary06,
-                    onPressed: controller.isSignupEnabled.value ? controller.signup : () {});
+                    textStyle: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value
+                        ? null
+                        : TextStyleUtil.manrope16w500(color: context.black03),
+                    buttonColor: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? context
+                        .primary01 : context.primary06,
+                    onPressed: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? controller
+                        .signup : () {});
               }),
               20.kheightBox,
               Row(
@@ -250,6 +254,18 @@ class SignupView extends GetView<SignupController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Obx(() {
+                    return Checkbox(
+                      checkColor: Colors.white,
+                      activeColor: context.primary01,
+                        value: controller.termsAndConditionsChecked.value,
+                        onChanged: (bool? value) {
+                          if(value != null){
+                            controller.termsAndConditionsChecked.value = value;
+                          }
+                        }
+                    );
+                  }),
                   Text(
                     StringConstant.termsAndcons1,
                     style: TextStyleUtil.manrope12w400(
@@ -257,7 +273,9 @@ class SignupView extends GetView<SignupController> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToTermsAndConditions();
+                    },
                     child: Text(
                       StringConstant.termsCons2,
                       style: TextStyleUtil.manrope12w400(
@@ -276,25 +294,32 @@ class SignupView extends GetView<SignupController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    StringConstant.privacyPolicy,
-                    style: TextStyleUtil.manrope12w400(
-                      color: context.primary01,
-                    ),
-                  ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToTermsAndConditions();
+                    },
                     child: Text(
-                      StringConstant.and,
+                      StringConstant.privacyPolicy,
                       style: TextStyleUtil.manrope12w400(
-                        color: context.black01,
+                        color: context.primary01,
                       ),
                     ),
                   ),
                   Text(
-                    StringConstant.contentPolicy,
+                    StringConstant.and,
                     style: TextStyleUtil.manrope12w400(
-                      color: context.primary01,
+                      color: context.black01,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      controller.goToTermsAndConditions();
+                    },
+                    child: Text(
+                      StringConstant.contentPolicy,
+                      style: TextStyleUtil.manrope12w400(
+                        color: context.primary01,
+                      ),
                     ),
                   ),
                 ],

@@ -247,4 +247,10 @@ class APIManager {
   static Future<Response> getCuisines() async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getCuisine);
   }
+
+  static Future<Response> scanLoyaltyCard({
+    required Map<String, dynamic> loyaltyCardData
+  }) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.scanLoyaltyCard, data: loyaltyCardData);
+  }
 }

@@ -11,6 +11,7 @@ import '../controllers/change_password_controller.dart';
 
 class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
   const ChangePasswordVerifyView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,24 +22,24 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
         body: Padding(
           padding: EdgeInsets.all(16.kw),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              StringConstant.verifyAccount,
+              StringConstant.resetPassword,
               style: TextStyleUtil.manrope32w700(),
             ),
-            Text(
-              StringConstant.enterNewPassword,
-              style: TextStyleUtil.manrope16w400(
-                color: context.black03,
-              ),
-            ),
+            // Text(
+            //   StringConstant.enterNewPassword,
+            //   style: TextStyleUtil.manrope16w400(
+            //     color: context.black03,
+            //   ),
+            // ),
             90.kheightBox,
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   textAlign: TextAlign.center,
-                  StringConstant.verifyAccountText,
+                  StringConstant.resetPasswordLinkEmail,
                   style: TextStyleUtil.manrope16w400(
                     color: context.black03,
                   ),
@@ -65,6 +66,13 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onChanged: (val) {
+                          if (val.isEmpty) {
+                            controller.isEmailEmpty.value = true;
+                          } else if (val.isNotEmpty) {
+                            controller.isEmailEmpty.value = false;
+                          }
+                        },
                         controller: controller.emailController,
                         decoration: InputDecoration(
                           hintText: StringConstant.enterEmailId,
@@ -79,11 +87,15 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
               ),
             ),
             const Spacer(),
-            CustomRedElevatedButton(
-                buttonText: StringConstant.continuee,
-                height: 56.kh,
-                width: 100.w,
-                onPressed: controller.sendResetPasswordLink),
+            Obx(() {
+              return CustomRedElevatedButton(
+                  buttonText: StringConstant.sendResetPasswordLink,
+                  textStyle: controller.isEmailEmpty.value ? TextStyleUtil.manrope16w500(color: context.black03) : null,
+                  buttonColor: controller.isEmailEmpty.value ? context.primary06 : context.primary01,
+                  height: 56.kh,
+                  width: 100.w,
+                  onPressed: controller.sendResetPasswordLink);
+            }),
             20.kheightBox,
           ]),
         ));

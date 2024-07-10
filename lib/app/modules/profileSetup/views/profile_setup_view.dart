@@ -21,6 +21,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: null,
         title: const Text(''),
         centerTitle: true,
       ),

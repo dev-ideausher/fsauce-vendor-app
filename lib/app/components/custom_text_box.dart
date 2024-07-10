@@ -13,6 +13,7 @@ class CustomTextBox extends StatelessWidget {
     this.border,
     this.suffixOnPressed,
     this.controller,
+    this.validator,
   });
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -21,6 +22,7 @@ class CustomTextBox extends StatelessWidget {
   final BoxBorder? border;
   final String hintText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class CustomTextBox extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextFormField(
+              validator: validator,
               controller: controller,
               maxLines: null,
               decoration: InputDecoration(
