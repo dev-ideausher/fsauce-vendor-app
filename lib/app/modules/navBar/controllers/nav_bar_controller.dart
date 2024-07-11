@@ -6,6 +6,13 @@ import 'package:fsauce_vendor_app/app/modules/profile/views/profile_view.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/views/vip_offers_view.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/string_constant.dart';
+import '../../../models/dashboard_monthly_data_model.dart';
+import '../../../models/dashboard_weekly_data_model.dart';
+import '../../../models/dashboard_yearly_data_model.dart';
+import '../../../services/dialog_helper.dart';
+import '../../../services/dio/api_service.dart';
+
 enum BottomTab {
   home,
   menu,

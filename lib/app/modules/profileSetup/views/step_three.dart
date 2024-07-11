@@ -6,12 +6,14 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
 
-class StepThree extends StatelessWidget {
+import '../../../components/custom_red_elevated_button.dart';
+import '../../../services/dialog_helper.dart';
+
+class StepThree extends GetView<ProfileSetupController> {
   const StepThree({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ProfileSetupController controller = Get.find();
     return Column(
       children: [
         Row(
@@ -58,7 +60,24 @@ class StepThree extends StatelessWidget {
             )),
         SizedBox(
           height: 24.h,
-        )
+        ),
+        40.kheightBox,
+        CustomRedElevatedButton(
+            buttonText: controller.stepCount.value < 2
+                ? StringConstant.next
+                : StringConstant.continuee,
+            height: 56.kh,
+            width: 100.w,
+            onPressed: () {
+              if(controller.selectedFiles.isNotEmpty){
+                controller.stepCount.value < 2
+                    ? controller.gotoNextStep
+                    : controller.gotoEnableLocationScreen();
+              } else{
+                DialogHelper.showError(StringConstant.noFilesSelected);
+              }
+            }),
+        30.kheightBox,
       ],
     );
   }

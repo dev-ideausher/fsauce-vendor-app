@@ -249,8 +249,24 @@ class APIManager {
   }
 
   static Future<Response> scanLoyaltyCard({
-    required Map<String, dynamic> loyaltyCardData
+    required Map<String, dynamic> data
   }) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.scanLoyaltyCard, data: loyaltyCardData);
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.scanLoyaltyCard, data: data);
+  }
+
+  static Future<Response> getDashboardData({required String dataFor}) async{
+    return await DioClient(
+        Dio(),
+        showSnakbar: true,
+        isOverlayLoader: true
+    ).get(Endpoints.dashboardData, queryParameters: {"dataFor": dataFor});
+  }
+
+  static Future<Response> redeemCouponCode({
+    required String code
+  }) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.redeemCouponCode, data: {
+      "code": code
+    });
   }
 }

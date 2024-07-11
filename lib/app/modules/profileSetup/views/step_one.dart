@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -11,18 +12,16 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
+import '../../../components/custom_red_elevated_button.dart';
 import '../../../models/cuisine_model.dart';
 
-class StepOne extends StatelessWidget {
+class StepOne extends GetView<ProfileSetupController> {
   StepOne({super.key});
 
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final ProfileSetupController controller =
-    Get.find<ProfileSetupController>();
-
     return Form(
       key: formKey,
       child: Column(
@@ -352,6 +351,7 @@ class StepOne extends StatelessWidget {
           ),
           6.kheightBox,
           CustomTextField(
+            keyboardType: TextInputType.number,
             validator: (String? val) {
               if(val == null || val.isEmpty){
                 return "Post code cannot be empty!";
@@ -363,6 +363,21 @@ class StepOne extends StatelessWidget {
             controller: controller.postCodeController,
             hintText: StringConstant.enterLocation,
           ),
+          40.kheightBox,
+          CustomRedElevatedButton(
+              buttonText: controller.stepCount.value < 2
+                  ? StringConstant.next
+                  : StringConstant.continuee,
+              height: 56.kh,
+              width: 100.w,
+              onPressed: () {
+                if(formKey.currentState!.validate()){
+                  controller.stepCount.value < 2
+                      ? controller.gotoNextStep()
+                      : controller.gotoEnableLocationScreen();
+                }
+              }),
+          30.kheightBox,
         ],
       ),
     );

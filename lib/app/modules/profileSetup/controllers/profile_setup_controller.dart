@@ -218,7 +218,7 @@ class ProfileSetupController extends GetxController {
   String restaurantBannerUrl = "";
 
   void gotoNextStep() async {
-    if (stepCount.value == 0) {
+    if (stepCount.value == 0 && restaurantLogo.isNotEmpty && restaurantBanner.isNotEmpty) {
       DialogHelper.showLoading();
       try{
         var response1 =

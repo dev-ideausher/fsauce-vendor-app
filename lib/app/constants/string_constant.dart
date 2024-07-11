@@ -494,6 +494,18 @@ class StringConstant {
   static const String sendResetPasswordLink = "Send reset password link";
   static const String resetPassword = "Reset password";
   static const String resetPasswordLinkEmail = "We will send a reset password link to the email id below.";
+  static const String lastWeek = "lastWeek";
+  static const String lastMonth = "lastMonth";
+  static const String lastYear = "lastYear";
+  static const String failedToGetDashboardData = "Failed to get dashboard data";
+  static const String enterCouponCodeBelow = "To enter coupon code, click here";
+  static const String redeemCouponCode = "Redeem Coupon Code";
+  static const String enterCodeBelow = "Enter your coupon code below to redeem the discount.";
+  static const String couponCode = "Coupon code";
+  static const String enterCouponCode = "Enter coupon code";
+  static const String redeem = "Redeem";
+  static const String redeemedSuccessfully = "Redeemed Successfully!";
+  static const String plsSelectFeaturesAndTimings = "Please select features and timings!";
 
   // static const String
 }

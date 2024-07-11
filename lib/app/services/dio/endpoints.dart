@@ -27,13 +27,16 @@ class Endpoints {
   static const String addNotification = "vendor/addNotification";
   static const String getNotification = "vendor/getNotification";
 
+  //Dashboard end points
+  static const String dashboardData = "vendor/DashboardData";
+
   //Loyalty card end points
   static const String addLoyaltyCard = 'vendor/loyaltycard/addLoyaltycard';
   static const String getLoyaltyCards = 'vendor/loyaltycard/getLoyaltycardList?';
   static const String editLoyaltyCard = 'vendor/loyaltycard/editLoyaltycard';
   static const String delLoyaltyCard = 'vendor/loyaltycard/deleteLoyaltyCard?id=';
   static const String getOneLoyaltyCard = 'vendor/loyaltycard/getOneLoyaltycard?id=';
-  static const String scanLoyaltyCard = 'v1/vendor/loyaltycard/scanLoyaltyCard';
+  static const String scanLoyaltyCard = 'vendor/loyaltycard/scanLoyaltyCard';
 
   static const String addCategory = "vendor/menu/addCategory";
   static const String getCategory = "vendor/menu/getCategory";
@@ -53,7 +56,7 @@ class Endpoints {
   static const String getCoupon = "/vendor/coupon/getOneCoupon?id=";
   static const String editCoupon = "vendor/coupon/editCoupon";
   static const String deleteCoupon = "/vendor/coupon/deleteCoupon?id=";
-
+  static const String redeemCouponCode = "vendor/loyaltycard/redeemLoyaltyCardByCode";
 
   // receiveTimeout
   static const int receiveTimeout = 15000;

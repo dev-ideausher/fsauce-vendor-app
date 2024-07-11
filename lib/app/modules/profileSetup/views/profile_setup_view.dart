@@ -47,16 +47,6 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                 CustomStepper(activeStep: controller.stepCount.value),
                 controller.steps[controller.stepCount.value],
                 40.kheightBox,
-                CustomRedElevatedButton(
-                    buttonText: controller.stepCount.value < 2
-                        ? StringConstant.next
-                        : StringConstant.continuee,
-                    height: 56.kh,
-                    width: 100.w,
-                    onPressed: controller.stepCount.value < 2
-                        ? controller.gotoNextStep
-                        : controller.gotoEnableLocationScreen),
-                30.kheightBox,
               ],
             ),
           ),

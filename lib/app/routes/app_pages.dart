@@ -1,3 +1,4 @@
+import 'package:fsauce_vendor_app/app/modules/qrScan/views/redeem_coupon_code.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/view/splash_view.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/bindings/subscription_binding.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/views/card_details_view.dart';
@@ -86,6 +87,11 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.REDEEMCOUPONCODE,
+      page: () => RedeemCouponCode(),
+      binding: QrScanBinding(),
     ),
     GetPage(
       name: _Paths.TERMSANDCONDITIONS,

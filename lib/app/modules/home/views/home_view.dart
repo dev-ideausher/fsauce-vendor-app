@@ -4,6 +4,10 @@ import 'package:fsauce_vendor_app/app/components/profile_option.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/analysis_screen.dart';
+import 'package:fsauce_vendor_app/app/modules/home/views/monthly_analysis.dart';
+import 'package:fsauce_vendor_app/app/modules/home/views/weekly_analysis.dart';
+import 'package:fsauce_vendor_app/app/modules/home/views/yearly_analysis.dart';
+import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/navBar/views/nav_bar_view.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -165,8 +169,8 @@ class HomeView extends GetView<HomeController> {
                   10.kheightBox,
                   ProfileOption(
                     svgPath: ImageConstant.rating,
-                    onTap: controller.gotoRestaurantDetatils,
-                    text: StringConstant.restaurantDetails,
+                    onTap: controller.goToRestaurantDetails,
+                    text: StringConstant.ratingAndFeedbackManagement,
                   ),
                   20.kheightBox,
                   DefaultTabController(
@@ -223,11 +227,11 @@ class HomeView extends GetView<HomeController> {
                         SizedBox(
                           height:
                           100.h - 200, // Set a fixed height for TabBarView
-                          child: const TabBarView(
+                          child: TabBarView(
                             children: [
-                              SingleChildScrollView(child: AnalysisScreen()),
-                              SingleChildScrollView(child: AnalysisScreen()),
-                              SingleChildScrollView(child: AnalysisScreen()),
+                              SingleChildScrollView(child: WeeklyAnalysis()),
+                              SingleChildScrollView(child: MonthlyAnalysis()),
+                              SingleChildScrollView(child: YearlyAnalysis()),
                             ],
                           ),
                         ),
