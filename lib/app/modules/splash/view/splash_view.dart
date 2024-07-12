@@ -22,7 +22,7 @@ class SplashView extends GetView<SplashController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CommonImageView(
-                  imagePath: Assets.FsauceLogo,
+                  imagePath: Assets.pngsFsauceLogo,
                   fit: BoxFit.contain,
                   height: 500.kh,
                   width: 500.kh,

@@ -41,23 +41,26 @@ class LoyaltyCardsView extends GetView<LoyaltyCardsController> {
           ),
           leading: const SizedBox(),
           centerTitle: true,
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 7.kw),
-              child: IconButton(
-                  onPressed: controller.gotoEditLoyaltyPage,
-                  icon: CommonImageView(
-                    svgPath: ImageConstant.editPen,
-                    height: 20.kh,
-                  )),
-            )
-          ],
         ),
         body: Padding(
           padding: EdgeInsets.all(16.kw),
           child: TabBarView(
               children: controller.tabs,
           )
+        ),
+        floatingActionButton: Container(
+          height: 41.kh,
+          width: 41.kw,
+          decoration:
+          BoxDecoration(shape: BoxShape.circle, color: context.primary01),
+          child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 30.kw,
+              ),
+              onPressed: controller.gotoEditLoyaltyPage),
         ),
       ),
     );

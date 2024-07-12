@@ -6,13 +6,14 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class VipOffersController extends GetxController {
   //TODO: Implement VipOffersController
 
   RxList<Coupon> couponsList = <Coupon>[].obs;
   RxList<Coupon> inactiveCouponList = <Coupon>[].obs;
-  Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true).obs;
+  Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true, image: '').obs;
 
   @override
   void onInit() {

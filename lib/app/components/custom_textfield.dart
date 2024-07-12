@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixOnPressed,
     this.keyboardType,
     this.validator,
+    this.readOnly = false,
   });
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class CustomTextField extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextFormField(
+              readOnly: readOnly,
               validator: validator,
               controller: controller,
               keyboardType: keyboardType,

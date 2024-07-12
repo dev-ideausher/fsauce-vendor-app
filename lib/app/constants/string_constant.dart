@@ -506,6 +506,8 @@ class StringConstant {
   static const String redeem = "Redeem";
   static const String redeemedSuccessfully = "Redeemed Successfully!";
   static const String plsSelectFeaturesAndTimings = "Please select features and timings!";
+  static const String emptyCouponImage = "Coupon image is empty!";
+  static const String couponPhoto = "Coupon photo";
 
   // static const String
 }

@@ -28,6 +28,9 @@ class EditResturantDetailsController extends GetxController {
   Rx<CuisineModel> selectedCuisine = CuisineModel(id: "id", name: "name").obs;
   List<DropdownMenuItem<CuisineModel>> cuisineOptions = <DropdownMenuItem<CuisineModel>>[];
 
+  String restaurantLogo = "";
+  String restaurantBanner = "";
+
   Future<void> pickLogo() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
@@ -77,11 +80,27 @@ class EditResturantDetailsController extends GetxController {
     averagePriceController.text = details.avgPrice.toString();
     descriptionController.text = details.description;
     initialCuisineModels.value = details.cuisine;
+    restaurantLogo = details.restaurantLogo;
+    restaurantBanner = details.restaurantBanner;
   }
 
   @override
   void onReady() {
     super.onReady();
+  }
+
+  Future<String> uploadRestaurantMedia(String filePath) async{
+    String fileUrl = "";
+    try{
+      var response = await APIManager.uploadFile(filePath: filePath);
+      if(response.data['status']){
+        fileUrl = response.data['data'];
+      }
+    } catch(e){
+      print("An error occurred while uploading logo! $e");
+      DialogHelper.showError(StringConstant.somethingWentWrong);
+    }
+    return fileUrl;
   }
 
   Future<void> updateDetails() async{
@@ -101,43 +120,46 @@ class EditResturantDetailsController extends GetxController {
       DialogHelper.showError(StringConstant.selectedBannerImageEmpty);
     }
     else{
-      String logoUrl = ''; String bannerUrl = '';
-      var uploadLogoResponse = await APIManager.uploadFile(filePath: selectedLogoImage.value);
-      if(!uploadLogoResponse.data['status']){
-        DialogHelper.showError(StringConstant.logoImageUploadError);
-      } else if(uploadLogoResponse.data['status']){
-        logoUrl = uploadLogoResponse.data['data'];
-        var uploadBannerResponse = await APIManager.uploadFile(filePath: selectedLogoImage.value);
-        if(!uploadBannerResponse.data['status']){
-          DialogHelper.showError(StringConstant.bannerImageUploadError);
-        } else if(uploadLogoResponse.data['status']){
-          bannerUrl = uploadBannerResponse.data['data'];
-          var response = await APIManager.updateVendor(
-              restaurantDetails: RestaurantDetails(
-                restaurantName: restaurantNameController.text,
-                restaurantLogo: logoUrl,
-                restaurantBanner: bannerUrl,
-                location: addressController.text,
-                avgPrice: int.parse(averagePriceController.text),
-                description: descriptionController.text,
-                features: Get.find<HomeController>().restaurantDetails.value.features,
-                timing: Get.find<HomeController>().restaurantDetails.value.timing,
-                media: Get.find<HomeController>().restaurantDetails.value.media,
-                cuisine: initialCuisineModels,
-              )
-          );
-          if(response.data["status"]){
-            restaurantNameController.text = "";
-            addressController.text = "";
-            averagePriceController.text = "";
-            descriptionController.text = "";
-            DialogHelper.showSuccess(StringConstant.detailsUpdatedSuccessfully);
-            Get.find<HomeController>().getRestaurantDetails();
-          }
-          else if(!response.data["status"]){
-            DialogHelper.showError(StringConstant.anErrorOccurred);
-          }
+      try{
+        String logoUrl = restaurantLogo;
+        String bannerUrl = restaurantBanner;
+        if(logoUrl.isEmpty && selectedLogoImage.isNotEmpty){
+          logoUrl = await uploadRestaurantMedia(selectedLogoImage.value);
         }
+        else if(bannerUrl.isEmpty && selectedBannerImage.isNotEmpty){
+          bannerUrl = await uploadRestaurantMedia(selectedBannerImage.value);
+        }
+        var response = await APIManager.updateVendor(
+            restaurantDetails: RestaurantDetails(
+              restaurantName: restaurantNameController.text,
+              restaurantLogo: logoUrl,
+              restaurantBanner: bannerUrl,
+              location: addressController.text,
+              avgPrice: int.parse(averagePriceController.text),
+              description: descriptionController.text,
+              features: Get.find<HomeController>().restaurantDetails.value.features,
+              timing: Get.find<HomeController>().restaurantDetails.value.timing,
+              media: Get.find<HomeController>().restaurantDetails.value.media,
+              cuisine: initialCuisineModels,
+            )
+        );
+        if(response.data["status"]){
+          restaurantNameController.text = "";
+          addressController.text = "";
+          averagePriceController.text = "";
+          descriptionController.text = "";
+          selectedBannerImage.value = "";
+          selectedLogoImage.value = "";
+          Get.back();
+          DialogHelper.showSuccess(StringConstant.detailsUpdatedSuccessfully);
+          Get.find<HomeController>().getRestaurantDetails();
+        }
+        else if(!response.data["status"]){
+          DialogHelper.showError(StringConstant.anErrorOccurred);
+        }
+      } catch(e){
+        print("An error occurred while editing profile!: $e");
+        DialogHelper.showError(StringConstant.anErrorOccurred);
       }
     }
   }

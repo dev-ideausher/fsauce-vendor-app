@@ -26,7 +26,12 @@ class LoyaltyView extends GetView<LoyaltyController> {
             StringConstant.loyaltyCard,
             style: TextStyleUtil.manrope18w600(),
           ),
-          leading: const SizedBox(),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, size: 18),
+            onPressed: () {
+              Get.back();
+            },
+          ),
           centerTitle: true,
         ),
         body: SingleChildScrollView(

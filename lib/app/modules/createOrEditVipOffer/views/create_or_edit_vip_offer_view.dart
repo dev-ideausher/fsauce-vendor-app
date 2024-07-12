@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -11,6 +13,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../components/common_image_view.dart';
 import '../controllers/create_or_edit_vip_offer_controller.dart';
 
 class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
@@ -145,7 +148,9 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
               ),
               10.kheightBox,
               CustomTextField(
+                readOnly: true,
                 controller: controller.validTillDateController,
+                  keyboardType: TextInputType.datetime,
                   fillColor: context.loginSignupTextfieldColor,
                   border: Border.all(color: context.black07),
                   suffixIcon: Icons.calendar_month,
@@ -162,6 +167,94 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                     });
                   },
                   hintText: StringConstant.enterValidTill),
+              10.kheightBox,
+              Row(
+                children: [
+                  Text(
+                    StringConstant.couponPhoto,
+                    style: TextStyleUtil.manrope14w500(),
+                  ),
+                  Text(
+                    "*",
+                    style:
+                    TextStyleUtil.manrope14w500(color: context.primary01),
+                  )
+                ],
+              ),
+              20.kheightBox,
+              Obx(() {
+                if (controller.selectedCouponImage.isNotEmpty) {
+                  return Image.file(
+                    height: 160.kh,
+                    width: 100.w,
+                    File(controller.selectedCouponImage.value),
+                    fit: BoxFit.contain,
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+              10.kheightBox,
+              Obx(() {
+                if (controller.couponImageLink
+                    .isNotEmpty && controller.selectedCouponImage.isEmpty) {
+                  return Column(
+                    children: <Widget>[
+                      6.kheightBox,
+                      CommonImageView(
+                        url: controller.couponImageLink
+                            .value,
+                        height: 150.kh,
+                        width: 150.kh,
+                      ),
+                      6.kheightBox,
+                    ],
+                  );
+                }
+                else if(controller.couponImageLink.isEmpty && controller.selectedCouponImage.isEmpty){
+                  return Container();
+                }
+                else {
+                  return Container();
+                }
+              }),
+              Obx(() {
+                if (controller.couponImageLink
+                    .value
+                    .isEmpty) {
+                  return InkWell(
+                    onTap: () {
+                      controller.pickCouponImage();
+                    },
+                    child: Container(
+                      height: 160.kh,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: context.black07),
+                          borderRadius: BorderRadius.circular(8.kw),
+                          color: context.loginSignupTextfieldColor),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.file_upload_outlined),
+                            2.kwidthBox,
+                            Text(
+                              StringConstant.uploadPhoto,
+                              style: TextStyleUtil.manrope14w400(
+                                  color: context.black03),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return IconButton(onPressed: () {
+                    controller.pickCouponImage();
+                  }, icon: const Icon(Icons.edit));
+                }
+              }),
               20.kheightBox,
               Row(
                 children: [
@@ -251,6 +344,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                                 lastDate: DateTime.now().add(const Duration(days: 2 * 365))
                             ).then((pickedDate){
                               if(pickedDate != null){
+                                controller.scheduledDate = pickedDate;
                                 controller.scheduleDateController.text = pickedDate.toString().substring(0, 11);
                               }
                             });

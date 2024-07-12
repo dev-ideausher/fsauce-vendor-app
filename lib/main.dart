@@ -31,9 +31,6 @@ Future<void> main() async {
       locale: const Locale('en', 'US'),
       // translationsKeys: AppTranslation.translations,
       initialRoute: Routes.SPLASHVIEW,
-      //Get.find<GetStorageService>().encjwToken.isEmpty
-      //           ? AppPages.INITIAL
-      //           : Routes.NAV_BAR,
       initialBinding: SplashBinding(),
       getPages: AppPages.routes,
     ),

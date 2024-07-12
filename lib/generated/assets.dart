@@ -4,7 +4,7 @@ class Assets {
 
   static const String lottiefilesCarUpdate = 'assets/lottiefiles/carUpdate.json';
   static const String lottiefilesInAppUpdate = 'assets/lottiefiles/inAppUpdate.json';
-  static const String FsauceLogo = 'assets/pngs/fsauce_logo.png';
+  static const String pngsFsauceLogo = 'assets/pngs/fsauce_logo.png';
   static const String pngsSubscriptionIcon = 'assets/pngs/subscription_icon.png';
   static const String svgsAppleLogo = 'assets/svgs/apple_logo.svg';
   static const String svgsBackIcon = 'assets/svgs/back_icon.svg';
@@ -25,6 +25,7 @@ class Assets {
   static const String svgsFocusIcon = 'assets/svgs/focus_icon.svg';
   static const String svgsFsauceLogo = 'assets/svgs/fsauce_logo.svg';
   static const String svgsGetStarted = 'assets/svgs/get_started.svg';
+  static const String svgsGiftIcon = 'assets/svgs/gift_icon.svg';
   static const String svgsGoogleLogo = 'assets/svgs/google_logo.svg';
   static const String svgsGroupChatIcon = 'assets/svgs/group_chat_icon.svg';
   static const String svgsGroups = 'assets/svgs/groups.svg';

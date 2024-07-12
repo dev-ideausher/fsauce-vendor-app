@@ -146,7 +146,10 @@ class APIManager {
         "description": coupon.description,
         "termsAndConditions": coupon.termsAndConditions,
         "id": coupon.id,
-        "isActive": isActive
+        "isActive": isActive,
+        "image": coupon.image,
+        "isSheduled": coupon.isSheduled ?? "",
+        "sheduleDate": coupon.sheduleDate ?? "",
       },
     );
   }

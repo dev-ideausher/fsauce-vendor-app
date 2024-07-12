@@ -8,6 +8,8 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
+import '../../generated/assets.dart';
+
 class LoyaltyReviewCard extends StatelessWidget {
   const LoyaltyReviewCard({super.key});
 
@@ -57,60 +59,47 @@ class LoyaltyReviewCard extends StatelessWidget {
             style: TextStyleUtil.manrope16w600(color: Colors.white),
           ),
           10.kheightBox,
-          Row(
+          Wrap(
+            runSpacing: 10.kh,
             children: [
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.kw)),
-                child: Center(
-                  child: Icon(
-                    Icons.check,
-                    size: 28,
-                  ),
-                ),
+              SizedBox(
+                height: 50,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx, index){
+                      return Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                            color: context.black07,
+                            borderRadius: BorderRadius.circular(8.kw)),
+                        child: Center(
+                          child: Icon(
+                            Icons.check,
+                            color: context.black04,
+                            size: 28,
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (ctx, index){
+                      return 10.kwidthBox;
+                    },
+                    itemCount: Get.find<LoyaltyController>().noOfStamps),
               ),
               10.kwidthBox,
               Container(
                 height: 48,
                 width: 48,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.black07,
                     borderRadius: BorderRadius.circular(8.kw)),
                 child: Center(
-                  child: Icon(
-                    Icons.check,
-                    size: 28,
-                  ),
-                ),
-              ),
-              10.kwidthBox,
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.kw)),
-                child: Center(
-                  child: Icon(
-                    Icons.check,
-                    size: 28,
-                  ),
-                ),
-              ),
-              10.kwidthBox,
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.kw)),
-                child: Center(
-                  child: Icon(
-                    Icons.check,
-                    size: 28,
+                  child: CommonImageView(
+                    svgPath: Assets.svgsGiftIcon,
+                    height: 28.kh,
+                    width: 28.kw,
                   ),
                 ),
               )
@@ -123,14 +112,14 @@ class LoyaltyReviewCard extends StatelessWidget {
           ),
           10.kheightBox,
           Text(
-            "4 points = 1 Free Regular Pizza",
+            Get.find<LoyaltyController>().cardTitleController.text,
             style: TextStyleUtil.manrope16w500(color: Colors.white),
           ),
           20.kheightBox,
           Container(
             height: 58,
             width: 100.w,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
             child: Row(
@@ -143,8 +132,8 @@ class LoyaltyReviewCard extends StatelessWidget {
                   width: 2,
                   decoration: BoxDecoration(color: context.borderColor2),
                 ),
-                Text(StringConstant.history),
-                Icon(Icons.keyboard_arrow_right_sharp)
+                const Text(StringConstant.history),
+                const Icon(Icons.keyboard_arrow_right_sharp)
               ],
             ),
           ),
@@ -163,7 +152,7 @@ class LoyaltyReviewCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Reddem",
+                  Text("Redeem",
                       style: TextStyleUtil.manrope16w500(color: Colors.white)),
                 ],
               ),
