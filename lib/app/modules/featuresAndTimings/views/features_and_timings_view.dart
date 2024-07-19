@@ -20,6 +20,8 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.selectedFeatures.value =
+        Get.find<HomeController>().restaurantDetails.value.features;
     return Scaffold(
       appBar: const CustomAppBar(
         title: StringConstant.featuresTimings,
@@ -44,36 +46,36 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
               ),
               8.kheightBox,
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.kh),
-                decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.kw),
-                    border: Border.all(color: context.black07)),
-                child: MultiSelectDialogField<FeatureModel>(
-                  initialValue: controller.selectedFeatures,
-                  items: controller.multiSelectFeatures,
-                  title: Text(
-                    StringConstant.enterFeatures,
-                    style: TextStyleUtil.manrope16w400(),
-                  ),
-                  selectedColor: context.primary01,
+                  padding: EdgeInsets.symmetric(horizontal: 8.kh),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.kw),
-                    border: Border.all(color: Colors.transparent),
+                      color: context.loginSignupTextfieldColor,
+                      borderRadius: BorderRadius.circular(8.kw),
+                      border: Border.all(color: context.black07)),
+                  child: MultiSelectDialogField<FeatureModel>(
+                    initialValue: controller.selectedFeatures,
+                    items: controller.multiSelectFeatures,
+                    title: Text(
+                      StringConstant.enterFeatures,
+                      style: TextStyleUtil.manrope16w400(),
+                    ),
+                    selectedColor: context.primary01,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.kw),
+                      border: Border.all(color: Colors.transparent),
+                    ),
+                    buttonIcon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Colors.black,
+                    ),
+                    buttonText: Text(
+                      StringConstant.enterFeatures,
+                      style: TextStyleUtil.manrope14w400(color: context
+                          .black04),
+                    ),
+                    onConfirm: (results) {
+                      controller.selectedFeatures.value = results;
+                    },
                   ),
-                  buttonIcon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: Colors.black,
-                  ),
-                  buttonText: Text(
-                    StringConstant.enterFeatures,
-                    style: TextStyleUtil.manrope14w400(color: context
-                        .black04),
-                  ),
-                  onConfirm: (results) {
-                    controller.selectedFeatures.addAll(results);
-                  },
-                )
               ),
               10.kheightBox,
               Row(

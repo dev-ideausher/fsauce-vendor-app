@@ -32,364 +32,393 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.kw),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.restaurantName,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                6.kheightBox,
-                CustomTextField(
-                    controller: controller.restaurantNameController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    hintText: StringConstant.enterRestaurantName),
-                20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.restaurantLogo,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                Text(
-                  StringConstant.pngJpgJpeg,
-                  style: TextStyleUtil.manrope14w500(color: context.black03),
-                ),
-                6.kheightBox,
-                Obx(() {
-                  if (controller.selectedLogoImage.isNotEmpty) {
-                    return Image.file(
-                      width: 100.w,
-                      height: 100.kh,
-                      File(controller.selectedLogoImage.value),
-                      fit: BoxFit.contain,
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
-                6.kheightBox,
-                Obx(() {
-                  if (Get
-                      .find<HomeController>()
-                      .restaurantDetails
-                      .value
-                      .restaurantLogo
-                      .isNotEmpty && controller.selectedLogoImage.isEmpty) {
-                    return Column(
-                      children: <Widget>[
-                        6.kheightBox,
-                        CommonImageView(
-                          url: Get
-                              .find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .restaurantLogo,
-                          height: 150.kh,
-                          width: 150.kh,
-                        ),
-                        6.kheightBox,
-                      ],
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
-                Obx(() {
-                  if (Get
-                      .find<HomeController>()
-                      .restaurantDetails
-                      .value
-                      .restaurantLogo
-                      .isEmpty) {
-                    return InkWell(
-                      onTap: () {
-                        controller.pickLogo();
-                      },
-                      child: Container(
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.kheightBox,
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.restaurantName,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  6.kheightBox,
+                  CustomTextField(
+                    validator: (String? val){
+                      if(val == null || val.isEmpty){
+                        return StringConstant.restaurantNameCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                      controller: controller.restaurantNameController,
+                      fillColor: context.loginSignupTextfieldColor,
+                      border: Border.all(color: context.black07),
+                      hintText: StringConstant.enterRestaurantName),
+                  20.kheightBox,
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.restaurantLogo,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  Text(
+                    StringConstant.pngJpgJpeg,
+                    style: TextStyleUtil.manrope14w500(color: context.black03),
+                  ),
+                  6.kheightBox,
+                  Obx(() {
+                    if (controller.selectedLogoImage.isNotEmpty) {
+                      return Image.file(
                         width: 100.w,
                         height: 100.kh,
-                        decoration: BoxDecoration(
-                          color: context.loginSignupTextfieldColor,
-                          borderRadius: BorderRadius.circular(8.kw),
-                          border: RDottedLineBorder.all(
-                            color: context.black07,
-                            width: 2,
+                        File(controller.selectedLogoImage.value),
+                        fit: BoxFit.contain,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+                  6.kheightBox,
+                  Obx(() {
+                    if (Get
+                        .find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .restaurantLogo
+                        .isNotEmpty && controller.selectedLogoImage.isEmpty) {
+                      return Column(
+                        children: <Widget>[
+                          6.kheightBox,
+                          CommonImageView(
+                            url: Get
+                                .find<HomeController>()
+                                .restaurantDetails
+                                .value
+                                .restaurantLogo,
+                            height: 150.kh,
+                            width: 150.kh,
                           ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.file_upload_outlined),
-                            10.kheightBox,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  StringConstant.uploadFile,
-                                  style: TextStyleUtil.manrope14w500(
-                                      color: context.primary01),
-                                ),
-                                4.kwidthBox,
-                                Text(
-                                  StringConstant.or,
-                                  style: TextStyleUtil.manrope14w500(
-                                      color: context.black04),
-                                ),
-                                4.kwidthBox,
-                                Text(
-                                  StringConstant.selectFile,
-                                  style: TextStyleUtil.manrope14w500(
-                                      color: context.primary01),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  } else {
-                    return IconButton(onPressed: () {
-                      controller.pickLogo();
-                    }, icon: const Icon(Icons.edit));
-                  }
-                }),
-                10.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.restaurantBannerImage,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                6.kheightBox,
-                Obx(() {
-                  if (controller.selectedBannerImage.isNotEmpty) {
-                    return Image.file(
-                      height: 160.kh,
-                      width: 100.w,
-                      File(controller.selectedBannerImage.value),
-                      fit: BoxFit.contain,
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
-                6.kheightBox,
-                Obx(() {
-                  if (Get
-                      .find<HomeController>()
-                      .restaurantDetails
-                      .value
-                      .restaurantBanner
-                      .isNotEmpty && controller.selectedBannerImage.isEmpty) {
-                    return Column(
-                      children: <Widget>[
-                        6.kheightBox,
-                        CommonImageView(
-                          url: Get
-                              .find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .restaurantBanner,
-                          height: 150.kh,
-                          width: 150.kh,
-                        ),
-                        6.kheightBox,
-                      ],
-                    );
-                  }
-                  else {
-                    return Container();
-                  }
-                }),
-                Obx(() {
-                  if (Get
-                      .find<HomeController>()
-                      .restaurantDetails
-                      .value
-                      .restaurantBanner
-                      .isEmpty) {
-                    return InkWell(
-                      onTap: () {
-                        controller.pickBanner();
-                      },
-                      child: Container(
-                        height: 160.kh,
-                        width: 100.w,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: context.black07),
+                          6.kheightBox,
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+                  Obx(() {
+                    if (Get
+                        .find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .restaurantLogo
+                        .isEmpty) {
+                      return InkWell(
+                        onTap: () {
+                          controller.pickLogo();
+                        },
+                        child: Container(
+                          width: 100.w,
+                          height: 100.kh,
+                          decoration: BoxDecoration(
+                            color: context.loginSignupTextfieldColor,
                             borderRadius: BorderRadius.circular(8.kw),
-                            color: context.loginSignupTextfieldColor),
-                        child: Center(
-                          child: Row(
+                            border: RDottedLineBorder.all(
+                              color: context.black07,
+                              width: 2,
+                            ),
+                          ),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Icon(Icons.file_upload_outlined),
-                              2.kwidthBox,
-                              Text(
-                                StringConstant.uploadPhoto,
-                                style: TextStyleUtil.manrope14w400(
-                                    color: context.black03),
+                              10.kheightBox,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    StringConstant.uploadFile,
+                                    style: TextStyleUtil.manrope14w500(
+                                        color: context.primary01),
+                                  ),
+                                  4.kwidthBox,
+                                  Text(
+                                    StringConstant.or,
+                                    style: TextStyleUtil.manrope14w500(
+                                        color: context.black04),
+                                  ),
+                                  4.kwidthBox,
+                                  Text(
+                                    StringConstant.selectFile,
+                                    style: TextStyleUtil.manrope14w500(
+                                        color: context.primary01),
+                                  ),
+                                ],
                               )
                             ],
                           ),
                         ),
-                      ),
-                    );
-                  } else {
-                    return IconButton(onPressed: () {
-                      controller.pickBanner();
-                    }, icon: const Icon(Icons.edit));
-                  }
-                }),
-                20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.address,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                10.kheightBox,
-                CustomTextField(
-                    controller: controller.addressController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    hintText: StringConstant.enterAddress),
-                20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.avgPriceFor2,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                10.kheightBox,
-                CustomTextField(
-                    controller: controller.averagePriceController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    hintText: StringConstant.enterAddress),
-                20.kheightBox,
-                Text(
-                  StringConstant.description,
-                  style: TextStyleUtil.manrope14w500(),
-                ),
-                10.kheightBox,
-                CustomTextField(
-                    controller: controller.descriptionController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    hintText: StringConstant.enterDescription),
-                10.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.cuisine,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                      TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                10.kheightBox,
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: context.borderColor2),
-                      borderRadius: BorderRadius.circular(8.kw)),
-                  padding: EdgeInsets.symmetric(horizontal: 10.kw),
-                  child: Row(
+                      );
+                    } else {
+                      return IconButton(onPressed: () {
+                        controller.pickLogo();
+                      }, icon: const Icon(Icons.edit));
+                    }
+                  }),
+                  10.kheightBox,
+                  Row(
                     children: [
-                      Expanded(
-                          child: Obx(() {
-                            return DropdownButtonFormField<CuisineModel>(
-                              // value: controller.cuisines.firstWhere((
-                              //     CuisineModel cuisine) =>
-                              // cuisine == controller.initialCuisineModels.first),
-                              dropdownColor: Colors.white,
-                              style: TextStyleUtil.manrope16w400(),
-                              onChanged: (val) {
-                                if (val != null) {
-                                  controller.initialCuisineModels.value = [];
-                                  controller.initialCuisineModels.add(val);
-                                  controller.selectedCuisine.value = val;
-                                }
-                              },
-                              items: controller.cuisines
-                                  .map<DropdownMenuItem<CuisineModel>>((
-                                  CuisineModel value) {
-                                return DropdownMenuItem<CuisineModel>(
-                                  value: value,
-                                  child: Text(value.name!),
-                                );
-                              }).toList(),
-                              icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded),
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(0),
-                                hintText: StringConstant.selectCuisine,
-                                hintStyle: TextStyleUtil.manrope14w400(
-                                    color: context.black04),
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            );
-                          })
+                      Text(
+                        StringConstant.restaurantBannerImage,
+                        style: TextStyleUtil.manrope14w500(),
                       ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
                     ],
                   ),
-                ),
-                40.kheightBox,
-                CustomRedElevatedButton(
-                    buttonText: StringConstant.save,
-                    height: 56.kh,
-                    width: 100.w,
-                    onPressed: () {
-                      controller.updateDetails();
-                    }),
-                40.kheightBox,
-              ],
+                  6.kheightBox,
+                  Obx(() {
+                    if (controller.selectedBannerImage.isNotEmpty) {
+                      return Image.file(
+                        height: 160.kh,
+                        width: 100.w,
+                        File(controller.selectedBannerImage.value),
+                        fit: BoxFit.contain,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+                  6.kheightBox,
+                  Obx(() {
+                    if (Get
+                        .find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .restaurantBanner
+                        .isNotEmpty && controller.selectedBannerImage.isEmpty) {
+                      return Column(
+                        children: <Widget>[
+                          6.kheightBox,
+                          CommonImageView(
+                            url: Get
+                                .find<HomeController>()
+                                .restaurantDetails
+                                .value
+                                .restaurantBanner,
+                            height: 150.kh,
+                            width: 150.kh,
+                          ),
+                          6.kheightBox,
+                        ],
+                      );
+                    }
+                    else {
+                      return Container();
+                    }
+                  }),
+                  Obx(() {
+                    if (Get
+                        .find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .restaurantBanner
+                        .isEmpty) {
+                      return InkWell(
+                        onTap: () {
+                          controller.pickBanner();
+                        },
+                        child: Container(
+                          height: 160.kh,
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: context.black07),
+                              borderRadius: BorderRadius.circular(8.kw),
+                              color: context.loginSignupTextfieldColor),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.file_upload_outlined),
+                                2.kwidthBox,
+                                Text(
+                                  StringConstant.uploadPhoto,
+                                  style: TextStyleUtil.manrope14w400(
+                                      color: context.black03),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return IconButton(onPressed: () {
+                        controller.pickBanner();
+                      }, icon: const Icon(Icons.edit));
+                    }
+                  }),
+                  20.kheightBox,
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.address,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  10.kheightBox,
+                  CustomTextField(
+                      validator: (String? val){
+                        if(val == null || val.isEmpty){
+                          return StringConstant.restaurantAddressCannotBeEmpty;
+                        }
+                        return null;
+                      },
+                      controller: controller.addressController,
+                      fillColor: context.loginSignupTextfieldColor,
+                      border: Border.all(color: context.black07),
+                      hintText: StringConstant.enterAddress),
+                  20.kheightBox,
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.avgPriceFor2,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  10.kheightBox,
+                  CustomTextField(
+                      validator: (String? val){
+                        if(val == null || val.isEmpty){
+                          return StringConstant.restaurantPriceCannotBeEmpty;
+                        }
+                        return null;
+                      },
+                      controller: controller.averagePriceController,
+                      fillColor: context.loginSignupTextfieldColor,
+                      border: Border.all(color: context.black07),
+                      hintText: StringConstant.enterAddress),
+                  20.kheightBox,
+                  Text(
+                    StringConstant.description,
+                    style: TextStyleUtil.manrope14w500(),
+                  ),
+                  10.kheightBox,
+                  CustomTextField(
+                      controller: controller.descriptionController,
+                      fillColor: context.loginSignupTextfieldColor,
+                      border: Border.all(color: context.black07),
+                      hintText: StringConstant.enterDescription),
+                  10.kheightBox,
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.cuisine,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
+                      )
+                    ],
+                  ),
+                  10.kheightBox,
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: context.borderColor2),
+                        borderRadius: BorderRadius.circular(8.kw)),
+                    padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Obx(() {
+                              return DropdownButtonFormField<CuisineModel>(
+                                validator: (CuisineModel? model){
+                                  if(model == null || model.id!.isEmpty){
+                                    return StringConstant.restaurantCuisineCannotBeEmpty;
+                                  }
+                                  return null;
+                                },
+                                value: controller.cuisines.firstWhere(
+                                        (CuisineModel cuisine) =>
+                                cuisine.id == controller.initialCuisineModels.first.id) ?? controller.selectedCuisine.value,
+                                dropdownColor: Colors.white,
+                                style: TextStyleUtil.manrope16w400(),
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    controller.initialCuisineModels.value = [];
+                                    controller.initialCuisineModels.add(val);
+                                    controller.selectedCuisine.value = val;
+                                  }
+                                },
+                                items: controller.cuisines
+                                    .map<DropdownMenuItem<CuisineModel>>((
+                                    CuisineModel value) {
+                                  return DropdownMenuItem<CuisineModel>(
+                                    value: value,
+                                    child: Text(value.name!),
+                                  );
+                                }).toList(),
+                                icon: const Icon(
+                                    Icons.keyboard_arrow_down_rounded),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  hintText: StringConstant.selectCuisine,
+                                  hintStyle: TextStyleUtil.manrope14w400(
+                                      color: context.black04),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              );
+                            })
+                        ),
+                      ],
+                    ),
+                  ),
+                  40.kheightBox,
+                  CustomRedElevatedButton(
+                      buttonText: StringConstant.save,
+                      height: 56.kh,
+                      width: 100.w,
+                      onPressed: () {
+                        if(controller.formKey.currentState!.validate()){
+                          controller.updateDetails();
+                        }
+                      }),
+                  40.kheightBox,
+                ],
+              ),
             ),
           ),
         ));

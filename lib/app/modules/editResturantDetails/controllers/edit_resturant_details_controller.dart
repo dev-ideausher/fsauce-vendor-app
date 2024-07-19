@@ -25,8 +25,9 @@ class EditResturantDetailsController extends GetxController {
   RxString selectedCuisineType = "".obs;
   RxList<CuisineModel> initialCuisineModels = <CuisineModel>[].obs;
   RxList<CuisineModel> cuisines = <CuisineModel>[].obs;
-  Rx<CuisineModel> selectedCuisine = CuisineModel(id: "id", name: "name").obs;
-  List<DropdownMenuItem<CuisineModel>> cuisineOptions = <DropdownMenuItem<CuisineModel>>[];
+  Rx<CuisineModel> selectedCuisine = CuisineModel(id: "id", name: "name", image: "").obs;
+  // List<DropdownMenuItem<CuisineModel>> cuisineOptions = <DropdownMenuItem<CuisineModel>>[];
+  final formKey = GlobalKey<FormState>();
 
   String restaurantLogo = "";
   String restaurantBanner = "";
@@ -106,27 +107,32 @@ class EditResturantDetailsController extends GetxController {
   Future<void> updateDetails() async{
     if(restaurantNameController.text.trim().isEmpty){
       DialogHelper.showError(StringConstant.resNameEmpty);
+      return;
     }
     if(addressController.text.trim().isEmpty){
       DialogHelper.showError(StringConstant.addressNameEmpty);
+      return;
     }
     if(averagePriceController.text.trim().isEmpty){
       DialogHelper.showError(StringConstant.avgPriceEmpty);
+      return;
     }
     if(selectedLogoImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantLogo.isEmpty){
       DialogHelper.showError(StringConstant.selectedLogoImageEmpty);
+      return;
     }
     if(selectedBannerImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantBanner.isEmpty){
       DialogHelper.showError(StringConstant.selectedBannerImageEmpty);
+      return;
     }
-    else{
+    else if(restaurantNameController.text.trim().isNotEmpty && addressController.text.isNotEmpty && averagePriceController.text.isNotEmpty){
       try{
         String logoUrl = restaurantLogo;
         String bannerUrl = restaurantBanner;
-        if(logoUrl.isEmpty && selectedLogoImage.isNotEmpty){
+        if(selectedLogoImage.isNotEmpty){
           logoUrl = await uploadRestaurantMedia(selectedLogoImage.value);
         }
-        else if(bannerUrl.isEmpty && selectedBannerImage.isNotEmpty){
+        else if(selectedBannerImage.isNotEmpty){
           bannerUrl = await uploadRestaurantMedia(selectedBannerImage.value);
         }
         var response = await APIManager.updateVendor(

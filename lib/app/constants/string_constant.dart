@@ -224,7 +224,7 @@ class StringConstant {
   static const String restaurantBannerImage = "Restaurant Banner Image";
   static const String uploadPhoto = "Upload photo";
   static const String enterLocation = "Enter Location";
-  static const String avgPriceFor2 = "Average price for 2 people";
+  static const String avgPriceFor2 = "Average Price For 2 People";
   static const String enterPrice = "Enter price";
   static const String enterDescription = "Enter description";
   static const String enterFeatures = "Enter Features";
@@ -508,6 +508,14 @@ class StringConstant {
   static const String plsSelectFeaturesAndTimings = "Please select features and timings!";
   static const String emptyCouponImage = "Coupon image is empty!";
   static const String couponPhoto = "Coupon photo";
+  static const String restaurantNameCannotBeEmpty = "Restaurant name cannot be empty!";
+  static const String restaurantAddressCannotBeEmpty = "Restaurant address cannot be empty!";
+  static const String restaurantPriceCannotBeEmpty = "Restaurant average price cannot be empty!";
+  static const String restaurantCuisineCannotBeEmpty = "Cuisine cannot be empty!";
+  static const String oldPasswordCannotBeEmpty = "Old password cannot be empty!";
+  static const String newPasswordCannotBeEmpty = "New password cannot be empty!";
+  static const String confirmPasswordCannotBeEmpty = "New password cannot be empty!";
+  static const String passwordsDoNotMatch = "Passwords do not match!";
 
   // static const String
 }

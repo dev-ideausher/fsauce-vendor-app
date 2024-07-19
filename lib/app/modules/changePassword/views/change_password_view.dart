@@ -11,6 +11,7 @@ import '../controllers/change_password_controller.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
   const ChangePasswordView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

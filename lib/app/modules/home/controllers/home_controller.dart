@@ -50,6 +50,7 @@ class HomeController extends GetxController {
   Future<void> getDashboardWeeklyData() async{
     try{
       var response = await APIManager.getDashboardData(dataFor: StringConstant.lastWeek);
+      weeklyData.value = DashboardWeeklyData();
       if(response.data['status']){
         weeklyData.value = DashboardWeeklyData.fromJson(response.data['data']);
         weeklyCouponChartData.value = List.generate(weeklyData.value.cards!.totalCoupons!, (int index){
@@ -137,7 +138,7 @@ class HomeController extends GetxController {
       features: [],
       timing: [],
       media: [],
-    cuisine: [CuisineModel(id: "", name: "")],
+    cuisine: [CuisineModel(id: "", name: "", image: "")],
   ).obs;
 
   String vendor = '';

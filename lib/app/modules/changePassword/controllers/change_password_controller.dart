@@ -12,6 +12,11 @@ class ChangePasswordController extends GetxController {
   Auth auth = Get.put(Auth());
 
   RxBool isEmailEmpty = true.obs;
+  RxBool isOldPasswordVisible = false.obs;
+  RxBool isNewPasswordVisible = false.obs;
+  RxBool isConfirmPasswordVisible = false.obs;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -31,6 +36,18 @@ class ChangePasswordController extends GetxController {
 
   void sendResetPasswordLink() {
     auth.sendResetPasswordMail(email: emailController.text.trim());
+  }
+
+  void toggleOldPasswordVisible(){
+    isOldPasswordVisible.value = !isOldPasswordVisible.value;
+  }
+
+  void toggleNewPasswordVisible(){
+    isNewPasswordVisible.value = !isNewPasswordVisible.value;
+  }
+
+  void toggleConfirmPasswordVisible(){
+    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
 
   void gotoChangePasswordDoneScreen() {

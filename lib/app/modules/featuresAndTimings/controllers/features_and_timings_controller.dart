@@ -32,6 +32,8 @@ class FeaturesAndTimingsController extends GetxController {
 
   @override
   void onReady() {
+    selectedFeatures.value =
+        Get.find<HomeController>().restaurantDetails.value.features;
     super.onReady();
   }
 
@@ -45,9 +47,7 @@ class FeaturesAndTimingsController extends GetxController {
         Get.find<HomeController>().restaurantDetails.value;
     if (details.features.isNotEmpty) {
       selectedFeatures.value = [];
-      for(FeatureModel feature in details.features){
-        selectedFeatures.add(feature);
-      }
+      selectedFeatures.value = details.features;
     }
     print(selectedFeatures.length);
     try{
