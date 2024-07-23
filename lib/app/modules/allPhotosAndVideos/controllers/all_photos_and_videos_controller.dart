@@ -9,6 +9,8 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
+import 'package:video_player/video_player.dart';
 
 class AllPhotosAndVideosController extends GetxController {
   //TODO: Implement AllPhotosAndVideosController
@@ -24,6 +26,9 @@ class AllPhotosAndVideosController extends GetxController {
     super.onReady();
   }
 
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
   RxList<String> selectedFiles = <String>[].obs;
   List<String> uploadedFilesUrl = [];
   RxList<String> restaurantUploads = <String>[].obs;
@@ -31,6 +36,12 @@ class AllPhotosAndVideosController extends GetxController {
   void getRestaurantUploads(){
     Get.find<HomeController>().getRestaurantDetails();
     restaurantUploads.value = Get.find<HomeController>().restaurantDetails.value.media;
+  }
+
+  bool isImage(String path) {
+    final mimeType = lookupMimeType(path);
+
+    return mimeType!.startsWith('image/');
   }
 
   void confirmDeleteImage(int index){
@@ -58,7 +69,7 @@ class AllPhotosAndVideosController extends GetxController {
 
   Future<void> pickMultipleFiles() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultiImage();
+    final List<XFile>? pickedFiles = await picker.pickMultipleMedia();
 
     if (pickedFiles != null) {
       for(XFile file in pickedFiles){

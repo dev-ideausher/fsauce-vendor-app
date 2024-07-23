@@ -86,7 +86,7 @@ class LoyaltyReviewCard extends StatelessWidget {
                     separatorBuilder: (ctx, index){
                       return 10.kwidthBox;
                     },
-                    itemCount: Get.find<LoyaltyController>().noOfStamps),
+                    itemCount: Get.find<LoyaltyController>().noOfStamps.value),
               ),
               10.kwidthBox,
               Container(

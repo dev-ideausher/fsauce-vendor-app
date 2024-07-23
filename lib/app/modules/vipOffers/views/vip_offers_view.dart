@@ -40,20 +40,20 @@ class VipOffersView extends GetView<VipOffersController> {
               ],
             ),
           ),
-          floatingActionButton: Container(
-            height: 41.kh,
-            width: 41.kw,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: context.primary01),
-            child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 30.kw,
-                ),
-                onPressed: controller.gotoCreateVipOffer),
-          ),
+          // floatingActionButton: Container(
+          //   height: 41.kh,
+          //   width: 41.kw,
+          //   decoration:
+          //       BoxDecoration(shape: BoxShape.circle, color: context.primary01),
+          //   child: IconButton(
+          //       padding: EdgeInsets.zero,
+          //       icon: Icon(
+          //         Icons.add,
+          //         color: Colors.white,
+          //         size: 30.kw,
+          //       ),
+          //       onPressed: controller.gotoCreateVipOffer),
+          // ),
           body: SizedBox(
             height: 100.h,
             width: 100.w,

@@ -52,6 +52,8 @@ class ChangePasswordProfileView
                             validator: (String? val) {
                               if (val == null || val.isEmpty) {
                                 return StringConstant.oldPasswordCannotBeEmpty;
+                              } else if(val.length > 15){
+                                return StringConstant.max15CharsAllowed;
                               }
                               return null;
                             },
@@ -111,6 +113,8 @@ class ChangePasswordProfileView
                             validator: (String? val) {
                               if (val == null || val.isEmpty) {
                                 return StringConstant.newPasswordCannotBeEmpty;
+                              } else if(val.length > 15){
+                                return StringConstant.max15CharsAllowed;
                               }
                               return null;
                             },
@@ -173,6 +177,8 @@ class ChangePasswordProfileView
                                 return StringConstant.confirmPasswordCannotBeEmpty;
                               } else if(val != controller.newPasswordController.text){
                                 return StringConstant.passwordsDoNotMatch;
+                              } else if(val.length > 15){
+                                return StringConstant.max15CharsAllowed;
                               }
                               return null;
                             },
@@ -207,7 +213,9 @@ class ChangePasswordProfileView
                   width: 100.w,
                   onPressed: (){
                     if(controller.formKey.currentState!.validate()){
-
+                      if(controller.newPasswordController.text == controller.confirmPasswordController.text){
+                        controller.updatePassword(controller.newPasswordController.text);
+                      }
                     }
                   }),
             ],

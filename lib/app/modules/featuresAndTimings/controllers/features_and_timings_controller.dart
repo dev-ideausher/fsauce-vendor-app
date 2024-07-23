@@ -23,6 +23,8 @@ class FeaturesAndTimingsController extends GetxController {
 
   RxList<FeatureModel> selectedFeatures = <FeatureModel>[].obs;
 
+  RxBool isFeatureSelected = false.obs;
+
   @override
   void onInit() {
     getFeatures();
@@ -32,14 +34,7 @@ class FeaturesAndTimingsController extends GetxController {
 
   @override
   void onReady() {
-    selectedFeatures.value =
-        Get.find<HomeController>().restaurantDetails.value.features;
     super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
   
   Future<void> getFeatures() async{
@@ -49,7 +44,7 @@ class FeaturesAndTimingsController extends GetxController {
       selectedFeatures.value = [];
       selectedFeatures.value = details.features;
     }
-    print(selectedFeatures.length);
+    debugPrint(selectedFeatures.length.toString());
     try{
       var response = await APIManager.getFeatures();
       if(response.data['status']){

@@ -14,6 +14,7 @@ class LoyaltyCard extends StatelessWidget {
     required this.brandColor,
     required this.onAddPressed,
     required this.width,
+    required this.noOfStamps,
     required this.brandLogo});
 
   final String brandName;
@@ -22,6 +23,7 @@ class LoyaltyCard extends StatelessWidget {
   final Color brandColor;
   final double width;
   final Function onAddPressed;
+  final int noOfStamps;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class LoyaltyCard extends StatelessWidget {
                         bottomLeft: Radius.circular(4))),
                 child: Center(
                     child: Text(
-                  "0/4 Points",
+                  "0/$noOfStamps Points",
                   style: TextStyleUtil.manrope14w500(),
                 )),
               )

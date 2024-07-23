@@ -53,7 +53,9 @@ class HomeController extends GetxController {
       weeklyData.value = DashboardWeeklyData();
       if(response.data['status']){
         weeklyData.value = DashboardWeeklyData.fromJson(response.data['data']);
-        weeklyCouponChartData.value = List.generate(weeklyData.value.cards!.totalCoupons!, (int index){
+        print("WeeklyData value coupons: ${weeklyData.value.couponCounts!.length}");
+        weeklyCouponChartData.value = List.generate(
+            weeklyData.value.cards!.totalCoupons!, (int index){
           return ChartData(weeklyData.value.couponCounts![index]!.date!, double.parse(weeklyData.value.couponCounts![index]!.total!.toString()));
         });
         weeklyStampsChartData.value = List.generate(weeklyData.value.cards!.totalStamps!, (int index){
@@ -67,7 +69,7 @@ class HomeController extends GetxController {
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      DialogHelper.showError(StringConstant.somethingWentWrong);
+      // DialogHelper.showError(StringConstant.somethingWentWrong);
     }
   }
 
@@ -90,7 +92,7 @@ class HomeController extends GetxController {
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      DialogHelper.showError(StringConstant.somethingWentWrong);
+      // DialogHelper.showError(StringConstant.somethingWentWrong);
     }
   }
 
@@ -113,7 +115,7 @@ class HomeController extends GetxController {
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      DialogHelper.showError(StringConstant.somethingWentWrong);
+      // DialogHelper.showError(StringConstant.somethingWentWrong);
     }
   }
 

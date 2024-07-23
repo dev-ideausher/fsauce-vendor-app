@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/string_constant.dart';
+import '../../../services/auth.dart';
+import '../../../services/dialog_helper.dart';
+
 class ChangePasswordProfileController extends GetxController {
   //TODO: Implement ChangePasswordProfileController
+
+  final Auth auth = Get.put(Auth()); // Retrieve the Auth service
 
   final formKey = GlobalKey<FormState>();
 
@@ -30,5 +36,17 @@ class ChangePasswordProfileController extends GetxController {
     oldPasswordController.dispose();
     newPasswordController.dispose();
     confirmPasswordController.dispose();
+  }
+
+  void updatePassword(String newPassword) async{
+    try{
+      DialogHelper.showLoading();
+      await auth.updatePassword(newPassword: newPassword);
+      DialogHelper.showSuccess(StringConstant.passwordChangedSuccessfully);
+      DialogHelper.hideDialog();
+    } catch(e){
+      print("An error occurred while updating password!: $e");
+      DialogHelper.showError(e.toString());
+    }
   }
 }

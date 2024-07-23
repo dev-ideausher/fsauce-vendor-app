@@ -60,7 +60,6 @@ class StepTwo extends GetView<ProfileSetupController> {
             ),
             onConfirm: (results) {
               controller.selectedFeatures.value = results;
-              print(results);
             },
           ),
         ),

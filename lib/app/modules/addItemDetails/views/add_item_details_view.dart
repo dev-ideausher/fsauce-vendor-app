@@ -14,6 +14,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
+import '../../../services/dialog_helper.dart';
 import '../controllers/add_item_details_controller.dart';
 
 class AddItemDetailsView extends GetView<AddItemDetailsController> {

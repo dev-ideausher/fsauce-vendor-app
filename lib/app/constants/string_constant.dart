@@ -516,6 +516,16 @@ class StringConstant {
   static const String newPasswordCannotBeEmpty = "New password cannot be empty!";
   static const String confirmPasswordCannotBeEmpty = "New password cannot be empty!";
   static const String passwordsDoNotMatch = "Passwords do not match!";
+  static const String offerTitleCannotBeEmpty = "Offer title cannot be empty!";
+  static const String noOfStampsCannotBeEmpty = "Number of stamps cannot be empty!";
+  static const String dateCannotBeEmpty = "Valid till date cannot be empty!";
+  static const String scheduleDateCannotBeEmpty = "Schedule date cannot be empty!";
+  static const String notificationTitleEmpty = "Notification title cannot be empty!";
+  static const String passwordChangedSuccessfully = "Password changed successfully!";
+  static const String emptyFeatures = "Features cannot be empty!";
+  static const String max15CharsAllowed = "Maximum 15 characters are allowed.";
+  static const String max25CharsAllowed = "Maximum 25 characters are allowed.";
+  static const String selectedFeatures = "Selected Features";
 
   // static const String
 }

@@ -66,13 +66,13 @@ class PushNotificationCard extends StatelessWidget {
               )
             ],
           ),
-          // Text(
-          //   "Feb 27, 2022, 23:57",
-          //   style: TextStyleUtil.manrope14w400(
-          //     color: context.black03,
-          //   ),
-          // ),
-          Spacer(),
+          Text(
+            // "Feb 27, 2022, 23:57",
+            notification.sheduledDate ?? "Feb 27, 2022, 23:57",
+            style: TextStyleUtil.manrope14w400(
+              color: context.black03,
+            ),
+          ),
           Container(
             height: 26,
             width: 80.kw,

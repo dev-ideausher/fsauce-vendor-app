@@ -14,6 +14,8 @@ class CreatePushNotificationController extends GetxController {
   TextEditingController scheduledDateController = TextEditingController();
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
+  final formKey = GlobalKey<FormState>();
+
   Future<void> addNotification() async{
     if(titleController.text.isEmpty){
       DialogHelper.showError(StringConstant.titleEmpty);

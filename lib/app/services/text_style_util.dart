@@ -21,12 +21,14 @@ class TextStyleUtil {
   static TextStyle manrope14w400({
     Color color = defaultColor,
     TextDecoration? textDecoration,
+    Color? decorationColor,
   }) {
     return _manropeTextStyle(
       color: color,
       fontSize: 14.ksp,
       fontWeight: FontWeight.w400,
       textDecoration: textDecoration,
+      decorationColor: decorationColor,
     );
   }
 
@@ -301,6 +303,7 @@ class TextStyleUtil {
     required double fontSize,
     required FontWeight fontWeight,
     TextDecoration? textDecoration,
+    Color? decorationColor,
   }) {
     return GoogleFonts.manrope(
       textStyle: TextStyle(
@@ -308,6 +311,7 @@ class TextStyleUtil {
         fontSize: fontSize,
         fontWeight: fontWeight,
         decoration: textDecoration,
+        decorationColor: decorationColor,
       ),
     );
   }

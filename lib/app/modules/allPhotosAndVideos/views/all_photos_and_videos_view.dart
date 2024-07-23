@@ -12,6 +12,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 import '../controllers/all_photos_and_videos_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
   const AllPhotosAndVideosView({Key? key}) : super(key: key);
@@ -47,14 +48,31 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (ctx, index){
-                        return InkWell(
-                          onLongPress: () {
-                            controller.confirmDeleteImage(index);
-                          },
-                          child: CommonImageView(
-                            url: controller.restaurantUploads[index],
-                          ),
-                        );
+                        if(controller.restaurantUploads[index].endsWith(".jpg")){
+                          return InkWell(
+                            onLongPress: () {
+                              controller.confirmDeleteImage(index);
+                            },
+                            child: CommonImageView(
+                              url: controller.restaurantUploads[index],
+                            ),
+                          );
+                        } else if(controller.restaurantUploads[index].endsWith(".mp4")){
+                          return InkWell(
+                            onTap: () {
+                              launchUrl(Uri.parse(controller.restaurantUploads[index]));
+                            },
+                            child: Container(
+                                height: 400.kh,
+                                width: 120.kw,
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(4.kh),
+                                ),
+                                child: const Center(child: Icon(Icons.videocam))
+                            ),
+                          );
+                        }
                       },
                       separatorBuilder: (ctx, index){
                         return 8.kheightBox;
@@ -75,10 +93,22 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                       itemBuilder: (ctx, index){
+                      if(controller.isImage(controller.selectedFiles[index])){
                         return Image.file(
-                            File(controller.selectedFiles[index]),
+                          File(controller.selectedFiles[index]),
                           fit: BoxFit.contain,
                         );
+                      } else {
+                        return Container(
+                          height: 400.kh,
+                          width: 120.kw,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(4.kh),
+                          ),
+                          child: const Center(child: Icon(Icons.videocam))
+                        );
+                      }
                       },
                       separatorBuilder: (ctx, index){
                         return 8.kheightBox;

@@ -266,63 +266,62 @@ class SignupView extends GetView<SignupController> {
                         }
                     );
                   }),
-                  Text(
-                    StringConstant.termsAndcons1,
-                    style: TextStyleUtil.manrope12w400(
-                      color: context.black01,
-                    ),
-                  ),
                   InkWell(
-                    onTap: () {
+                    onTap: (){
                       controller.goToTermsAndConditions();
                     },
-                    child: Text(
-                      StringConstant.termsCons2,
-                      style: TextStyleUtil.manrope12w400(
-                        color: context.primary01,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    StringConstant.and,
-                    style: TextStyleUtil.manrope12w400(
-                      color: context.black01,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          StringConstant.termsAndcons1,
+                          style: TextStyleUtil.manrope12w400(
+                            color: context.black01,
+                          ),
+                        ),
+                        Text(
+                          StringConstant.termsCons2,
+                          style: TextStyleUtil.manrope12w400(
+                            color: context.primary01,
+                          ),
+                        ),
+                        Text(
+                          StringConstant.and,
+                          style: TextStyleUtil.manrope12w400(
+                            color: context.black01,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      controller.goToTermsAndConditions();
-                    },
-                    child: Text(
+              InkWell(
+                onTap: () {
+                  controller.goToTermsAndConditions();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
                       StringConstant.privacyPolicy,
                       style: TextStyleUtil.manrope12w400(
                         color: context.primary01,
                       ),
                     ),
-                  ),
-                  Text(
-                    StringConstant.and,
-                    style: TextStyleUtil.manrope12w400(
-                      color: context.black01,
+                    Text(
+                      StringConstant.and,
+                      style: TextStyleUtil.manrope12w400(
+                        color: context.black01,
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      controller.goToTermsAndConditions();
-                    },
-                    child: Text(
+                    Text(
                       StringConstant.contentPolicy,
                       style: TextStyleUtil.manrope12w400(
                         color: context.primary01,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               30.kheightBox,
             ],

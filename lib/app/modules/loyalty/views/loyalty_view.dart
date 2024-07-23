@@ -36,367 +36,391 @@ class LoyaltyView extends GetView<LoyaltyController> {
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16.kw),
-          child: Obx(() => Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.cardDetails,
-                        style: TextStyleUtil.manrope16w600(),
-                      ),
-                      6.kwidthBox,
-                      Expanded(
-                          child: Divider(
-                        color: context.black05,
-                      ))
-                    ],
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.offerTitle,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  CustomTextField(
-                    controller: controller.cardTitleController,
-                      fillColor: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.black07),
-                      hintText: StringConstant.enterOfferTitle),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.numberOfStamps,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: context.borderColor2),
-                        borderRadius: BorderRadius.circular(8.kw)),
-                    padding: EdgeInsets.symmetric(horizontal: 10.kw),
-                    child: Row(
+          child: Obx(() => Form(
+            key: controller.formKey,
+            child: Column(
+                  children: [
+                    Row(
                       children: [
+                        Text(
+                          StringConstant.cardDetails,
+                          style: TextStyleUtil.manrope16w600(),
+                        ),
+                        6.kwidthBox,
                         Expanded(
-                            child: DropdownButtonFormField<String>(
-                          style: TextStyleUtil.manrope16w400(),
-                          onChanged: (val) {
-                            if(val != null){
-                              controller.noOfStamps = int.parse(val);
-                            }
-                          },
-                          items: <String>["1", "2", "3", "4", "5", "6"]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(0),
-                            hintText: StringConstant.selectNumberOfStamps,
-                            hintStyle: TextStyleUtil.manrope14w400(
-                                color: context.black04),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        )),
+                            child: Divider(
+                          color: context.black05,
+                        ))
                       ],
                     ),
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.validTill,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  CustomTextField(
-                      controller: controller.validTillDateController,
-                      fillColor: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.black07),
-                      suffixIcon: Icons.calendar_month,
-                      suffixOnPressed: () {
-                        showDatePicker(
-                          context: context,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(const Duration(days: 2 * 365)),
-
-                        ).then((pickedDate){
-                          if(pickedDate != null){
-                            controller.validTillDateController.text = pickedDate.toString().substring(0, 11);
-                            controller.validTill = pickedDate;
-                          }
-                        });
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.offerTitle,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        )
+                      ],
+                    ),
+                    10.kheightBox,
+                    CustomTextField(
+                      validator: (String? val){
+                        if(val == null || val.isEmpty){
+                          return StringConstant.offerTitleCannotBeEmpty;
+                        }
+                        return null;
                       },
-                      hintText: StringConstant.enterValidTill),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.cardBackground,
-                        style: TextStyleUtil.manrope16w600(),
-                      ),
-                      6.kwidthBox,
-                      Expanded(
-                          child: Divider(
-                        color: context.black05,
-                      ))
-                    ],
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.backgroundColor,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    height: 53.kh,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.borderColor2),
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
+                      controller: controller.cardTitleController,
+                        fillColor: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.black07),
+                        hintText: StringConstant.enterOfferTitle),
+                    20.kheightBox,
+                    Row(
                       children: [
-                        Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: controller.backgroundColor.value,
-                                border:
-                                    Border.all(color: context.borderColor1))),
-                        10.kwidthBox,
                         Text(
-                          "#${controller.backgroundColor.value.toString().substring(10, 16).toUpperCase()}",
-                          style: TextStyleUtil.manrope14w400(),
+                          StringConstant.numberOfStamps,
+                          style: TextStyleUtil.manrope14w500(),
                         ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: controller.openBackgroundColorpalet,
-                          child: CommonImageView(
-                            svgPath: ImageConstant.colorPicker,
-                          ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
                         )
                       ],
                     ),
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.textColor,
-                        style: TextStyleUtil.manrope14w500(),
+                    10.kheightBox,
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: context.borderColor2),
+                          borderRadius: BorderRadius.circular(8.kw)),
+                      padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: DropdownButtonFormField<String>(
+                                validator: (String? val){
+                                  if(val == null || val.isEmpty){
+                                    return StringConstant.noOfStampsCannotBeEmpty;
+                                  }
+                                  return null;
+                                },
+                            style: TextStyleUtil.manrope16w400(),
+                            onChanged: (val) {
+                              if(val != null){
+                                controller.noOfStamps.value = int.parse(val);
+                              }
+                            },
+                            items: <String>["1", "2", "3", "4", "5", "6"]
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(0),
+                              hintText: StringConstant.selectNumberOfStamps,
+                              hintStyle: TextStyleUtil.manrope14w400(
+                                  color: context.black04),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          )),
+                        ],
                       ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    height: 53.kh,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.borderColor2),
-                      borderRadius: BorderRadius.circular(8.0.kw),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
+                    20.kheightBox,
+                    Row(
                       children: [
-                        Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: controller.textColor.value,
-                                border:
-                                    Border.all(color: context.borderColor1))),
-                        10.kwidthBox,
                         Text(
-                          "#${controller.textColor.value.toString().substring(10, 16).toUpperCase()}",
-                          style: TextStyleUtil.manrope14w400(),
+                          StringConstant.validTill,
+                          style: TextStyleUtil.manrope14w500(),
                         ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: controller.openTextColorpalet,
-                          child: CommonImageView(
-                            svgPath: ImageConstant.colorPicker,
-                          ),
+                        Text(
+                          "*",
+                          style:
+                          TextStyleUtil.manrope14w500(color: context.primary01),
                         )
                       ],
                     ),
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.stampDesign,
-                        style: TextStyleUtil.manrope16w600(),
-                      ),
-                      6.kwidthBox,
-                      Expanded(
-                          child: Divider(
-                        color: context.black05,
-                      ))
-                    ],
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.backgroundColor,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    height: 53.kh,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.borderColor2),
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
+                    10.kheightBox,
+                    CustomTextField(
+                      readOnly: true,
+                        validator: (String? val){
+                          if(val == null || val.isEmpty){
+                            return StringConstant.dateCannotBeEmpty;
+                          }
+                          return null;
+                        },
+                        controller: controller.validTillDateController,
+                        fillColor: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.black07),
+                        suffixIcon: Icons.calendar_month,
+                        suffixOnPressed: () {
+                          showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(const Duration(days: 2 * 365)),
+
+                          ).then((pickedDate){
+                            if(pickedDate != null){
+                              controller.validTillDateController.text = pickedDate.toString().substring(0, 11);
+                              controller.validTill = pickedDate;
+                            }
+                          });
+                        },
+                        hintText: StringConstant.enterValidTill),
+                    20.kheightBox,
+                    Row(
                       children: [
-                        Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: controller.stampBackgroundColor.value,
-                                border:
-                                    Border.all(color: context.borderColor1))),
-                        10.kwidthBox,
                         Text(
-                          "#${controller.stampBackgroundColor.value.toString().substring(10, 16).toUpperCase()}",
-                          style: TextStyleUtil.manrope14w400(),
+                          StringConstant.cardBackground,
+                          style: TextStyleUtil.manrope16w600(),
                         ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: controller.openStampBackgroundColorpalet,
-                          child: CommonImageView(
-                            svgPath: ImageConstant.colorPicker,
-                          ),
+                        6.kwidthBox,
+                        Expanded(
+                            child: Divider(
+                          color: context.black05,
+                        ))
+                      ],
+                    ),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.backgroundColor,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
                         )
                       ],
                     ),
-                  ),
-                  20.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.stampColor,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    height: 53.kh,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.borderColor2),
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      children: [
-                        Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: controller.stampTextColor.value,
-                                border:
-                                    Border.all(color: context.borderColor1))),
-                        10.kwidthBox,
-                        Text(
-                          "#${controller.stampTextColor.value.toString().substring(10, 16).toUpperCase()}",
-                          style: TextStyleUtil.manrope14w400(),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: controller.openStampTextColorpalet,
-                          child: CommonImageView(
-                            svgPath: ImageConstant.colorPicker,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  30.kheightBox,
-                  CustomRedElevatedButton(
-                      buttonText: StringConstant.save,
+                    10.kheightBox,
+                    Container(
+                      height: 53.kh,
                       width: 100.w,
-                      height: 56.kh,
-                      onPressed: () {
-                        controller.createLoyaltyCard();
-                      }),
-                  10.kheightBox,
-                  CustomRedElevatedButtonWithBorder(
-                      buttonText: StringConstant.previewCard,
+                      decoration: BoxDecoration(
+                        color: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.borderColor2),
+                        borderRadius: BorderRadius.circular(8.0.kw),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: controller.backgroundColor.value,
+                                  border:
+                                      Border.all(color: context.borderColor1))),
+                          10.kwidthBox,
+                          Text(
+                            "#${controller.backgroundColor.value.toString().substring(10, 16).toUpperCase()}",
+                            style: TextStyleUtil.manrope14w400(),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: controller.openBackgroundColorpalet,
+                            child: CommonImageView(
+                              svgPath: ImageConstant.colorPicker,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.textColor,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        )
+                      ],
+                    ),
+                    10.kheightBox,
+                    Container(
+                      height: 53.kh,
                       width: 100.w,
-                      height: 56.kh,
-                      onPressed: controller.gotoPreviewScreen),
-                  10.kheightBox
-                ],
-              )),
+                      decoration: BoxDecoration(
+                        color: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.borderColor2),
+                        borderRadius: BorderRadius.circular(8.0.kw),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: controller.textColor.value,
+                                  border:
+                                      Border.all(color: context.borderColor1))),
+                          10.kwidthBox,
+                          Text(
+                            "#${controller.textColor.value.toString().substring(10, 16).toUpperCase()}",
+                            style: TextStyleUtil.manrope14w400(),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: controller.openTextColorpalet,
+                            child: CommonImageView(
+                              svgPath: ImageConstant.colorPicker,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.stampDesign,
+                          style: TextStyleUtil.manrope16w600(),
+                        ),
+                        6.kwidthBox,
+                        Expanded(
+                            child: Divider(
+                          color: context.black05,
+                        ))
+                      ],
+                    ),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.backgroundColor,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        )
+                      ],
+                    ),
+                    10.kheightBox,
+                    Container(
+                      height: 53.kh,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                        color: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.borderColor2),
+                        borderRadius: BorderRadius.circular(8.0.kw),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: controller.stampBackgroundColor.value,
+                                  border:
+                                      Border.all(color: context.borderColor1))),
+                          10.kwidthBox,
+                          Text(
+                            "#${controller.stampBackgroundColor.value.toString().substring(10, 16).toUpperCase()}",
+                            style: TextStyleUtil.manrope14w400(),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: controller.openStampBackgroundColorpalet,
+                            child: CommonImageView(
+                              svgPath: ImageConstant.colorPicker,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
+                          StringConstant.stampColor,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        )
+                      ],
+                    ),
+                    10.kheightBox,
+                    Container(
+                      height: 53.kh,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                        color: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.borderColor2),
+                        borderRadius: BorderRadius.circular(8.0.kw),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: controller.stampTextColor.value,
+                                  border:
+                                      Border.all(color: context.borderColor1))),
+                          10.kwidthBox,
+                          Text(
+                            "#${controller.stampTextColor.value.toString().substring(10, 16).toUpperCase()}",
+                            style: TextStyleUtil.manrope14w400(),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: controller.openStampTextColorpalet,
+                            child: CommonImageView(
+                              svgPath: ImageConstant.colorPicker,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    30.kheightBox,
+                    CustomRedElevatedButton(
+                        buttonText: StringConstant.save,
+                        width: 100.w,
+                        height: 56.kh,
+                        onPressed: () {
+                          if(controller.formKey.currentState!.validate()){
+                            controller.createLoyaltyCard();
+                          }
+                        }),
+                    10.kheightBox,
+                    CustomRedElevatedButtonWithBorder(
+                        buttonText: StringConstant.previewCard,
+                        width: 100.w,
+                        height: 56.kh,
+                        onPressed: controller.gotoPreviewScreen),
+                    10.kheightBox
+                  ],
+                ),
+          )),
         ));
   }
 }

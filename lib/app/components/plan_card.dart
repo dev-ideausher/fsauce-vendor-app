@@ -34,7 +34,7 @@ class PlanCard extends StatelessWidget {
             children: <Widget>[
               Radio(
                   activeColor: context.primary01,
-                  value: true,
+                  value: false,
                   groupValue: true,
                   onChanged: (dynamic object) {
                     controller.selectedPlan.value =

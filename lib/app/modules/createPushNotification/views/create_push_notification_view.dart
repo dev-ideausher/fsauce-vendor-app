@@ -22,71 +22,91 @@ class CreatePushNotificationView
         ),
         body: Padding(
           padding: EdgeInsets.all(16.kw),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    StringConstant.notificationTitle,
-                    style: TextStyleUtil.manrope14w500(),
-                  ),
-                  Text(
-                    "*",
-                    style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
-                  )
-                ],
-              ),
-              10.kheightBox,
-              CustomTextField(
-                controller: controller.titleController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.enterTitle),
-              20.kheightBox,
-              Row(
-                children: [
-                  Text(
-                    StringConstant.scheduleDate,
-                    style: TextStyleUtil.manrope14w500(),
-                  ),
-                  Text(
-                    "*",
-                    style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
-                  )
-                ],
-              ),
-              10.kheightBox,
-              CustomTextField(
-                  controller: controller.scheduledDateController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  suffixIcon: Icons.calendar_month,
-                  suffixOnPressed: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(Duration(days: 2 * 365)),
-
-                    ).then((pickedDate){
-                      if(pickedDate != null){
-                        controller.selectedDate.value = pickedDate;
-                        controller.scheduledDateController.text = pickedDate.toString().substring(0, 11);
-                      }
-                    });
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      StringConstant.notificationTitle,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    Text(
+                      "*",
+                      style:
+                          TextStyleUtil.manrope14w500(color: context.primary01),
+                    )
+                  ],
+                ),
+                10.kheightBox,
+                CustomTextField(
+                  validator: (String? val){
+                    if(val  == null || val.isEmpty){
+                      return StringConstant.notificationTitleEmpty;
+                    } else if(val.length > 15){
+                      return StringConstant.max25CharsAllowed;
+                    }
+                      return null;
                   },
-                  hintText: StringConstant.enterScheduleDate),
-              20.kheightBox,
-              const Spacer(),
-              CustomRedElevatedButton(
-                  buttonText: StringConstant.save,
-                  height: 56.kh,
-                  width: 100.w,
-                  onPressed: () {
-                    controller.addNotification();
-                  })
-            ],
+                  controller: controller.titleController,
+                    fillColor: context.loginSignupTextfieldColor,
+                    border: Border.all(color: context.black07),
+                    hintText: StringConstant.enterTitle),
+                20.kheightBox,
+                Row(
+                  children: [
+                    Text(
+                      StringConstant.scheduleDate,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    Text(
+                      "*",
+                      style:
+                          TextStyleUtil.manrope14w500(color: context.primary01),
+                    )
+                  ],
+                ),
+                10.kheightBox,
+                CustomTextField(
+                  readOnly: true,
+                    validator: (String? val){
+                      if(val == null || val.isEmpty){
+                        return StringConstant.scheduleDateCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                    controller: controller.scheduledDateController,
+                    fillColor: context.loginSignupTextfieldColor,
+                    border: Border.all(color: context.black07),
+                    suffixIcon: Icons.calendar_month,
+                    suffixOnPressed: () {
+                      showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 2 * 365)),
+
+                      ).then((pickedDate){
+                        if(pickedDate != null){
+                          controller.selectedDate.value = pickedDate;
+                          controller.scheduledDateController.text = pickedDate.toString().substring(0, 11);
+                        }
+                      });
+                    },
+                    hintText: StringConstant.enterScheduleDate),
+                20.kheightBox,
+                const Spacer(),
+                CustomRedElevatedButton(
+                    buttonText: StringConstant.save,
+                    height: 56.kh,
+                    width: 100.w,
+                    onPressed: () {
+                      if(controller.formKey.currentState!.validate()){
+                        controller.addNotification();
+                      }
+                    })
+              ],
+            ),
           ),
         ));
   }

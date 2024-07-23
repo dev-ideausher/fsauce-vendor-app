@@ -89,6 +89,7 @@ class HomeView extends GetView<HomeController> {
                                             color: Colors.white,
                                             textDecoration:
                                             TextDecoration.underline,
+                                            decorationColor: Colors.white,
                                           ),
                                         );
                                       }),

@@ -45,6 +45,12 @@ class Auth extends GetxService {
     // print('EmailPass : ${await result.user?.getIdToken()}');
   }
 
+  updatePassword({required String newPassword}) async{
+    final result = await auth.updatePassword(newPassword).then((value) async{
+      await handleGetContact();
+    });
+  }
+
   createEmailPass({required String email, required String pass}) async {
     final result = await auth
         .createAccountWithEmail(email: email, password: pass)

@@ -20,9 +20,11 @@ class LoyaltyController extends GetxController {
   //TODO: Implement LoyaltyController
 
   TextEditingController cardTitleController = TextEditingController();
-  int noOfStamps = 1;
+  RxInt noOfStamps = 1.obs;
   DateTime validTill = DateTime.now();
   TextEditingController validTillDateController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -44,24 +46,29 @@ class LoyaltyController extends GetxController {
   Future<void> createLoyaltyCard() async{
     if(cardTitleController.text.isEmpty){
       DialogHelper.showError(StringConstant.offerTitleErrorMsg);
+      return;
     }
     else if(backgroundColor.value.toString().isEmpty){
       DialogHelper.showError(StringConstant.bgColorCannotBeEmpty);
+      return;
     }
     else if(textColor.value.toString().isEmpty){
       DialogHelper.showError(StringConstant.textColorCannotBeEmpty);
+      return;
     }
     else if(stampBackgroundColor.value.toString().isEmpty){
       DialogHelper.showError(StringConstant.stampBGErrorMsg);
+      return;
     }
     else if(stampTextColor.value.toString().isEmpty){
       DialogHelper.showError(StringConstant.stampColorErrorMsg);
+      return;
     }
 
     String vendorId = Get.find<HomeController>().vendor;
     Map<String, dynamic> data = {
       "title": cardTitleController.text,
-      "noOfStamps": noOfStamps,
+      "noOfStamps": noOfStamps.value,
       "cardBackgroundColor": backgroundColor.value.value.toString(),
       "cardTextColor": textColor.value.toString(),
       "stampBackgroundColor": stampBackgroundColor.value.toString(),
