@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/gradients.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
+import '../../generated/assets.dart';
 
 class LoyaltyCard extends StatelessWidget {
   const LoyaltyCard({super.key,
@@ -28,7 +31,7 @@ class LoyaltyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 175.kh,
+      height: 200.kh,
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: brandColor),
@@ -36,6 +39,7 @@ class LoyaltyCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 48,
@@ -50,6 +54,11 @@ class LoyaltyCard extends StatelessWidget {
                     url: brandLogo,
                   ),
                 ),
+              ),
+              16.kwidthBox,
+              Text(
+                brandName,
+                style: TextStyleUtil.manrope20w700(color: Colors.white),
               ),
               Spacer(),
               Container(
@@ -69,8 +78,9 @@ class LoyaltyCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
+          10.kheightBox,
           Container(
-            height: 85.kh,
+            height: 120.kh,
             width: width,
             padding: EdgeInsets.only(bottom: 16.kw, left: 16.kw, right: 16.kw),
             decoration: BoxDecoration(
@@ -84,24 +94,59 @@ class LoyaltyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      brandName,
-                      style: TextStyleUtil.manrope18w700(color: Colors.white),
+                    Wrap(
+                      runSpacing: 10.kh,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          child: ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (ctx, index){
+                                return Container(
+                                  height: 48,
+                                  width: 48,
+                                  decoration: BoxDecoration(
+                                      color: context.black07,
+                                      borderRadius: BorderRadius.circular(8.kw)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: context.black04,
+                                      size: 28,
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (ctx, index){
+                                return 10.kwidthBox;
+                              },
+                              itemCount: noOfStamps),
+                        ),
+                        10.kwidthBox,
+                        Container(
+                          height: 48,
+                          width: 48,
+                          decoration: BoxDecoration(
+                              color: context.black07,
+                              borderRadius: BorderRadius.circular(8.kw)),
+                          child: Center(
+                            child: CommonImageView(
+                              svgPath: Assets.svgsGiftIcon,
+                              height: 28.kh,
+                              width: 28.kw,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    4.kheightBox,
+                    24.kheightBox,
                     Text(
                       offer,
                       style: TextStyleUtil.manrope16w500(color: Colors.white),
                     )
                   ],
                 ),
-                InkWell(
-                    onTap: () {
-                      onAddPressed();
-                    },
-                    child: CommonImageView(
-                      svgPath: ImageConstant.qrIcon,
-                    ))
               ],
             ),
           )

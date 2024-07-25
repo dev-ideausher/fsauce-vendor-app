@@ -101,18 +101,23 @@ class CreateOrEditVipOfferController extends GetxController {
         .trim()
         .isEmpty) {
       DialogHelper.showError("Title can't be empty");
+      return;
     }
     if(selectedCouponImage.isEmpty){
       DialogHelper.showError(StringConstant.emptyCouponImage);
+      return;
     }
     if (validTillDateController.text.isEmpty) {
       DialogHelper.showError("Please select a date");
+      return;
     }
     if (descriptionController.text.isEmpty) {
       DialogHelper.showError("Description can't be empty");
+      return;
     }
     if (termsAndConditionsController.text.isEmpty) {
       DialogHelper.showError("Terms and conditions can't be empty");
+      return;
     }
     else{
       String couponImageLink = "";
@@ -120,6 +125,7 @@ class CreateOrEditVipOfferController extends GetxController {
         var uploadCouponImageResponse = await APIManager.uploadFile(filePath: selectedCouponImage.value);
         if(!uploadCouponImageResponse.data['status']){
           DialogHelper.showError(StringConstant.anErrorOccurred);
+          return;
         } else if(uploadCouponImageResponse.data['status']){
           couponImageLink = uploadCouponImageResponse.data['data'];
           bool isSheduled = false; String sheduledDate = "";
@@ -143,6 +149,7 @@ class CreateOrEditVipOfferController extends GetxController {
             var response = await APIManager.addCoupon(data: data);
             if (response.data['status']) {
               Get.find<VipOffersController>().getCoupons();
+              Get.back();
               DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);
               showCreatedBottomSheet();
               titleController.text = '';
@@ -152,7 +159,7 @@ class CreateOrEditVipOfferController extends GetxController {
               selectedTypeOfOffer.value = 0;
               selectedValidForOption.value = 0;
               selectedCouponImage.value = "";
-              Get.back();
+              return;
             }
           } catch(e){
             print("Error: $e");
@@ -171,18 +178,23 @@ class CreateOrEditVipOfferController extends GetxController {
         .trim()
         .isEmpty) {
       DialogHelper.showError("Title can't be empty");
+      return;
     }
     if (validTillDateController.text.isEmpty) {
       DialogHelper.showError("Please select a date");
+      return;
     }
     if (descriptionController.text.isEmpty) {
       DialogHelper.showError("Description can't be empty");
+      return;
     }
     if(selectedCouponImage.isEmpty && couponImageLink.isEmpty){
       DialogHelper.showError(StringConstant.emptyCouponImage);
+      return;
     }
     if (termsAndConditionsController.text.isEmpty) {
       DialogHelper.showError("Terms and conditions can't be empty");
+      return;
     }
     try{
       if(couponImageLink.isEmpty){
@@ -208,11 +220,11 @@ class CreateOrEditVipOfferController extends GetxController {
                   image: selectedCouponImageLink,
                   isSheduled: isSheduled,
                   sheduleDate: sheduledDate ?? "",
-
                 ), true
             );
             if (response.data['status']) {
               Get.find<VipOffersController>().getCoupons();
+              Get.back();
               DialogHelper.showSuccess(StringConstant.vipOfferEditedSuccessfully);
               showUpdatedBottomSheet();
               titleController.text = '';
@@ -223,8 +235,10 @@ class CreateOrEditVipOfferController extends GetxController {
               selectedCouponImage.value = "";
               selectedValidForOption.value = 0;
             }
-          } else if(!uploadResponse.data['status']){
+          }
+          else if(!uploadResponse.data['status']){
             DialogHelper.showError(StringConstant.anErrorOccurred);
+            return;
           }
         } catch(e){
           print("Error: $e");
@@ -248,11 +262,11 @@ class CreateOrEditVipOfferController extends GetxController {
               image: couponImageLink.value,
               isSheduled: isSheduled,
               sheduleDate: sheduledDate ?? "",
-
             ), true
         );
         if (response.data['status']) {
           Get.find<VipOffersController>().getCoupons();
+          Get.back();
           DialogHelper.showSuccess(StringConstant.vipOfferEditedSuccessfully);
           showUpdatedBottomSheet();
           titleController.text = '';
@@ -262,6 +276,7 @@ class CreateOrEditVipOfferController extends GetxController {
           selectedTypeOfOffer.value = 0;
           selectedCouponImage.value = "";
           selectedValidForOption.value = 0;
+          return;
         }
       }
     } catch(e){

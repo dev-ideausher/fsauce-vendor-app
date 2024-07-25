@@ -53,13 +53,15 @@ class MenuPageView extends GetView<MenuPageController> {
                     ],
                   );
                 } else {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      EmptyWidget(title: StringConstant.noMenuFound, subTitle: StringConstant.craftMenu),
-                    ],
+                  return Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Center(child: EmptyWidget(title: StringConstant.noMenuFound, subTitle: StringConstant.craftMenu)),
+                      ],
+                    ),
                   );
                 }
               }

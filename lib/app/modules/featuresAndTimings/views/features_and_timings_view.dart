@@ -106,7 +106,10 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (ctx, index) {
                       return Chip(
-                        label: Text(controller.selectedFeatures[index].name!),
+                        backgroundColor: context.primary01,
+                        side: BorderSide.none,
+                        avatar: const Icon(Icons.check, color: Colors.white),
+                        label: Text(controller.selectedFeatures[index].name!, style: TextStyleUtil.manrope14w600(color: Colors.white),),
                       );
                     },
                     separatorBuilder: (ctx, index) {

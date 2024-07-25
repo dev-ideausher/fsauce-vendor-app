@@ -41,7 +41,7 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
               },
               itemCount: controller.activeLoyaltyCards.length);
         } else if (controller.activeLoyaltyCards.isEmpty) {
-          return EmptyWidget(title: StringConstant.noOffersFound, subTitle: StringConstant.createAttractiveOffers);
+          return EmptyWidget(title: StringConstant.noLoyaltyCardFound, subTitle: StringConstant.getStartedWithLoyaltyCards);
         } else {
           return const Center(
               child: CircularProgressIndicator(color: Colors.red,));

@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../../../constants/string_constant.dart';
 
 class SignupController extends GetxController {
-  final Auth auth = Get.put(Auth()); // Retrieve the Auth service
+  final Auth auth = Get.find<Auth>(); // Retrieve the Auth service
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

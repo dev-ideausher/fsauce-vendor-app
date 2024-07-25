@@ -68,37 +68,16 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Pizza",
-                        style:
-                        TextStyleUtil.manrope14w400(color: context.black03),
-                      ),
-                      5.kwidthBox,
-                      Container(
-                        height: 5.kh,
-                        width: 5.kh,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: context.black01),
-                      ),
-                      5.kwidthBox,
-                      Text(
-                        "Italian",
-                        style:
-                        TextStyleUtil.manrope14w400(color: context.black03),
-                      ),
-                      5.kwidthBox,
-                      Container(
-                        height: 5.kh,
-                        width: 5.kh,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: context.black01),
-                      ),
-                      5.kwidthBox,
-                      Text(
-                        "Fast Food",
-                        style:
-                        TextStyleUtil.manrope14w400(color: context.black03),
-                      )
+                      Obx(() {
+                        return Text(
+                          Get
+                              .find<HomeController>()
+                              .restaurantDetails
+                              .value.cuisine.first.name!,
+                          style: TextStyleUtil.manrope14w400(
+                              color: context.black03),
+                        );
+                      }),
                     ],
                   ),
                   2.kheightBox,

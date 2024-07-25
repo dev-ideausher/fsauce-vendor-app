@@ -42,6 +42,12 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
             10.kheightBox,
             CustomTextField(
               controller: controller.jobTitleController,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return StringConstant.emptyJobTitle;
+                }
+                return null;
+              },
               fillColor: context.loginSignupTextfieldColor,
               border: Border.all(color: context.black07),
               hintText: StringConstant.enterJobTitle,
@@ -103,6 +109,13 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
             ),
             10.kheightBox,
             CustomTextField(
+              readOnly: true,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return StringConstant.dateCannotBeEmpty;
+                }
+                return null;
+              },
               controller: controller.lastDateToApplyController,
               fillColor: context.loginSignupTextfieldColor,
               border: Border.all(color: context.black07),
@@ -159,7 +172,7 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               height: 56.kh,
               width: 100.w,
               onPressed:
-                controller.toEdit.value ? controller.editJob : controller.addJob,
+              controller.toEdit.value ? controller.editJob : controller.addJob,
             ),
           ],
         ),

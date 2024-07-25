@@ -10,6 +10,13 @@ import '../../../constants/string_constant.dart';
 class CreatePushNotificationController extends GetxController {
   //TODO: Implement CreatePushNotificationController
 
+  @override
+  void onClose() {
+    titleController.dispose();
+    scheduledDateController.dispose();
+    super.onClose();
+  }
+
   TextEditingController titleController = TextEditingController();
   TextEditingController scheduledDateController = TextEditingController();
   Rx<DateTime> selectedDate = DateTime.now().obs;
@@ -19,40 +26,26 @@ class CreatePushNotificationController extends GetxController {
   Future<void> addNotification() async{
     if(titleController.text.isEmpty){
       DialogHelper.showError(StringConstant.titleEmpty);
-    } else if(scheduledDateController.text.isEmpty){
-      DialogHelper.showError(StringConstant.scheduledDateEmpty);
-    } else{
+      return;
+    }
+    else{
       try{
         PushNotification notification = PushNotification(title: titleController.text, sheduledDate: selectedDate.value.toString());
         var response = await APIManager.addPushNotification(data: notification.toJson());
         if(response.data['status']){
+          Get.back();
           DialogHelper.showSuccess(StringConstant.notificationSentSuccessfully);
           Get.find<PushNotificationController>().getNotifications();
           Get.find<PushNotificationController>().notificationList.add(notification);
-          Get.back();
+          return;
         } else{
           DialogHelper.showError(response.data['message']);
+          return;
         }
       } catch(e){
         DialogHelper.showError(e.toString());
+        return;
       }
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    titleController.dispose();
-    scheduledDateController.dispose();
-    super.onClose();
   }
 }

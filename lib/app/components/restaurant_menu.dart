@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/category_model.dart';
+import 'package:fsauce_vendor_app/app/models/menu_item_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -23,6 +24,13 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
       case 0:
         break;
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.category.menu.sort((model1, model2) => model1.name.toLowerCase().toString().compareTo(model2.name.toLowerCase().toString()));
   }
 
   @override

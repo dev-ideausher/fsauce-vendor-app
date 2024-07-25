@@ -142,7 +142,7 @@ class ProfileSetupController extends GetxController {
             restaurantName: restaurantNameController.text.trim(),
             restaurantLogo: restaurantLogoUrl,
             restaurantBanner: restaurantBannerUrl,
-            location: streetNameController.text + cityNameController.text + cityNameController.text,
+            location: streetNameController.text + cityNameController.text,
             //locationController.text.trim()
             avgPrice: int.parse(averagePriceController.text.trim()),
             description: descriptionController.text.trim(),

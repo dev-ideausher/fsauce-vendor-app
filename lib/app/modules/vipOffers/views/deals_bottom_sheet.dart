@@ -83,22 +83,6 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                           )
                         ],
                       ),
-                      const Spacer(),
-                      Container(
-                        height: 24.kh,
-                        width: 24.kw,
-                        margin: EdgeInsets.all(10.kw),
-                        decoration: BoxDecoration(
-                            color: context.primary07,
-                            borderRadius: BorderRadius.circular(12.kw)),
-                        child: Center(
-                          child: Icon(
-                            Icons.favorite_outline,
-                            size: 16.kw,
-                            color: context.primary01,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

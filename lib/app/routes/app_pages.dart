@@ -220,7 +220,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.JOBS,
-      page: () => const JobsView(),
+      page: () => JobsView(),
       binding: JobsBinding(),
     ),
     GetPage(

@@ -103,7 +103,7 @@ class JobEditOrAddController extends GetxController {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
 
@@ -122,6 +122,17 @@ class JobEditOrAddController extends GetxController {
     descriptionController.text = job.description;
     howToApplyController.text = job.howToApply;
     id = job.id;
+  }
+
+  void emptyAddJobVariables(){
+    jobTitleController.text = "";
+    minSalaryController.text = "";
+    maxSalaryController.text = "";
+    lastDateToApplyController.text =
+        "";
+    descriptionController.text = "";
+    howToApplyController.text = "";
+    id = "";
   }
 
   void editJob() async {
@@ -157,6 +168,7 @@ class JobEditOrAddController extends GetxController {
         Get.back();
       } catch (e) {
         DialogHelper.showError("Something went wrong!");
+        return;
       }
     }
   }

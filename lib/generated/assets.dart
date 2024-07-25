@@ -6,6 +6,7 @@ class Assets {
   static const String lottiefilesInAppUpdate = 'assets/lottiefiles/inAppUpdate.json';
   static const String pngsFsauceLogo = 'assets/pngs/fsauce_logo.png';
   static const String pngsSubscriptionIcon = 'assets/pngs/subscription_icon.png';
+  static const String svgsAppIcon = 'assets/svgs/app_icon.svg';
   static const String svgsAppleLogo = 'assets/svgs/apple_logo.svg';
   static const String svgsBackIcon = 'assets/svgs/back_icon.svg';
   static const String svgsColorPicker = 'assets/svgs/color_picker.svg';

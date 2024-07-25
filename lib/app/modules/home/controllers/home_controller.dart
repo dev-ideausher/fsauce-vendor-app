@@ -125,11 +125,6 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Rx<RestaurantDetails> restaurantDetails = RestaurantDetails(
       restaurantName: '',
       restaurantLogo: '',

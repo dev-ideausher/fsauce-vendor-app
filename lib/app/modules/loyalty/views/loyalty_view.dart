@@ -289,118 +289,118 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         ],
                       ),
                     ),
-                    20.kheightBox,
-                    Row(
-                      children: [
-                        Text(
-                          StringConstant.stampDesign,
-                          style: TextStyleUtil.manrope16w600(),
-                        ),
-                        6.kwidthBox,
-                        Expanded(
-                            child: Divider(
-                          color: context.black05,
-                        ))
-                      ],
-                    ),
-                    20.kheightBox,
-                    Row(
-                      children: [
-                        Text(
-                          StringConstant.backgroundColor,
-                          style: TextStyleUtil.manrope14w500(),
-                        ),
-                        Text(
-                          "*",
-                          style: TextStyleUtil.manrope14w500(
-                              color: context.primary01),
-                        )
-                      ],
-                    ),
-                    10.kheightBox,
-                    Container(
-                      height: 53.kh,
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: context.loginSignupTextfieldColor,
-                        border: Border.all(color: context.borderColor2),
-                        borderRadius: BorderRadius.circular(8.0.kw),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: controller.stampBackgroundColor.value,
-                                  border:
-                                      Border.all(color: context.borderColor1))),
-                          10.kwidthBox,
-                          Text(
-                            "#${controller.stampBackgroundColor.value.toString().substring(10, 16).toUpperCase()}",
-                            style: TextStyleUtil.manrope14w400(),
-                          ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: controller.openStampBackgroundColorpalet,
-                            child: CommonImageView(
-                              svgPath: ImageConstant.colorPicker,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    20.kheightBox,
-                    Row(
-                      children: [
-                        Text(
-                          StringConstant.stampColor,
-                          style: TextStyleUtil.manrope14w500(),
-                        ),
-                        Text(
-                          "*",
-                          style: TextStyleUtil.manrope14w500(
-                              color: context.primary01),
-                        )
-                      ],
-                    ),
-                    10.kheightBox,
-                    Container(
-                      height: 53.kh,
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: context.loginSignupTextfieldColor,
-                        border: Border.all(color: context.borderColor2),
-                        borderRadius: BorderRadius.circular(8.0.kw),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: controller.stampTextColor.value,
-                                  border:
-                                      Border.all(color: context.borderColor1))),
-                          10.kwidthBox,
-                          Text(
-                            "#${controller.stampTextColor.value.toString().substring(10, 16).toUpperCase()}",
-                            style: TextStyleUtil.manrope14w400(),
-                          ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: controller.openStampTextColorpalet,
-                            child: CommonImageView(
-                              svgPath: ImageConstant.colorPicker,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    // 20.kheightBox,
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       StringConstant.stampDesign,
+                    //       style: TextStyleUtil.manrope16w600(),
+                    //     ),
+                    //     6.kwidthBox,
+                    //     Expanded(
+                    //         child: Divider(
+                    //       color: context.black05,
+                    //     ))
+                    //   ],
+                    // ),
+                    // 20.kheightBox,
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       StringConstant.backgroundColor,
+                    //       style: TextStyleUtil.manrope14w500(),
+                    //     ),
+                    //     Text(
+                    //       "*",
+                    //       style: TextStyleUtil.manrope14w500(
+                    //           color: context.primary01),
+                    //     )
+                    //   ],
+                    // ),
+                    // 10.kheightBox,
+                    // Container(
+                    //   height: 53.kh,
+                    //   width: 100.w,
+                    //   decoration: BoxDecoration(
+                    //     color: context.loginSignupTextfieldColor,
+                    //     border: Border.all(color: context.borderColor2),
+                    //     borderRadius: BorderRadius.circular(8.0.kw),
+                    //   ),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Container(
+                    //           height: 20,
+                    //           width: 20,
+                    //           decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(4),
+                    //               color: controller.stampBackgroundColor.value,
+                    //               border:
+                    //                   Border.all(color: context.borderColor1))),
+                    //       10.kwidthBox,
+                    //       Text(
+                    //         "#${controller.stampBackgroundColor.value.toString().substring(10, 16).toUpperCase()}",
+                    //         style: TextStyleUtil.manrope14w400(),
+                    //       ),
+                    //       const Spacer(),
+                    //       InkWell(
+                    //         onTap: controller.openStampBackgroundColorpalet,
+                    //         child: CommonImageView(
+                    //           svgPath: ImageConstant.colorPicker,
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // 20.kheightBox,
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       StringConstant.stampColor,
+                    //       style: TextStyleUtil.manrope14w500(),
+                    //     ),
+                    //     Text(
+                    //       "*",
+                    //       style: TextStyleUtil.manrope14w500(
+                    //           color: context.primary01),
+                    //     )
+                    //   ],
+                    // ),
+                    // 10.kheightBox,
+                    // Container(
+                    //   height: 53.kh,
+                    //   width: 100.w,
+                    //   decoration: BoxDecoration(
+                    //     color: context.loginSignupTextfieldColor,
+                    //     border: Border.all(color: context.borderColor2),
+                    //     borderRadius: BorderRadius.circular(8.0.kw),
+                    //   ),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Container(
+                    //           height: 20,
+                    //           width: 20,
+                    //           decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(4),
+                    //               color: controller.stampTextColor.value,
+                    //               border:
+                    //                   Border.all(color: context.borderColor1))),
+                    //       10.kwidthBox,
+                    //       Text(
+                    //         "#${controller.stampTextColor.value.toString().substring(10, 16).toUpperCase()}",
+                    //         style: TextStyleUtil.manrope14w400(),
+                    //       ),
+                    //       const Spacer(),
+                    //       InkWell(
+                    //         onTap: controller.openStampTextColorpalet,
+                    //         child: CommonImageView(
+                    //           svgPath: ImageConstant.colorPicker,
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     30.kheightBox,
                     CustomRedElevatedButton(
                         buttonText: StringConstant.save,

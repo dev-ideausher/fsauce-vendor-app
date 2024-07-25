@@ -526,6 +526,9 @@ class StringConstant {
   static const String max15CharsAllowed = "Maximum 15 characters are allowed.";
   static const String max25CharsAllowed = "Maximum 25 characters are allowed.";
   static const String selectedFeatures = "Selected Features";
+  static const String noLoyaltyCardFound = "No loyalty cards found.";
+  static const String getStartedWithLoyaltyCards = "Get started by creating loyalty cards";
+  static const String emptyJobTitle = "Job title empty!";
 
   // static const String
 }

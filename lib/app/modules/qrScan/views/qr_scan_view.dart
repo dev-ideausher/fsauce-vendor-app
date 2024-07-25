@@ -84,7 +84,7 @@ class _QrScanViewState extends State<QrScanView> {
             flex: 4,
             child: Column(
               children: [
-                result != null ? Text(result!.code!) : const Text(""),
+                // result != null ? Text(result!.code!) : const Text(""),
                 Center(
                   child: InkWell(
                     onTap: () {
@@ -110,9 +110,11 @@ class _QrScanViewState extends State<QrScanView> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        return;
       });
       if(result != null){
         scanQR(result!.code!);
+        return;
       }
     });
   }
@@ -123,18 +125,24 @@ class _QrScanViewState extends State<QrScanView> {
         Map<String, dynamic> loyaltyCardData = jsonStringToMap(result!.code!);
         Map<String, dynamic> cardData = {
           "user": loyaltyCardData['user'],
+          //6694b2a1f3acdcf9ad0955a2
           "LoyaltyCard": loyaltyCardData['LoyaltyCard'],
+          //669df96980cfd4f7d036b286
         };
         var response  = await APIManager.scanLoyaltyCard(data: cardData);
         if(response.data['status']){
+          Get.back();
           Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.redeemedSuccessfully));
+          return;
         } else if(!response.data['status'] && result != null){
           DialogHelper.showError(response.data['message']);
+          return;
         }
       } catch(e){
-        print("Error while scanning QR: $e");
         DialogHelper.showError(StringConstant.somethingWentWrong);
+        return;
       }
+      return;
     }
   }
 

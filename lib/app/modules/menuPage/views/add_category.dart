@@ -63,7 +63,9 @@ class AddCategory extends StatelessWidget {
                 width: 43.w,
                 height: 56.kh,
                 buttonText: StringConstant.cancel,
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
               ),
               CustomRedElevatedButton(
                   width: 43.w,

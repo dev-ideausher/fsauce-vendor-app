@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import '../../../constants/string_constant.dart';
 
 class LoginController extends GetxController {
-  final Auth auth = Get.put(Auth()); // Retrieve the Auth service
+  final Auth auth = Get.find<Auth>(); // Retrieve the Auth service
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,6 +21,8 @@ class LoginController extends GetxController {
   RxBool isApple = false.obs;
   RxBool passwordVisible = false.obs;
   RxBool isLoginEnabled = false.obs;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {

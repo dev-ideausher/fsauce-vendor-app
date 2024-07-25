@@ -44,7 +44,7 @@ class CreatePushNotificationView
                   validator: (String? val){
                     if(val  == null || val.isEmpty){
                       return StringConstant.notificationTitleEmpty;
-                    } else if(val.length > 15){
+                    } else if(val.length > 50){
                       return StringConstant.max25CharsAllowed;
                     }
                       return null;
@@ -54,28 +54,16 @@ class CreatePushNotificationView
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterTitle),
                 20.kheightBox,
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.scheduleDate,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                          TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    StringConstant.scheduleDate,
+                    style: TextStyleUtil.manrope14w500(),
+                  ),
                 ),
                 10.kheightBox,
                 CustomTextField(
                   readOnly: true,
-                    validator: (String? val){
-                      if(val == null || val.isEmpty){
-                        return StringConstant.scheduleDateCannotBeEmpty;
-                      }
-                      return null;
-                    },
                     controller: controller.scheduledDateController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),

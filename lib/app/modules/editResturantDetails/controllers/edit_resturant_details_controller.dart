@@ -159,13 +159,16 @@ class EditResturantDetailsController extends GetxController {
           Get.back();
           DialogHelper.showSuccess(StringConstant.detailsUpdatedSuccessfully);
           Get.find<HomeController>().getRestaurantDetails();
+          return;
         }
         else if(!response.data["status"]){
           DialogHelper.showError(StringConstant.anErrorOccurred);
+          return;
         }
       } catch(e){
         print("An error occurred while editing profile!: $e");
         DialogHelper.showError(StringConstant.anErrorOccurred);
+        return;
       }
     }
   }

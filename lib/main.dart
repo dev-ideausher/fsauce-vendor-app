@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/binding/splash_binding.dart';
+import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/firebase_options.dart';
 
 import 'app/modules/home/bindings/home_binding.dart';
@@ -18,6 +19,8 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
+
+  Get.lazyPut<Auth>(() => Auth());
 
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

@@ -22,20 +22,11 @@ class MenuPageController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   TextEditingController editCategoryController = TextEditingController();
   TextEditingController addCategoryController = TextEditingController();
   TextEditingController itemNameController = TextEditingController();
   TextEditingController editMenuItemController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
   RxString itemImage = "".obs;
@@ -108,6 +99,7 @@ class MenuPageController extends GetxController {
   void addCategory() async {
     if (addCategoryController.text.isEmpty) {
       DialogHelper.showError(StringConstant.enterCategoryName);
+      return;
     } else {
       try {
         var response = await APIManager.addCategory(
@@ -119,11 +111,14 @@ class MenuPageController extends GetxController {
           getCategory();
           Get.back();
           DialogHelper.showSuccess(StringConstant.categoryAddedSuccessfully);
+          return;
         } else {
           DialogHelper.showError(StringConstant.somethingWentWrong);
+          return;
         }
       } catch (e) {
         DialogHelper.showError(StringConstant.categoryNameAdded);
+        return;
       }
     }
   }
@@ -132,6 +127,9 @@ class MenuPageController extends GetxController {
     var response = await APIManager.getCategories();
     List data = response.data["data"];
     categories.value = data.map((e) => CategoryModel.fromJson(e)).toList();
+    categories.forEach((category){
+      category.menu.sort((model1, model2) => model1.name.toString().toLowerCase().compareTo(model2.name.toString().toLowerCase()));
+    });
   }
 
   void showAddItem() {
@@ -174,6 +172,7 @@ class MenuPageController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      Get.back();
       DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
       await getCategory();
       return true;

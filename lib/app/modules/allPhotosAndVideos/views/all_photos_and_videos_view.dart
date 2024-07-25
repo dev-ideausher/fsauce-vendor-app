@@ -22,143 +22,148 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
       appBar: const CustomAppBar(
         title: StringConstant.allPhotosAndVideos,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.kw),
-        child: ListView(
-          children: [
-            Row(
-              children: [
-                Text(
-                  StringConstant.restaurantImageAndVideos,
-                  style: TextStyleUtil.manrope14w500(),
-                ),
-                Text(
-                  "*",
-                  style: TextStyleUtil.manrope14w500(color: context.primary01),
-                )
-              ],
-            ),
-            12.kheightBox,
-            Obx((){
-              if(controller.restaurantUploads.isNotEmpty){
-                return SizedBox(
-                  height: 250.kh,
-                  width: double.infinity,
-                  child: ListView.separated(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16.kw),
+          height: 1000.kh,
+          width: 800.kw,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    StringConstant.restaurantImageAndVideos,
+                    style: TextStyleUtil.manrope14w500(),
+                  ),
+                  Text(
+                    "*",
+                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                  )
+                ],
+              ),
+              12.kheightBox,
+              Obx((){
+                if(controller.restaurantUploads.isNotEmpty){
+                  return SizedBox(
+                    height: 250.kh,
+                    width: 600.kw,
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index){
+                          if(controller.restaurantUploads[index].endsWith(".jpg")){
+                            return InkWell(
+                              onLongPress: () {
+                                controller.confirmDeleteImage(index);
+                              },
+                              child: CommonImageView(
+                                url: controller.restaurantUploads[index],
+                              ),
+                            );
+                          } else if(controller.restaurantUploads[index].endsWith(".mp4")){
+                            return InkWell(
+                              onTap: () {
+                                launchUrl(Uri.parse(controller.restaurantUploads[index]));
+                              },
+                              child: Container(
+                                  height: 400.kh,
+                                  width: 120.kw,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.circular(4.kh),
+                                  ),
+                                  child: const Center(child: Icon(Icons.videocam))
+                              ),
+                            );
+                          } else{
+                            return Container();
+                          }
+                        },
+                        separatorBuilder: (ctx, index){
+                          return 8.kheightBox;
+                        }, itemCount: controller.restaurantUploads.length),
+                  );
+                }
+                else{
+                  return Container();
+                }
+              }),
+              12.kheightBox,
+              Obx((){
+                if(controller.selectedFiles.isNotEmpty){
+                  return SizedBox(
+                    height: 250.kh,
+                    width: 600.kw,
+                    child: ListView.separated(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index){
-                        if(controller.restaurantUploads[index].endsWith(".jpg")){
-                          return InkWell(
-                            onLongPress: () {
-                              controller.confirmDeleteImage(index);
-                            },
-                            child: CommonImageView(
-                              url: controller.restaurantUploads[index],
-                            ),
+                        itemBuilder: (ctx, index){
+                        if(controller.isImage(controller.selectedFiles[index])){
+                          return Image.file(
+                            File(controller.selectedFiles[index]),
+                            fit: BoxFit.contain,
                           );
-                        } else if(controller.restaurantUploads[index].endsWith(".mp4")){
-                          return InkWell(
-                            onTap: () {
-                              launchUrl(Uri.parse(controller.restaurantUploads[index]));
-                            },
-                            child: Container(
-                                height: 400.kh,
-                                width: 120.kw,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  borderRadius: BorderRadius.circular(4.kh),
-                                ),
-                                child: const Center(child: Icon(Icons.videocam))
+                        } else {
+                          return Container(
+                            height: 400.kh,
+                            width: 120.kw,
+                            decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(4.kh),
                             ),
+                            child: const Center(child: Icon(Icons.videocam))
                           );
                         }
-                      },
-                      separatorBuilder: (ctx, index){
-                        return 8.kheightBox;
-                      }, itemCount: controller.restaurantUploads.length),
-                );
-              }
-              else{
-                return Container();
-              }
-            }),
-            12.kheightBox,
-            Obx((){
-              if(controller.selectedFiles.isNotEmpty){
-                return SizedBox(
-                  height: 250.kh,
-                  width: double.infinity,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index){
-                      if(controller.isImage(controller.selectedFiles[index])){
-                        return Image.file(
-                          File(controller.selectedFiles[index]),
-                          fit: BoxFit.contain,
-                        );
-                      } else {
-                        return Container(
-                          height: 400.kh,
-                          width: 120.kw,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(4.kh),
-                          ),
-                          child: const Center(child: Icon(Icons.videocam))
-                        );
-                      }
-                      },
-                      separatorBuilder: (ctx, index){
-                        return 8.kheightBox;
-                      }, itemCount: controller.selectedFiles.length),
-                );
-              }
-              else{
-                return Container();
-              }
-            }),
-            12.kheightBox,
-            InkWell(
-              onTap: () {
-                controller.pickMultipleFiles();
-              },
-              child: Container(
-                height: 160.kh,
-                width: 100.w,
-                decoration: BoxDecoration(
-                    border: Border.all(color: context.black07),
-                    borderRadius: BorderRadius.circular(8.kw),
-                    color: context.loginSignupTextfieldColor),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.file_upload_outlined),
-                      2.kwidthBox,
-                      Text(
-                        StringConstant.uploadPhotosAndVideos,
-                        style:
-                            TextStyleUtil.manrope14w400(color: context.black03),
-                      )
-                    ],
+                        },
+                        separatorBuilder: (ctx, index){
+                          return 8.kheightBox;
+                        }, itemCount: controller.selectedFiles.length),
+                  );
+                }
+                else{
+                  return Container();
+                }
+              }),
+              12.kheightBox,
+              InkWell(
+                onTap: () {
+                  controller.pickMultipleFiles();
+                },
+                child: Container(
+                  height: 160.kh,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: context.black07),
+                      borderRadius: BorderRadius.circular(8.kw),
+                      color: context.loginSignupTextfieldColor),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.file_upload_outlined),
+                        2.kwidthBox,
+                        Text(
+                          StringConstant.uploadPhotosAndVideos,
+                          style:
+                              TextStyleUtil.manrope14w400(color: context.black03),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Spacer(),
-            CustomRedElevatedButton(
-                buttonText: StringConstant.save,
-                height: 56.kh,
-                width: 100.w,
-                onPressed: () {
-                  controller.uploadAllImagesAndVideos();
-                }),
-            10.kheightBox,
-          ],
+            ],
+          ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: CustomRedElevatedButton(
+          buttonText: StringConstant.save,
+          height: 56.kh,
+          width: 100.w,
+          onPressed: () {
+            controller.uploadAllImagesAndVideos();
+          }),
     );
   }
 }

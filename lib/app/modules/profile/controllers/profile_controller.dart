@@ -5,23 +5,10 @@ import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../../services/auth.dart';
+
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void gotoProfileDetailsScreen() {
     Get.toNamed(Routes.PROFILE_DETAILS);
@@ -47,8 +34,9 @@ class ProfileController extends GetxController {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.confirmLogout,
         subTitle: StringConstant.confirmLogoutSub,
-        onYesTap: () {
-          Get.find<GetStorageService>().logout();
+        onYesTap: () async{
+          // Get.find<GetStorageService>().logout();
+          await Get.find<Auth>().logOutUser();
           Get.offAllNamed(Routes.LOGIN);
         },
         onNoTap: Get.back));

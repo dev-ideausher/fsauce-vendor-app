@@ -68,7 +68,7 @@ class DealsOfTheDayCard extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 40.w,
-                      child: Text(coupon.description),
+                      child: Text(coupon.description, maxLines: 2,),
                     )
                   ],
                 ),

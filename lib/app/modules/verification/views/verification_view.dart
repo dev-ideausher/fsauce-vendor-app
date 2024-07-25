@@ -16,8 +16,9 @@ class VerificationView extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: "",
+          leading: Container(),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.kw),

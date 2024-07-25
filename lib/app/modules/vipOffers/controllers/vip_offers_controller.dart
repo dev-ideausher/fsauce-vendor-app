@@ -21,16 +21,6 @@ class VipOffersController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future<void> getCoupons() async{
     var response = await APIManager.getCouponList();
     List data = response.data["data"];

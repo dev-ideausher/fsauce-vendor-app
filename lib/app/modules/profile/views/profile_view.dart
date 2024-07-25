@@ -72,37 +72,30 @@ class ProfileView extends GetView<ProfileController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Pizza",
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        ),
                         5.kwidthBox,
-                        Container(
-                          height: 5.kh,
-                          width: 5.kh,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: context.black01),
-                        ),
-                        5.kwidthBox,
-                        Text(
-                          "Italian",
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        ),
-                        5.kwidthBox,
-                        Container(
-                          height: 5.kh,
-                          width: 5.kh,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: context.black01),
-                        ),
-                        5.kwidthBox,
-                        Text(
-                          "Fast Food",
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        )
+                        Obx(() {
+                          return Text(
+                            Get
+                                .find<HomeController>()
+                                .restaurantDetails
+                                .value.cuisine.first.name!,
+                            style: TextStyleUtil.manrope14w400(
+                                color: context.black03),
+                          );
+                        }),
+                        // 5.kwidthBox,
+                        // Container(
+                        //   height: 5.kh,
+                        //   width: 5.kh,
+                        //   decoration: BoxDecoration(
+                        //       shape: BoxShape.circle, color: context.black01),
+                        // ),
+                        // 5.kwidthBox,
+                        // Text(
+                        //   "Fast Food",
+                        //   style: TextStyleUtil.manrope14w400(
+                        //       color: context.black03),
+                        // )
                       ],
                     ),
                     2.kheightBox,
@@ -134,36 +127,38 @@ class ProfileView extends GetView<ProfileController> {
                 text: StringConstant.pushNotifications,
               ),
               10.kheightBox,
-          InkWell(
-            onTap: () {
-              controller.gotoSubscriptionScreen();
-            },
-            child: Container(
-              height: 56.kh,
-              width: 100.w,
-              padding: EdgeInsets.symmetric(horizontal: 20.kw),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border(bottom: BorderSide(color: context.borderColor2))),
-              child: Row(
-                children: [
-                  Icon(Icons.monetization_on_outlined, color: context.primary01, size: 22.kh,),
-                  16.kwidthBox,
-                  Text(
-                    StringConstant.subscriptions,
-                    style: TextStyleUtil.manrope14w400(),
+              InkWell(
+                onTap: () {
+                  controller.gotoSubscriptionScreen();
+                },
+                child: Container(
+                  height: 56.kh,
+                  width: 100.w,
+                  padding: EdgeInsets.symmetric(horizontal: 20.kw),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border(
+                          bottom: BorderSide(color: context.borderColor2))),
+                  child: Row(
+                    children: [
+                      Icon(Icons.monetization_on_outlined,
+                        color: context.primary01, size: 22.kh,),
+                      16.kwidthBox,
+                      Text(
+                        StringConstant.subscriptions,
+                        style: TextStyleUtil.manrope14w400(),
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 20,
+                        color: context.black01,
+                      )
+                    ],
                   ),
-                  const Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 20,
-                    color: context.black01,
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
               10.kheightBox,
               ProfileOption(
                 svgPath: ImageConstant.helpAndSupport,
@@ -189,10 +184,12 @@ class ProfileView extends GetView<ProfileController> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border(bottom: BorderSide(color: context.borderColor2))),
+                      border: Border(
+                          bottom: BorderSide(color: context.borderColor2))),
                   child: Row(
                     children: [
-                      Icon(Icons.delete_outline, color: context.primary01, size: 22.kh,),
+                      Icon(Icons.delete_outline, color: context.primary01,
+                        size: 22.kh,),
                       16.kwidthBox,
                       Text(
                         StringConstant.deleteAccount,
