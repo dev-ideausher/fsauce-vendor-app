@@ -19,16 +19,6 @@ class RatingAndFeedbackManagementController extends GetxController {
     getRatings();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void showRatingDeleteDialog(String id) {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.deleteReview,
@@ -50,7 +40,7 @@ class RatingAndFeedbackManagementController extends GetxController {
   Future<void> getRatings() async{
     String id = Get.find<HomeController>().vendor;
     try{
-      var response = await APIManager.getRatings(id: id, rating: int.parse(selectedRatingFilter.value.toString()));
+      var response = await APIManager.getRatings(id: id, rating: selectedRatingFilter.value.toInt());
       if(response.data["status"]){
         List data = response.data["data"];
         ratings.value = [];

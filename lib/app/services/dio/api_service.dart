@@ -240,7 +240,7 @@ class APIManager {
   }
 
   static Future<Response> getNotifications() async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getNotification, );
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getNotification,);
   }
 
   static Future<Response> getFeatures() async {

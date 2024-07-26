@@ -9,7 +9,7 @@ class ChangePasswordController extends GetxController {
 
   TextEditingController emailController = TextEditingController();
 
-  Auth auth = Get.put(Auth());
+  Auth auth = Get.find<Auth>();
 
   RxBool isEmailEmpty = true.obs;
   RxBool isOldPasswordVisible = false.obs;
@@ -17,16 +17,6 @@ class ChangePasswordController extends GetxController {
   RxBool isConfirmPasswordVisible = false.obs;
 
   final formKey = GlobalKey<FormState>();
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

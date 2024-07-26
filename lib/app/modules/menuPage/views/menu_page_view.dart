@@ -39,33 +39,25 @@ class MenuPageView extends GetView<MenuPageController> {
         ),
         body: Padding(
           padding: EdgeInsets.only(top: 16.kh, left: 16.kw, right: 16.kw),
-          child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Obx( () {
-                if(controller.categories.isNotEmpty){
-                  return Column(
-                    children: [
-                      ...controller.categories.value.map(
-                            (e) => RestaurantMenu(
-                          category: e,
-                        ),
-                      )
-                    ],
-                  );
-                } else {
-                  return Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Center(child: EmptyWidget(title: StringConstant.noMenuFound, subTitle: StringConstant.craftMenu)),
-                      ],
-                    ),
-                  );
-                }
-              }
-              )),
+          child: Obx( () {
+            if(controller.categories.isNotEmpty){
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    ...controller.categories.value.map(
+                          (e) => RestaurantMenu(
+                        category: e,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return Center(child: EmptyWidget(title: StringConstant.noMenuFound, subTitle: StringConstant.craftMenu));
+            }
+          }
+          ),
         ));
   }
 }

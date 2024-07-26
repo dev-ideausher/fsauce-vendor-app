@@ -43,11 +43,6 @@ class CreateOrEditVipOfferController extends GetxController {
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
     titleController.dispose();

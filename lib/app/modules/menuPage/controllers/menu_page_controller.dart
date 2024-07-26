@@ -36,7 +36,7 @@ class MenuPageController extends GetxController {
   CategoryModel? addItemSelectedCategory;
 
   void shoeAddCategoryOrItem() {
-    Get.bottomSheet(const AddCategoryOrMenu());
+    Get.bottomSheet(AddCategoryOrMenu());
   }
 
   void onAddCategoryClick() {
@@ -127,6 +127,7 @@ class MenuPageController extends GetxController {
     var response = await APIManager.getCategories();
     List data = response.data["data"];
     categories.value = data.map((e) => CategoryModel.fromJson(e)).toList();
+    categories.sort((category1, category2) => category1.name.toString().toLowerCase().compareTo(category2.name.toString().toLowerCase()));
     categories.forEach((category){
       category.menu.sort((model1, model2) => model1.name.toString().toLowerCase().compareTo(model2.name.toString().toLowerCase()));
     });

@@ -7,7 +7,9 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 class AddCategoryOrMenu extends StatelessWidget {
-  const AddCategoryOrMenu({super.key});
+  AddCategoryOrMenu({super.key});
+
+  final controller = Get.find<MenuPageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,32 +35,38 @@ class AddCategoryOrMenu extends StatelessWidget {
             style: TextStyleUtil.manrope18w600(color: context.black01),
           ),
           20.kheightBox,
-          InkWell(
-            onTap: Get.find<MenuPageController>().showAddItem,
-            child: Container(
-              height: 53.kh,
-              width: 100.w,
-              padding: EdgeInsets.symmetric(horizontal: 10.kw),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border:
+          Obx(() {
+            if(controller.categories.isNotEmpty){
+              return InkWell(
+                onTap: controller.showAddItem,
+                child: Container(
+                  height: 53.kh,
+                  width: 100.w,
+                  padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border:
                       Border(bottom: BorderSide(color: context.borderColor1))),
-              child: Row(
-                children: [
-                  Text(
-                    StringConstant.addItem,
-                    style: TextStyleUtil.manrope14w500(),
+                  child: Row(
+                    children: [
+                      Text(
+                        StringConstant.addItem,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.keyboard_arrow_right_outlined)
+                    ],
                   ),
-                  const Spacer(),
-                  const Icon(Icons.keyboard_arrow_right_outlined)
-                ],
-              ),
-            ),
-          ),
+                ),
+              );
+            } else{
+              return Text(StringConstant.startCreatingCategories, style: TextStyleUtil.manrope14w500());
+            }
+          }),
           16.kheightBox,
           InkWell(
-            onTap: Get.find<MenuPageController>().onAddCategoryClick,
+            onTap: controller.onAddCategoryClick,
             child: Container(
               height: 53.kh,
               width: 100.w,

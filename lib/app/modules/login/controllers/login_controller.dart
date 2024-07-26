@@ -71,13 +71,16 @@ class LoginController extends GetxController {
         await auth.loginEmailPass(email: email, pass: password);
         await DialogHelper.hideDialog();
         gotoHomeScreen();
+        return;
       } catch (e) {
         await DialogHelper.hideDialog();
         Get.snackbar(StringConstant.error, e.toString());
+        return;
       }
     } else {
       await DialogHelper.hideDialog();
       Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
+      return;
     }
   }
 

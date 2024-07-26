@@ -38,6 +38,10 @@ class DealsOfTheDayCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 10.kh),
       decoration: BoxDecoration(
           color: Colors.white,
+          image: DecorationImage(
+            alignment: Alignment.centerRight,
+              image: NetworkImage(coupon.image),
+          ),
           border: Border.all(
             color: context.black07,
           ),
@@ -148,7 +152,7 @@ class DealsOfTheDayCard extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextButton(
                   onPressed: () {

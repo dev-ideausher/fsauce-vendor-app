@@ -221,7 +221,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
               Obx(() {
                 if (controller.couponImageLink
                     .value
-                    .isEmpty) {
+                    .isEmpty && controller.selectedCouponImage.isEmpty) {
                   return InkWell(
                     onTap: () {
                       controller.pickCouponImage();

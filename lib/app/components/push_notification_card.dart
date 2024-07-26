@@ -39,16 +39,18 @@ class PushNotificationCard extends StatelessWidget {
                   onSelected: (item) => handleClick(item),
                   itemBuilder: (context) => [
                     PopupMenuItem<int>(
-                        onTap: isActivate
+                        onTap: notification.sheduledDate != null ?
+                        isActivate
                             ? Get.find<PushNotificationController>()
                                 .showInactiveDialog
                             : Get.find<PushNotificationController>()
-                                .showActiveDialog,
+                                .showActiveDialog : () {},
                         value: 1,
                         child: Text(
+                          notification.sheduledDate != null ?
                           isActivate
                               ? StringConstant.inactivateNotification
-                              : StringConstant.activateNotification,
+                              : StringConstant.activateNotification : "",
                           style: TextStyleUtil.manrope14w400(),
                         )),
                     PopupMenuItem<int>(
@@ -68,7 +70,7 @@ class PushNotificationCard extends StatelessWidget {
           ),
           Text(
             // "Feb 27, 2022, 23:57",
-            notification.sheduledDate ?? "Feb 27, 2022, 23:57",
+            notification.sheduledDate!.substring(0, 10) ?? "",
             style: TextStyleUtil.manrope14w400(
               color: context.black03,
             ),

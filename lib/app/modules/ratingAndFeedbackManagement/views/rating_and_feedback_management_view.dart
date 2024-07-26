@@ -22,11 +22,11 @@ class RatingAndFeedbackManagementView
         appBar: const CustomAppBar(
           title: StringConstant.ratingAndFeedbackManagement,
         ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.kw),
-          child: Obx(() {
-            if(controller.ratings.isNotEmpty){
-              return Column(
+        body: Obx(() {
+          if(controller.ratings.isNotEmpty){
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(16.kw),
+              child: Column(
                 children: [
                   Container(
                     height: 120.kh,
@@ -205,17 +205,17 @@ class RatingAndFeedbackManagementView
                     ),
                   )
                 ],
-              );
-            } else if(controller.ratings.isEmpty){
-              return Center(
-                child: EmptyWidget(
-                  title: StringConstant.noRatingsFound,
-                ),
-              );
-            } else{
-              return const Center(child: CircularProgressIndicator());
-            }
-          }),
-        ));
+              ),
+            );
+          } else if(controller.ratings.isEmpty){
+            return Center(
+              child: EmptyWidget(
+                title: StringConstant.noRatingsFound,
+              ),
+            );
+          } else{
+            return const Center(child: CircularProgressIndicator());
+          }
+        }));
   }
 }

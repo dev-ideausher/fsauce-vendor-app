@@ -30,7 +30,7 @@ class CreatePushNotificationController extends GetxController {
     }
     else{
       try{
-        PushNotification notification = PushNotification(title: titleController.text, sheduledDate: selectedDate.value.toString());
+        PushNotification notification = PushNotification(title: titleController.text, sheduledDate: scheduledDateController.text.isEmpty ? null : selectedDate.value.toString());
         var response = await APIManager.addPushNotification(data: notification.toJson());
         if(response.data['status']){
           Get.back();

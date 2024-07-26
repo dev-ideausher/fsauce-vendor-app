@@ -36,11 +36,16 @@ class Auth extends GetxService {
     print('Apple : ${await result.user?.getIdToken()}');
   }
 
-  loginEmailPass({required String email, required String pass}) async {
-    final result = await auth
-        .loginWithEmail(email: email, password: pass)
+  Future<dynamic> loginEmailPass({required String email, required String pass}) async {
+    await _firebaseAuth.signInWithEmailAndPassword(email: email, password: pass)
         .then((value) async {
       await handleGetContact();
+    }).catchError((e) {
+      if(e is FirebaseAuthException){
+        DialogHelper.showError(e.message ?? "Something went wrong");
+      }
+      print("This is from auth, loginEmailPass");
+      print(e);
     });
     // print('EmailPass : ${await result.user?.getIdToken()}');
   }
@@ -52,7 +57,7 @@ class Auth extends GetxService {
   }
 
   createEmailPass({required String email, required String pass}) async {
-    final result = await auth
+    await auth
         .createAccountWithEmail(email: email, password: pass)
         .then((value) async {
       await handleGetContact();

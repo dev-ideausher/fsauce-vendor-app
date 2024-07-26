@@ -49,21 +49,12 @@ class PushNotificationView extends GetView<PushNotificationController> {
               padding: EdgeInsets.all(16.kw),
               child: Column(
                 children: [
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //       border: Border.all(color: context.black07),
-                  //       borderRadius: BorderRadius.circular(8.kw)),
-                  //   child: const CustomTextField(
-                  //       prefixIcon: Icons.search_rounded,
-                  //       fillColor: Colors.white,
-                  //       hintText: StringConstant.searchNotifications),
-                  // ),
                   20.kheightBox,
                   ListView.separated(
                     shrinkWrap: true,
                       itemBuilder: (ctx, index){
                     return PushNotificationCard(
-                      isActivate: true,
+                      isActivate: controller.notificationList[index].sheduledDate == null ? true : DateTime.parse(controller.notificationList[index].sheduledDate!).isAfter(DateTime.now()),
                       notification: controller.notificationList[index],
                     );
                   }, separatorBuilder: (ctx, index){

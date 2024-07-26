@@ -44,8 +44,8 @@ class CreatePushNotificationView
                   validator: (String? val){
                     if(val  == null || val.isEmpty){
                       return StringConstant.notificationTitleEmpty;
-                    } else if(val.length > 50){
-                      return StringConstant.max25CharsAllowed;
+                    } else if(val.length > 100){
+                      return StringConstant.max100CharsAllowed;
                     }
                       return null;
                   },
