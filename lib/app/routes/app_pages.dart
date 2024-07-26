@@ -82,6 +82,8 @@ class AppPages {
 
   static const INITIAL = Routes.SPLASHVIEW;
 
+  //SPLASHVIEW
+
   static final routes = [
     GetPage(
       name: _Paths.HOME,

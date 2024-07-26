@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ import 'storage.dart';
 import 'dart:developer';
 import 'dialog_helper.dart';
 
+import 'package:google_sign_in/google_sign_in.dart';
+
 class Auth extends GetxService {
   final auth = FirebaseAuthenticationService();
   final _facebookLogin = FacebookAuth.instance;
@@ -17,9 +21,27 @@ class Auth extends GetxService {
 
   google() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/google_sign_in
-    await auth.signInWithGoogle().then((value) async {
+    final _googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount =
+    await _googleSignIn.signIn();
+    if (googleSignInAccount == null) {
+      debugPrint('Process is canceled by the user');
+      DialogHelper.showError("Google sign cancelled by user");
+      return;
+    }
+    final googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final userCredential = await _firebaseAuth.signInWithCredential(credential);
+
+    if(userCredential.user != null){
       await handleGetContact();
-    });
+    }
   }
 
   apple() async {
@@ -57,11 +79,21 @@ class Auth extends GetxService {
   }
 
   createEmailPass({required String email, required String pass}) async {
-    await auth
-        .createAccountWithEmail(email: email, password: pass)
+    await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
         .then((value) async {
       await handleGetContact();
+    }).catchError((e) {
+      if(e is FirebaseAuthException){
+        DialogHelper.showError(e.message ?? "Something went wrong");
+      }
+      print("This is from auth, createEmailPass");
+      print(e);
     });
+    // await auth
+    //     .createAccountWithEmail(email: email, password: pass)
+    //     .then((value) async {
+    //   await handleGetContact();
+    // });
     // print('EmailPass : ${await result.user?.getIdToken()}');
   }
 
@@ -77,8 +109,16 @@ class Auth extends GetxService {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
-  sendResetPasswordMail({required String email}) async {
-    await auth.sendResetPasswordLink(email);
+  Future<bool> sendResetPasswordMail({required String email}) async {
+    final result = await auth.sendResetPasswordLink(email);
+    if(result is bool){
+      if(result){
+        return true;
+      } else{
+        return false;
+      }
+    }
+    return false;
   }
 
   verifyMobileOtp({required String otp}) async {

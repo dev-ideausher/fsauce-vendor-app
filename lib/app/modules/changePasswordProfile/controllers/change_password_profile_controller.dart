@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
@@ -21,16 +22,6 @@ class ChangePasswordProfileController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
     oldPasswordController.dispose();
@@ -42,8 +33,9 @@ class ChangePasswordProfileController extends GetxController {
     try{
       DialogHelper.showLoading();
       await auth.updatePassword(newPassword: newPassword);
-      DialogHelper.showSuccess(StringConstant.passwordChangedSuccessfully);
       DialogHelper.hideDialog();
+      Get.back();
+      Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.passwordChangedSuccessfully));
     } catch(e){
       print("An error occurred while updating password!: $e");
       DialogHelper.showError(e.toString());

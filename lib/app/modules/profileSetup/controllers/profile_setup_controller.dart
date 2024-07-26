@@ -20,9 +20,11 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../models/feature_model.dart';
 
+import 'package:mime/mime.dart';
+
 class ProfileSetupController extends GetxController {
 
-  final stepCount = 0.obs;
+  final stepCount = 2.obs;
   RxList<CuisineModel> selectedCuisines = <CuisineModel>[].obs;
   RxList<FeatureModel> features = <FeatureModel>[].obs;
   RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
@@ -206,12 +208,18 @@ class ProfileSetupController extends GetxController {
 
   Future<void> pickMultipleFiles() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultiImage();
+    final List<XFile>? pickedFiles = await picker.pickMultipleMedia();
 
     if (pickedFiles != null) {
       selectedFiles.clear();
       selectedFiles.addAll(pickedFiles.map((file) => file.path));
     }
+  }
+
+  bool isImage(String path) {
+    final mimeType = lookupMimeType(path);
+
+    return mimeType!.startsWith('image/');
   }
 
   String restaurantLogoUrl = "";

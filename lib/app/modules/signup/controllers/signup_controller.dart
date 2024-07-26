@@ -72,7 +72,7 @@ class SignupController extends GetxController {
       } catch (e) {
         await DialogHelper.hideDialog();
         // Handle error (show a message to the user)
-        Get.snackbar(StringConstant.error, e.toString());
+        // Get.snackbar(StringConstant.error, e.toString());
       }
     } else {
       await DialogHelper.hideDialog();

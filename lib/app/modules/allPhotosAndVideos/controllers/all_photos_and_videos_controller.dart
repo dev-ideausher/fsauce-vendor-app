@@ -21,14 +21,6 @@ class AllPhotosAndVideosController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
   RxList<String> selectedFiles = <String>[].obs;
   List<String> uploadedFilesUrl = [];
   RxList<String> restaurantUploads = <String>[].obs;
@@ -123,10 +115,5 @@ class AllPhotosAndVideosController extends GetxController {
     } else{
       DialogHelper.showError(StringConstant.uploadAllImagesError);
     }
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/modules/changePassword/views/change_password_view.dart';
 import 'package:fsauce_vendor_app/app/modules/changePassword/views/password_change_complete.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
+import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordController extends GetxController {
@@ -24,8 +26,18 @@ class ChangePasswordController extends GetxController {
     emailController.dispose();
   }
 
-  void sendResetPasswordLink() {
-    auth.sendResetPasswordMail(email: emailController.text.trim());
+  void sendResetPasswordLink() async{
+    DialogHelper.showLoading();
+    final result = await auth.sendResetPasswordMail(email: emailController.text.trim());
+    if(result){
+      DialogHelper.hideDialog();
+      Get.back();
+      Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: "Reset password link sent to your email address"));
+      return;
+    } else {
+      DialogHelper.showError("Something went wrong!");
+      return;
+    }
   }
 
   void toggleOldPasswordVisible(){

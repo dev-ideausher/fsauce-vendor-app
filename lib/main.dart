@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fsauce_vendor_app/app/modules/profileSetup/bindings/profile_setup_binding.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/binding/splash_binding.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/firebase_options.dart';

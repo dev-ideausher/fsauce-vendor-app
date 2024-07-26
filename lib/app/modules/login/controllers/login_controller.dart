@@ -69,7 +69,7 @@ class LoginController extends GetxController {
     if (email.isNotEmpty && password.isNotEmpty) {
       try {
         await auth.loginEmailPass(email: email, pass: password);
-        await DialogHelper.hideDialog();
+        DialogHelper.hideDialog();
         gotoHomeScreen();
         return;
       } catch (e) {
