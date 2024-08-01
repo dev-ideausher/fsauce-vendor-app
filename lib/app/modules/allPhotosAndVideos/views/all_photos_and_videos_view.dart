@@ -80,7 +80,7 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                           }
                         },
                         separatorBuilder: (ctx, index){
-                          return 8.kheightBox;
+                          return 20.kwidthBox;
                         }, itemCount: controller.restaurantUploads.length),
                   );
                 }
@@ -99,24 +99,46 @@ class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
                       scrollDirection: Axis.horizontal,
                         itemBuilder: (ctx, index){
                         if(controller.isImage(controller.selectedFiles[index])){
-                          return Image.file(
-                            File(controller.selectedFiles[index]),
-                            fit: BoxFit.contain,
+                          return Stack(
+                            children: [
+                              Image.file(
+                              File(controller.selectedFiles[index]),
+                              fit: BoxFit.contain,
+                            ),
+                              Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: IconButton(
+                                      onPressed: (){
+                                        controller.selectedFiles.removeAt(index);
+                                      }, icon: const Icon(Icons.cancel_outlined, size: 20,))),
+                            ]
                           );
                         } else {
-                          return Container(
-                            height: 400.kh,
-                            width: 120.kw,
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(4.kh),
+                          return Stack(
+                            children: [
+                              Container(
+                              height: 400.kh,
+                              width: 120.kw,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(4.kh),
+                              ),
+                              child: const Center(child: Icon(Icons.videocam))
                             ),
-                            child: const Center(child: Icon(Icons.videocam))
+                              Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: IconButton(
+                                      onPressed: (){
+                                        controller.selectedFiles.removeAt(index);
+                                      }, icon: const Icon(Icons.cancel_outlined, size: 20,))),
+                            ]
                           );
                         }
                         },
                         separatorBuilder: (ctx, index){
-                          return 8.kheightBox;
+                          return 20.kwidthBox;
                         }, itemCount: controller.selectedFiles.length),
                   );
                 }

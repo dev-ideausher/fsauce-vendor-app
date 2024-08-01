@@ -85,6 +85,7 @@ class _QrScanViewState extends State<QrScanView> {
             child: Column(
               children: [
                 // result != null ? Text(result!.code!) : const Text(""),
+                50.kheightBox,
                 Center(
                   child: InkWell(
                     onTap: () {

@@ -46,19 +46,19 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
                   6.kheightBox,
                   CustomTextField(
-                    validator: (String? val){
-                      if(val == null || val.isEmpty){
-                        return StringConstant.restaurantNameCannotBeEmpty;
-                      }
-                      return null;
-                    },
+                      validator: (String? val) {
+                        if (val == null || val.isEmpty) {
+                          return StringConstant.restaurantNameCannotBeEmpty;
+                        }
+                        return null;
+                      },
                       controller: controller.restaurantNameController,
                       fillColor: context.loginSignupTextfieldColor,
                       border: Border.all(color: context.black07),
@@ -72,8 +72,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
@@ -101,7 +101,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         .restaurantDetails
                         .value
                         .restaurantLogo
-                        .isNotEmpty && controller.selectedLogoImage.isEmpty) {
+                        .isNotEmpty &&
+                        controller.selectedLogoImage.isEmpty) {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
@@ -175,9 +176,11 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                       );
                     } else {
-                      return IconButton(onPressed: () {
-                        controller.pickLogo();
-                      }, icon: const Icon(Icons.edit));
+                      return IconButton(
+                          onPressed: () {
+                            controller.pickLogo();
+                          },
+                          icon: const Icon(Icons.edit));
                     }
                   }),
                   10.kheightBox,
@@ -189,8 +192,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
@@ -214,7 +217,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         .restaurantDetails
                         .value
                         .restaurantBanner
-                        .isNotEmpty && controller.selectedBannerImage.isEmpty) {
+                        .isNotEmpty &&
+                        controller.selectedBannerImage.isEmpty) {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
@@ -230,8 +234,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                           6.kheightBox,
                         ],
                       );
-                    }
-                    else {
+                    } else {
                       return Container();
                     }
                   }),
@@ -270,9 +273,11 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                       );
                     } else {
-                      return IconButton(onPressed: () {
-                        controller.pickBanner();
-                      }, icon: const Icon(Icons.edit));
+                      return IconButton(
+                          onPressed: () {
+                            controller.pickBanner();
+                          },
+                          icon: const Icon(Icons.edit));
                     }
                   }),
                   20.kheightBox,
@@ -284,15 +289,15 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
                   10.kheightBox,
                   CustomTextField(
-                      validator: (String? val){
-                        if(val == null || val.isEmpty){
+                      validator: (String? val) {
+                        if (val == null || val.isEmpty) {
                           return StringConstant.restaurantAddressCannotBeEmpty;
                         }
                         return null;
@@ -310,15 +315,15 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
                   10.kheightBox,
                   CustomTextField(
-                      validator: (String? val){
-                        if(val == null || val.isEmpty){
+                      validator: (String? val) {
+                        if (val == null || val.isEmpty) {
                           return StringConstant.restaurantPriceCannotBeEmpty;
                         }
                         return null;
@@ -347,8 +352,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       ),
                       Text(
                         "*",
-                        style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
                       )
                     ],
                   ),
@@ -360,48 +365,44 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     padding: EdgeInsets.symmetric(horizontal: 10.kw),
                     child: Row(
                       children: [
-                        Expanded(
-                            child: Obx(() {
-                              return DropdownButtonFormField<CuisineModel>(
-                                validator: (CuisineModel? model){
-                                  if(model == null || model.id!.isEmpty){
-                                    return StringConstant.restaurantCuisineCannotBeEmpty;
-                                  }
-                                  return null;
-                                },
-                                value: controller.cuisines.firstWhere(
-                                        (CuisineModel cuisine) =>
-                                cuisine.id == controller.initialCuisineModels.first.id) ?? controller.selectedCuisine.value,
-                                dropdownColor: Colors.white,
-                                style: TextStyleUtil.manrope16w400(),
-                                onChanged: (val) {
-                                  if (val != null) {
-                                    controller.initialCuisineModels.value = [];
-                                    controller.initialCuisineModels.add(val);
-                                    controller.selectedCuisine.value = val;
-                                  }
-                                },
-                                items: controller.cuisines
-                                    .map<DropdownMenuItem<CuisineModel>>((
-                                    CuisineModel value) {
+                        Expanded(child: Obx(() {
+                          return DropdownButtonFormField<CuisineModel>(
+                            validator: (CuisineModel? model){
+                              if(model == null){
+                                return "Not selected cuisine!";
+                              }
+                              return null;
+                            },
+                            value: controller.initialCuisineModels.first,
+                            dropdownColor: Colors.white,
+                            style: TextStyleUtil.manrope16w400(),
+                            onChanged: (val) {
+                              if (val != null) {
+                                controller.initialCuisineModels.value = [];
+                                controller.initialCuisineModels.add(val);
+                              }
+                            },
+                            items: controller.cuisines
+                                .map<DropdownMenuItem<CuisineModel>>(
+                                    (CuisineModel value) {
                                   return DropdownMenuItem<CuisineModel>(
                                     value: value,
                                     child: Text(value.name!),
                                   );
                                 }).toList(),
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(0),
-                                  hintText: StringConstant.selectCuisine,
-                                  hintStyle: TextStyleUtil.manrope14w400(
-                                      color: context.black04),
-                                  border: const OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              );
-                            })
+                            icon: const Icon(
+                                Icons.keyboard_arrow_down_rounded),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(0),
+                              hintText: StringConstant.selectCuisine,
+                              hintStyle: TextStyleUtil.manrope14w400(
+                                  color: context.black04),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          );
+                        })
                         ),
                       ],
                     ),
@@ -412,7 +413,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       height: 56.kh,
                       width: 100.w,
                       onPressed: () {
-                        if(controller.formKey.currentState!.validate()){
+                        if (controller.formKey.currentState!.validate()) {
                           controller.updateDetails();
                         }
                       }),

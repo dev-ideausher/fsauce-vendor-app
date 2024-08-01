@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsSvgsAppIcon = 'assets/svgs/app_icon.svg';
   static const String lottiefilesCarUpdate = 'assets/lottiefiles/carUpdate.json';
   static const String lottiefilesInAppUpdate = 'assets/lottiefiles/inAppUpdate.json';
   static const String pngsFsauceLogo = 'assets/pngs/fsauce_logo.png';
@@ -12,6 +13,7 @@ class Assets {
   static const String svgsColorPicker = 'assets/svgs/color_picker.svg';
   static const String svgsCompleteTick = 'assets/svgs/complete_tick.svg';
   static const String svgsDealOfDay = 'assets/svgs/deal_of_day.svg';
+  static const String svgsDealOfTheDay = 'assets/svgs/deal_of_the_day.svg';
   static const String svgsDislike = 'assets/svgs/dislike.svg';
   static const String svgsDislikeIcon = 'assets/svgs/dislike_icon.svg';
   static const String svgsDoneSwipe = 'assets/svgs/done_swipe.svg';
@@ -32,7 +34,7 @@ class Assets {
   static const String svgsGroups = 'assets/svgs/groups.svg';
   static const String svgsGroupsFill = 'assets/svgs/groups_fill.svg';
   static const String svgsHeart = 'assets/svgs/heart.svg';
-  static const String svgsHelpSupportIcon = 'assets/svgs/help_&_support_icon.svg';
+  static const String svgsHelpAndSupportIcon = 'assets/svgs/help_&_support_icon.svg';
   static const String svgsHome = 'assets/svgs/home.svg';
   static const String svgsHomeFill = 'assets/svgs/home_fill.svg';
   static const String svgsImageIcon = 'assets/svgs/image_icon.svg';

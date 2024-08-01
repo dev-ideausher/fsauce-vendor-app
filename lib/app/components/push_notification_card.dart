@@ -14,94 +14,120 @@ class PushNotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String date = notification.sheduledDate ?? "";
     return Container(
-      height: 150.kh,
+      height: date.isNotEmpty ? 164.kh : 120.kh,
       width: 100.w,
-      margin: EdgeInsets.only(bottom: 10.kh),
-      padding: const EdgeInsets.only(left: 12, right: 6, top: 16, bottom: 16),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  notification.title!,
-                  style: TextStyleUtil.manrope14w500(),
-                ),
+          date.isNotEmpty ? Container(
+              height: 37.kh,
+              decoration: BoxDecoration(
+                color: context.primary07,
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 10.kh),
-                child: PopupMenuButton<int>(
-                  color: Colors.white,
-                  onSelected: (item) => handleClick(item),
-                  itemBuilder: (context) => [
-                    PopupMenuItem<int>(
-                        onTap: notification.sheduledDate != null ?
-                        isActivate
-                            ? Get.find<PushNotificationController>()
-                                .showInactiveDialog
-                            : Get.find<PushNotificationController>()
-                                .showActiveDialog : () {},
-                        value: 1,
-                        child: Text(
-                          notification.sheduledDate != null ?
-                          isActivate
-                              ? StringConstant.inactivateNotification
-                              : StringConstant.activateNotification : "",
-                          style: TextStyleUtil.manrope14w400(),
-                        )),
-                    PopupMenuItem<int>(
-                        onTap: Get.find<PushNotificationController>()
-                            .showDeleteDialog,
-                        value: 1,
-                        child: Text(
-                          StringConstant.deleteNotification,
-                          style: TextStyleUtil.manrope14w400(
-                            color: context.primary01,
-                          ),
-                        )),
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Icon(Icons.check),
+                    4.kwidthBox,
+                    Text(StringConstant.scheduledFor, style: TextStyleUtil.manrope14w400(),),
+                    Text(date.isNotEmpty ? date.substring(0, 10) : date, style: TextStyleUtil.manrope14w400(),),
                   ],
                 ),
               )
-            ],
-          ),
-          Text(
-            // "Feb 27, 2022, 23:57",
-            notification.sheduledDate!.substring(0, 10) ?? "",
-            style: TextStyleUtil.manrope14w400(
-              color: context.black03,
-            ),
-          ),
-          8.kheightBox,
+          ) : Container(),
           Container(
-            height: 26,
-            width: 80.kw,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                    color: isActivate ? context.green : context.primary02)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            margin: EdgeInsets.only(bottom: 10.kh),
+            padding: const EdgeInsets.only(left: 12, right: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(
-                      color: isActivate ? context.green : context.primary01,
-                      shape: BoxShape.circle),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        notification.title!,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10.kh),
+                      child: PopupMenuButton<int>(
+                        color: Colors.white,
+                        onSelected: (item) => handleClick(item),
+                        itemBuilder: (context) => [
+                          PopupMenuItem<int>(
+                              onTap: notification.sheduledDate != null ?
+                              isActivate
+                                  ? Get.find<PushNotificationController>()
+                                      .showInactiveDialog
+                                  : Get.find<PushNotificationController>()
+                                      .showActiveDialog : () {},
+                              value: 1,
+                              child: Text(
+                                notification.sheduledDate != null ?
+                                isActivate
+                                    ? StringConstant.inactivateNotification
+                                    : StringConstant.activateNotification : "",
+                                style: TextStyleUtil.manrope14w400(),
+                              )),
+                          PopupMenuItem<int>(
+                              onTap: Get.find<PushNotificationController>()
+                                  .showDeleteDialog,
+                              value: 1,
+                              child: Text(
+                                StringConstant.deleteNotification,
+                                style: TextStyleUtil.manrope14w400(
+                                  color: context.primary01,
+                                ),
+                              )),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                5.kwidthBox,
                 Text(
-                  isActivate ? StringConstant.active : StringConstant.inactive,
-                  style: TextStyleUtil.manrope12w500(
-                      color: isActivate ? context.green : context.primary01),
-                )
+                  // "Feb 27, 2022, 23:57",
+                  date.isNotEmpty ? date.substring(0,10) : date,
+                  style: TextStyleUtil.manrope14w400(
+                    color: context.black03,
+                  ),
+                ),
+                notification.sheduledDate != null ? 8.kheightBox : Container(),
+                Container(
+                  height: 26,
+                  width: 80.kw,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                          color: isActivate ? context.green : context.primary02)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 7,
+                        width: 7,
+                        decoration: BoxDecoration(
+                            color: isActivate ? context.green : context.primary01,
+                            shape: BoxShape.circle),
+                      ),
+                      5.kwidthBox,
+                      Text(
+                        isActivate ? StringConstant.active : StringConstant.inactive,
+                        style: TextStyleUtil.manrope12w500(
+                            color: isActivate ? context.green : context.primary01),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

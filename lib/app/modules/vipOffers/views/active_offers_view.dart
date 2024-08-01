@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/deal_of_the_day_date.dart';
 import 'package:fsauce_vendor_app/app/components/deals_of_the_day_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
@@ -19,17 +20,32 @@ class ActiveOffersView extends GetView<VipOffersController> {
           return ListView.separated(
             shrinkWrap: true,
             itemBuilder: (ctx, index) {
-              return DealsOfTheDayCard(
-                  width: 100.w,
-                  isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
-                  isActive: true,
-                  coupon: controller.couponsList[index],
-                  onClick: () {
-                    controller.selectedCoupon.value =
-                    controller.couponsList[index];
-                    controller.showDealsBottomSheet();
-                  }
-              );
+              String date = controller.couponsList[index].sheduleDate ?? "";
+              if(date.isEmpty){
+                return DealsOfTheDayCard(
+                    width: 100.w,
+                    isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
+                    isActive: true,
+                    coupon: controller.couponsList[index],
+                    onClick: () {
+                      controller.selectedCoupon.value =
+                      controller.couponsList[index];
+                      controller.showDealsBottomSheet();
+                    }
+                );
+              } else{
+                return DealsOfTheDayCardDate(
+                    width: 100.w,
+                    isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
+                    isActive: true,
+                    coupon: controller.couponsList[index],
+                    onClick: () {
+                      controller.selectedCoupon.value =
+                      controller.couponsList[index];
+                      controller.showDealsBottomSheet();
+                    }
+                );
+              }
             },
             separatorBuilder: (ctx, index) {
               return 12.kheightBox;

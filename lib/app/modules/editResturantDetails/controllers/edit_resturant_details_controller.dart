@@ -80,14 +80,10 @@ class EditResturantDetailsController extends GetxController {
     addressController.text = details.location;
     averagePriceController.text = details.avgPrice.toString();
     descriptionController.text = details.description;
-    initialCuisineModels.value = details.cuisine;
+    initialCuisineModels.value = [details.cuisine.first];
+    print("selected cuisine of the user: ${details.cuisine.first.name}");
     restaurantLogo = details.restaurantLogo;
     restaurantBanner = details.restaurantBanner;
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   Future<String> uploadRestaurantMedia(String filePath) async{

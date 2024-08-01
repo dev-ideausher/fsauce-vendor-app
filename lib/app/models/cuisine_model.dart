@@ -9,6 +9,16 @@ class CuisineModel{
     required this.image,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is CuisineModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory CuisineModel.fromJson(Map<String, dynamic> json){
     return CuisineModel(id: json['_id'], name: json['name'], image: json['image']);
   }

@@ -531,6 +531,7 @@ class StringConstant {
   static const String getStartedWithLoyaltyCards = "Get started by creating loyalty cards";
   static const String emptyJobTitle = "Job title empty!";
   static const String startCreatingCategories = "Start creating categories first, then add items to them";
-
+  static const String scheduledFor = "Scheduled for";
+  static const String offerScheduledFor = "Offer scheduled for";
   // static const String
 }
