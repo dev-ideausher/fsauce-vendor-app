@@ -45,9 +45,6 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
             Text(widget.title,
                 style: TextStyleUtil.manrope14w600(color: context.black02)),
             16.kheightBox,
-            Center(
-              child: EmptyWidget(title: StringConstant.noDataFound),
-            ),
             SfCartesianChart(
               backgroundColor: Colors.white,
               primaryXAxis: const CategoryAxis(

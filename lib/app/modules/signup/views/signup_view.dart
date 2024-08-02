@@ -104,10 +104,11 @@ class SignupView extends GetView<SignupController> {
                                   onPressed: () {
                                     controller.togglePasswordVisible();
                                   },
-                                  icon: Icon(
+                                  icon: controller.passwordVisible.value ? Icon(
                                     Icons.remove_red_eye_rounded,
                                     size: 18.kw,
-                                  )),
+                                  ) : Icon(Icons.visibility_off, size: 18.kw,)
+                              ),
                               hintText: StringConstant.enterPassword,
                               hintStyle: TextStyleUtil.manrope14w400(
                                   color: context.black04),

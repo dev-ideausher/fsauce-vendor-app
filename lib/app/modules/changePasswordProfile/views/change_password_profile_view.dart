@@ -63,10 +63,11 @@ class ChangePasswordProfileView
                                     controller.isOldPasswordVisible.value =
                                     !controller.isOldPasswordVisible.value;
                                   },
-                                  icon: Icon(
+                                  icon: controller.isOldPasswordVisible.value ? Icon(
                                     Icons.remove_red_eye_rounded,
                                     size: 18.kw,
-                                  )),
+                                  ) : Icon(Icons.visibility_off, size: 18.kw)
+                              ),
                               hintText: StringConstant.enterPassword,
                               hintStyle: TextStyleUtil.manrope14w400(
                                   color: context.black04),
@@ -125,10 +126,11 @@ class ChangePasswordProfileView
                                     controller.isNewPasswordVisible.value =
                                     !controller.isNewPasswordVisible.value;
                                   },
-                                  icon: Icon(
+                                  icon: controller.isNewPasswordVisible.value ? Icon(
                                     Icons.remove_red_eye_rounded,
                                     size: 18.kw,
-                                  )),
+                                  ) : Icon(Icons.visibility_off, size: 18.kw,)
+                              ),
                               hintText: StringConstant.enterNewPassword,
                               hintStyle: TextStyleUtil.manrope14w400(
                                   color: context.black04),
@@ -190,10 +192,11 @@ class ChangePasswordProfileView
                                     controller.isConfirmPasswordVisible.value =
                                     !controller.isConfirmPasswordVisible.value;
                                   },
-                                  icon: Icon(
+                                  icon: controller.isConfirmPasswordVisible.value ? Icon(
                                     Icons.remove_red_eye_rounded,
                                     size: 18.kw,
-                                  )),
+                                  ) : Icon(Icons.visibility_off, size: 18.kw)
+                              ),
                               hintText: StringConstant.confirmPassword,
                               hintStyle: TextStyleUtil.manrope14w400(
                                   color: context.black04),
