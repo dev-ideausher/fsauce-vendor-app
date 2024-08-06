@@ -135,6 +135,8 @@ class HomeController extends GetxController {
       features: [],
       timing: [],
       media: [],
+    lat: '',
+    lon: '',
     cuisine: [CuisineModel(id: "", name: "", image: "")],
   ).obs;
 

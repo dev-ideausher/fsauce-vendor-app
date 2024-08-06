@@ -13,18 +13,22 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/dio/client.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../models/feature_model.dart';
 
 import 'package:mime/mime.dart';
 
+import '../views/get_location_view.dart';
+
 class ProfileSetupController extends GetxController {
 
-  final stepCount = 2.obs;
+  final stepCount = 0.obs;
   RxList<CuisineModel> selectedCuisines = <CuisineModel>[].obs;
   RxList<FeatureModel> features = <FeatureModel>[].obs;
   RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
@@ -41,11 +45,6 @@ class ProfileSetupController extends GetxController {
     getFeatures();
     getCuisines();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override
@@ -107,7 +106,7 @@ class ProfileSetupController extends GetxController {
 
     if (isDataUpdated) {
       print(selectedFilesUrl);
-      Get.toNamed(Routes.ENABLE_LOCATION);
+      Get.offAllNamed(Routes.ENABLE_LOCATION);
     } else {
       Get.snackbar(StringConstant.error, StringConstant.somethingWentWrong);
     }
@@ -138,19 +137,20 @@ class ProfileSetupController extends GetxController {
               ),
             ))
         .toList();
-
     var response = await APIManager.updateVendor(
         restaurantDetails: RestaurantDetails(
-            restaurantName: restaurantNameController.text.trim(),
-            restaurantLogo: restaurantLogoUrl,
-            restaurantBanner: restaurantBannerUrl,
-            location: streetNameController.text + cityNameController.text,
-            //locationController.text.trim()
-            avgPrice: int.parse(averagePriceController.text.trim()),
-            description: descriptionController.text.trim(),
-            features: selectedFeatures,
-            timing: timings,
-            media: selectedFilesUrl,
+          restaurantName: restaurantNameController.text.trim(),
+          restaurantLogo: restaurantLogoUrl,
+          restaurantBanner: restaurantBannerUrl,
+          location: streetNameController.text + cityNameController.text,
+          //locationController.text.trim()
+          avgPrice: int.parse(averagePriceController.text.trim()),
+          description: descriptionController.text.trim(),
+          features: selectedFeatures,
+          lat: "",
+          lon: "",
+          timing: timings,
+          media: selectedFilesUrl,
           cuisine: selectedCuisines,
         ));
 

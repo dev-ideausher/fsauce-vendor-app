@@ -14,17 +14,12 @@ import 'package:get/get.dart';
 
 class VerificationController extends GetxController {
   Timer? _timer;
-  final Auth auth = Get.put(Auth());
+  final Auth auth = Get.find<Auth>();
 
   @override
   void onInit() {
     super.onInit();
     _startEmailVerificationCheck();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

@@ -43,6 +43,7 @@ abstract class Routes {
   static const SPLASHVIEW = _Paths.SPLASHVIEW;
   static const TERMSANDCONDITIONS = _Paths.TERMSANDCONDITIONS;
   static const REDEEMCOUPONCODE = _Paths.REDEEMCOUPONCODE;
+  static const GETLOCATION = _Paths.GETLOCATION;
 }
 
 abstract class _Paths {
@@ -87,4 +88,5 @@ abstract class _Paths {
   static const SPLASHVIEW = '/splash-view';
   static const TERMSANDCONDITIONS = '/terms-conditions';
   static const REDEEMCOUPONCODE = '/redeem-coupon-code';
+  static const GETLOCATION = '/get-location';
 }

@@ -99,6 +99,8 @@ class AllPhotosAndVideosController extends GetxController {
             description: details.description,
             features: details.features,
             timing: details.timing,
+            lat: details.lat,
+            lon: details.lon,
             media: List.from(uploadedFilesUrl)..addAll(details.media),
             cuisine: details.cuisine
           )

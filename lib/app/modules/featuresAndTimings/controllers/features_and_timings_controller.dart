@@ -178,6 +178,8 @@ class FeaturesAndTimingsController extends GetxController {
       timing: timings,
       media: details.media,
           cuisine: details.cuisine,
+          lat: details.lat,
+          lon: details.lon,
     ));
     if (response.data['status']) {
       Get.find<HomeController>().getRestaurantDetails();

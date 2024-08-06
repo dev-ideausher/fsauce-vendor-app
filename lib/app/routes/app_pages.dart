@@ -55,6 +55,7 @@ import '../modules/profile/views/profile_view.dart';
 import '../modules/profileDetails/bindings/profile_details_binding.dart';
 import '../modules/profileDetails/views/profile_details_view.dart';
 import '../modules/profileSetup/bindings/profile_setup_binding.dart';
+import '../modules/profileSetup/views/get_location_view.dart';
 import '../modules/profileSetup/views/profile_setup_view.dart';
 import '../modules/pushNotification/bindings/push_notification_binding.dart';
 import '../modules/pushNotification/views/push_notification_view.dart';

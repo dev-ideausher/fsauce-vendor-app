@@ -142,6 +142,8 @@ class EditResturantDetailsController extends GetxController {
               features: Get.find<HomeController>().restaurantDetails.value.features,
               timing: Get.find<HomeController>().restaurantDetails.value.timing,
               media: Get.find<HomeController>().restaurantDetails.value.media,
+              lat: Get.find<HomeController>().restaurantDetails.value.lat,
+              lon: Get.find<HomeController>().restaurantDetails.value.lon,
               cuisine: initialCuisineModels,
             )
         );

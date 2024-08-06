@@ -12,6 +12,8 @@ class RestaurantDetails {
   List<Timing> timing;
   List<String> media;
   List<CuisineModel> cuisine;
+  String lat;
+  String lon;
 
   RestaurantDetails({
     required this.restaurantName,
@@ -24,6 +26,8 @@ class RestaurantDetails {
     required this.timing,
     required this.media,
     required this.cuisine,
+    required this.lat,
+    required this.lon,
   });
 
   RestaurantDetails.fromJson(Map<String, dynamic> json)
@@ -33,6 +37,8 @@ class RestaurantDetails {
         location = json['location'],
         avgPrice = json['avgPrice'],
         description = json['description'],
+        lat = json['lat'] ?? "",
+        lon = json['lon'] ?? "",
         features =
             json['features'] != null
                 ? (json['features'] as List)
@@ -57,6 +63,8 @@ class RestaurantDetails {
         'features': features.map((e) => e.toJson()).toList(),
         'timing': timing.map((timing) => timing.toJson()).toList(),
         'media': media,
+        'lat': lat ?? "",
+        'lon': lon ?? "",
         'cuisine': cuisine.map((e) => e.toJson()).toList(),
       };
 
@@ -83,6 +91,8 @@ class RestaurantDetails {
         timing: timing ?? this.timing,
         media: media ?? this.media,
         cuisine: cuisine ?? this.cuisine,
+        lat: lat ?? this.lat,
+        lon: lon ?? this.lon,
       );
 }
 

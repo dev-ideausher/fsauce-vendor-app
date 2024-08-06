@@ -7,6 +7,16 @@ class FeatureModel{
     required this.name,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is FeatureModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory FeatureModel.fromJson(Map<String, dynamic> json){
     return FeatureModel(id: json['_id'], name: json['name']);
   }
