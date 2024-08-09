@@ -44,6 +44,7 @@ abstract class Routes {
   static const TERMSANDCONDITIONS = _Paths.TERMSANDCONDITIONS;
   static const REDEEMCOUPONCODE = _Paths.REDEEMCOUPONCODE;
   static const GETLOCATION = _Paths.GETLOCATION;
+  static const LOGIN_EMAIL_VERIFICATION = _Paths.LOGIN_EMAIL_VERIFICATION;
 }
 
 abstract class _Paths {
@@ -89,4 +90,5 @@ abstract class _Paths {
   static const TERMSANDCONDITIONS = '/terms-conditions';
   static const REDEEMCOUPONCODE = '/redeem-coupon-code';
   static const GETLOCATION = '/get-location';
+  static const LOGIN_EMAIL_VERIFICATION = '/login-email-verification';
 }

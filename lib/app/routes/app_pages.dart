@@ -1,10 +1,3 @@
-import 'package:fsauce_vendor_app/app/modules/qrScan/views/redeem_coupon_code.dart';
-import 'package:fsauce_vendor_app/app/modules/splash/view/splash_view.dart';
-import 'package:fsauce_vendor_app/app/modules/subscription/bindings/subscription_binding.dart';
-import 'package:fsauce_vendor_app/app/modules/subscription/views/card_details_view.dart';
-import 'package:fsauce_vendor_app/app/modules/subscription/views/payment_methods_view.dart';
-import 'package:fsauce_vendor_app/app/modules/subscription/views/purchase_plan_view.dart';
-import 'package:fsauce_vendor_app/app/modules/subscription/views/subscription_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
@@ -36,6 +29,8 @@ import '../modules/jobs/bindings/jobs_binding.dart';
 import '../modules/jobs/views/jobs_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/loginEmailVerification/bindings/login_email_verification_binding.dart';
+import '../modules/loginEmailVerification/views/login_email_verification_view.dart';
 import '../modules/loyalty/bindings/loyalty_binding.dart';
 import '../modules/loyalty/views/loyalty_view.dart';
 import '../modules/loyaltyCardPreview/bindings/loyalty_card_preview_binding.dart';
@@ -61,6 +56,7 @@ import '../modules/pushNotification/bindings/push_notification_binding.dart';
 import '../modules/pushNotification/views/push_notification_view.dart';
 import '../modules/qrScan/bindings/qr_scan_binding.dart';
 import '../modules/qrScan/views/qr_scan_view.dart';
+import '../modules/qrScan/views/redeem_coupon_code.dart';
 import '../modules/ratingAndFeedbackManagement/bindings/rating_and_feedback_management_binding.dart';
 import '../modules/ratingAndFeedbackManagement/views/rating_and_feedback_management_view.dart';
 import '../modules/scanHistory/bindings/scan_history_binding.dart';
@@ -71,6 +67,12 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/signup/views/terms_conditions_view.dart';
 import '../modules/splash/binding/splash_binding.dart';
+import '../modules/splash/view/splash_view.dart';
+import '../modules/subscription/bindings/subscription_binding.dart';
+import '../modules/subscription/views/card_details_view.dart';
+import '../modules/subscription/views/payment_methods_view.dart';
+import '../modules/subscription/views/purchase_plan_view.dart';
+import '../modules/subscription/views/subscription_view.dart';
 import '../modules/verification/bindings/verification_binding.dart';
 import '../modules/verification/views/verification_view.dart';
 import '../modules/vipOffers/bindings/vip_offers_binding.dart';
@@ -119,7 +121,10 @@ class AppPages {
     GetPage(
       name: _Paths.VERIFICATION,
       page: () => const VerificationView(),
-      binding: VerificationBinding(),
+      bindings: [
+        VerificationBinding(),
+        SignupBinding(),
+      ],
     ),
     GetPage(
       name: _Paths.CHANGE_PASSWORD,
@@ -281,6 +286,14 @@ class AppPages {
       name: _Paths.SPLASHVIEW,
       page: () => SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN_EMAIL_VERIFICATION,
+      page: () => const LoginEmailVerificationView(),
+      bindings: [
+        LoginEmailVerificationBinding(),
+        LoginBinding(),
+      ],
     ),
   ];
 }

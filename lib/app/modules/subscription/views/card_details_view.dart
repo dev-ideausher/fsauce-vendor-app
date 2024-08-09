@@ -49,25 +49,23 @@ class CardDetailsView extends GetView<SubscriptionController>{
                     border: Border.all(color: context.black05)
                   ),
                   child: Center(
-                    child: Expanded(
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: controller.cardNumberController,
-                        validator: (String? val){
-                          if(val == null || val.isEmpty){
-                            return StringConstant.cardNoEmpty;
-                          } else if(val.length < 13){
-                            return StringConstant.less13;
-                          } else if(!val.isNumericOnly){
-                            return StringConstant.onlyNoAllowed;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: StringConstant.enterFeatures,
-                          hintStyle: TextStyleUtil.manrope14w400()
-                        ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: controller.cardNumberController,
+                      validator: (String? val){
+                        if(val == null || val.isEmpty){
+                          return StringConstant.cardNoEmpty;
+                        } else if(val.length < 13){
+                          return StringConstant.less13;
+                        } else if(!val.isNumericOnly){
+                          return StringConstant.onlyNoAllowed;
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: StringConstant.enterFeatures,
+                        hintStyle: TextStyleUtil.manrope14w400()
                       ),
                     ),
                   ),
@@ -94,21 +92,18 @@ class CardDetailsView extends GetView<SubscriptionController>{
                           border: Border.all(color: context.black05)
                       ),
                       child: Center(
-                        child: Expanded(
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: controller.expiresController,
-                            validator: (String? val){
-                              if(val == null || val.isEmpty){
-                                return StringConstant.expiryDateEmpty;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: StringConstant.enterFeatures,
-                                hintStyle: TextStyleUtil.manrope14w400()
-                            ),
+                        child: TextFormField(
+                          controller: controller.expiresController,
+                          validator: (String? val){
+                            if(val == null || val.isEmpty){
+                              return StringConstant.expiryDateEmpty;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: StringConstant.enterFeatures,
+                              hintStyle: TextStyleUtil.manrope14w400()
                           ),
                         ),
                       ),
@@ -124,26 +119,24 @@ class CardDetailsView extends GetView<SubscriptionController>{
                           border: Border.all(color: context.black05)
                       ),
                       child: Center(
-                        child: Expanded(
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            obscureText: true,
-                            controller: controller.cvvController,
-                            validator: (String? val){
-                              if(val == null || val.isEmpty){
-                                return StringConstant.cvvEmpty;
-                              } else if(val.length != 3){
-                                return StringConstant.cvv3Digits;
-                              } else if(!val.isNumericOnly){
-                                return StringConstant.invalidCvv;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: StringConstant.enterFeatures,
-                                hintStyle: TextStyleUtil.manrope14w400()
-                            ),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          controller: controller.cvvController,
+                          validator: (String? val){
+                            if(val == null || val.isEmpty){
+                              return StringConstant.cvvEmpty;
+                            } else if(val.length != 3){
+                              return StringConstant.cvv3Digits;
+                            } else if(!val.isNumericOnly){
+                              return StringConstant.invalidCvv;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: StringConstant.enterFeatures,
+                              hintStyle: TextStyleUtil.manrope14w400()
                           ),
                         ),
                       ),
@@ -164,20 +157,18 @@ class CardDetailsView extends GetView<SubscriptionController>{
                       border: Border.all(color: context.black05)
                   ),
                   child: Center(
-                    child: Expanded(
-                      child: TextFormField(
-                        controller: controller.nameController,
-                        validator: (String? val){
-                          if(val == null || val.isEmpty){
-                            return StringConstant.nameCannotBeEmpty;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: StringConstant.enterFeatures,
-                            hintStyle: TextStyleUtil.manrope14w400()
-                        ),
+                    child: TextFormField(
+                      controller: controller.nameController,
+                      validator: (String? val){
+                        if(val == null || val.isEmpty){
+                          return StringConstant.nameCannotBeEmpty;
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: StringConstant.enterFeatures,
+                          hintStyle: TextStyleUtil.manrope14w400()
                       ),
                     ),
                   ),
@@ -194,7 +185,8 @@ class CardDetailsView extends GetView<SubscriptionController>{
           width: MediaQuery.of(context).size.width * 0.9,
           onPressed: () {
             if(controller.formKey.currentState!.validate()){
-              Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.cardSavedSuccessfully));
+              controller.addCard();
+              // Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.cardSavedSuccessfully));
             }
           }),
     );

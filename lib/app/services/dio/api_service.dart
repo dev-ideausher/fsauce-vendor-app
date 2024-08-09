@@ -272,4 +272,39 @@ class APIManager {
       "code": code
     });
   }
+
+  static Future<Response> getSubscriptionPlans() async{
+    return await DioClient(
+        Dio(),
+        showSnakbar: true,
+        isOverlayLoader: true
+    ).get(Endpoints.getSubscriptionPlans);
+  }
+
+  static Future<Map<String, dynamic>> deleteCard(String id) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete(Endpoints.delCard, queryParameters: {
+      "CardId": id,
+    });
+  }
+
+  static Future<Response> addVendorSubscription({
+    required Map<String, dynamic> data
+  }) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(
+      Endpoints.vendorSubscription,
+      data: data,
+    );
+  }
+
+  static Future<Response> addCard({
+    required Map<String, dynamic> data
+  }) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(
+      Endpoints.addCard,
+      data: data,
+    );
+  }
 }

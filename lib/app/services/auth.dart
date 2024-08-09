@@ -172,7 +172,7 @@ class Auth extends GetxService {
     DialogHelper.showLoading();
     // erase the user's token and data in GetStorageService
     Get.find<GetStorageService>().logout();
-    // firbase logout
+    // firebase logout
     auth.logout();
     // navigate to login page
     // await Get.offAllNamed(Routes.LOGIN);

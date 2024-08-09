@@ -27,10 +27,10 @@ class OnboardingController extends GetxController {
   }
 
   void gotoSignupScreen() {
-    Get.toNamed(Routes.SIGNUP);
+    Get.offAllNamed(Routes.SIGNUP);
   }
 
   void gotoLoginScreen() {
-    Get.toNamed(Routes.LOGIN);
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
@@ -7,9 +8,10 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
+import '../../../services/storage.dart';
 
 class SignupController extends GetxController {
-  final Auth auth = Get.find<Auth>(); // Retrieve the Auth service
+  final Auth auth = Get.find<Auth>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

@@ -8,6 +8,12 @@ class Endpoints {
   static const String onboardVendor = "vendor/onboarding";
   static const String fileUpload = "user/uploadFile";
 
+  //subscription endpoints
+  static const String getSubscriptionPlans = "vendor/getSubscriptionPlans";
+  static const String addCard = "vendor/addCard";
+  static const String vendorSubscription = "vendor/vendorSubscription";
+  static const String delCard = "vendor/deleteCard?CardId=";
+
   //Delete media
   static const String deleteMedia = "vendor/deleteMedia";
 

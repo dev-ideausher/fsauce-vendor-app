@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/models/login_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
@@ -13,7 +14,8 @@ import 'package:get/get.dart';
 import '../../../constants/string_constant.dart';
 
 class LoginController extends GetxController {
-  final Auth auth = Get.find<Auth>(); // Retrieve the Auth service
+  final Auth auth = Get.find<Auth>();
+  User? user = FirebaseAuth.instance.currentUser;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -39,19 +41,19 @@ class LoginController extends GetxController {
     emailController.dispose();
   }
 
-  void getOS(){
-    if(Platform.isAndroid){
+  void getOS() {
+    if (Platform.isAndroid) {
       isApple.value = false;
-    } else if(Platform.isIOS){
+    } else if (Platform.isIOS) {
       isApple.value = true;
     }
   }
 
-  void toggleIsEnabled(){
+  void toggleIsEnabled() {
     isLoginEnabled.value = !isLoginEnabled.value;
   }
 
-  void togglePasswordVisible(){
+  void togglePasswordVisible() {
     passwordVisible.value = !passwordVisible.value;
   }
 
@@ -112,39 +114,35 @@ class LoginController extends GetxController {
     }
   }
 
-  void gotoHomeScreen() async{
-    try{
+  void gotoHomeScreen() async {
+    try {
       final response = await APIManager.onboardVendor();
       final LoginModel loginModel = LoginModel.fromJson(response.data);
-      if(loginModel.status ?? false){
-        if((loginModel.user?.restaurantName ?? "").isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        } else if((loginModel.user?.restaurantLogo ?? "").isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        } else if((loginModel.user?.restaurantBanner ?? "").isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }else if((loginModel.user?.avgPrice.toString() ?? "").isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }else if((loginModel.user?.location ?? "").isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }
-        else if((loginModel.user?.features ?? []).isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }
-        else if((loginModel.user?.timing ?? []).isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }
-        else if((loginModel.user?.media ?? []).isEmpty){
-          Get.offNamed(Routes.PROFILE_SETUP);
-        }
-        else{
+      if (loginModel.status ?? false) {
+        if ((loginModel.user?.restaurantName ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.location ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.features ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.timing ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.media ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else {
           Get.find<GetStorageService>().isLoggedIn = true;
-          Get.offNamed(Routes.NAV_BAR);
+          Get.offAllNamed(Routes.NAV_BAR);
         }
-      } else{
+      } else {
         showMySnackbar(msg: loginModel.message ?? "Login message");
       }
-    } catch (e){
+    } catch (e) {
       debugPrint(e.toString());
     }
   }

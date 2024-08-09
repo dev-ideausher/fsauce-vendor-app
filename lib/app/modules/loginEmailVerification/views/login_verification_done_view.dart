@@ -1,19 +1,18 @@
-import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
-import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
-import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/loginEmailVerification/controllers/login_email_verification_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
-import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/verification_controller.dart';
+import '../../../components/common_image_view.dart';
+import '../../../components/custom_red_elevated_button.dart';
+import '../../../constants/image_constant.dart';
+import '../../../constants/string_constant.dart';
+import '../../../services/text_style_util.dart';
 
-class VerificationDoneScreen extends GetView<VerificationController> {
-  const VerificationDoneScreen({super.key});
+class LoginEmailVerificationDone extends GetView<LoginEmailVerificationController> {
+  const LoginEmailVerificationDone({super.key});
 
   @override
   Widget build(BuildContext context) {

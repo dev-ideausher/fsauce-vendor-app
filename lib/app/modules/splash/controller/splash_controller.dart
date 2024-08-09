@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
@@ -16,4 +17,5 @@ class SplashController extends GetxController{
     });
     super.onInit();
   }
+
 }
