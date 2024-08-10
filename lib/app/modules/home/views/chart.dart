@@ -4,7 +4,7 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+//import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../components/empty_widget.dart';
 import '../../../constants/string_constant.dart';
@@ -22,11 +22,11 @@ class CouponAnalysisCard extends StatefulWidget {
 }
 
 class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
-  late TooltipBehavior _tooltip;
+  //late TooltipBehavior _tooltip;
 
   @override
   void initState() {
-    _tooltip = TooltipBehavior(enable: true);
+   // _tooltip = TooltipBehavior(enable: true);
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
             Text(widget.title,
                 style: TextStyleUtil.manrope14w600(color: context.black02)),
             16.kheightBox,
-            SfCartesianChart(
+           /* SfCartesianChart(
               backgroundColor: Colors.white,
               primaryXAxis: const CategoryAxis(
                 labelStyle: TextStyle(
@@ -75,7 +75,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
                   width: 0.2, // Set the bar width here
                 ),
               ],
-            )
+            )*/
           ],
         ),
       ),

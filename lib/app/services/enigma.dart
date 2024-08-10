@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:tuple/tuple.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
-String passphrase = 'password';
+String passphrase = "foodsauciety\$\$";
 
 String encryptAESCryptoJS(String plainText) {
   try {
