@@ -31,7 +31,8 @@ class ProfileController extends GetxController {
   }
 
   void showLogoutDialog() {
-    Get.dialog(ConfrimationDialog(
+    Get.dialog(
+        ConfrimationDialog(
         title: StringConstant.confirmLogout,
         subTitle: StringConstant.confirmLogoutSub,
         onYesTap: () async{
@@ -39,7 +40,8 @@ class ProfileController extends GetxController {
           await Get.find<Auth>().logOutUser();
           Get.offAllNamed(Routes.LOGIN);
         },
-        onNoTap: Get.back));
+        onNoTap: Get.back)
+    );
   }
 
   void showDeleteAccountDialog() {

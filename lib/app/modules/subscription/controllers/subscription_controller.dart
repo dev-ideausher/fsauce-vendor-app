@@ -37,7 +37,7 @@ class SubscriptionController extends GetxController {
           subscriptionPlans.add(SubscriptionModel.fromJson(planData));
         }
       } else {
-        DialogHelper.showError(response.data["message"]);
+        DialogHelper.showError(response.data["message"] ?? "");
       }
     } catch (e) {
       print("An error occurred while getting subscription plans");
@@ -76,18 +76,23 @@ class SubscriptionController extends GetxController {
         await generateStripeToken(card: cardNumberController.text, name: nameController.text, expiryDate: expiresController.text, cvv: cvvController.text) ??
             "";
     if (token.isNotEmpty) {
+      var jsonToken = {"token": "${token}","default":"true"};
       try {
         final response = await APIManager.addCard(data: {
           "token": encryptAESCryptoJS(token),
-        });
+          "default":"true"
+        }
+        );
         if (response.data['status']) {
-          DialogHelper.showSuccess("Card Added!");
+          showMySnackbar(msg: "Card Added!");
+          print("Card added!");
         } else {
-          DialogHelper.showError(response.data['message']);
+          showMySnackbar(msg: response.data['message'] ?? "");
+          print("An error occurred while adding card: ${response.data['message']}");
         }
       } catch (e) {
         print("An error occurred while adding card: $e");
-        DialogHelper.showError(e.toString());
+        showMySnackbar(msg: e.toString() ?? "");
       }
     }
   }

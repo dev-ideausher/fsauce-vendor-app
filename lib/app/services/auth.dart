@@ -5,8 +5,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
+import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
+import '../models/login_model.dart';
+import '../routes/app_pages.dart';
 import 'storage.dart';
 import 'dart:developer';
 import 'dialog_helper.dart';
@@ -58,19 +62,45 @@ class Auth extends GetxService {
     print('Apple : ${await result.user?.getIdToken()}');
   }
 
-  Future<dynamic> loginEmailPass({required String email, required String pass}) async {
-    await _firebaseAuth.signInWithEmailAndPassword(email: email, password: pass)
-        .then((value) async {
-      await handleGetContact();
-    }).catchError((e) {
-      if(e is FirebaseAuthException){
-        DialogHelper.showError(e.message ?? "Something went wrong");
+  loginEmailPass({required String email, required String pass}) async {
+    await auth.loginWithEmail(email: email, password: pass).then((value) async {
+      try {
+        if (value.hasError) {
+          if (value.errorMessage == "The supplied auth credential is malformed or has expired.") {
+            createEmailPass(email: email, pass: pass);
+          } else {
+            showMySnackbar(title: "Error", msg: value.errorMessage ?? "Something went wrong");
+          }
+        } else {
+          if (value.user!.emailVerified) {
+            // User is verified, proceed with getting contacts
+            handleGetContact();
+          } else {
+            // User created but email not verified
+            showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+            await value.user!.sendEmailVerification();
+          }
+        }
+      } on FirebaseAuthException catch (e) {
+        showMySnackbar(title: e.code.toLowerCase(), msg: getErrorMessageFromFirebaseException(e));
+      } on Exception catch (e) {
+        showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
       }
-      print("This is from auth, loginEmailPass");
-      print(e);
     });
-    // print('EmailPass : ${await result.user?.getIdToken()}');
   }
+  // Future<dynamic> loginEmailPass({required String email, required String pass}) async {
+  //   await _firebaseAuth.signInWithEmailAndPassword(email: email, password: pass)
+  //       .then((value) async {
+  //     await handleGetContact();
+  //   }).catchError((e) {
+  //     if(e is FirebaseAuthException){
+  //       DialogHelper.showError(e.message ?? "Something went wrong");
+  //     }
+  //     print("This is from auth, loginEmailPass");
+  //     print(e);
+  //   });
+  //   // print('EmailPass : ${await result.user?.getIdToken()}');
+  // }
 
   updatePassword({required String newPassword}) async{
     final result = await auth.updatePassword(newPassword).then((value) async{
@@ -79,25 +109,66 @@ class Auth extends GetxService {
   }
 
   createEmailPass({required String email, required String pass}) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
-        .then((value) async {
-      await handleGetContact();
-    }).catchError((e) {
-      if(e is FirebaseAuthException){
-        DialogHelper.showError(e.message ?? "Something went wrong");
-      }
-      print("This is from auth, createEmailPass");
-      print(e);
-    });
-    // await auth
-    //     .createAccountWithEmail(email: email, password: pass)
-    //     .then((value) async {
-    //   await handleGetContact();
-    // });
-    // print('EmailPass : ${await result.user?.getIdToken()}');
+    try {
+      // Call Firebase authentication to create an account with email and password
+      await auth.createAccountWithEmail(email: email, password: pass).then((value) async {
+        if (value.hasError) {
+          // If there was an error during account creation
+          if (value.user != null) {
+            // User exists but email might not be verified
+            if (value.user!.emailVerified) {
+              // User is verified, proceed with getting contacts
+              handleGetContact();
+            } else {
+              // User exists but email is not verified
+              showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+              await value.user!.sendEmailVerification();
+            }
+          } else {
+            // Error occurred without a user being created
+            showMySnackbar(msg: value.errorMessage ?? "");
+          }
+        } else {
+          // Account creation successful
+          if (value.user!.emailVerified) {
+            // User is verified, proceed with getting contacts
+            handleGetContact();
+          } else {
+            // User created but email not verified
+            showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+            await value.user!.sendEmailVerification();
+          }
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuth exceptions
+      showMySnackbar(title: e.code.toLowerCase(), msg: getErrorMessageFromFirebaseException(e));
+    } catch (e) {
+      // Handle other exceptions
+      showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
+    }
   }
+  // createEmailPass({required String email, required String pass}) async {
+  //   await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
+  //       .then((value) async {
+  //     await handleGetContact();
+  //   }).catchError((e) {
+  //     if(e is FirebaseAuthException){
+  //       DialogHelper.showError(e.message ?? "Something went wrong");
+  //     }
+  //     print("This is from auth, createEmailPass");
+  //     print(e);
+  //   });
+  //   // await auth
+  //   //     .createAccountWithEmail(email: email, password: pass)
+  //   //     .then((value) async {
+  //   //   await handleGetContact();
+  //   // });
+  //   // print('EmailPass : ${await result.user?.getIdToken()}');
+  // }
 
 //phone number with country code
+
   mobileOtp({required String phoneno}) async {
     await auth.requestVerificationCode(
       phoneNumber: phoneno,
@@ -164,8 +235,42 @@ class Auth extends GetxService {
 
     Get.find<GetStorageService>().encjwToken = mytoken!;
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
-    log(Get.find<GetStorageService>().encjwToken);
-    debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
+    // log(Get.find<GetStorageService>().encjwToken);
+    // debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
+    gotoHomeScreen();
+  }
+
+  void gotoHomeScreen() async {
+    try {
+      final response = await APIManager.onboardVendor();
+      final LoginModel loginModel = LoginModel.fromJson(response.data);
+      if (loginModel.status ?? false) {
+        if ((loginModel.user?.restaurantName ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.location ?? "").isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.features ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.timing ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else if ((loginModel.user?.media ?? []).isEmpty) {
+          Get.offAllNamed(Routes.PROFILE_SETUP);
+        } else {
+          Get.find<GetStorageService>().isLoggedIn = true;
+          Get.offAllNamed(Routes.NAV_BAR);
+        }
+      } else {
+        showMySnackbar(msg: loginModel.message ?? "Login message");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<void> logOutUser() async {

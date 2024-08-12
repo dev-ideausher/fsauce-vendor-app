@@ -72,7 +72,6 @@ class LoginController extends GetxController {
       try {
         await auth.loginEmailPass(email: email, pass: password);
         DialogHelper.hideDialog();
-        gotoHomeScreen();
         return;
       } catch (e) {
         await DialogHelper.hideDialog();
@@ -89,7 +88,6 @@ class LoginController extends GetxController {
   void loginWithGoogle() async {
     try {
       await auth.google();
-      gotoHomeScreen();
     } catch (e) {
       print("Error : ${e.toString()}");
       Get.snackbar(StringConstant.error, e.toString());
@@ -99,7 +97,6 @@ class LoginController extends GetxController {
   void loginWithFacebook() async {
     try {
       await auth.facebook();
-      gotoHomeScreen();
     } catch (e) {
       Get.snackbar(StringConstant.error, e.toString());
     }
@@ -108,42 +105,8 @@ class LoginController extends GetxController {
   void loginWithApple() async {
     try {
       await auth.apple();
-      gotoHomeScreen();
     } catch (e) {
       Get.snackbar(StringConstant.error, e.toString());
-    }
-  }
-
-  void gotoHomeScreen() async {
-    try {
-      final response = await APIManager.onboardVendor();
-      final LoginModel loginModel = LoginModel.fromJson(response.data);
-      if (loginModel.status ?? false) {
-        if ((loginModel.user?.restaurantName ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.location ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.features ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.timing ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.media ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else {
-          Get.find<GetStorageService>().isLoggedIn = true;
-          Get.offAllNamed(Routes.NAV_BAR);
-        }
-      } else {
-        showMySnackbar(msg: loginModel.message ?? "Login message");
-      }
-    } catch (e) {
-      debugPrint(e.toString());
     }
   }
 
