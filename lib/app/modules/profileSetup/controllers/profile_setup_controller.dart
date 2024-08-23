@@ -68,10 +68,10 @@ class ProfileSetupController extends GetxController {
         features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
         multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
       } else{
-        DialogHelper.showError(response.data['message']);
+        Get.snackbar("Error", response.data['message']);
       }
     } catch(error){
-      DialogHelper.showError(error.toString());
+      Get.snackbar("Error", error.toString());
     }
   }
 
@@ -83,10 +83,10 @@ class ProfileSetupController extends GetxController {
         cuisineModels.value = [];
         cuisineModels.value = data.map((e) => CuisineModel.fromJson(e)).toList();
       } else{
-        DialogHelper.showError(response.data['message']);
+        Get.snackbar("Error", response.data['message']);
       }
     } catch(error){
-      DialogHelper.showError(error.toString());
+      Get.snackbar("Error", error.toString());
     }
   }
 
@@ -142,7 +142,7 @@ class ProfileSetupController extends GetxController {
           restaurantName: restaurantNameController.text.trim(),
           restaurantLogo: restaurantLogoUrl,
           restaurantBanner: restaurantBannerUrl,
-          location: streetNameController.text + cityNameController.text,
+          location: "${streetNameController.text} ${cityNameController.text}",
           //locationController.text.trim()
           avgPrice: int.parse(averagePriceController.text.trim()),
           description: descriptionController.text.trim(),

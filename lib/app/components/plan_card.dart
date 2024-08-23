@@ -6,10 +6,10 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
-import '../models/subscription_model.dart';
+import '../models/plan_model.dart';
 
 class PlanCard extends StatelessWidget {
-  SubscriptionModel plan;
+  PlanModel plan;
 
   PlanCard({required this.plan, super.key});
 
@@ -18,8 +18,8 @@ class PlanCard extends StatelessWidget {
     List<String?> features = plan.features ?? [];
     final controller = Get.find<SubscriptionController>();
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
-      height: 200.kh,
+      // padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
+      height: 204.kh,
       width: 400.kw,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -37,24 +37,15 @@ class PlanCard extends StatelessWidget {
           Row(
             children: <Widget>[
               Obx(() {
-                return InkWell(
-                  onTap: () {
-                    if (controller.selectedPlan.value.Id == plan.Id) {
-                      controller.selectedPlan.value = SubscriptionModel();
-                    } else if(controller.selectedPlan.value.Id != plan.Id) {
-                      controller.selectedPlan.value.Id = plan.Id;
+                return Radio<PlanModel>(
+                  activeColor: context.primary01,
+                    value: plan,
+                    groupValue: controller.selectedPlan.value,
+                    onChanged: (PlanModel? model){
+                      if(model != null){
+                        controller.selectedPlan.value = model;
+                      }
                     }
-                  },
-                  child: Container(
-                    height: 20, width: 20,
-                    decoration: BoxDecoration(
-                        color: controller.selectedPlan.value.Id == plan.Id
-                            ? context.primary01
-                            : Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: context.primary01)
-                    ),
-                  ),
                 );
               }),
               32.kwidthBox,
@@ -62,6 +53,18 @@ class PlanCard extends StatelessWidget {
                 plan.title ?? "",
                 style: TextStyleUtil.manrope18w600(),
               ),
+              Expanded(child: Container()),
+              controller.selectedPlan.value.Id == plan.Id ?
+              Container(
+                padding: EdgeInsets.all(8.kw),
+                decoration: BoxDecoration(
+                  color: context.primary03,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8.kw), bottomLeft: Radius.circular(8.kw))
+                ),
+                child: Center(
+                  child: Text(StringConstant.currentPlan, style: TextStyleUtil.manrope12w400(color: Colors.white))
+                )
+              ) : Container(),
             ],
           ),
           10.kheightBox,

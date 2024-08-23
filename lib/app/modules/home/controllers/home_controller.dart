@@ -65,11 +65,11 @@ class HomeController extends GetxController {
           return ChartData(weeklyData.value.rewardsCount![index]!.date!, double.parse(weeklyData.value.rewardsCount![index]!.total!.toString()));
         });
       } else{
-        DialogHelper.showError(StringConstant.failedToGetDashboardData);
+        Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      // DialogHelper.showError(StringConstant.somethingWentWrong);
+      // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
 
@@ -88,11 +88,11 @@ class HomeController extends GetxController {
           return ChartData(monthlyData.value.rewardsCount!.graphData![index]!.week!, double.parse(monthlyData.value.rewardsCount!.graphData![index]!.count!.toString()));
         });
       } else{
-        DialogHelper.showError(StringConstant.failedToGetDashboardData);
+        Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      // DialogHelper.showError(StringConstant.somethingWentWrong);
+      // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
 
@@ -111,11 +111,11 @@ class HomeController extends GetxController {
           return ChartData(yearlyData.value.rewardsCount![index]!.month!, double.parse(yearlyData.value.rewardsCount![index]!.order!.toString()));
         });
       } else{
-        DialogHelper.showError(StringConstant.failedToGetDashboardData);
+        Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
       print("An error occurred while getting dashboard data: $e");
-      // DialogHelper.showError(StringConstant.somethingWentWrong);
+      // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
 

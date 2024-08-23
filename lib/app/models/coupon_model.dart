@@ -26,6 +26,7 @@ class Coupon {
   String image;
   bool? isSheduled;
   String? sheduleDate;
+  String? couponCode;
 
   Coupon({
     required this.title,
@@ -39,6 +40,7 @@ class Coupon {
     required this.image,
     this.isSheduled,
     this.sheduleDate,
+    this.couponCode,
   });
 
   Map<String, dynamic> toJson() {
@@ -51,6 +53,7 @@ class Coupon {
     data['image'] = image;
     data['isSheduled'] = isSheduled;
     data['sheduleDate'] = sheduleDate;
+    data['couponCode'] = couponCode ?? "";
     if (termsAndConditions != null) {
       final v = termsAndConditions;
       final arr0 = [];
@@ -79,6 +82,7 @@ class Coupon {
         validTill: json['validTill']?.toString() ?? 'Default valid till date',
         description: json['description']?.toString() ?? 'Default description',
         id: json['_id'],
+        couponCode: json['couponCode'] ?? "",
         isActive: json['isActive'],
         image: json['image'] ?? "",
         sheduleDate: json['sheduleDate'] ?? "",

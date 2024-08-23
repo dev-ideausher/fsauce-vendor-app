@@ -10,12 +10,15 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+
 class JobEditOrAddController extends GetxController {
 
   @override
   void onInit(){
     super.onInit();
     getToEdit();
+    Get.find<HomeController>().getRestaurantDetails();
   }
 
   @override
@@ -44,56 +47,64 @@ class JobEditOrAddController extends GetxController {
   }
 
   void addJob() async {
-    if (_validateForm()) {
-      try {
-        Map<String, dynamic> data = {
-          "title" : jobTitleController.text.trim() ?? "Default job title",
-          "description": descriptionController.text ?? "Default description",
-          "lastDate": lastDateToApplyController.text ?? "Default last date",
-          "minSalary": int.parse(minSalaryController.text.trim()) ?? 0,
-          "maxSalary": int.parse(maxSalaryController.text.trim()) ?? 0,
-          "howToApply": howToApplyController.text ?? "Default how to apply"
-        };
-        var response = await APIManager.addNewJob(data: data);
-        if(response.data['status']){
-          JobsController jobsController = Get.find<JobsController>();
-          jobsController.updateJobs();
-          Get.back();
-          Get.bottomSheet(const AddedSuccessfullBottomSheet(
-            subTitle: StringConstant.newJobCreatedSuccessfully,
-          ));
+    if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
+      if (_validateForm()) {
+        try {
+          Map<String, dynamic> data = {
+            "title" : jobTitleController.text.trim() ?? "Default job title",
+            "description": descriptionController.text ?? "Default description",
+            "lastDate": lastDateToApplyController.text ?? "Default last date",
+            "minSalary": minSalaryController.text.trim().contains(".") ? double.parse(minSalaryController.text.trim()) :
+            int.parse(minSalaryController.text.trim()) ?? 0,
+            "maxSalary": maxSalaryController.text.trim().contains(".") ? double.parse(minSalaryController.text.trim()) :
+            int.parse(maxSalaryController.text.trim()) ?? 0,
+            "howToApply": howToApplyController.text ?? "Default how to apply"
+          };
+          var response = await APIManager.addNewJob(data: data);
+          if(response.data['status']){
+            JobsController jobsController = Get.find<JobsController>();
+            jobsController.updateJobs();
+            Get.back();
+            Get.bottomSheet(const AddedSuccessfullBottomSheet(
+              subTitle: StringConstant.newJobCreatedSuccessfully,
+            ));
+          }
+          // Fetch updated jobs list after adding a new job
+        } catch (e) {
+          print("Error occurred while creating new job: ${e.toString()}");
+          Get.snackbar("Error",e.toString());
+          return;
         }
-        // Fetch updated jobs list after adding a new job
-      } catch (e) {
-        print("Error occurred while creating new job: ${e.toString()}");
-        DialogHelper.showError(e.toString());
       }
+    } else{
+      Get.snackbar("Subscription Required", "Kindly subscribe to one of the plans to access this feaure.");
+      return;
     }
   }
 
   bool _validateForm() {
     if (jobTitleController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.enterJobTitle);
+      Get.snackbar("Error", StringConstant.enterJobTitle);
       return false;
     }
     if (minSalaryController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.minSalaryOffered);
+      Get.snackbar("Error", StringConstant.minSalaryOffered);
       return false;
     }
     if (maxSalaryController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.maxSalaryOffered);
+      Get.snackbar("Error", StringConstant.maxSalaryOffered);
       return false;
     }
     if (lastDateToApplyController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.enterLastDateToApply);
+      Get.snackbar("Error", StringConstant.enterLastDateToApply);
       return false;
     }
     if (descriptionController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.enterDescription);
+      Get.snackbar("Error", StringConstant.enterDescription);
       return false;
     }
     if (howToApplyController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.enterHowToApply);
+      Get.snackbar("Error", StringConstant.enterHowToApply);
       return false;
     }
     return true;
@@ -167,7 +178,7 @@ class JobEditOrAddController extends GetxController {
         jobsController.updateJobInList(updatedJob);
         Get.back();
       } catch (e) {
-        DialogHelper.showError("Something went wrong!");
+        Get.snackbar("Error", "Something went wrong!");
         return;
       }
     }

@@ -104,7 +104,7 @@ class StepTwo extends GetView<ProfileSetupController> {
                       ? controller.gotoNextStep()
                       : controller.gotoEnableLocationScreen();
                 } else {
-                  DialogHelper.showError(
+                  Get.snackbar("Error",
                       StringConstant.plsSelectFeaturesAndTimings);
                 }
               });

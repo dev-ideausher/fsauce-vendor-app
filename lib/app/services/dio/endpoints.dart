@@ -13,6 +13,8 @@ class Endpoints {
   static const String addCard = "vendor/addCard";
   static const String vendorSubscription = "vendor/vendorSubscription";
   static const String delCard = "vendor/deleteCard?CardId=";
+  static const String getCardList = "vendor/getCardList";
+  static const String cancelSubscription = "vendor/cancelSubscription";
 
   //Delete media
   static const String deleteMedia = "vendor/deleteMedia";
@@ -28,6 +30,7 @@ class Endpoints {
   //Vendor end points
   static const String updateVendor = "vendor/updateVendor";
   static const String getVendor = "vendor/getVendorProfile";
+  static const String deleteVendor = "vendor/deleteAccount";
 
   //Notification end points
   static const String addNotification = "vendor/addNotification";

@@ -20,7 +20,7 @@ class PushNotificationController extends GetxController {
       notificationList.value = data.map((e) => PushNotification.fromJson(e)).toList();
     } catch(e){
       print(e.toString());
-      DialogHelper.showError(e.toString());
+      Get.snackbar("Error", e.toString());
     }
   }
 
@@ -28,16 +28,6 @@ class PushNotificationController extends GetxController {
   void onInit() {
     getNotifications();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void showInactiveDialog() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -49,6 +50,10 @@ class SignupView extends GetView<SignupController> {
                     children: [
                       Expanded(
                         child: TextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp(r'\s')),
+                          ],
                           onChanged: (val) {
                             if (val.isEmpty) {
                               controller.isSignupEnabled.value = false;
@@ -90,6 +95,11 @@ class SignupView extends GetView<SignupController> {
                       Expanded(
                         child: Obx(() {
                           return TextField(
+                            maxLength: 64,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                  RegExp(r'\s')),
+                            ],
                             onChanged: (val) {
                               if (val.isEmpty) {
                                 controller.isSignupEnabled.value = false;
@@ -100,6 +110,7 @@ class SignupView extends GetView<SignupController> {
                             obscureText: controller.passwordVisible.value,
                             controller: controller.passwordController,
                             decoration: InputDecoration(
+                              counterText: "",
                               suffixIcon: IconButton(
                                   onPressed: () {
                                     controller.togglePasswordVisible();

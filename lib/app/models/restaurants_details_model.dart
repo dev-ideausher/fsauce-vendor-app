@@ -1,5 +1,6 @@
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/feature_model.dart';
+import 'package:fsauce_vendor_app/app/models/subscription_model.dart';
 
 class RestaurantDetails {
   String restaurantName;
@@ -14,6 +15,9 @@ class RestaurantDetails {
   List<CuisineModel> cuisine;
   String lat;
   String lon;
+  String? stripeCustomerId;
+  String? stripeCardId;
+  Subscription? subscriptionModel;
 
   RestaurantDetails({
     required this.restaurantName,
@@ -28,6 +32,9 @@ class RestaurantDetails {
     required this.cuisine,
     required this.lat,
     required this.lon,
+    this.stripeCustomerId,
+    this.stripeCardId,
+    this.subscriptionModel,
   });
 
   RestaurantDetails.fromJson(Map<String, dynamic> json)
@@ -39,6 +46,10 @@ class RestaurantDetails {
         description = json['description'],
         lat = json['lat'] ?? "",
         lon = json['lon'] ?? "",
+        stripeCustomerId = json['stripeCustomerId'],
+        stripeCardId = json['stripeCardId'],
+        subscriptionModel = json['subscription'] != null ?
+        Subscription.fromJson(json['subscription']) : null,
         features =
             json['features'] != null
                 ? (json['features'] as List)
@@ -65,6 +76,10 @@ class RestaurantDetails {
         'media': media,
         'lat': lat ?? "",
         'lon': lon ?? "",
+        'subscriptionModel': null,
+        //subscriptionModel == null ? {"":""} : subscriptionModel!.toJson()
+        'stripeCustomerId': stripeCustomerId,
+        'stripeCardId': stripeCardId,
         'cuisine': cuisine.map((e) => e.toJson()).toList(),
       };
 
@@ -93,6 +108,8 @@ class RestaurantDetails {
         cuisine: cuisine ?? this.cuisine,
         lat: lat ?? this.lat,
         lon: lon ?? this.lon,
+        stripeCustomerId: this.stripeCustomerId,
+        stripeCardId: this.stripeCardId
       );
 }
 

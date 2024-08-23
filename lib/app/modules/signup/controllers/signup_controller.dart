@@ -17,7 +17,7 @@ class SignupController extends GetxController {
   final passwordController = TextEditingController();
 
   RxBool isApple = false.obs;
-  RxBool passwordVisible = false.obs;
+  RxBool passwordVisible = true.obs;
   RxBool isSignupEnabled = false.obs;
   RxBool termsAndConditionsChecked = false.obs;
 
@@ -76,9 +76,11 @@ class SignupController extends GetxController {
         // Handle error (show a message to the user)
         // Get.snackbar(StringConstant.error, e.toString());
       }
+      return;
     } else {
       await DialogHelper.hideDialog();
       Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
+      return;
     }
   }
 
@@ -114,8 +116,9 @@ class SignupController extends GetxController {
   }
 
   bool _isEmailValid(String email) {
-    final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    return regex.hasMatch(email);
+    return GetUtils.isEmail(email);
+    // final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    // return regex.hasMatch(email);
   }
 
   bool _isPasswordValid(String password) {

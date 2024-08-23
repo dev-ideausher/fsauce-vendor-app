@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
+import 'package:get/get.dart';
 
 class SelectedPlanCard extends StatelessWidget {
   const SelectedPlanCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<SubscriptionController>();
     return Container(
       height: 88.kh,
       width: MediaQuery.of(context).size.width * 0.9,
@@ -35,16 +38,16 @@ class SelectedPlanCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(StringConstant.silverPlan, style: TextStyleUtil.manrope16w600(),),
+                  Text(controller.selectedPlan.value.title ?? StringConstant.silverPlan, style: TextStyleUtil.manrope16w600(),),
               4.kheightBox,
               Row(
                   children: <Widget>[
                     Text(
-                      "\$ 500",
+                      "\$${controller.selectedPlan.value.price}" ?? "\$500",
                       style: TextStyleUtil.manrope18w600(color: context.primary01),
                     ),
                     Text(
-                      "/${StringConstant.year.toLowerCase()}",
+                      " / ${controller.selectedPlan.value.billedFrequency}" ?? "/${StringConstant.year.toLowerCase()}",
                       style: TextStyleUtil.manrope18w600(color: context.black04),
                     )
                   ],),

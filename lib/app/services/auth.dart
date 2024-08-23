@@ -30,7 +30,7 @@ class Auth extends GetxService {
     await _googleSignIn.signIn();
     if (googleSignInAccount == null) {
       debugPrint('Process is canceled by the user');
-      DialogHelper.showError("Google sign cancelled by user");
+      Get.snackbar("Error", "Google sign cancelled by user");
       return;
     }
     final googleSignInAuthentication =
@@ -45,6 +45,7 @@ class Auth extends GetxService {
 
     if(userCredential.user != null){
       await handleGetContact();
+      gotoHomeScreen();
     }
   }
 
@@ -75,6 +76,7 @@ class Auth extends GetxService {
           if (value.user!.emailVerified) {
             // User is verified, proceed with getting contacts
             handleGetContact();
+            gotoHomeScreen();
           } else {
             // User created but email not verified
             showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
@@ -105,67 +107,71 @@ class Auth extends GetxService {
   updatePassword({required String newPassword}) async{
     final result = await auth.updatePassword(newPassword).then((value) async{
       await handleGetContact();
+    }).catchError((e) {
+      if(e is FirebaseAuthException){
+        showMySnackbar(msg: "An error occurred");
+      }
     });
   }
 
-  createEmailPass({required String email, required String pass}) async {
-    try {
-      // Call Firebase authentication to create an account with email and password
-      await auth.createAccountWithEmail(email: email, password: pass).then((value) async {
-        if (value.hasError) {
-          // If there was an error during account creation
-          if (value.user != null) {
-            // User exists but email might not be verified
-            if (value.user!.emailVerified) {
-              // User is verified, proceed with getting contacts
-              handleGetContact();
-            } else {
-              // User exists but email is not verified
-              showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
-              await value.user!.sendEmailVerification();
-            }
-          } else {
-            // Error occurred without a user being created
-            showMySnackbar(msg: value.errorMessage ?? "");
-          }
-        } else {
-          // Account creation successful
-          if (value.user!.emailVerified) {
-            // User is verified, proceed with getting contacts
-            handleGetContact();
-          } else {
-            // User created but email not verified
-            showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
-            await value.user!.sendEmailVerification();
-          }
-        }
-      });
-    } on FirebaseAuthException catch (e) {
-      // Handle FirebaseAuth exceptions
-      showMySnackbar(title: e.code.toLowerCase(), msg: getErrorMessageFromFirebaseException(e));
-    } catch (e) {
-      // Handle other exceptions
-      showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
-    }
-  }
   // createEmailPass({required String email, required String pass}) async {
-  //   await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
-  //       .then((value) async {
-  //     await handleGetContact();
-  //   }).catchError((e) {
-  //     if(e is FirebaseAuthException){
-  //       DialogHelper.showError(e.message ?? "Something went wrong");
-  //     }
-  //     print("This is from auth, createEmailPass");
-  //     print(e);
-  //   });
-  //   // await auth
-  //   //     .createAccountWithEmail(email: email, password: pass)
-  //   //     .then((value) async {
-  //   //   await handleGetContact();
-  //   // });
-  //   // print('EmailPass : ${await result.user?.getIdToken()}');
+  //   try {
+  //     // Call Firebase authentication to create an account with email and password
+  //     await auth.createAccountWithEmail(email: email, password: pass).then((value) async {
+  //       if (value.hasError) {
+  //         // If there was an error during account creation
+  //         if (value.user != null) {
+  //           // User exists but email might not be verified
+  //           if (value.user!.emailVerified) {
+  //             // User is verified, proceed with getting contacts
+  //             handleGetContact();
+  //           } else {
+  //             // User exists but email is not verified
+  //             showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+  //             await value.user!.sendEmailVerification();
+  //           }
+  //         } else {
+  //           // Error occurred without a user being created
+  //           showMySnackbar(msg: value.errorMessage ?? "");
+  //         }
+  //       } else {
+  //         // Account creation successful
+  //         if (value.user!.emailVerified) {
+  //           // User is verified, proceed with getting contacts
+  //           handleGetContact();
+  //         } else {
+  //           // User created but email not verified
+  //           showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+  //           await value.user!.sendEmailVerification();
+  //         }
+  //       }
+  //     });
+  //   } on FirebaseAuthException catch (e) {
+  //     // Handle FirebaseAuth exceptions
+  //     showMySnackbar(title: e.code.toLowerCase(), msg: getErrorMessageFromFirebaseException(e));
+  //   } catch (e) {
+  //     // Handle other exceptions
+  //     showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
+  //   }
   // }
+  createEmailPass({required String email, required String pass}) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
+        .then((value) async {
+      await handleGetContact();
+    }).catchError((e) {
+      if(e is FirebaseAuthException){
+        Get.snackbar("Error", e.message ?? "Something went wrong");
+      }
+      print("This is from auth, createEmailPass");
+      print(e);
+    });
+    // await auth
+    //     .createAccountWithEmail(email: email, password: pass)
+    //     .then((value) async {
+    //   await handleGetContact();
+    // });
+    // print('EmailPass : ${await result.user?.getIdToken()}');
+  }
 
 //phone number with country code
 
@@ -237,7 +243,6 @@ class Auth extends GetxService {
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
     // log(Get.find<GetStorageService>().encjwToken);
     // debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
-    gotoHomeScreen();
   }
 
   void gotoHomeScreen() async {

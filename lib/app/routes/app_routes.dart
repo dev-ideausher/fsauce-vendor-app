@@ -45,6 +45,7 @@ abstract class Routes {
   static const REDEEMCOUPONCODE = _Paths.REDEEMCOUPONCODE;
   static const GETLOCATION = _Paths.GETLOCATION;
   static const LOGIN_EMAIL_VERIFICATION = _Paths.LOGIN_EMAIL_VERIFICATION;
+  static const CURRENT_SUBSCRIPTION_PLAN = _Paths.CURRENT_SUBSCRIPTION_PLAN;
 }
 
 abstract class _Paths {
@@ -91,4 +92,5 @@ abstract class _Paths {
   static const REDEEMCOUPONCODE = '/redeem-coupon-code';
   static const GETLOCATION = '/get-location';
   static const LOGIN_EMAIL_VERIFICATION = '/login-email-verification';
+  static const CURRENT_SUBSCRIPTION_PLAN = '/current-subscription-plan';
 }

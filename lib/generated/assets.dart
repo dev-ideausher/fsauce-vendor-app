@@ -9,6 +9,7 @@ class Assets {
   static const String pngsSubscriptionIcon = 'assets/pngs/subscription_icon.png';
   static const String svgsAppIcon = 'assets/svgs/app_icon.svg';
   static const String svgsAppleLogo = 'assets/svgs/apple_logo.svg';
+  static const String svgsApplePayLogo = 'assets/svgs/apple_pay_logo.svg';
   static const String svgsBackIcon = 'assets/svgs/back_icon.svg';
   static const String svgsColorPicker = 'assets/svgs/color_picker.svg';
   static const String svgsCompleteTick = 'assets/svgs/complete_tick.svg';
@@ -30,11 +31,12 @@ class Assets {
   static const String svgsGetStarted = 'assets/svgs/get_started.svg';
   static const String svgsGiftIcon = 'assets/svgs/gift_icon.svg';
   static const String svgsGoogleLogo = 'assets/svgs/google_logo.svg';
+  static const String svgsGooglePayLogo = 'assets/svgs/google_pay_logo.svg';
   static const String svgsGroupChatIcon = 'assets/svgs/group_chat_icon.svg';
   static const String svgsGroups = 'assets/svgs/groups.svg';
   static const String svgsGroupsFill = 'assets/svgs/groups_fill.svg';
   static const String svgsHeart = 'assets/svgs/heart.svg';
-  static const String svgsHelpAndSupportIcon = 'assets/svgs/help_&_support_icon.svg';
+  static const String svgsHelpSupportIcon = 'assets/svgs/help_&_support_icon.svg';
   static const String svgsHome = 'assets/svgs/home.svg';
   static const String svgsHomeFill = 'assets/svgs/home_fill.svg';
   static const String svgsImageIcon = 'assets/svgs/image_icon.svg';
@@ -80,5 +82,6 @@ class Assets {
   static const String svgsVipIcon2 = 'assets/svgs/vip_icon2.svg';
   static const String svgsVipOfferFilled = 'assets/svgs/vip_offer_filled.svg';
   static const String svgsVipOffers = 'assets/svgs/vip_offers.svg';
+  static const String svgsVisaLogo = 'assets/svgs/visa_logo.svg';
 
 }

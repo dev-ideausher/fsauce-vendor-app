@@ -31,7 +31,7 @@ class RatingAndFeedbackManagementController extends GetxController {
               DialogHelper.showSuccess(StringConstant.deletedSuccessfully);
             }
           } catch (e) {
-            DialogHelper.showError(StringConstant.somethingWentWrong);
+            Get.snackbar("Error",StringConstant.somethingWentWrong);
           }
         },
         onNoTap: Get.back));
@@ -49,10 +49,10 @@ class RatingAndFeedbackManagementController extends GetxController {
         Get.snackbar(StringConstant.noRatingsFound, StringConstant.noRatingsFound);
       }
       else{
-        DialogHelper.showError(StringConstant.anErrorOccurredWhileGettingRatings);
+        Get.snackbar("Error",StringConstant.anErrorOccurredWhileGettingRatings);
       }
     } catch(e){
-      DialogHelper.showError(e.toString());
+      Get.snackbar("Error", e.toString());
     }
   }
 }

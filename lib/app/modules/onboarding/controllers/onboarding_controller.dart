@@ -28,25 +28,6 @@ class OnboardingController extends GetxController {
     }
   }
 
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-    // removeLoginSessions();
-  }
-
-  void removeLoginSessions(){
-    if(user != null){
-      if(!user!.emailVerified){
-        Get.find<GetStorageService>().isLoggedIn = false;
-        auth.logOutUser();
-        print("Logged out user in onboarding controller");
-      }
-    } else{
-      print("User is null in remove login session.");
-    }
-  }
-
   void changePageCount({required int n}) {
     pageCount.value = n;
   }

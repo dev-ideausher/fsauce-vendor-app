@@ -14,6 +14,7 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
 
 class LoyaltyController extends GetxController {
@@ -27,13 +28,9 @@ class LoyaltyController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   @override
-  void onInit() {
+  void onInit(){
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    Get.find<HomeController>().getRestaurantDetails();
   }
 
   @override
@@ -44,47 +41,54 @@ class LoyaltyController extends GetxController {
   }
 
   Future<void> createLoyaltyCard() async{
-    if(cardTitleController.text.isEmpty){
-      DialogHelper.showError(StringConstant.offerTitleErrorMsg);
-      return;
-    }
-    else if(backgroundColor.value.toString().isEmpty){
-      DialogHelper.showError(StringConstant.bgColorCannotBeEmpty);
-      return;
-    }
-    else if(textColor.value.toString().isEmpty){
-      DialogHelper.showError(StringConstant.textColorCannotBeEmpty);
-      return;
-    }
-    else if(stampBackgroundColor.value.toString().isEmpty){
-      DialogHelper.showError(StringConstant.stampBGErrorMsg);
-      return;
-    }
-    else if(stampTextColor.value.toString().isEmpty){
-      DialogHelper.showError(StringConstant.stampColorErrorMsg);
-      return;
-    }
+    if(
+    Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null
+    ){
+      if(cardTitleController.text.isEmpty){
+        Get.snackbar("Error", StringConstant.offerTitleErrorMsg);
+        return;
+      }
+      else if(backgroundColor.value.toString().isEmpty){
+        Get.snackbar("Error", StringConstant.bgColorCannotBeEmpty);
+        return;
+      }
+      else if(textColor.value.toString().isEmpty){
+        Get.snackbar("Error", StringConstant.textColorCannotBeEmpty);
+        return;
+      }
+      else if(stampBackgroundColor.value.toString().isEmpty){
+        Get.snackbar("Error", StringConstant.stampBGErrorMsg);
+        return;
+      }
+      else if(stampTextColor.value.toString().isEmpty){
+        Get.snackbar("Error", StringConstant.stampColorErrorMsg);
+        return;
+      }
 
-    String vendorId = Get.find<HomeController>().vendor;
-    Map<String, dynamic> data = {
-      "title": cardTitleController.text,
-      "noOfStamps": noOfStamps.value,
-      "cardBackgroundColor": backgroundColor.value.value.toString(),
-      "cardTextColor": textColor.value.toString(),
-      "stampBackgroundColor": stampBackgroundColor.value.toString(),
-      "stampColor": stampTextColor.value.toString(),
-      "vendor": vendorId, //"66728075a065bac72ace0f09"
-      "validTill": validTill.toString(),
-      "isActive": true
-    };
-    var response = await APIManager.addLoyaltyCard(data: data);
-    if(response.data['status']){
-      Get.back();
-      Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
-      DialogHelper.showSuccess(StringConstant.loyaltyAddedMessage);
-      Get.find<LoyaltyCardsController>().getLoyaltyCards();
-    } else if(!response.data['status']){
-      DialogHelper.showError(StringConstant.anErrorOccurred);
+      String vendorId = Get.find<HomeController>().vendor;
+      Map<String, dynamic> data = {
+        "title": cardTitleController.text,
+        "noOfStamps": noOfStamps.value,
+        "cardBackgroundColor": backgroundColor.value.value.toString(),
+        "cardTextColor": textColor.value.toString(),
+        "stampBackgroundColor": stampBackgroundColor.value.toString(),
+        "stampColor": stampTextColor.value.toString(),
+        "vendor": vendorId, //"66728075a065bac72ace0f09"
+        "validTill": validTill.toString(),
+        "isActive": true
+      };
+      var response = await APIManager.addLoyaltyCard(data: data);
+      if(response.data['status']){
+        Get.back();
+        Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
+        DialogHelper.showSuccess(StringConstant.loyaltyAddedMessage);
+        Get.find<LoyaltyCardsController>().getLoyaltyCards();
+      } else if(!response.data['status']){
+        Get.snackbar("Error",StringConstant.anErrorOccurred);
+      }
+    } else{
+      Get.snackbar("Subscription Required", "Kindly subscribe to a plan to access this feature!");
+      return;
     }
   }
 

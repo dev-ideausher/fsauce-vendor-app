@@ -14,12 +14,15 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+
 class MenuPageController extends GetxController {
 
   @override
   void onInit() {
     getCategory();
     super.onInit();
+    Get.find<HomeController>().getRestaurantDetails();
   }
 
   TextEditingController editCategoryController = TextEditingController();
@@ -97,29 +100,33 @@ class MenuPageController extends GetxController {
   }
 
   void addCategory() async {
-    if (addCategoryController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.enterCategoryName);
-      return;
-    } else {
-      try {
-        var response = await APIManager.addCategory(
-          categoryName: addCategoryController.text.trim(),
-        );
-        print(response);
-        if (response.statusCode == 200) {
-          addCategoryController.text = "";
-          getCategory();
-          Get.back();
-          DialogHelper.showSuccess(StringConstant.categoryAddedSuccessfully);
-          return;
-        } else {
-          DialogHelper.showError(StringConstant.somethingWentWrong);
+    if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
+      if (addCategoryController.text.isEmpty) {
+        Get.snackbar("Error", StringConstant.enterCategoryName);
+        return;
+      } else {
+        try {
+          var response = await APIManager.addCategory(
+            categoryName: addCategoryController.text.trim(),
+          );
+          print(response);
+          if (response.statusCode == 200) {
+            addCategoryController.text = "";
+            getCategory();
+            Get.back();
+            DialogHelper.showSuccess(StringConstant.categoryAddedSuccessfully);
+            return;
+          } else {
+            Get.snackbar("Error", StringConstant.somethingWentWrong);
+            return;
+          }
+        } catch (e) {
+          Get.snackbar("Error", StringConstant.categoryNameAdded);
           return;
         }
-      } catch (e) {
-        DialogHelper.showError(StringConstant.categoryNameAdded);
-        return;
       }
+    } else{
+      Get.snackbar("Subscription Required", "Subscribe to a plan to access this feature.");
     }
   }
 
@@ -157,11 +164,11 @@ class MenuPageController extends GetxController {
 
   Future<bool> addMenuItem() async {
     if (itemNameController.text.trim().isEmpty) {
-      DialogHelper.showError(StringConstant.itemNameCantBeEmpty);
+      Get.snackbar("Error", StringConstant.itemNameCantBeEmpty);
       return false;
     }
     if (itemImage.value.isEmpty) {
-      DialogHelper.showError(StringConstant.selectAnImage);
+      Get.snackbar("Error", StringConstant.selectAnImage);
       return false;
     }
     var uploadResponse = await APIManager.uploadFile(filePath: itemImage.value);
@@ -202,7 +209,7 @@ class MenuPageController extends GetxController {
 
   Future<void> editItem({required MenuItemModel menu}) async {
     if (editMenuItemController.text.isEmpty) {
-      DialogHelper.showError(StringConstant.itemNameCantBeEmpty);
+      Get.snackbar("Error", StringConstant.itemNameCantBeEmpty);
       return;
     }
     if (itemEditImage.value.isNotEmpty) {

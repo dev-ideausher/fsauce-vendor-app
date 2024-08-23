@@ -10,6 +10,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/verification_controller.dart';
 
 class VerificationDoneScreen extends GetView<VerificationController> {
@@ -24,7 +25,7 @@ class VerificationDoneScreen extends GetView<VerificationController> {
           width: double.infinity,
           child: Column(
             children: [
-              30.kheightBox,
+              Expanded(child: Container()),
               CommonImageView(
                 svgPath: ImageConstant.completeTick,
               ),
@@ -45,7 +46,7 @@ class VerificationDoneScreen extends GetView<VerificationController> {
                 height: 56.kh,
                 width: double.infinity,
                 onPressed: () {
-                  controller.gotoProfileSetupScreen();
+                  Get.offAllNamed(Routes.PROFILE_SETUP);
                 },
               ),
               20.kheightBox,

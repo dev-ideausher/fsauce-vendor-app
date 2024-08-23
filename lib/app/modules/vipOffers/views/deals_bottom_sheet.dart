@@ -86,6 +86,10 @@ class DealsBottomSheet extends GetView<VipOffersController> {
               ),
             ),
             20.kheightBox,
+            coupon.couponCode!.isNotEmpty ? Text(StringConstant.couponCode, style: TextStyleUtil.manrope16w500(),) : Container(),
+            coupon.couponCode!.isNotEmpty ? 4.kheightBox : Container(),
+            coupon.couponCode!.isNotEmpty ? Text(coupon.couponCode ?? "", style: TextStyleUtil.manrope14w400(color: context.black02),) : Container(),
+            coupon.couponCode!.isNotEmpty ? 20.kheightBox : Container(),
             Text(StringConstant.validTill, style: TextStyleUtil.manrope16w500(),),
             4.kheightBox,
             Text(coupon.validTill.substring(0, 10), style: TextStyleUtil.manrope14w400(color: context.black02),),
@@ -111,21 +115,21 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                   padding: EdgeInsets.symmetric(vertical: 5.kh),
                   child: Row(
                     children: [
-                      Container(
-                        height: 16.kh,
-                        width: 16.kw,
-                        decoration: BoxDecoration(
-                            color: context.primary03,
-                            borderRadius: BorderRadius.circular(8.kw)),
-                        child: Center(
-                          child: Icon(
-                            Icons.check,
-                            color: context.primary07,
-                            size: 13.ksp,
-                          ),
-                        ),
-                      ),
-                      10.kwidthBox,
+                      // Container(
+                      //   height: 16.kh,
+                      //   width: 16.kw,
+                      //   decoration: BoxDecoration(
+                      //       color: context.primary03,
+                      //       borderRadius: BorderRadius.circular(8.kw)),
+                      //   child: Center(
+                      //     child: Icon(
+                      //       Icons.check,
+                      //       color: context.primary07,
+                      //       size: 13.ksp,
+                      //     ),
+                      //   ),
+                      // ),
+                      // 10.kwidthBox,
                       Text(
                         e,
                         style:

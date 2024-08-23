@@ -8,6 +8,8 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+
 class CreateOrEditVipOfferController extends GetxController {
   //TODO: Implement CreateOrEditVipOfferController
 
@@ -40,6 +42,7 @@ class CreateOrEditVipOfferController extends GetxController {
   void onInit() {
     super.onInit();
     getSelectedCouponDetails();
+    Get.find<HomeController>().getRestaurantDetails();
   }
 
   @override
@@ -92,79 +95,90 @@ class CreateOrEditVipOfferController extends GetxController {
   }
 
   Future<void> addCoupon() async {
-    if (titleController.text
-        .trim()
-        .isEmpty) {
-      DialogHelper.showError("Title can't be empty");
-      return;
-    }
-    if(selectedCouponImage.isEmpty){
-      DialogHelper.showError(StringConstant.emptyCouponImage);
-      return;
-    }
-    if (validTillDateController.text.isEmpty) {
-      DialogHelper.showError("Please select a date");
-      return;
-    }
-    if (descriptionController.text.isEmpty) {
-      DialogHelper.showError("Description can't be empty");
-      return;
-    }
-    if (termsAndConditionsController.text.isEmpty) {
-      DialogHelper.showError("Terms and conditions can't be empty");
-      return;
-    }
-    else{
-      String couponImageLink = "";
-      try{
-        var uploadCouponImageResponse = await APIManager.uploadFile(filePath: selectedCouponImage.value);
-        if(!uploadCouponImageResponse.data['status']){
-          DialogHelper.showError(StringConstant.anErrorOccurred);
-          return;
-        } else if(uploadCouponImageResponse.data['status']){
-          couponImageLink = uploadCouponImageResponse.data['data'];
-          bool isSheduled = false; String sheduledDate = "";
-          if(scheduleDateController.text.isNotEmpty){
-            isSheduled = true;
-            sheduledDate = scheduledDate.toString();
-          }
-          try{
-            Map<String, dynamic> data = {
-              "title": titleController.text,
-              "typeOfOffer": typeOfOffers[selectedTypeOfOffer.value],
-              "validFor": validForOptions[selectedValidForOption.value],
-              "validTill": validTillDateController.text,
-              "description": descriptionController.text,
-              "termsAndConditions": [termsAndConditionsController.text],
-              "isActive": true,
-              "isSheduled": isSheduled ?? "",
-              "sheduleDate": sheduledDate,
-              "image": couponImageLink,
-            };
-            var response = await APIManager.addCoupon(data: data);
-            if (response.data['status']) {
-              Get.find<VipOffersController>().getCoupons();
-              Get.back();
-              DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);
-              showCreatedBottomSheet();
-              titleController.text = '';
-              validTillDateController.text = '';
-              descriptionController.text = '';
-              termsAndConditionsController.text = '';
-              selectedTypeOfOffer.value = 0;
-              selectedValidForOption.value = 0;
-              selectedCouponImage.value = "";
-              return;
-            }
-          } catch(e){
-            print("Error: $e");
-            rethrow;
-          }
-        }
-      } catch(e){
-        print("Error: $e");
-        rethrow;
+    if(
+    Get
+        .find<HomeController>()
+        .restaurantDetails
+        .value
+        .subscriptionModel != null
+    ){
+      if (titleController.text
+          .trim()
+          .isEmpty) {
+        Get.snackbar("Error","Title can't be empty");
+        return;
       }
+      if(selectedCouponImage.isEmpty){
+        Get.snackbar("Error", StringConstant.emptyCouponImage);
+        return;
+      }
+      if (validTillDateController.text.isEmpty) {
+        Get.snackbar("Error","Please select a date");
+        return;
+      }
+      if (descriptionController.text.isEmpty) {
+        Get.snackbar("Error","Description can't be empty");
+        return;
+      }
+      if (termsAndConditionsController.text.isEmpty) {
+        Get.snackbar("Error","Terms and conditions can't be empty");
+        return;
+      }
+      else{
+        String couponImageLink = "";
+        try{
+          var uploadCouponImageResponse = await APIManager.uploadFile(filePath: selectedCouponImage.value);
+          if(!uploadCouponImageResponse.data['status']){
+            Get.snackbar("Error", StringConstant.anErrorOccurred);
+            return;
+          } else if(uploadCouponImageResponse.data['status']){
+            couponImageLink = uploadCouponImageResponse.data['data'];
+            bool isSheduled = false; String sheduledDate = "";
+            if(scheduleDateController.text.isNotEmpty){
+              isSheduled = true;
+              sheduledDate = scheduledDate.toString();
+            }
+            try{
+              Map<String, dynamic> data = {
+                "title": titleController.text,
+                "typeOfOffer": typeOfOffers[selectedTypeOfOffer.value],
+                "validFor": validForOptions[selectedValidForOption.value],
+                "validTill": validTillDateController.text,
+                "description": descriptionController.text,
+                "termsAndConditions": [termsAndConditionsController.text],
+                "isActive": true,
+                "isSheduled": isSheduled ?? "",
+                "sheduleDate": sheduledDate,
+                "image": couponImageLink,
+              };
+              var response = await APIManager.addCoupon(data: data);
+              if (response.data['status']) {
+                Get.find<VipOffersController>().getCoupons();
+                Get.back();
+                DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);
+                showCreatedBottomSheet();
+                titleController.text = '';
+                validTillDateController.text = '';
+                descriptionController.text = '';
+                termsAndConditionsController.text = '';
+                selectedTypeOfOffer.value = 0;
+                selectedValidForOption.value = 0;
+                selectedCouponImage.value = "";
+                return;
+              }
+            } catch(e){
+              print("Error: $e");
+              rethrow;
+            }
+          }
+        } catch(e){
+          print("Error: $e");
+          rethrow;
+        }
+      }
+    } else{
+      Get.snackbar("Subscription required", "Kindly subscribe to a plan to access this feaure.");
+      return;
     }
   }
 
@@ -172,23 +186,23 @@ class CreateOrEditVipOfferController extends GetxController {
     if (titleController.text
         .trim()
         .isEmpty) {
-      DialogHelper.showError("Title can't be empty");
+      Get.snackbar("Error","Title can't be empty");
       return;
     }
     if (validTillDateController.text.isEmpty) {
-      DialogHelper.showError("Please select a date");
+      Get.snackbar("Error","Please select a date");
       return;
     }
     if (descriptionController.text.isEmpty) {
-      DialogHelper.showError("Description can't be empty");
+      Get.snackbar("Error","Description can't be empty");
       return;
     }
     if(selectedCouponImage.isEmpty && couponImageLink.isEmpty){
-      DialogHelper.showError(StringConstant.emptyCouponImage);
+      Get.snackbar("Error", StringConstant.emptyCouponImage);
       return;
     }
     if (termsAndConditionsController.text.isEmpty) {
-      DialogHelper.showError("Terms and conditions can't be empty");
+      Get.snackbar("Error","Terms and conditions can't be empty");
       return;
     }
     try{
@@ -232,7 +246,7 @@ class CreateOrEditVipOfferController extends GetxController {
             }
           }
           else if(!uploadResponse.data['status']){
-            DialogHelper.showError(StringConstant.anErrorOccurred);
+            Get.snackbar("Error", StringConstant.anErrorOccurred);
             return;
           }
         } catch(e){

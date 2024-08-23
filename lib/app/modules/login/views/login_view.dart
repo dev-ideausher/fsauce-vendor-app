@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
@@ -53,6 +54,10 @@ class LoginView extends GetView<LoginController> {
                       children: [
                         Expanded(
                           child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                  RegExp(r'\s')),
+                            ],
                             onChanged: (val) {
                               if (val.isEmpty) {
                                 controller.isLoginEnabled.value = false;
@@ -94,6 +99,11 @@ class LoginView extends GetView<LoginController> {
                         Expanded(
                           child: Obx(() {
                             return TextField(
+                              maxLength: 64,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    RegExp(r'\s')),
+                              ],
                               onChanged: (val) {
                                 if (val.isEmpty) {
                                   controller.isLoginEnabled.value = false;
@@ -104,6 +114,7 @@ class LoginView extends GetView<LoginController> {
                               obscureText: controller.passwordVisible.value,
                               controller: controller.passwordController,
                               decoration: InputDecoration(
+                                counterText: "",
                                 suffixIcon: IconButton(
                                     onPressed: () {
                                       controller.togglePasswordVisible();

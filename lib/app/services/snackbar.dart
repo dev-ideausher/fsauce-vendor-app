@@ -5,7 +5,7 @@ void showMySnackbar({String? title, required String msg}) {
       ? null
       : Get.rawSnackbar(
           title: title ?? "Message",
-          message: msg,
+          message: msg ?? "",
           duration: const Duration(milliseconds: 2000),
         );
 }

@@ -3,8 +3,8 @@ class Job {
   String title;
   String description;
   DateTime lastDate;
-  int minSalary;
-  int maxSalary;
+  num minSalary;
+  num maxSalary;
   String howToApply;
   String vendor;
   DateTime createdAt;

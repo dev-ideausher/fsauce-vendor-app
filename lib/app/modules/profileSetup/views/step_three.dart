@@ -150,7 +150,7 @@ class StepThree extends GetView<ProfileSetupController> {
                     ? controller.gotoNextStep
                     : controller.gotoEnableLocationScreen();
               } else {
-                DialogHelper.showError(StringConstant.noFilesSelected);
+                Get.snackbar("Error", StringConstant.noFilesSelected);
               }
             }),
         30.kheightBox,

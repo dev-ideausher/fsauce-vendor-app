@@ -50,7 +50,7 @@ class AllPhotosAndVideosController extends GetxController {
               DialogHelper.showSuccess("Deleted Successfully!");
             }
           } catch (e) {
-            DialogHelper.showError("Something went wrong!");
+            Get.snackbar("Error","Something went wrong!");
           }
         },
         subTitle: StringConstant.deleteMediaSub,
@@ -75,14 +75,14 @@ class AllPhotosAndVideosController extends GetxController {
       for(int index = 0; index < selectedFiles.length; index++){
         var response = await APIManager.uploadFile(filePath: selectedFiles[index]);
         if(!response.data['status']){
-          DialogHelper.showError(StringConstant.imageUploadError);
+          Get.snackbar("Error", StringConstant.imageUploadError);
         } else if(response.data['status']){
           uploadedFilesUrl.add(response.data['data']);
         }
       }
       saveAllImagesAndVideos();
     } else if(selectedFiles.isEmpty){
-      DialogHelper.showError(StringConstant.noFilesSelected);
+      Get.snackbar("Error", StringConstant.noFilesSelected);
     }
   }
 
@@ -101,6 +101,8 @@ class AllPhotosAndVideosController extends GetxController {
             timing: details.timing,
             lat: details.lat,
             lon: details.lon,
+            stripeCardId: details.stripeCardId ?? "",
+            stripeCustomerId: details.stripeCustomerId ?? "",
             media: List.from(uploadedFilesUrl)..addAll(details.media),
             cuisine: details.cuisine
           )
@@ -112,10 +114,10 @@ class AllPhotosAndVideosController extends GetxController {
         Get.find<HomeController>().getRestaurantDetails();
       }
       else if(!response.data["status"]){
-        DialogHelper.showError(StringConstant.anErrorOccurred);
+        Get.snackbar("Error", StringConstant.anErrorOccurred);
       }
     } else{
-      DialogHelper.showError(StringConstant.uploadAllImagesError);
+      Get.snackbar("Error", StringConstant.uploadAllImagesError);
     }
   }
 }

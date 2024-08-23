@@ -136,11 +136,11 @@ class _QrScanViewState extends State<QrScanView> {
           Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.redeemedSuccessfully));
           return;
         } else if(!response.data['status'] && result != null){
-          DialogHelper.showError(response.data['message']);
+          Get.snackbar("Error", response.data['message']);
           return;
         }
       } catch(e){
-        DialogHelper.showError(StringConstant.somethingWentWrong);
+        Get.snackbar("Error", StringConstant.somethingWentWrong);
         return;
       }
       return;

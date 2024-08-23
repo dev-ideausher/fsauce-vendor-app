@@ -1,3 +1,4 @@
+import 'package:fsauce_vendor_app/app/modules/subscription/views/current_subscription_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
@@ -280,6 +281,11 @@ class AppPages {
     GetPage(
       name: _Paths.CARDDETAILS,
       page: () => CardDetailsView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.CURRENT_SUBSCRIPTION_PLAN,
+      page: () => CurrentSubscriptionView(),
       binding: SubscriptionBinding(),
     ),
     GetPage(

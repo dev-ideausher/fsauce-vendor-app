@@ -123,7 +123,7 @@ class JobsController extends GetxController {
               jobs.removeWhere((element) => element.id == id);
             }
           } catch (e) {
-            DialogHelper.showError("Something went wrong!");
+            Get.snackbar("Error","Something went wrong!");
           }
         },
         subTitle: StringConstant.deleteJobSub,

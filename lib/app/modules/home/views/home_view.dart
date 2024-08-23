@@ -71,30 +71,25 @@ class HomeView extends GetView<HomeController> {
                                     }),
                                   ],
                                 ),
-                                InkWell(
-                                  onTap: Get
-                                      .find<HomeController>()
-                                      .showLocationBottomSheet,
-                                  child: Row(
-                                    children: [
-                                      CommonImageView(
-                                        svgPath: ImageConstant.locationIcon,
-                                      ),
-                                      4.kwidthBox,
-                                      Obx(() {
-                                        return Text(
-                                          controller.restaurantDetails.value
-                                              .location,
-                                          style: TextStyleUtil.manrope14w400(
-                                            color: Colors.white,
-                                            textDecoration:
-                                            TextDecoration.underline,
-                                            decorationColor: Colors.white,
-                                          ),
-                                        );
-                                      }),
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    CommonImageView(
+                                      svgPath: ImageConstant.locationIcon,
+                                    ),
+                                    4.kwidthBox,
+                                    Obx(() {
+                                      return Text(
+                                        controller.restaurantDetails.value
+                                            .location,
+                                        style: TextStyleUtil.manrope14w400(
+                                          color: Colors.white,
+                                          textDecoration:
+                                          TextDecoration.underline,
+                                          decorationColor: Colors.white,
+                                        ),
+                                      );
+                                    }),
+                                  ],
                                 ),
                               ],
                             ),

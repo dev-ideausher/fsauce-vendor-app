@@ -4,7 +4,7 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-//import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../components/empty_widget.dart';
 import '../../../constants/string_constant.dart';
@@ -45,7 +45,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
             Text(widget.title,
                 style: TextStyleUtil.manrope14w600(color: context.black02)),
             16.kheightBox,
-           /* SfCartesianChart(
+            SfCartesianChart(
               backgroundColor: Colors.white,
               primaryXAxis: const CategoryAxis(
                 labelStyle: TextStyle(
@@ -64,7 +64,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
                 ),
                 majorGridLines: MajorGridLines(width: 0.5),
               ),
-              tooltipBehavior: _tooltip,
+              // tooltipBehavior: _tooltip,
               series: <CartesianSeries<ChartData, String>>[
                 ColumnSeries<ChartData, String>(
                   dataSource: widget.graphData,
@@ -75,7 +75,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
                   width: 0.2, // Set the bar width here
                 ),
               ],
-            )*/
+            )
           ],
         ),
       ),

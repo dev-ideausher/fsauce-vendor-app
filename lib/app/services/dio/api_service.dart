@@ -281,11 +281,9 @@ class APIManager {
     ).get(Endpoints.getSubscriptionPlans);
   }
 
-  static Future<Map<String, dynamic>> deleteCard(String id) async {
+  static Future<Response> deleteCard(String id) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .delete(Endpoints.delCard, queryParameters: {
-      "CardId": id,
-    });
+        .get("${Endpoints.delCard}$id");
   }
 
   static Future<Response> addVendorSubscription({
@@ -306,5 +304,21 @@ class APIManager {
       Endpoints.addCard,
       data: data,
     );
+  }
+
+  static Future<Response> getCardDataList() async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get(
+      Endpoints.getCardList,
+    );
+  }
+  
+  static Future<Response> cancelSubscription({required Map<String, dynamic> data}) async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
+        Endpoints.cancelSubscription, data: data);
+  }
+
+  static Future<Response> deleteAccount() async{
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).delete(Endpoints.deleteVendor);
   }
 }

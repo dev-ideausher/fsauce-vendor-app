@@ -20,7 +20,6 @@ import '../../../services/snackbar.dart';
 class VerificationController extends GetxController {
   Timer? _timer;
   final Auth auth = Get.find<Auth>();
-  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void onInit() {
@@ -40,31 +39,12 @@ class VerificationController extends GetxController {
     });
   }
 
-  // void closeTimer() async {
-  //   if (user == null) return;
-  //
-  //   if (!user!.emailVerified) {
-  //     print("Logging out user");
-  //     Get.find<GetStorageService>().logout();
-  //     await auth.logOutUser();
-  //     try {
-  //       await user!.delete();
-  //       print("User account deleted");
-  //     } catch (e) {
-  //       print("Error deleting user account: $e");
-  //     }
-  //     _timer?.cancel();
-  //   } else {
-  //     _timer?.cancel();
-  //   }
-  // }
-
   Future<void> _checkEmailVerified() async {
+    User? user = FirebaseAuth.instance.currentUser;
     await user?.reload(); // Refresh user data
-    if (user != null && user!.emailVerified) {
+    if (user != null && user.emailVerified) {
       _timer?.cancel();
       DialogHelper.showLoading();
-
       var response = await APIManager.onboardVendor();
       DialogHelper.hideDialog();
       if (response.data['status']) {
@@ -91,39 +71,6 @@ class VerificationController extends GetxController {
   }
 
   void gotoProfileSetupScreen() async{
-    // try {
-    //   final response = await APIManager.onboardVendor();
-    //   final LoginModel loginModel = LoginModel.fromJson(response.data);
-    //   if(user != null || !user!.emailVerified){
-    //     Get.offAllNamed(Routes.VERIFICATION);
-    //   }
-    //   else if (loginModel.status ?? false) {
-    //     if ((loginModel.user?.restaurantName ?? "").isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.location ?? "").isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.features ?? []).isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.timing ?? []).isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else if ((loginModel.user?.media ?? []).isEmpty) {
-    //       Get.offAllNamed(Routes.PROFILE_SETUP);
-    //     } else {
-    //       Get.find<GetStorageService>().isLoggedIn = true;
-    //       Get.offAllNamed(Routes.NAV_BAR);
-    //     }
-    //   } else {
-    //     showMySnackbar(msg: loginModel.message ?? "Login message");
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
     Get.offAllNamed(Routes.PROFILE_SETUP);
   }
 

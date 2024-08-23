@@ -20,16 +20,6 @@ class QrScanController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
     couponCodeController.dispose();
@@ -48,7 +38,7 @@ class QrScanController extends GetxController {
 
       } catch(e){
         print("Error while scanning QR: $e");
-        DialogHelper.showError(StringConstant.somethingWentWrong);
+        Get.snackbar("Error" , StringConstant.somethingWentWrong);
       }
     }
   }
@@ -60,11 +50,11 @@ class QrScanController extends GetxController {
         if(response.data['status']){
           Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.redeemedSuccessfully));
         } else if(!response.data['status']){
-          DialogHelper.showError(response.data['message']);
+          Get.snackbar("Error",response.data['message']);
         }
       } catch(e){
         print("Error while scanning QR: $e");
-        DialogHelper.showError(StringConstant.somethingWentWrong);
+        Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     }
   }

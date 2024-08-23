@@ -10,7 +10,7 @@ import '../../../services/text_style_util.dart';
 import '../controllers/home_controller.dart';
 
 class YearlyAnalysis extends GetView<HomeController>{
-  YearlyAnalysis({super.key});
+  const YearlyAnalysis({super.key});
 
   @override
   Widget build(BuildContext context){

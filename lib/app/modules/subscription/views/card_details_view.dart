@@ -23,7 +23,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
             },
             icon: const Icon(Icons.arrow_back)),
         title: Text(
-          StringConstant.paymentMethod,
+          StringConstant.cardDetails,
           style: TextStyleUtil.manrope18w600(),
         ),
       ),
@@ -50,6 +50,11 @@ class CardDetailsView extends GetView<SubscriptionController>{
                   ),
                   child: Center(
                     child: TextFormField(
+                      maxLength: 20,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp(r'\s')),
+                      ],
                       keyboardType: TextInputType.number,
                       controller: controller.cardNumberController,
                       validator: (String? val){
@@ -93,6 +98,12 @@ class CardDetailsView extends GetView<SubscriptionController>{
                       ),
                       child: Center(
                         child: TextFormField(
+                          maxLength: 5,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp(r'\s')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9/]'))
+                          ],
                           controller: controller.expiresController,
                           validator: (String? val){
                             if(val == null || val.isEmpty){
@@ -120,6 +131,12 @@ class CardDetailsView extends GetView<SubscriptionController>{
                       ),
                       child: Center(
                         child: TextFormField(
+                          maxLength: 3,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp(r'\s')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9/]'))
+                          ],
                           keyboardType: TextInputType.number,
                           obscureText: true,
                           controller: controller.cvvController,
@@ -180,7 +197,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CustomRedElevatedButton(
-          buttonText: StringConstant.proceed,
+          buttonText: StringConstant.save,
           height: 56.kh,
           width: MediaQuery.of(context).size.width * 0.9,
           onPressed: () {

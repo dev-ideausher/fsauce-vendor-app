@@ -67,10 +67,10 @@ class EditResturantDetailsController extends GetxController {
         cuisines.value = [];
         cuisines.value = data.map((e) => CuisineModel.fromJson(e)).toList();
       } else{
-        DialogHelper.showError(response.data['message']);
+        Get.snackbar("Error", response.data['message']);
       }
     } catch(error){
-      DialogHelper.showError(error.toString());
+      Get.snackbar("Error", error.toString());
     }
   }
 
@@ -81,7 +81,6 @@ class EditResturantDetailsController extends GetxController {
     averagePriceController.text = details.avgPrice.toString();
     descriptionController.text = details.description;
     initialCuisineModels.value = [details.cuisine.first];
-    print("selected cuisine of the user: ${details.cuisine.first.name}");
     restaurantLogo = details.restaurantLogo;
     restaurantBanner = details.restaurantBanner;
   }
@@ -94,31 +93,30 @@ class EditResturantDetailsController extends GetxController {
         fileUrl = response.data['data'];
       }
     } catch(e){
-      print("An error occurred while uploading logo! $e");
-      DialogHelper.showError(StringConstant.somethingWentWrong);
+      Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
     return fileUrl;
   }
 
   Future<void> updateDetails() async{
     if(restaurantNameController.text.trim().isEmpty){
-      DialogHelper.showError(StringConstant.resNameEmpty);
+      Get.snackbar("Error", StringConstant.resNameEmpty);
       return;
     }
     if(addressController.text.trim().isEmpty){
-      DialogHelper.showError(StringConstant.addressNameEmpty);
+      Get.snackbar("Error", StringConstant.addressNameEmpty);
       return;
     }
     if(averagePriceController.text.trim().isEmpty){
-      DialogHelper.showError(StringConstant.avgPriceEmpty);
+      Get.snackbar("Error", StringConstant.avgPriceEmpty);
       return;
     }
     if(selectedLogoImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantLogo.isEmpty){
-      DialogHelper.showError(StringConstant.selectedLogoImageEmpty);
+      Get.snackbar("Error", StringConstant.selectedLogoImageEmpty);
       return;
     }
     if(selectedBannerImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantBanner.isEmpty){
-      DialogHelper.showError(StringConstant.selectedBannerImageEmpty);
+      Get.snackbar("Error", StringConstant.selectedBannerImageEmpty);
       return;
     }
     else if(restaurantNameController.text.trim().isNotEmpty && addressController.text.isNotEmpty && averagePriceController.text.isNotEmpty){
@@ -144,6 +142,8 @@ class EditResturantDetailsController extends GetxController {
               media: Get.find<HomeController>().restaurantDetails.value.media,
               lat: Get.find<HomeController>().restaurantDetails.value.lat,
               lon: Get.find<HomeController>().restaurantDetails.value.lon,
+              stripeCardId: Get.find<HomeController>().restaurantDetails.value.stripeCardId ?? "",
+              stripeCustomerId: Get.find<HomeController>().restaurantDetails.value.stripeCustomerId ?? "",
               cuisine: initialCuisineModels,
             )
         );
@@ -160,12 +160,11 @@ class EditResturantDetailsController extends GetxController {
           return;
         }
         else if(!response.data["status"]){
-          DialogHelper.showError(StringConstant.anErrorOccurred);
+          Get.snackbar("Error", StringConstant.anErrorOccurred);
           return;
         }
       } catch(e){
-        print("An error occurred while editing profile!: $e");
-        DialogHelper.showError(StringConstant.anErrorOccurred);
+        Get.snackbar("Error", StringConstant.anErrorOccurred);
         return;
       }
     }

@@ -533,5 +533,8 @@ class StringConstant {
   static const String startCreatingCategories = "Start creating categories first, then add items to them";
   static const String scheduledFor = "Scheduled for";
   static const String offerScheduledFor = "Offer scheduled for";
+  static const String currentPlan = "Current Plan";
+  static const String upgrade = "Upgrade";
+  static const String cancelled = "Cancelled";
   // static const String
 }

@@ -38,7 +38,7 @@ class ChangePasswordProfileController extends GetxController {
       Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.passwordChangedSuccessfully));
     } catch(e){
       print("An error occurred while updating password!: $e");
-      DialogHelper.showError(e.toString());
+      Get.snackbar("Error", e.toString());
     }
   }
 }

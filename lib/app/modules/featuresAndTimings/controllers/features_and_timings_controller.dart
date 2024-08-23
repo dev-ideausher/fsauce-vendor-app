@@ -31,11 +31,6 @@ class FeaturesAndTimingsController extends GetxController {
     getFeaturesAndTimings();
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
   
   Future<void> getFeatures() async{
     RestaurantDetails details =
@@ -53,10 +48,10 @@ class FeaturesAndTimingsController extends GetxController {
         features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
         multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
       } else{
-        DialogHelper.showError(response.data['message']);
+        Get.snackbar("Error", response.data['message']);
       }
     } catch(error){
-      DialogHelper.showError(error.toString());
+      Get.snackbar("Error", error.toString());
     }
   }
 
@@ -189,7 +184,7 @@ class FeaturesAndTimingsController extends GetxController {
       Get.bottomSheet(const AddedSuccessfullBottomSheet(
           subTitle: StringConstant.featuresAndTimingsAddedSuccessfully));
     } else {
-      DialogHelper.showError(StringConstant.anErrorOccurred);
+      Get.snackbar("Error", StringConstant.anErrorOccurred);
     }
   }
 }

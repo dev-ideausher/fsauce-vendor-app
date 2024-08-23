@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../constants/string_constant.dart';
+import '../../../services/storage.dart';
 
 class EnableLocationController extends GetxController {
   //TODO: Implement EnableLocationController
@@ -74,12 +75,13 @@ class EnableLocationController extends GetxController {
                 lon: position.longitude.toString()));
         if(response.statusCode == 200){
           print(locationText);
+          Get.find<GetStorageService>().isLoggedIn = true;
           gotoNavBar();
         } else{
-          DialogHelper.showError(StringConstant.somethingWentWrong);
+          Get.snackbar("Error", StringConstant.somethingWentWrong);
         }
       } catch(e){
-        DialogHelper.showError(StringConstant.somethingWentWrong);
+        Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     } else {
       Get.snackbar(StringConstant.permissionDenied,

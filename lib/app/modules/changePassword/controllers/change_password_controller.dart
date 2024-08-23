@@ -26,16 +26,29 @@ class ChangePasswordController extends GetxController {
     emailController.dispose();
   }
 
+  bool _isEmailValid(String email) {
+    return GetUtils.isEmail(email);
+    // final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    // return regex.hasMatch(email);
+  }
+
   void sendResetPasswordLink() async{
-    DialogHelper.showLoading();
-    final result = await auth.sendResetPasswordMail(email: emailController.text.trim());
-    if(result){
-      DialogHelper.hideDialog();
-      Get.back();
-      Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: "You will receive a reset password link shortly"));
-      return;
-    } else {
-      DialogHelper.showError("Something went wrong!");
+    if(_isEmailValid(emailController.text.trim())){
+      DialogHelper.showLoading();
+      final result = await auth.sendResetPasswordMail(email: emailController.text.trim());
+      if(result){
+        DialogHelper.hideDialog();
+        Get.back();
+        Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: "You will receive a reset password link shortly"));
+        return;
+      } else {
+        Get.snackbar("Error","Something went wrong!");
+        return;
+      }
+    } else if(!_isEmailValid(emailController.text.trim())){
+      Get.snackbar("Error","Invalid email");
+    }
+    else{
       return;
     }
   }
