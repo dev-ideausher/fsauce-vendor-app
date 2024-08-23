@@ -7,8 +7,10 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 class ConfrimationDialog extends StatelessWidget {
-  const ConfrimationDialog(
+  ConfrimationDialog(
       {super.key,
+        this.yesButtonText,
+        this.noButtonText,
       required this.title,
       required this.subTitle,
       required this.onYesTap,
@@ -17,6 +19,8 @@ class ConfrimationDialog extends StatelessWidget {
   final String subTitle;
   final Function onYesTap;
   final Function onNoTap;
+  String? yesButtonText;
+  String? noButtonText;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +40,14 @@ class ConfrimationDialog extends StatelessWidget {
         Row(
           children: <Widget>[
             CustomRedElevatedButtonWithBorder(
-                buttonText: StringConstant.no,
+                buttonText: noButtonText ?? StringConstant.no,
                 height: 40.kh,
                 width: 120.kw,
                 onPressed: () {
                   onNoTap();
                 }),
             CustomRedElevatedButton(
-                buttonText: StringConstant.yes,
+                buttonText: yesButtonText ?? StringConstant.yes,
                 height: 40.kh,
                 width: 120.kw,
                 onPressed: () {

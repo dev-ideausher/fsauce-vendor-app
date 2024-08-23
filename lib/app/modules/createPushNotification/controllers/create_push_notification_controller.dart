@@ -5,9 +5,12 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 
+import '../../../components/confirmation_dialog.dart';
 import '../../../constants/string_constant.dart';
 
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+
+import '../../../routes/app_pages.dart';
 
 class CreatePushNotificationController extends GetxController {
   //TODO: Implement CreatePushNotificationController
@@ -57,7 +60,19 @@ class CreatePushNotificationController extends GetxController {
         }
       }
     } else{
-      Get.snackbar("Subscription Required", "Kindly subscribe to a plan to access this feature!");
+      Get.dialog(
+          ConfrimationDialog(
+              title: StringConstant.subscriptionRequired,
+              subTitle: StringConstant.subscriptionRequiredText,
+              yesButtonText: StringConstant.checkoutSubscriptions,
+              noButtonText: StringConstant.close,
+              onYesTap: () async{
+                // Get.find<GetStorageService>().logout();
+                Get.back();
+                Get.offNamed(Routes.SUBSCRIPTION);
+              },
+              onNoTap: Get.back)
+      );
       return;
     }
   }

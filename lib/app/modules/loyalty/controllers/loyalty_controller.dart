@@ -16,6 +16,8 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
+import '../../../components/confirmation_dialog.dart';
+
 
 class LoyaltyController extends GetxController {
   //TODO: Implement LoyaltyController
@@ -87,7 +89,19 @@ class LoyaltyController extends GetxController {
         Get.snackbar("Error",StringConstant.anErrorOccurred);
       }
     } else{
-      Get.snackbar("Subscription Required", "Kindly subscribe to a plan to access this feature!");
+      Get.dialog(
+          ConfrimationDialog(
+              title: StringConstant.subscriptionRequired,
+              subTitle: StringConstant.subscriptionRequiredText,
+              yesButtonText: StringConstant.checkoutSubscriptions,
+              noButtonText: StringConstant.close,
+              onYesTap: () async{
+                // Get.find<GetStorageService>().logout();
+                Get.back();
+                Get.offNamed(Routes.SUBSCRIPTION);
+              },
+              onNoTap: Get.back)
+      );
       return;
     }
   }

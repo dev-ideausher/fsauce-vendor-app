@@ -10,6 +10,9 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
+import '../../../components/confirmation_dialog.dart';
+import '../../../routes/app_pages.dart';
+
 class CreateOrEditVipOfferController extends GetxController {
   //TODO: Implement CreateOrEditVipOfferController
 
@@ -177,7 +180,19 @@ class CreateOrEditVipOfferController extends GetxController {
         }
       }
     } else{
-      Get.snackbar("Subscription required", "Kindly subscribe to a plan to access this feaure.");
+      Get.dialog(
+          ConfrimationDialog(
+              title: StringConstant.subscriptionRequired,
+              subTitle: StringConstant.subscriptionRequiredText,
+              yesButtonText: StringConstant.checkoutSubscriptions,
+              noButtonText: StringConstant.close,
+              onYesTap: () async{
+                // Get.find<GetStorageService>().logout();
+                Get.back();
+                Get.offNamed(Routes.SUBSCRIPTION);
+              },
+              onNoTap: Get.back)
+      );
       return;
     }
   }

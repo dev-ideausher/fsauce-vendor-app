@@ -536,5 +536,9 @@ class StringConstant {
   static const String currentPlan = "Current Plan";
   static const String upgrade = "Upgrade";
   static const String cancelled = "Cancelled";
+  static const String subscriptionRequired = "Subscription Required";
+  static const String subscriptionRequiredText = "Kindly subscribe to one of the plans to access this feature.";
+  static const String checkoutSubscriptions = "See plans";
+  static const String close = "Close";
   // static const String
 }

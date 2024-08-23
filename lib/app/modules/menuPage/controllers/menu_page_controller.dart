@@ -126,7 +126,20 @@ class MenuPageController extends GetxController {
         }
       }
     } else{
-      Get.snackbar("Subscription Required", "Subscribe to a plan to access this feature.");
+      Get.dialog(
+          ConfrimationDialog(
+              title: StringConstant.subscriptionRequired,
+              subTitle: StringConstant.subscriptionRequiredText,
+              yesButtonText: StringConstant.checkoutSubscriptions,
+              noButtonText: StringConstant.close,
+              onYesTap: () async{
+                // Get.find<GetStorageService>().logout();
+                Get.back();
+                Get.offNamed(Routes.SUBSCRIPTION);
+              },
+              onNoTap: Get.back)
+      );
+      return;
     }
   }
 

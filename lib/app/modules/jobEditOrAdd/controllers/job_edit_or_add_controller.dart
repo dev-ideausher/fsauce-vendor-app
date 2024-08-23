@@ -12,6 +12,9 @@ import 'package:intl/intl.dart';
 
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
+import '../../../components/confirmation_dialog.dart';
+import '../../../services/auth.dart';
+
 class JobEditOrAddController extends GetxController {
 
   @override
@@ -77,7 +80,19 @@ class JobEditOrAddController extends GetxController {
         }
       }
     } else{
-      Get.snackbar("Subscription Required", "Kindly subscribe to one of the plans to access this feaure.");
+      Get.dialog(
+          ConfrimationDialog(
+              title: StringConstant.subscriptionRequired,
+              subTitle: StringConstant.subscriptionRequiredText,
+              yesButtonText: StringConstant.checkoutSubscriptions,
+              noButtonText: StringConstant.close,
+              onYesTap: () async{
+                // Get.find<GetStorageService>().logout();
+                Get.back();
+                Get.offNamed(Routes.SUBSCRIPTION);
+              },
+              onNoTap: Get.back)
+      );
       return;
     }
   }

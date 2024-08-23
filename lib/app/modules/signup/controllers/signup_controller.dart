@@ -87,7 +87,7 @@ class SignupController extends GetxController {
   void signupWithGoogle() async {
     try {
       await auth.google();
-      gotoVerificationScreen();
+      // gotoVerificationScreen();
     } catch (e) {
       Get.snackbar(StringConstant.error, e.toString());
     }
