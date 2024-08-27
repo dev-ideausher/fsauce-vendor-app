@@ -318,7 +318,7 @@ class APIManager {
         Endpoints.cancelSubscription, data: data);
   }
 
-  static Future<Response> deleteAccount() async{
+  static Future<Map<String, dynamic>> deleteAccount() async{
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).delete(Endpoints.deleteVendor);
   }
 }

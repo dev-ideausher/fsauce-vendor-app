@@ -25,28 +25,38 @@ class Auth extends GetxService {
 
   google() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/google_sign_in
-    final _googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleSignInAccount =
-    await _googleSignIn.signIn();
-    if (googleSignInAccount == null) {
-      debugPrint('Process is canceled by the user');
-      Get.snackbar("Error", "Google sign cancelled by user");
-      return;
-    }
-    final googleSignInAuthentication =
-    await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final userCredential = await _firebaseAuth.signInWithCredential(credential);
-
-    if(userCredential.user != null){
+    // final _googleSignIn = GoogleSignIn();
+    // final GoogleSignInAccount? googleSignInAccount =
+    // await _googleSignIn.signIn();
+    // if (googleSignInAccount == null) {
+    //   debugPrint('Process is canceled by the user');
+    //   Get.snackbar("Error", "Google sign cancelled by user");
+    //   return;
+    // }
+    // final googleSignInAuthentication =
+    // await googleSignInAccount.authentication;
+    //
+    // final AuthCredential credential = GoogleAuthProvider.credential(
+    //   accessToken: googleSignInAuthentication.accessToken,
+    //   idToken: googleSignInAuthentication.idToken,
+    // );
+    //
+    // try{
+    //   final userCredential = await _firebaseAuth.signInWithCredential(credential);
+    //   if(userCredential.user != null){
+    //     await handleGetContact();
+    //     gotoHomeScreen();
+    //   }
+    // } on FirebaseAuthException catch(e){
+    //   if (e.code == 'account-exists-with-different-credential') {
+    //     print("Error occurred from google auth: Account already exists");
+    //     Get.snackbar("Error", "Account exists");
+    //   }
+    // }
+    await auth.signInWithGoogle().then((value) async {
       await handleGetContact();
       gotoHomeScreen();
-    }
+    });
   }
 
   apple() async {
@@ -74,7 +84,6 @@ class Auth extends GetxService {
           }
         } else {
           if (value.user!.emailVerified) {
-            // User is verified, proceed with getting contacts
             handleGetContact();
             gotoHomeScreen();
           } else {

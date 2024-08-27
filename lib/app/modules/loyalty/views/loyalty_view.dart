@@ -14,6 +14,9 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../components/confirmation_dialog.dart';
+import '../../../routes/app_pages.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/loyalty_controller.dart';
 
 class LoyaltyView extends GetView<LoyaltyController> {
@@ -407,8 +410,24 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         width: 100.w,
                         height: 56.kh,
                         onPressed: () {
-                          if(controller.formKey.currentState!.validate()){
-                            controller.createLoyaltyCard();
+                          if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
+                            if(controller.formKey.currentState!.validate()){
+                              controller.createLoyaltyCard();
+                            }
+                          } else{
+                            Get.dialog(
+                                ConfrimationDialog(
+                                    title: StringConstant.subscriptionRequired,
+                                    subTitle: StringConstant.subscriptionRequiredText,
+                                    yesButtonText: StringConstant.checkoutSubscriptions,
+                                    noButtonText: StringConstant.close,
+                                    onYesTap: () async{
+                                      // Get.find<GetStorageService>().logout();
+                                      Get.back();
+                                      Get.offNamed(Routes.SUBSCRIPTION);
+                                    },
+                                    onNoTap: Get.back)
+                            );
                           }
                         }),
                     10.kheightBox,
