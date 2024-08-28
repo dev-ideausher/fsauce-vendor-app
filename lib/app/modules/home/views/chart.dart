@@ -1,10 +1,11 @@
+import 'package:custom_syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+
 
 import '../../../components/empty_widget.dart';
 import '../../../constants/string_constant.dart';
@@ -47,14 +48,14 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
             16.kheightBox,
             SfCartesianChart(
               backgroundColor: Colors.white,
-              primaryXAxis: const CategoryAxis(
+              primaryXAxis:  CategoryAxis(
                 labelStyle: TextStyle(
                   fontSize: 12, // Adjust the font size as needed
                   color: Colors.black,
                 ),
                 majorGridLines: MajorGridLines(width: 0),
               ),
-              primaryYAxis: const NumericAxis(
+              primaryYAxis:  NumericAxis(
                 minimum: 0,
                 maximum: 80,
                 interval: 20,
