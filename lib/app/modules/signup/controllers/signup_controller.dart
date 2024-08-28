@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
 import '../../../services/storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignupController extends GetxController {
   final Auth auth = Get.find<Auth>();

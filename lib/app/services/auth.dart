@@ -53,6 +53,9 @@ class Auth extends GetxService {
     //     Get.snackbar("Error", "Account exists");
     //   }
     // }
+    if(auth.hasUser){
+      await FirebaseAuthenticationService().logout();
+    }
     await auth.signInWithGoogle().then((value) async {
       await handleGetContact();
       gotoHomeScreen();

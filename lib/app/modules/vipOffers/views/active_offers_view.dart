@@ -18,6 +18,7 @@ class ActiveOffersView extends GetView<VipOffersController> {
       body: Obx(() {
         if(controller.couponsList.isNotEmpty){
           return ListView.separated(
+            controller: controller.scrollController,
             shrinkWrap: true,
             itemBuilder: (ctx, index) {
               String date = controller.couponsList[index].sheduleDate ?? "";

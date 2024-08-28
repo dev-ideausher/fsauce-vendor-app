@@ -7,7 +7,6 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import 'package:dio/dio.dart'; // Add Dio import if not already present
 
 class JobsController extends GetxController {
   final RxList<Job> jobs = <Job>[].obs;

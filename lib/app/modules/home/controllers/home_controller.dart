@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/dashboard_weekly_data_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
@@ -68,7 +69,7 @@ class HomeController extends GetxController {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
-      print("An error occurred while getting dashboard data: $e");
+      print("An error occurred while getting weekly dashboard data: $e");
       // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
@@ -91,7 +92,7 @@ class HomeController extends GetxController {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
-      print("An error occurred while getting dashboard data: $e");
+      print("An error occurred while getting monthly dashboard data: $e");
       // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
@@ -114,7 +115,7 @@ class HomeController extends GetxController {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
     } catch(e){
-      print("An error occurred while getting dashboard data: $e");
+      print("An error occurred while getting yearly dashboard data: $e");
       // Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
   }
