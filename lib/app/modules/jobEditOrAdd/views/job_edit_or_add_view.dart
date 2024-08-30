@@ -42,6 +42,7 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
             10.kheightBox,
             CustomTextField(
               controller: controller.jobTitleController,
+              maxLength: 30,
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
                   return StringConstant.emptyJobTitle;

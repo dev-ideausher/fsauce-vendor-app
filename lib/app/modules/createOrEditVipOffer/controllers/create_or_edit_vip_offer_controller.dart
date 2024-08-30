@@ -156,7 +156,7 @@ class CreateOrEditVipOfferController extends GetxController {
               };
               var response = await APIManager.addCoupon(data: data);
               if (response.data['status']) {
-                Get.find<VipOffersController>().updateCoupons();
+                Get.find<VipOffersController>().getCoupons();
                 Get.back();
                 DialogHelper.showSuccess(StringConstant.vipOfferCreatedSuccessfully);
                 showCreatedBottomSheet();

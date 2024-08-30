@@ -81,7 +81,7 @@ class AddNewItem extends StatelessWidget {
                           (CategoryModel value) {
                     return DropdownMenuItem<CategoryModel>(
                       value: value,
-                      child: Text(value.name),
+                      child: Text(value.name, softWrap: true, style: const TextStyle(overflow: TextOverflow.ellipsis)),
                     );
                   }).toList(),
                   icon: const Icon(Icons.keyboard_arrow_down_rounded),

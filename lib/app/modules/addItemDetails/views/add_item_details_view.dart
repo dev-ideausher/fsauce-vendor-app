@@ -29,7 +29,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
         padding: EdgeInsets.all(16.kw),
         child: Form(
           key: Get.find<MenuPageController>().formKey,
-          child: Column(
+          child: ListView(
             children: [
               Row(
                 children: [
@@ -149,10 +149,12 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
               ),
               10.kheightBox,
               CustomTextField(
+                maxLength: 30,
                   controller: Get.find<MenuPageController>().itemNameController,
                   fillColor: context.black07,
-                  hintText: StringConstant.enterHere),
-              const Spacer(),
+                  hintText: StringConstant.enterHere
+              ),
+              220.kheightBox,
               CustomRedElevatedButton(
                   width: 100.w,
                   height: 56.kh,

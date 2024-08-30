@@ -11,6 +11,8 @@ import '../../../services/auth.dart';
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
 
+  final auth = Get.find<Auth>();
+
   void gotoProfileDetailsScreen() {
     Get.toNamed(Routes.PROFILE_DETAILS);
   }
@@ -59,6 +61,7 @@ class ProfileController extends GetxController {
   Future<void> delAccount() async{
     try{
       var response = await APIManager.deleteAccount();
+      auth.auth.currentUser!.delete();
       print("Response of the delete account api: ${response['status']}, ${response['message']}");
       if(response['status']){
         await Get.find<Auth>().logOutUser();

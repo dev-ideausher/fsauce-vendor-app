@@ -11,10 +11,44 @@ import 'package:get/get.dart';
 class LoyaltyCardsController extends GetxController {
   //TODO: Implement LoyaltyCardsController
 
+  int currentActivePage = 1;
+  final int activeLimit = 5;
+  var isActiveLoading = false.obs;
+  var isMoreActiveDataAvailable = true.obs;
+
+  int currentInactivePage = 1;
+  final int inActiveLimit = 5;
+  var isInActiveLoading = false.obs;
+  var isMoreInactiveDataAvailable = true.obs;
+
   @override
   void onInit() {
     getLoyaltyCards();
+    activeScrollController = ScrollController()..addListener(_scrollListener);
+    inActiveScrollController = ScrollController()..addListener(_inactiveScrollListener);
     super.onInit();
+  }
+
+  ScrollController activeScrollController = ScrollController();
+  ScrollController inActiveScrollController = ScrollController();
+
+  _scrollListener() {
+    if (activeScrollController.position.extentAfter <= 0 && isActiveLoading.value == false) {
+      addActiveCards();
+    }
+  }
+
+  _inactiveScrollListener(){
+    if(inActiveScrollController.position.extentAfter <= 0 && isInActiveLoading.value == false){
+      addInactiveCards();
+    }
+  }
+
+  @override
+  void onClose() {
+    activeScrollController.removeListener(_scrollListener);
+    inActiveScrollController.removeListener(_inactiveScrollListener);
+    super.onClose();
   }
 
   List<Widget> tabs = [
@@ -25,7 +59,58 @@ class LoyaltyCardsController extends GetxController {
   RxList<LoyaltyCardModel> activeLoyaltyCards = <LoyaltyCardModel>[].obs;
   RxList<LoyaltyCardModel> inActiveLoyaltyCards = <LoyaltyCardModel>[].obs;
 
+  void addActiveCards() async{
+    if (isActiveLoading.value || !isMoreActiveDataAvailable.value) return;
+
+    isActiveLoading.value = true;
+    try{
+      var response = await APIManager.getLoyaltyCards(page: currentActivePage + 1, limit: activeLimit, status: true);
+      List<LoyaltyCardModel> fetchedCards = (response.data['data'] as List).map((card) => LoyaltyCardModel.fromJson(card)).toList();
+
+      if(fetchedCards.length < activeLimit){
+        isMoreActiveDataAvailable.value = false;
+      } else{
+        ++currentActivePage;
+      }
+
+      activeLoyaltyCards.addAll(fetchedCards);
+    } catch(e){
+      print("An error occurred while adding active cards!: $e");
+    } finally {
+      isActiveLoading.value = false;
+    }
+    return;
+  }
+
+  void addInactiveCards() async{
+    if (isInActiveLoading.value || !isMoreInactiveDataAvailable.value) return;
+
+    isInActiveLoading.value = true;
+    try{
+      var response = await APIManager.getLoyaltyCards(page: currentInactivePage + 1, limit: inActiveLimit, status: false);
+      List<LoyaltyCardModel> fetchedCards = (response.data['data'] as List).map((card) => LoyaltyCardModel.fromJson(card)).toList();
+
+      if(fetchedCards.length < inActiveLimit){
+        isMoreInactiveDataAvailable.value = false;
+      } else{
+        ++currentInactivePage;
+      }
+
+      inActiveLoyaltyCards.addAll(fetchedCards);
+    } catch(e){
+      print("An error occurred while adding inactive coupons!: $e");
+    } finally {
+      isInActiveLoading.value = false;
+    }
+    return;
+  }
+
   Future<void> getLoyaltyCards() async{
+
+    currentActivePage = 1;
+    isMoreActiveDataAvailable.value = true;
+    isActiveLoading.value = false;
+
     var response = await APIManager.getLoyaltyCards(status: true);
     if(response.data['status']){
       activeLoyaltyCards.value = [];
@@ -35,6 +120,10 @@ class LoyaltyCardsController extends GetxController {
     } else{
 
     }
+
+    currentInactivePage = 1;
+    isMoreInactiveDataAvailable.value = true;
+    isInActiveLoading.value = false;
 
     var cardsResponse = await APIManager.getLoyaltyCards(status: false);
     if(cardsResponse.data['status']){

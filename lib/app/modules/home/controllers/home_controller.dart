@@ -54,7 +54,6 @@ class HomeController extends GetxController {
       weeklyData.value = DashboardWeeklyData();
       if(response.data['status']){
         weeklyData.value = DashboardWeeklyData.fromJson(response.data['data']);
-        print("WeeklyData value coupons: ${weeklyData.value.couponCounts!.length}");
         weeklyCouponChartData.value = List.generate(
             weeklyData.value.cards!.totalCoupons!, (int index){
           return ChartData(weeklyData.value.couponCounts![index]!.date!, double.parse(weeklyData.value.couponCounts![index]!.total!.toString()));

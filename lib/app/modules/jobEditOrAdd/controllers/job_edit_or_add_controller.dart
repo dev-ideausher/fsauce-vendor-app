@@ -122,6 +122,10 @@ class JobEditOrAddController extends GetxController {
       Get.snackbar("Error", StringConstant.enterHowToApply);
       return false;
     }
+    if(int.parse(maxSalaryController.text.toString()) < int.parse(minSalaryController.text.toString())){
+      Get.snackbar("Error", "Max salary offered cannot be less than Min salary offered.");
+      return false;
+    }
     return true;
   }
 

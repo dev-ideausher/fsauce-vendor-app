@@ -17,47 +17,58 @@ class ActiveOffersView extends GetView<VipOffersController> {
     return Scaffold(
       body: Obx(() {
         if(controller.couponsList.isNotEmpty){
-          return ListView.separated(
-            controller: controller.scrollController,
-            shrinkWrap: true,
-            itemBuilder: (ctx, index) {
-              String date = controller.couponsList[index].sheduleDate ?? "";
-              if(date.isEmpty){
-                return DealsOfTheDayCard(
-                    width: 100.w,
-                    isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
-                    isActive: true,
-                    coupon: controller.couponsList[index],
-                    onClick: () {
-                      controller.selectedCoupon.value =
-                      controller.couponsList[index];
-                      controller.showDealsBottomSheet();
-                    }
-                );
-              } else{
-                return DealsOfTheDayCardDate(
-                    width: 100.w,
-                    isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
-                    isActive: true,
-                    coupon: controller.couponsList[index],
-                    onClick: () {
-                      controller.selectedCoupon.value =
-                      controller.couponsList[index];
-                      controller.showDealsBottomSheet();
-                    }
-                );
+          return NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
+                // controller.getActiveCoupons();
+                controller.addActiveCoupons();
               }
+              return false;
             },
-            separatorBuilder: (ctx, index) {
-              return 12.kheightBox;
-            },
-            itemCount: controller.couponsList.length,
+            child: ListView.separated(
+              shrinkWrap: true,
+              controller: controller.activeScrollController,
+              itemBuilder: (ctx, index) {
+                String date = controller.couponsList[index].sheduleDate ?? "";
+                if(date.isEmpty){
+                  return DealsOfTheDayCard(
+                      width: 100.w,
+                      isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
+                      isActive: true,
+                      coupon: controller.couponsList[index],
+                      onClick: () {
+                        controller.selectedCoupon.value =
+                        controller.couponsList[index];
+                        controller.showDealsBottomSheet();
+                      }
+                  );
+                }
+                else{
+                  return DealsOfTheDayCardDate(
+                      width: 100.w,
+                      isNormalOffer: controller.couponsList[index].typeOfOffer == 'Normal offer',
+                      isActive: true,
+                      coupon: controller.couponsList[index],
+                      onClick: () {
+                        controller.selectedCoupon.value =
+                        controller.couponsList[index];
+                        controller.showDealsBottomSheet();
+                      }
+                  );
+                }
+              },
+              separatorBuilder: (ctx, index) {
+                return 12.kheightBox;
+              },
+              itemCount: controller.couponsList.length,
+            ),
           );
         } else if(controller.couponsList.isEmpty){
           return EmptyWidget(title: StringConstant.noOffersFound, subTitle: StringConstant.createAttractiveOffers);
           // return const Center(child: Text(StringConstant.noCoupons));
         } else{
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator(color: context.primary01,));
         }
       }),
       floatingActionButton: Container(

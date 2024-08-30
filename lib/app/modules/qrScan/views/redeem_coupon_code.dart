@@ -96,7 +96,8 @@ class RedeemCouponCode extends GetView<QrScanController> {
                         }
                       }
                   );
-                })
+                }),
+                100.kheightBox,
               ],
             ),
           ),

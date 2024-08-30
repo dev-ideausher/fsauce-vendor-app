@@ -15,29 +15,39 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
     return Scaffold(
       body: Obx(() {
         if (controller.inActiveLoyaltyCards.isNotEmpty) {
-          return ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (ctx, index) {
-                return Obx(() {
-                  return LoyaltyCard(
-                      brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
-                      offer: controller.inActiveLoyaltyCards[index].title,
-                      brandColor: Color(int.parse(
-                          controller.inActiveLoyaltyCards[index]
-                              .cardBackgroundColor)),
-                      onAddPressed: () {
-                        //ToDo: When the loyalty card is pressed.
-                      },
-                      noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
-                      width: 100.w,
-                      brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
-                  );
-                });
-              },
-              separatorBuilder: (ctx, index) {
-                return 10.kheightBox;
-              },
-              itemCount: controller.inActiveLoyaltyCards.length);
+          return NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              if (scrollInfo.metrics.pixels ==
+                  scrollInfo.metrics.maxScrollExtent) {
+                // controller.getActiveCoupons();
+                controller.addInactiveCards();
+              }
+              return false;
+            },
+            child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (ctx, index) {
+                  return Obx(() {
+                    return LoyaltyCard(
+                        brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
+                        offer: controller.inActiveLoyaltyCards[index].title,
+                        brandColor: Color(int.parse(
+                            controller.inActiveLoyaltyCards[index]
+                                .cardBackgroundColor)),
+                        onAddPressed: () {
+                          //ToDo: When the loyalty card is pressed.
+                        },
+                        noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
+                        width: 100.w,
+                        brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
+                    );
+                  });
+                },
+                separatorBuilder: (ctx, index) {
+                  return 10.kheightBox;
+                },
+                itemCount: controller.inActiveLoyaltyCards.length),
+          );
         } else if (controller.inActiveLoyaltyCards.isEmpty) {
           return EmptyWidget(title: StringConstant.noLoyaltyCardFound, subTitle: StringConstant.getStartedWithLoyaltyCards);
         } else {

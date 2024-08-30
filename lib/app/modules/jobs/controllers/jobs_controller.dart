@@ -58,6 +58,9 @@ class JobsController extends GetxController {
   }
 
   void updateJobs() async {
+    currentPage = 1;
+    isLoading = false.obs;
+    isMoreDataAvailable = true.obs;
     try {
       var response = await APIManager.getJobs(
           page: currentPage.toString(), limit: limit.toString());

@@ -11,171 +11,116 @@ import 'package:image_picker/image_picker.dart';
 
 class VipOffersController extends GetxController {
   //TODO: Implement VipOffersController
-  ScrollController scrollController = ScrollController();
-  RxBool activeCouponsLoading = false.obs;
-  int activeCouponPage = 1;
+  ScrollController activeScrollController = ScrollController();
+  ScrollController inActiveScrollController = ScrollController();
 
   RxList<Coupon> couponsList = <Coupon>[].obs;
   RxList<Coupon> inactiveCouponList = <Coupon>[].obs;
   Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true, image: '').obs;
 
-  int currentPage = 1;
-  final int limit = 10;
-  var isLoading = false.obs;
-  var isMoreDataAvailable = true.obs;
+  int currentActivePage = 1;
+  final int activeLimit = 5;
+  var isActiveLoading = false.obs;
+  var isMoreActiveDataAvailable = true.obs;
 
-  int inactiveCurrentPage = 1;
-  final int inactiveLimit = 10;
-  var inactiveIsLoading = false.obs;
-  var inactiveIsMoreDataAvailable = true.obs;
+  int currentInactivePage = 1;
+  final int inActiveLimit = 5;
+  var isInActiveLoading = false.obs;
+  var isMoreInactiveDataAvailable = true.obs;
 
   @override
   void onInit() {
     getCoupons();
-    scrollController = ScrollController()..addListener(_scrollListener);
+    activeScrollController = ScrollController()..addListener(_scrollListener);
+    inActiveScrollController = ScrollController()..addListener(_inactiveScrollListener);
     super.onInit();
   }
 
   @override
   void onClose() {
-    scrollController.removeListener(_scrollListener);
+    activeScrollController.removeListener(_scrollListener);
+    inActiveScrollController.removeListener(_inactiveScrollListener);
     super.onClose();
   }
 
   _scrollListener() {
-    print(scrollController.position.extentAfter);
-    if (scrollController.position.extentAfter <= 0 && activeCouponsLoading.value == false) {
-      addNewCoupons();
+    if (activeScrollController.position.extentAfter <= 0 && isActiveLoading.value == false) {
+      addActiveCoupons();
     }
   }
 
-  Future<void> addNewCoupons() async{
-    activeCouponPage += 1;
-    activeCouponsLoading.value = true;
+  _inactiveScrollListener(){
+    if(inActiveScrollController.position.extentAfter <= 0 && isInActiveLoading.value == false){
+      addInactiveCoupons();
+    }
+  }
+
+  void addInactiveCoupons() async{
+    if (isInActiveLoading.value || !isMoreInactiveDataAvailable.value) return;
+
+    isInActiveLoading.value = true;
     try{
-      final response = await APIManager.getCouponList(page: activeCouponPage, limit: limit);
-      if(response.statusCode == 200){
-        List<Coupon> fetchedCoupons = (response.data["data"] as List)
-            .map((coupon) => Coupon.fromJson(coupon))
-            .toList();
-        couponsList.addAll(fetchedCoupons);
-        activeCouponsLoading.value = false;
-        return;
+      var response = await APIManager.getCouponList(page: currentInactivePage + 1, limit: inActiveLimit, status: false);
+      List<Coupon> fetchedCoupons = (response.data['data'] as List).map((coupon) => Coupon.fromJson(coupon)).toList();
+
+      if(fetchedCoupons.length < inActiveLimit){
+        isMoreInactiveDataAvailable.value = false;
       } else{
-        Get.snackbar("Message", response.data['message'] ?? "");
-        activeCouponsLoading.value = false;
-        return;
-      }
-    } catch(e){
-      print("An error occurred while getting new coupons: $e");
-      activeCouponsLoading.value = false;
-      Get.snackbar("Error", "Could not get coupons");
-      return;
-    }
-  }
-
-  void updateCoupons() {
-    updateInactiveCoupons();
-    updateActiveCoupons();
-  }
-
-  void getCoupons(){
-    getActiveCoupons();
-    getInactiveCoupons();
-  }
-
-  void updateActiveCoupons() async {
-    try {
-      var response = await APIManager.getCouponList(
-          page: currentPage, limit: limit);
-      List<Coupon> fetchedCoupons = (response.data["data"] as List)
-          .map((coupon) => Coupon.fromJson(coupon))
-          .toList();
-
-      if (fetchedCoupons.length < limit) {
-        isMoreDataAvailable.value = false;
-      } else {
-        currentPage++;
-      }
-      couponsList.value = [];
-      couponsList.addAll(fetchedCoupons);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void updateInactiveCoupons() async {
-    try {
-      var response = await APIManager.getCouponList(
-          page: inactiveCurrentPage, limit: inactiveLimit, status: false);
-      List<Coupon> fetchedCoupons = (response.data["data"] as List)
-          .map((coupon) => Coupon.fromJson(coupon))
-          .toList();
-
-      if (fetchedCoupons.length < inactiveLimit) {
-        inactiveIsMoreDataAvailable.value = false;
-      } else {
-        inactiveCurrentPage++;
-      }
-      inactiveCouponList.value = [];
-      inactiveCouponList.addAll(fetchedCoupons);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> getActiveCoupons() async{
-    if (isLoading.value || !isMoreDataAvailable.value) return;
-
-    isLoading.value = true;
-
-    try{
-      final response = await APIManager.getCouponList(
-        page: currentPage, limit: limit,
-      );
-      List<Coupon> fetchedCoupons = (response.data["data"] as List)
-          .map((coupon) => Coupon.fromJson(coupon))
-          .toList();
-
-      if (fetchedCoupons.length < limit) {
-        isMoreDataAvailable.value = false;
-      } else {
-        currentPage++;
-      }
-
-      couponsList.addAll(fetchedCoupons);
-    } catch(e){
-      print("Error occurred while getting coupons: $e");
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> getInactiveCoupons() async{
-    if (inactiveIsLoading.value || !inactiveIsMoreDataAvailable.value) return;
-
-    inactiveIsLoading.value = true;
-
-    try{
-      final response = await APIManager.getCouponList(
-        page: inactiveCurrentPage, limit: inactiveLimit, status: false
-      );
-      List<Coupon> fetchedCoupons = (response.data["data"] as List)
-          .map((coupon) => Coupon.fromJson(coupon))
-          .toList();
-
-      if (fetchedCoupons.length < inactiveLimit) {
-        inactiveIsMoreDataAvailable.value = false;
-      } else {
-        inactiveCurrentPage++;
+        ++currentInactivePage;
       }
 
       inactiveCouponList.addAll(fetchedCoupons);
     } catch(e){
-      print("Error occurred while getting coupons: $e");
+      print("An error occurred while adding inactive coupons!: $e");
     } finally {
-      inactiveIsLoading.value = false;
+      isInActiveLoading.value = false;
     }
+    return;
+  }
+
+  void addActiveCoupons() async{
+    if (isActiveLoading.value || !isMoreActiveDataAvailable.value) return;
+
+    isActiveLoading.value = true;
+    try{
+      var response = await APIManager.getCouponList(page: currentActivePage + 1, limit: activeLimit, status: true);
+      List<Coupon> fetchedCoupons = (response.data['data'] as List).map((coupon) => Coupon.fromJson(coupon)).toList();
+
+      if(fetchedCoupons.length < activeLimit){
+        isMoreActiveDataAvailable.value = false;
+      } else{
+        ++currentActivePage;
+      }
+
+      couponsList.addAll(fetchedCoupons);
+    } catch(e){
+      print("An error occurred while adding active coupons!: $e");
+    } finally {
+      isActiveLoading.value = false;
+    }
+    return;
+  }
+
+  Future<void> getCoupons() async{
+    currentActivePage = 1;
+    isMoreActiveDataAvailable.value = true;
+    isActiveLoading.value = false;
+    var response = await APIManager.getCouponList(status: true);
+    List<Coupon> fetchedCoupons = (response.data["data"] as List)
+        .map((coupon) => Coupon.fromJson(coupon))
+        .toList();
+
+    couponsList.value = fetchedCoupons;
+
+    currentInactivePage = 1;
+    isMoreInactiveDataAvailable.value = true;
+    isInActiveLoading.value = false;
+    var inactiveResponse = await APIManager.getCouponList(status: false);
+    List<Coupon> fetchedInactiveCoupon = (inactiveResponse.data['data'] as List)
+    .map((coupon) => Coupon.fromJson(coupon))
+    .toList();
+
+    inactiveCouponList.value = fetchedInactiveCoupon;
   }
 
   void showDealsBottomSheet() {
@@ -203,6 +148,7 @@ class VipOffersController extends GetxController {
         APIManager.editCoupon(coupon, false);
         couponsList.remove(coupon);
         inactiveCouponList.add(coupon);
+        addActiveCoupons();
       },
       subTitle: StringConstant.inactiveOfferSub,
       title: StringConstant.inactiveOffer,
@@ -216,6 +162,7 @@ class VipOffersController extends GetxController {
         APIManager.editCoupon(coupon, true);
         couponsList.add(coupon);
         inactiveCouponList.remove(coupon);
+        addInactiveCoupons();
       },
       subTitle: StringConstant.activeOfferSub,
       title: StringConstant.activeOffer,

@@ -8,7 +8,6 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 
-
 class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
   const ActiveLoyaltyCards({super.key});
 
@@ -17,29 +16,39 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
     return Scaffold(
       body: Obx(() {
         if (controller.activeLoyaltyCards.isNotEmpty) {
-          return ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (ctx, index) {
-                return Obx(() {
-                  return LoyaltyCard(
-                      brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
-                      offer: controller.activeLoyaltyCards[index].title,
-                      brandColor: Color(int.parse(
-                          controller.activeLoyaltyCards[index]
-                              .cardBackgroundColor)),
-                      onAddPressed: () {
-                        //ToDo: When the loyalty card is pressed.
-                      },
-                      noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
-                      width: 100.w,
-                      brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
-                  );
-                });
-              },
-              separatorBuilder: (ctx, index) {
-                return 10.kheightBox;
-              },
-              itemCount: controller.activeLoyaltyCards.length);
+          return NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              if (scrollInfo.metrics.pixels ==
+                  scrollInfo.metrics.maxScrollExtent) {
+                // controller.getActiveCoupons();
+                controller.addActiveCards();
+              }
+              return false;
+            },
+            child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (ctx, index) {
+                  return Obx(() {
+                    return LoyaltyCard(
+                        brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
+                        offer: controller.activeLoyaltyCards[index].title,
+                        brandColor: Color(int.parse(
+                            controller.activeLoyaltyCards[index]
+                                .cardBackgroundColor)),
+                        onAddPressed: () {
+                          //ToDo: When the loyalty card is pressed.
+                        },
+                        noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
+                        width: 100.w,
+                        brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
+                    );
+                  });
+                },
+                separatorBuilder: (ctx, index) {
+                  return 10.kheightBox;
+                },
+                itemCount: controller.activeLoyaltyCards.length),
+          );
         } else if (controller.activeLoyaltyCards.isEmpty) {
           return EmptyWidget(title: StringConstant.noLoyaltyCardFound, subTitle: StringConstant.getStartedWithLoyaltyCards);
         } else {
