@@ -20,125 +20,127 @@ class OnboardingView extends GetView<OnboardingController> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.kw),
-          child: Column(
-            children: [
-              30.kheightBox,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shadowColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      elevation: 4, // adjust elevation as needed
-                      backgroundColor: context.primary06, // background color
-                    ),
-                    onPressed: controller.gotoSignupScreen,
-                    child: SizedBox(
-                      height: 37.kh,
-                      width: 77.kw,
-                      child: Center(
-                        child: Text(
-                          StringConstant.skip,
-                          style: TextStyleUtil.manrope14w500(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 56.h,
-                width: 100.w,
-                child: PageView(
-                  controller: controller.pageController,
-                  onPageChanged: (value) {
-                    controller.changePageCount(n: value);
-                  },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                30.kheightBox,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        30.kheightBox,
-                        const Spacer(),
-                        Text(
-                          StringConstant.onboardingHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope24w700(),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        16.kheightBox,
-                        Text(
-                          StringConstant.onboardingSubHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope16w400(
-                            color: context.black03,
+                        elevation: 4, // adjust elevation as needed
+                        backgroundColor: context.primary06, // background color
+                      ),
+                      onPressed: controller.gotoSignupScreen,
+                      child: SizedBox(
+                        height: 37.kh,
+                        width: 77.kw,
+                        child: Center(
+                          child: Text(
+                            StringConstant.skip,
+                            style: TextStyleUtil.manrope14w500(),
                           ),
                         ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        30.kheightBox,
-                        const Spacer(),
-                        Text(
-                          StringConstant.onboardingHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope24w700(),
-                        ),
-                        16.kheightBox,
-                        Text(
-                          StringConstant.onboardingSubHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope16w400(
-                            color: context.black03,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        30.kheightBox,
-                        const Spacer(),
-                        Text(
-                          StringConstant.onboardingHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope24w700(),
-                        ),
-                        16.kheightBox,
-                        Text(
-                          StringConstant.onboardingSubHeading1,
-                          textAlign: TextAlign.start,
-                          style: TextStyleUtil.manrope16w400(
-                            color: context.black03,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-              30.kheightBox,
-              const PageIndicator(),
-              50.kheightBox,
-              CustomRedElevatedButton(
-                onPressed: controller.gotoLoginScreen,
-                buttonText: StringConstant.login,
-                textStyle: TextStyleUtil.manrope16w500(color: Colors.white),
-                height: 56.kh,
-                width: 100.w,
-              ),
-              10.kheightBox,
-              CustomRedElevatedButtonWithBorder(
-                onPressed: controller.gotoSignupScreen,
-                buttonText: StringConstant.signup,
-                textStyle: TextStyleUtil.manrope16w500(color: context.primary01),
-                height: 56.kh,
-                width: 100.w,
-              ),
-            ],
+                SizedBox(
+                  height: 56.h,
+                  width: 100.w,
+                  child: PageView(
+                    controller: controller.pageController,
+                    onPageChanged: (value) {
+                      controller.changePageCount(n: value);
+                    },
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          30.kheightBox,
+                          const Spacer(),
+                          Text(
+                            StringConstant.onboardingHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope24w700(),
+                          ),
+                          16.kheightBox,
+                          Text(
+                            StringConstant.onboardingSubHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope16w400(
+                              color: context.black03,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          30.kheightBox,
+                          const Spacer(),
+                          Text(
+                            StringConstant.onboardingHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope24w700(),
+                          ),
+                          16.kheightBox,
+                          Text(
+                            StringConstant.onboardingSubHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope16w400(
+                              color: context.black03,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          30.kheightBox,
+                          const Spacer(),
+                          Text(
+                            StringConstant.onboardingHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope24w700(),
+                          ),
+                          16.kheightBox,
+                          Text(
+                            StringConstant.onboardingSubHeading1,
+                            textAlign: TextAlign.start,
+                            style: TextStyleUtil.manrope16w400(
+                              color: context.black03,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                30.kheightBox,
+                const PageIndicator(),
+                50.kheightBox,
+                CustomRedElevatedButton(
+                  onPressed: controller.gotoLoginScreen,
+                  buttonText: StringConstant.login,
+                  textStyle: TextStyleUtil.manrope16w500(color: Colors.white),
+                  height: 56.kh,
+                  width: 100.w,
+                ),
+                10.kheightBox,
+                CustomRedElevatedButtonWithBorder(
+                  onPressed: controller.gotoSignupScreen,
+                  buttonText: StringConstant.signup,
+                  textStyle: TextStyleUtil.manrope16w500(color: context.primary01),
+                  height: 56.kh,
+                  width: 100.w,
+                ),
+              ],
+            ),
           ),
         ),
       ),

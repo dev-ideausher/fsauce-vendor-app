@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -40,9 +41,7 @@ class SignupView extends GetView<SignupController> {
                 height: 53.kh,
                 width: 100.w,
                 decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.0.kw),
-                    border: Border.all(color: context.black07)),
+                    color: context.loginSignupTextfieldColor, borderRadius: BorderRadius.circular(8.0.kw), border: Border.all(color: context.black07)),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 4.kh),
@@ -51,8 +50,7 @@ class SignupView extends GetView<SignupController> {
                       Expanded(
                         child: TextField(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp(r'\s')),
+                            FilteringTextInputFormatter.deny(RegExp(r'\s')),
                           ],
                           onChanged: (val) {
                             if (val.isEmpty) {
@@ -64,8 +62,7 @@ class SignupView extends GetView<SignupController> {
                           controller: controller.emailController,
                           decoration: InputDecoration(
                             hintText: StringConstant.enterEmailId,
-                            hintStyle: TextStyleUtil.manrope14w400(
-                                color: context.black04),
+                            hintStyle: TextStyleUtil.manrope14w400(color: context.black04),
                             border: InputBorder.none,
                           ),
                         ),
@@ -84,9 +81,7 @@ class SignupView extends GetView<SignupController> {
                 height: 53.kh,
                 width: 100.w,
                 decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.0.kw),
-                    border: Border.all(color: context.black07)),
+                    color: context.loginSignupTextfieldColor, borderRadius: BorderRadius.circular(8.0.kw), border: Border.all(color: context.black07)),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 4.kh),
@@ -97,8 +92,7 @@ class SignupView extends GetView<SignupController> {
                           return TextField(
                             maxLength: 64,
                             inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                  RegExp(r'\s')),
+                              FilteringTextInputFormatter.deny(RegExp(r'\s')),
                             ],
                             onChanged: (val) {
                               if (val.isEmpty) {
@@ -115,14 +109,17 @@ class SignupView extends GetView<SignupController> {
                                   onPressed: () {
                                     controller.togglePasswordVisible();
                                   },
-                                  icon: controller.passwordVisible.value ? Icon(
-                                    Icons.remove_red_eye_rounded,
-                                    size: 18.kw,
-                                  ) : Icon(Icons.visibility_off, size: 18.kw,)
-                              ),
+                                  icon: controller.passwordVisible.value
+                                      ? Icon(
+                                          Icons.remove_red_eye_rounded,
+                                          size: 18.kw,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                          size: 18.kw,
+                                        )),
                               hintText: StringConstant.enterPassword,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
+                              hintStyle: TextStyleUtil.manrope14w400(color: context.black04),
                               border: InputBorder.none,
                             ),
                           );
@@ -141,19 +138,17 @@ class SignupView extends GetView<SignupController> {
                     textStyle: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value
                         ? null
                         : TextStyleUtil.manrope16w500(color: context.black03),
-                    buttonColor: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? context
-                        .primary01 : context.primary06,
-                    onPressed: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? controller
-                        .signup : () {});
+                    buttonColor: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? context.primary01 : context.primary06,
+                    onPressed: controller.isSignupEnabled.value && controller.termsAndConditionsChecked.value ? controller.signup : () {});
               }),
               20.kheightBox,
               Row(
                 children: [
                   Expanded(
                       child: Divider(
-                        color: context.black07,
-                        thickness: 1.5,
-                      )),
+                    color: context.black07,
+                    thickness: 1.5,
+                  )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -165,17 +160,15 @@ class SignupView extends GetView<SignupController> {
                   ),
                   Expanded(
                       child: Divider(
-                        color: context.black07,
-                        thickness: 1.5,
-                      )),
+                    color: context.black07,
+                    thickness: 1.5,
+                  )),
                 ],
               ),
               20.kheightBox,
               Obx(() {
                 return Row(
-                  mainAxisAlignment: controller.isApple.value
-                      ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.center,
+                  mainAxisAlignment: controller.isApple.value ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                   children: [
                     Obx(() {
                       if (controller.isApple.value) {
@@ -268,17 +261,42 @@ class SignupView extends GetView<SignupController> {
                 children: [
                   Obx(() {
                     return Checkbox(
-                      checkColor: Colors.white,
-                      activeColor: context.primary01,
+                        checkColor: Colors.white,
+                        activeColor: context.primary01,
                         value: controller.termsAndConditionsChecked.value,
                         onChanged: (bool? value) {
-                          if(value != null){
+                          if (value != null) {
                             controller.termsAndConditionsChecked.value = value;
                           }
-                        }
-                    );
+                        });
                   }),
-                  InkWell(
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: StringConstant.termsAndcons1,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          controller.goToTermsAndConditions();
+                        },
+                      style: TextStyleUtil.manrope12w400(
+                        color: context.black01,
+                      ),
+                    ),
+                    TextSpan(
+                      text: StringConstant.termsCons2,
+                      style: TextStyleUtil.manrope12w400(
+                        color: context.primary01,
+                      ),
+                    ),
+                    TextSpan(
+                      text: StringConstant.and,
+                      style: TextStyleUtil.manrope12w400(
+                        color: context.black01,
+                      ),
+                    )
+                  ])),
+
+                  /*      InkWell(
                     onTap: (){
                       controller.goToTermsAndConditions();
                     },
@@ -304,7 +322,7 @@ class SignupView extends GetView<SignupController> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
                 ],
               ),
               InkWell(

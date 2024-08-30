@@ -21,10 +21,10 @@ dependencies:
   crypto: ^3.0.3
   cached_network_image: ^3.3.1
   url_launcher: ^6.3.0
-  firebase_auth: ^4.2.2
+  firebase_auth: ^5.2.0
   flutter_facebook_auth: ^6.0.4
-  stacked_firebase_auth: ^2.19.2
-  firebase_core: ^2.10.0
+  stacked_firebase_auth: ^2.20.1
+  firebase_core: ^3.4.0
   easy_stepper: ^0.8.5
   dotted_border: ^2.0.0
   r_dotted_line_border: ^0.1.1
