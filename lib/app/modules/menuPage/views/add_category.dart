@@ -51,7 +51,6 @@ class AddCategory extends StatelessWidget {
           ),
           10.kheightBox,
           CustomTextField(
-            maxLength: 30,
               controller: Get.find<MenuPageController>().addCategoryController,
               fillColor: context.black07,
               hintText: StringConstant.enterHere),

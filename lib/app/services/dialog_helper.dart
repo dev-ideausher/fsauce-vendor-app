@@ -58,7 +58,6 @@ class DialogHelper {
       StringConstant.success,
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: const Color(0xffCC1728),
       colorText: Colors.white,
     );
   }

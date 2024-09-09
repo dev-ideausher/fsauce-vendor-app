@@ -149,9 +149,10 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
               ),
               10.kheightBox,
               CustomTextField(
-                maxLength: 30,
                   controller: Get.find<MenuPageController>().itemNameController,
                   fillColor: context.black07,
+                  validator: (value) => controller.validateItemName(value ?? ""),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   hintText: StringConstant.enterHere
               ),
               220.kheightBox,
@@ -168,7 +169,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                       }
                     }
                   }),
-              20.kheightBox,
+              40.kheightBox,
             ],
           ),
         ),

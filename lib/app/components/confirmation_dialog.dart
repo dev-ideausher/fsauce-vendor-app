@@ -9,8 +9,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 class ConfrimationDialog extends StatelessWidget {
   ConfrimationDialog(
       {super.key,
-        this.yesButtonText,
-        this.noButtonText,
+      this.yesButtonText,
+      this.noButtonText,
       required this.title,
       required this.subTitle,
       required this.onYesTap,
@@ -38,6 +38,7 @@ class ConfrimationDialog extends StatelessWidget {
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20.kw)),
       actions: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             CustomRedElevatedButtonWithBorder(
                 buttonText: noButtonText ?? StringConstant.no,

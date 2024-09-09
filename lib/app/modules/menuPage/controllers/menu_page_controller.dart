@@ -17,7 +17,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
 class MenuPageController extends GetxController {
-
   @override
   void onInit() {
     getCategory();
@@ -100,7 +99,8 @@ class MenuPageController extends GetxController {
   }
 
   void addCategory() async {
-    if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
+    if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
+        null) {
       if (addCategoryController.text.isEmpty) {
         Get.snackbar("Error", StringConstant.enterCategoryName);
         return;
@@ -125,20 +125,18 @@ class MenuPageController extends GetxController {
           return;
         }
       }
-    } else{
-      Get.dialog(
-          ConfrimationDialog(
-              title: StringConstant.subscriptionRequired,
-              subTitle: StringConstant.subscriptionRequiredText,
-              yesButtonText: StringConstant.checkoutSubscriptions,
-              noButtonText: StringConstant.close,
-              onYesTap: () async{
-                // Get.find<GetStorageService>().logout();
-                Get.back();
-                Get.offNamed(Routes.SUBSCRIPTION);
-              },
-              onNoTap: Get.back)
-      );
+    } else {
+      Get.dialog(ConfrimationDialog(
+          title: StringConstant.subscriptionRequired,
+          subTitle: StringConstant.subscriptionRequiredText,
+          yesButtonText: StringConstant.checkoutSubscriptions,
+          noButtonText: StringConstant.close,
+          onYesTap: () async {
+            // Get.find<GetStorageService>().logout();
+            Get.back();
+            Get.offNamed(Routes.SUBSCRIPTION);
+          },
+          onNoTap: Get.back));
       return;
     }
   }
@@ -147,9 +145,15 @@ class MenuPageController extends GetxController {
     var response = await APIManager.getCategories();
     List data = response.data["data"];
     categories.value = data.map((e) => CategoryModel.fromJson(e)).toList();
-    categories.sort((category1, category2) => category1.name.toString().toLowerCase().compareTo(category2.name.toString().toLowerCase()));
-    categories.forEach((category){
-      category.menu.sort((model1, model2) => model1.name.toString().toLowerCase().compareTo(model2.name.toString().toLowerCase()));
+    categories.sort((category1, category2) => category1.name
+        .toString()
+        .toLowerCase()
+        .compareTo(category2.name.toString().toLowerCase()));
+    categories.forEach((category) {
+      category.menu.sort((model1, model2) => model1.name
+          .toString()
+          .toLowerCase()
+          .compareTo(model2.name.toString().toLowerCase()));
     });
   }
 
@@ -184,20 +188,30 @@ class MenuPageController extends GetxController {
       Get.snackbar("Error", StringConstant.selectAnImage);
       return false;
     }
-    var uploadResponse = await APIManager.uploadFile(filePath: itemImage.value);
-    String imgUrl = uploadResponse.data["data"];
-    var response = await APIManager.addMenuItem(
-      itemName: itemNameController.text.trim(),
-      categoryId: addItemSelectedCategory!.id,
-      imgUrl: imgUrl,
-    );
-
-    if (response.statusCode == 200) {
-      Get.back();
-      DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
-      await getCategory();
-      return true;
+    if (categories.any((category) => category.menu
+        .any((menuItem) => menuItem.name == itemNameController.text))) {
+      Get.snackbar("Error", StringConstant.aMenuItemWithSameName);
+      return false;
     }
+    try {
+      var uploadResponse =
+          await APIManager.uploadFile(filePath: itemImage.value);
+      String imgUrl = uploadResponse.data["data"];
+      var response = await APIManager.addMenuItem(
+        itemName: itemNameController.text.trim(),
+        categoryId: addItemSelectedCategory!.id,
+        imgUrl: imgUrl,
+      );
+      if (response.statusCode == 200) {
+        Get.back();
+        DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
+        await getCategory();
+        return true;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
     return false;
   }
 

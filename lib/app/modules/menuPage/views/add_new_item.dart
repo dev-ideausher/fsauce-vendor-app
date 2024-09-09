@@ -71,6 +71,7 @@ class AddNewItem extends StatelessWidget {
                     child: DropdownButtonFormField<CategoryModel>(
                   style: TextStyleUtil.manrope16w400(),
                   value: Get.find<MenuPageController>().addItemSelectedCategory,
+                  dropdownColor: const Color(0xffFAFAFA),
                   onChanged: (val) {
                     Get.find<MenuPageController>()
                         .changeSelectedCategory(category: val!);
@@ -81,7 +82,10 @@ class AddNewItem extends StatelessWidget {
                           (CategoryModel value) {
                     return DropdownMenuItem<CategoryModel>(
                       value: value,
-                      child: Text(value.name, softWrap: true, style: const TextStyle(overflow: TextOverflow.ellipsis)),
+                      child: Text(value.name,
+                          softWrap: true,
+                          style:
+                              const TextStyle(overflow: TextOverflow.ellipsis)),
                     );
                   }).toList(),
                   icon: const Icon(Icons.keyboard_arrow_down_rounded),

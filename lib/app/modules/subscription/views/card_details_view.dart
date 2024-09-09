@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/controllers/subscription_controller.dart';
@@ -15,18 +16,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back)),
-        title: Text(
-          StringConstant.cardDetails,
-          style: TextStyleUtil.manrope18w600(),
-        ),
-      ),
+      appBar: const CustomAppBar(title: StringConstant.cardDetails),
       body: Padding(padding: EdgeInsets.symmetric(horizontal: 16.kh),
         child: SingleChildScrollView(
           child: Form(
@@ -69,7 +59,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: StringConstant.enterFeatures,
+                        hintText: StringConstant.enterCardNumber,
                         hintStyle: TextStyleUtil.manrope14w400()
                       ),
                     ),
@@ -113,7 +103,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                           },
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: StringConstant.enterFeatures,
+                              hintText: StringConstant.expiryDate,
                               hintStyle: TextStyleUtil.manrope14w400()
                           ),
                         ),
@@ -152,7 +142,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                           },
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: StringConstant.enterFeatures,
+                              hintText: StringConstant.enterCVV,
                               hintStyle: TextStyleUtil.manrope14w400()
                           ),
                         ),
@@ -184,7 +174,7 @@ class CardDetailsView extends GetView<SubscriptionController>{
                       },
                       decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: StringConstant.enterFeatures,
+                          hintText: StringConstant.enterCardHolderName,
                           hintStyle: TextStyleUtil.manrope14w400()
                       ),
                     ),

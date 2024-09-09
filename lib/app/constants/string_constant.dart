@@ -374,30 +374,41 @@ class StringConstant {
   static const String resNameEmpty = "Restaurant name cannot be empty!";
   static const String addressNameEmpty = "Address cannot be empty!";
   static const String avgPriceEmpty = "Average price cannot be empty!";
-  static const String detailsUpdatedSuccessfully = "Details updated successfully!";
-  static const String imagesAndVideosSavedSuccessfully = "All images and videos saved successfully";
+  static const String detailsUpdatedSuccessfully =
+      "Details updated successfully!";
+  static const String imagesAndVideosSavedSuccessfully =
+      "All images and videos saved successfully";
   static const String selectedLogoImageEmpty = "Logo cannot be empty";
   static const String selectedBannerImageEmpty = "Banner image cannot be empty";
-  static const String logoImageUploadError = "An error occurred while uploading logo";
-  static const String bannerImageUploadError = "An error occurred while uploading banner image";
-  static const String uploadAllImagesError = "An error occurred while uploading all images and videos";
+  static const String logoImageUploadError =
+      "An error occurred while uploading logo";
+  static const String bannerImageUploadError =
+      "An error occurred while uploading banner image";
+  static const String uploadAllImagesError =
+      "An error occurred while uploading all images and videos";
   static const String noFilesSelected = "No files selected!";
-  static const String featuresAndTimingsAddedSuccessfully = "Features and Timings added successfully!";
+  static const String featuresAndTimingsAddedSuccessfully =
+      "Features and Timings added successfully!";
   static const String couldntGetLoyaltyCards = "Couldn't get loyalty cards!";
   static const String noLoyaltyCardsYet = "No loyalty cards yet!";
   static const String offerTitleErrorMsg = "Offer title cannot be empty!";
-  static const String bgColorCannotBeEmpty = "Background color cannot be empty!";
+  static const String bgColorCannotBeEmpty =
+      "Background color cannot be empty!";
   static const String textColorCannotBeEmpty = "Text color cannot be empty!";
-  static const String stampBGErrorMsg = "Stamp background color cannot be empty!";
+  static const String stampBGErrorMsg =
+      "Stamp background color cannot be empty!";
   static const String stampColorErrorMsg = "Stamp color cannot be empty!";
-  static const String loyaltyCardCreatedSuccessfully = "Loyalty Card created successfully!";
+  static const String loyaltyCardCreatedSuccessfully =
+      "Loyalty Card created successfully!";
   static const String imageUploadError = "Error uploading image";
   static const String dealOfTheDay = "Deal of the day";
   static const String normalOfferCoupon = "Normal offer";
   static const String takeAwayCoupon = "Take Away";
   static const String subscriptions = "Subscriptions";
-  static const String buySubscriptionText = "Buy subscription plan to avail exclusive features.";
-  static const String plansAvailableText = "Silver, Gold and Platinum Plans Available";
+  static const String buySubscriptionText =
+      "Buy subscription plan to avail exclusive features.";
+  static const String plansAvailableText =
+      "Silver, Gold and Platinum Plans Available";
   static const String silverPlan = "Silver Plan";
   static const String goldPlan = "Gold Plan";
   static const String platinumPlan = "Platinum Plan";
@@ -427,22 +438,28 @@ class StringConstant {
   static const String expires = "Expires";
   static const String cvv = "CVV";
   static const String nameOnCard = "Name on Card";
-  static const String membershipPurchaseSuccess = "Membership Purchased Successfully!";
+  static const String membershipPurchaseSuccess =
+      "Membership Purchased Successfully!";
   static const String cardSavedSuccessfully = "Card details saved!";
   static const String theFood = "THE FOOD";
   static const String sauceity = "SAUCEITY";
   static const String deleteMedia = "Delete this media file?";
-  static const String deleteMediaSub = "Are you sure you want to delete this media file?";
+  static const String deleteMediaSub =
+      "Are you sure you want to delete this media file?";
   static const String noOffersFound = "No Offers Found!";
-  static const String createAttractiveOffers = "Create attractive offers with discounts and special deals.";
+  static const String createAttractiveOffers =
+      "Create attractive offers with discounts and special deals.";
   static const String noMenuFound = "No Menu Found!";
-  static const String craftMenu = "Craft a clear menu with appetizers, mains, desserts, and drinks.";
+  static const String craftMenu =
+      "Craft a clear menu with appetizers, mains, desserts, and drinks.";
   static const String noJobsFound = "No Jobs Found!";
-  static const String createJobListings = "Create clear job listings to attract and hire qualified restaurant staff.";
+  static const String createJobListings =
+      "Create clear job listings to attract and hire qualified restaurant staff.";
   static const String noNotificationFound = "No Notifications Found!";
   static const String pleaseTryAgain = "Please try again after few days.";
   static const String noDataFound = "No Data Found!";
-  static const String anErrorOccurredWhileGettingRatings = "An error occurred while getting ratings";
+  static const String anErrorOccurredWhileGettingRatings =
+      "An error occurred while getting ratings";
   static const String noRatingsFound = "No Ratings Found!";
 
   static List<String> cuisineOptions = [
@@ -461,7 +478,8 @@ class StringConstant {
   static const String postCode = "Post code";
   static const String confirmDelAcccountSub = "Confirm delete account?";
   static const String permissionDenied = "Permission Denied";
-  static const String locationPermissionDenied = "You have denied location permissions.";
+  static const String locationPermissionDenied =
+      "You have denied location permissions.";
   static const String sendUsEmail = "Send us an e-mail at  ";
   static const String infoEmail = "Info@tfs.com";
   static const String applyBy = "Apply by ";
@@ -476,7 +494,8 @@ class StringConstant {
   static const String itemAddedSuccessfully = "Item added successfully";
   static const String deletedSuccessfully = "Deleted Successfully";
   static const String plsEnterValidMail = "Please enter a valid email";
-  static const String password6characters = "Password must be at least 6 characters long";
+  static const String password6characters =
+      "Password must be at least 6 characters long";
   static const String cardNoEmpty = "Card number cannot be empty";
   static const String less13 = "Less than 13 digits";
   static const String onlyNoAllowed = "Only numbers are allowed";
@@ -486,59 +505,88 @@ class StringConstant {
   static const String invalidCvv = "CVV invalid";
   static const String nameCannotBeEmpty = "Name cannot be empty";
   static const String verifEmailSent = "Verification email send successfully";
-  static const String notificationSentSuccessfully = "Notification sent successfully";
+  static const String notificationSentSuccessfully =
+      "Notification sent successfully";
   static const String titleEmpty = "Title cannot be empty!";
   static const String scheduledDateEmpty = "Scheduled date cannot be empty!";
   static const String noNotificationsCreated = "No notifications created";
   static const String failedToScanQR = "Failed to scan QR";
   static const String sendResetPasswordLink = "Send reset password link";
   static const String resetPassword = "Reset password";
-  static const String resetPasswordLinkEmail = "We will send a reset password link to the email id below.";
+  static const String resetPasswordLinkEmail =
+      "We will send a reset password link to the email id below.";
   static const String lastWeek = "lastWeek";
   static const String lastMonth = "lastMonth";
   static const String lastYear = "lastYear";
   static const String failedToGetDashboardData = "Failed to get dashboard data";
   static const String enterCouponCodeBelow = "To enter coupon code, click here";
   static const String redeemCouponCode = "Redeem Coupon Code";
-  static const String enterCodeBelow = "Enter your coupon code below to redeem the discount.";
+  static const String enterCodeBelow =
+      "Enter your coupon code below to redeem the discount.";
   static const String couponCode = "Coupon code";
   static const String enterCouponCode = "Enter coupon code";
   static const String redeem = "Redeem";
   static const String redeemedSuccessfully = "Redeemed Successfully!";
-  static const String plsSelectFeaturesAndTimings = "Please select features and timings!";
+  static const String plsSelectFeaturesAndTimings =
+      "Please select features and timings!";
   static const String emptyCouponImage = "Coupon image is empty!";
   static const String couponPhoto = "Coupon photo";
-  static const String restaurantNameCannotBeEmpty = "Restaurant name cannot be empty!";
-  static const String restaurantAddressCannotBeEmpty = "Restaurant address cannot be empty!";
-  static const String restaurantPriceCannotBeEmpty = "Restaurant average price cannot be empty!";
-  static const String restaurantCuisineCannotBeEmpty = "Cuisine cannot be empty!";
-  static const String oldPasswordCannotBeEmpty = "Old password cannot be empty!";
-  static const String newPasswordCannotBeEmpty = "New password cannot be empty!";
-  static const String confirmPasswordCannotBeEmpty = "New password cannot be empty!";
+  static const String restaurantNameCannotBeEmpty =
+      "Restaurant name cannot be empty!";
+  static const String restaurantAddressCannotBeEmpty =
+      "Restaurant address cannot be empty!";
+  static const String restaurantPriceCannotBeEmpty =
+      "Restaurant average price cannot be empty!";
+  static const String restaurantCuisineCannotBeEmpty =
+      "Cuisine cannot be empty!";
+  static const String oldPasswordCannotBeEmpty =
+      "Old password cannot be empty!";
+  static const String newPasswordCannotBeEmpty =
+      "New password cannot be empty!";
+  static const String confirmPasswordCannotBeEmpty =
+      "New password cannot be empty!";
   static const String passwordsDoNotMatch = "Passwords do not match!";
   static const String offerTitleCannotBeEmpty = "Offer title cannot be empty!";
-  static const String noOfStampsCannotBeEmpty = "Number of stamps cannot be empty!";
+  static const String noOfStampsCannotBeEmpty =
+      "Number of stamps cannot be empty!";
   static const String dateCannotBeEmpty = "Valid till date cannot be empty!";
-  static const String scheduleDateCannotBeEmpty = "Schedule date cannot be empty!";
-  static const String notificationTitleEmpty = "Notification title cannot be empty!";
-  static const String passwordChangedSuccessfully = "Password changed successfully!";
+  static const String scheduleDateCannotBeEmpty =
+      "Schedule date cannot be empty!";
+  static const String notificationTitleEmpty =
+      "Notification title cannot be empty!";
+  static const String passwordChangedSuccessfully =
+      "Password changed successfully!";
   static const String emptyFeatures = "Features cannot be empty!";
   static const String max15CharsAllowed = "Maximum 15 characters are allowed.";
   static const String max25CharsAllowed = "Maximum 25 characters are allowed.";
-  static const String max100CharsAllowed = "Maximum 100 characters are allowed.";
+  static const String max100CharsAllowed =
+      "Maximum 100 characters are allowed.";
   static const String selectedFeatures = "Selected Features";
   static const String noLoyaltyCardFound = "No loyalty cards found.";
-  static const String getStartedWithLoyaltyCards = "Get started by creating loyalty cards";
+  static const String getStartedWithLoyaltyCards =
+      "Get started by creating loyalty cards";
   static const String emptyJobTitle = "Job title empty!";
-  static const String startCreatingCategories = "Start creating categories first, then add items to them";
+  static const String startCreatingCategories =
+      "Start creating categories first, then add items to them";
   static const String scheduledFor = "Scheduled for";
-  static const String offerScheduledFor = "Offer scheduled for";
+  static const String offerScheduledFor = "Offer scheduled for ";
   static const String currentPlan = "Current Plan";
   static const String upgrade = "Upgrade";
   static const String cancelled = "Cancelled";
   static const String subscriptionRequired = "Subscription Required";
-  static const String subscriptionRequiredText = "Kindly subscribe to one of the plans to access this feature.";
+  static const String subscriptionRequiredText =
+      "Kindly subscribe to one of the plans to access this feature.";
   static const String checkoutSubscriptions = "See plans";
   static const String close = "Close";
+  static String aMenuItemWithSameName =
+      "A menu item with the same name already exists.";
+
+  static var enterCardNumber = "Enter your card number";
+
+  static var expiryDate = "Expiry date";
+
+  static var enterCVV = "Enter CVV";
+
+  static var enterCardHolderName = "Enter card holder's name";
   // static const String
 }

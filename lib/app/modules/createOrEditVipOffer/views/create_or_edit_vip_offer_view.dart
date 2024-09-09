@@ -41,7 +41,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -61,7 +61,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -76,7 +76,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       child: SelectContainer(
                           title: StringConstant.dealsOfTheDay,
                           isSelected: controller.typeOfOffers.elementAt(
-                              controller.selectedTypeOfOffer.value) ==
+                                  controller.selectedTypeOfOffer.value) ==
                               StringConstant.dealOfTheDay),
                     ),
                     16.kwidthBox,
@@ -87,7 +87,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       child: SelectContainer(
                           title: StringConstant.normalOffer,
                           isSelected: controller.typeOfOffers.elementAt(
-                              controller.selectedTypeOfOffer.value) ==
+                                  controller.selectedTypeOfOffer.value) ==
                               StringConstant.normalOfferCoupon),
                     )
                   ],
@@ -103,7 +103,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -118,7 +118,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       child: SelectContainer(
                           title: StringConstant.dineIn,
                           isSelected: controller.validForOptions.elementAt(
-                              controller.selectedValidForOption.value) ==
+                                  controller.selectedValidForOption.value) ==
                               StringConstant.dineIn),
                     ),
                     16.kwidthBox,
@@ -129,7 +129,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       child: SelectContainer(
                           title: StringConstant.takeAway,
                           isSelected: controller.validForOptions.elementAt(
-                              controller.selectedValidForOption.value) ==
+                                  controller.selectedValidForOption.value) ==
                               StringConstant.takeAwayCoupon),
                     )
                   ],
@@ -145,7 +145,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -162,7 +162,6 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       context: context,
                       firstDate: DateTime.now(),
                       lastDate: DateTime.now().add(Duration(days: 2 * 365)),
-
                     ).then((pickedDate) {
                       if (pickedDate != null) {
                         controller.validTillDateController.text =
@@ -181,7 +180,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -200,33 +199,29 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
               }),
               10.kheightBox,
               Obx(() {
-                if (controller.couponImageLink
-                    .isNotEmpty && controller.selectedCouponImage.isEmpty) {
+                if (controller.couponImageLink.isNotEmpty &&
+                    controller.selectedCouponImage.isEmpty) {
                   return Column(
                     children: <Widget>[
                       6.kheightBox,
                       CommonImageView(
-                        url: controller.couponImageLink
-                            .value,
+                        url: controller.couponImageLink.value,
                         height: 150.kh,
                         width: 150.kh,
                       ),
                       6.kheightBox,
                     ],
                   );
-                }
-                else if (controller.couponImageLink.isEmpty &&
+                } else if (controller.couponImageLink.isEmpty &&
                     controller.selectedCouponImage.isEmpty) {
                   return Container();
-                }
-                else {
+                } else {
                   return Container();
                 }
               }),
               Obx(() {
-                if (controller.couponImageLink
-                    .value
-                    .isEmpty && controller.selectedCouponImage.isEmpty) {
+                if (controller.couponImageLink.value.isEmpty &&
+                    controller.selectedCouponImage.isEmpty) {
                   return InkWell(
                     onTap: () {
                       controller.pickCouponImage();
@@ -255,9 +250,11 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                     ),
                   );
                 } else {
-                  return IconButton(onPressed: () {
-                    controller.pickCouponImage();
-                  }, icon: const Icon(Icons.edit));
+                  return IconButton(
+                      onPressed: () {
+                        controller.pickCouponImage();
+                      },
+                      icon: const Icon(Icons.edit));
                 }
               }),
               20.kheightBox,
@@ -270,7 +267,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -290,7 +287,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -344,11 +341,11 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                         IconButton(
                             onPressed: () {
                               showDatePicker(
-                                  context: context,
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime.now().add(
-                                      const Duration(days: 2 * 365))
-                              ).then((pickedDate) {
+                                      context: context,
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.now()
+                                          .add(const Duration(days: 2 * 365)))
+                                  .then((pickedDate) {
                                 if (pickedDate != null) {
                                   controller.scheduledDate = pickedDate;
                                   controller.scheduleDateController.text =
@@ -356,9 +353,10 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                                 }
                               });
                             },
-                            icon: Icon(Icons.calendar_month,
-                              color: context.black01,)
-                        )
+                            icon: Icon(
+                              Icons.calendar_month,
+                              color: context.black01,
+                            ))
                       ],
                     ),
                   ),
@@ -388,19 +386,19 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                         ),
                         IconButton(
                             onPressed: () {
-                              showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now()
-                              ).then((pickedTime) {
+                              controller.setTime(context);
+                              /*showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now())
+                                  .then((pickedTime) {
                                 if (pickedTime != null) {
                                   controller.scheduleTimeController.text =
                                       pickedTime.format(context);
                                 }
-                              });
+                              });*/
                             },
                             icon: Icon(Icons.watch_later_outlined,
-                                color: context.black01)
-                        )
+                                color: context.black01))
                       ],
                     ),
                   )

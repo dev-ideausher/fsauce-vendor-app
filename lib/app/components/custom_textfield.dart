@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.readOnly = false,
     this.maxLength,
+    this.autovalidateMode,
   });
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -31,6 +32,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool readOnly;
   final int? maxLength;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,7 @@ class CustomTextField extends StatelessWidget {
               readOnly: readOnly,
               validator: validator,
               controller: controller,
+              autovalidateMode: autovalidateMode,
               keyboardType: keyboardType,
               decoration: InputDecoration(
                 hintText: hintText,

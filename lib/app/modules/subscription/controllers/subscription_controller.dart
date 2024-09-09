@@ -152,6 +152,7 @@ class SubscriptionController extends GetxController {
           "token": encryptToken,
         });
         if (response.data['status']) {
+          Get.back();
           DialogHelper.showSuccess("Card Added!");
           getCardList();
         } else {

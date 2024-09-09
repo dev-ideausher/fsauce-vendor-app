@@ -20,34 +20,32 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        title: const Text(''),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.kw),
-          child: Obx(
-            () => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  StringConstant.profileSetup,
-                  style: TextStyleUtil.manrope32w700(),
-                ),
-                Text(
-                  StringConstant.enterProfileDetails,
-                  style: TextStyleUtil.manrope16w400(
-                    color: context.black03,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.kw),
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  54.kheightBox,
+                  Text(
+                    StringConstant.profileSetup,
+                    style: TextStyleUtil.manrope32w700(),
                   ),
-                ),
-                20.kheightBox,
-                CustomStepper(activeStep: controller.stepCount.value),
-                controller.steps[controller.stepCount.value],
-                40.kheightBox,
-              ],
+                  Text(
+                    StringConstant.enterProfileDetails,
+                    style: TextStyleUtil.manrope16w400(
+                      color: context.black03,
+                    ),
+                  ),
+                  20.kheightBox,
+                  CustomStepper(activeStep: controller.stepCount.value),
+                  controller.steps[controller.stepCount.value],
+                  40.kheightBox,
+                ],
+              ),
             ),
           ),
         ),

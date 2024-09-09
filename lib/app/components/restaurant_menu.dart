@@ -30,7 +30,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.category.menu.sort((model1, model2) => model1.name.toLowerCase().toString().compareTo(model2.name.toLowerCase().toString()));
+    widget.category.menu.sort((model1, model2) => model1.name
+        .toLowerCase()
+        .toString()
+        .compareTo(model2.name.toLowerCase().toString()));
   }
 
   @override
@@ -109,12 +112,15 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                       border: Border(
                           bottom: BorderSide(color: context.borderColor1))),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        e.name,
-                        style: TextStyleUtil.manrope14w500(),
+                      Expanded(
+                        child: Text(
+                          e.name,
+                          style: TextStyleUtil.manrope14w500(),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      const Spacer(),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.kw),
                         child: CommonImageView(

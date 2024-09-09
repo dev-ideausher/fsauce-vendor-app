@@ -24,6 +24,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       leading: isBackable ? (leading ?? _defaultBackButton(context)) : null,
       actions: actions,
+      surfaceTintColor: Colors.white,
+      foregroundColor: const Color(0xffFAFAFA),
+      backgroundColor: const Color(0xffFAFAFA),
     );
   }
 

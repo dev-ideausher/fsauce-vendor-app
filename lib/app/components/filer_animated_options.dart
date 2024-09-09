@@ -37,7 +37,11 @@ class _FilterAnimatedOptionState extends State<FilterAnimatedOption> {
             scale: 0.8,
             child: Switch(
               activeColor: context.primary01,
-              inactiveThumbColor: context.primary04,
+              inactiveThumbColor: context.white,
+              inactiveTrackColor: context.primary07,
+              trackOutlineWidth: WidgetStatePropertyAll(0.kh),
+              trackOutlineColor:
+                  const WidgetStatePropertyAll(Colors.transparent),
               value: widget.controller.isActivated,
               onChanged: (value) {
                 setState(() {

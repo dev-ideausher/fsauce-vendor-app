@@ -40,8 +40,8 @@ class LoyaltyView extends GetView<LoyaltyController> {
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16.kw),
           child: Obx(() => Form(
-            key: controller.formKey,
-            child: Column(
+                key: controller.formKey,
+                child: Column(
                   children: [
                     Row(
                       children: [
@@ -72,13 +72,14 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     ),
                     10.kheightBox,
                     CustomTextField(
-                      validator: (String? val){
-                        if(val == null || val.isEmpty){
-                          return StringConstant.offerTitleCannotBeEmpty;
-                        }
-                        return null;
-                      },
-                      controller: controller.cardTitleController,
+                        validator: (String? val) {
+                          if (val == null || val.isEmpty) {
+                            return StringConstant.offerTitleCannotBeEmpty;
+                          }
+                          return null;
+                        },
+                        maxLength: 30,
+                        controller: controller.cardTitleController,
                         fillColor: context.loginSignupTextfieldColor,
                         border: Border.all(color: context.black07),
                         hintText: StringConstant.enterOfferTitle),
@@ -106,15 +107,15 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         children: [
                           Expanded(
                               child: DropdownButtonFormField<String>(
-                                validator: (String? val){
-                                  if(val == null || val.isEmpty){
-                                    return StringConstant.noOfStampsCannotBeEmpty;
-                                  }
-                                  return null;
-                                },
+                            validator: (String? val) {
+                              if (val == null || val.isEmpty) {
+                                return StringConstant.noOfStampsCannotBeEmpty;
+                              }
+                              return null;
+                            },
                             style: TextStyleUtil.manrope16w400(),
                             onChanged: (val) {
-                              if(val != null){
+                              if (val != null) {
                                 controller.noOfStamps.value = int.parse(val);
                               }
                             },
@@ -148,16 +149,16 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         ),
                         Text(
                           "*",
-                          style:
-                          TextStyleUtil.manrope14w500(color: context.primary01),
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
                         )
                       ],
                     ),
                     10.kheightBox,
                     CustomTextField(
-                      readOnly: true,
-                        validator: (String? val){
-                          if(val == null || val.isEmpty){
+                        readOnly: true,
+                        validator: (String? val) {
+                          if (val == null || val.isEmpty) {
                             return StringConstant.dateCannotBeEmpty;
                           }
                           return null;
@@ -170,11 +171,12 @@ class LoyaltyView extends GetView<LoyaltyController> {
                           showDatePicker(
                             context: context,
                             firstDate: DateTime.now(),
-                            lastDate: DateTime.now().add(const Duration(days: 2 * 365)),
-
-                          ).then((pickedDate){
-                            if(pickedDate != null){
-                              controller.validTillDateController.text = pickedDate.toString().substring(0, 11);
+                            lastDate: DateTime.now()
+                                .add(const Duration(days: 2 * 365)),
+                          ).then((pickedDate) {
+                            if (pickedDate != null) {
+                              controller.validTillDateController.text =
+                                  pickedDate.toString().substring(0, 11);
                               controller.validTill = pickedDate;
                             }
                           });
@@ -298,24 +300,28 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         width: 100.w,
                         height: 56.kh,
                         onPressed: () {
-                          if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
-                            if(controller.formKey.currentState!.validate()){
+                          if (Get.find<HomeController>()
+                                  .restaurantDetails
+                                  .value
+                                  .subscriptionModel !=
+                              null) {
+                            if (controller.formKey.currentState!.validate()) {
                               controller.createLoyaltyCard();
                             }
-                          } else{
-                            Get.dialog(
-                                ConfrimationDialog(
-                                    title: StringConstant.subscriptionRequired,
-                                    subTitle: StringConstant.subscriptionRequiredText,
-                                    yesButtonText: StringConstant.checkoutSubscriptions,
-                                    noButtonText: StringConstant.close,
-                                    onYesTap: () async{
-                                      // Get.find<GetStorageService>().logout();
-                                      Get.back();
-                                      Get.offNamed(Routes.SUBSCRIPTION);
-                                    },
-                                    onNoTap: Get.back)
-                            );
+                          } else {
+                            Get.dialog(ConfrimationDialog(
+                                title: StringConstant.subscriptionRequired,
+                                subTitle:
+                                    StringConstant.subscriptionRequiredText,
+                                yesButtonText:
+                                    StringConstant.checkoutSubscriptions,
+                                noButtonText: StringConstant.close,
+                                onYesTap: () async {
+                                  // Get.find<GetStorageService>().logout();
+                                  Get.back();
+                                  Get.offNamed(Routes.SUBSCRIPTION);
+                                },
+                                onNoTap: Get.back));
                           }
                         }),
                     10.kheightBox,
@@ -327,7 +333,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     10.kheightBox
                   ],
                 ),
-          )),
+              )),
         ));
   }
 }

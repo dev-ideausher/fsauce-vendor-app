@@ -51,8 +51,7 @@ class DealsOfTheDayCardDate extends StatelessWidget {
             top: 0,
             child: ClipRRect(
               borderRadius: BorderRadius.horizontal(
-                left: Radius.elliptical(200.kw, 380.kw)
-              ),
+                  left: Radius.elliptical(200.kw, 380.kw)),
               child: CommonImageView(
                 url: coupon.image,
                 width: 80.kw,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/profile_option.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -19,14 +20,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            StringConstant.profile,
-            style: TextStyleUtil.manrope18w600(),
-          ),
-          leading: const SizedBox(),
-          centerTitle: true,
-        ),
+        appBar: const CustomAppBar(title: StringConstant.profile),
         body: SingleChildScrollView(
           padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 16.kh),
           child: Column(
@@ -52,8 +46,7 @@ class ProfileView extends GetView<ProfileController> {
                           height: 88,
                           width: 88,
                           fit: BoxFit.cover,
-                          url: Get
-                              .find<HomeController>()
+                          url: Get.find<HomeController>()
                               .restaurantDetails
                               .value
                               .restaurantLogo,
@@ -62,8 +55,7 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     Obx(() {
                       return Text(
-                        Get
-                            .find<HomeController>()
+                        Get.find<HomeController>()
                             .restaurantDetails
                             .value
                             .restaurantName,
@@ -76,10 +68,12 @@ class ProfileView extends GetView<ProfileController> {
                         5.kwidthBox,
                         Obx(() {
                           return Text(
-                            Get
-                                .find<HomeController>()
+                            Get.find<HomeController>()
                                 .restaurantDetails
-                                .value.cuisine.first.name!,
+                                .value
+                                .cuisine
+                                .first
+                                .name!,
                             style: TextStyleUtil.manrope14w400(
                                 color: context.black03),
                           );
@@ -143,8 +137,11 @@ class ProfileView extends GetView<ProfileController> {
                           bottom: BorderSide(color: context.borderColor2))),
                   child: Row(
                     children: [
-                      Icon(Icons.monetization_on_outlined,
-                        color: context.primary01, size: 22.kh,),
+                      Icon(
+                        Icons.monetization_on_outlined,
+                        color: context.primary01,
+                        size: 22.kh,
+                      ),
                       16.kwidthBox,
                       Text(
                         StringConstant.subscriptions,
@@ -189,8 +186,11 @@ class ProfileView extends GetView<ProfileController> {
                           bottom: BorderSide(color: context.borderColor2))),
                   child: Row(
                     children: [
-                      Icon(Icons.delete_outline, color: context.primary01,
-                        size: 22.kh,),
+                      Icon(
+                        Icons.delete_outline,
+                        color: context.primary01,
+                        size: 22.kh,
+                      ),
                       16.kwidthBox,
                       Text(
                         StringConstant.deleteAccount,
