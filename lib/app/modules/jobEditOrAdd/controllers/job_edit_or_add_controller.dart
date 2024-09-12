@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/models/job_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/jobs/controllers/jobs_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
@@ -132,6 +133,7 @@ class JobEditOrAddController extends GetxController {
   Future<void> pickDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
+      builder: _pickerTheme,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
@@ -141,6 +143,22 @@ class JobEditOrAddController extends GetxController {
       lastDateToApplyController.text =
           DateFormat('yyyy-MM-dd').format(pickedDate);
     }
+  }
+
+  Widget _pickerTheme(BuildContext context, Widget? child) {
+    return Theme(
+      data: ThemeData(
+        primaryColor: context.primary01,
+        colorScheme: ColorScheme.light(
+          primary: context.primary01,
+          surface: Colors.white,
+          onPrimary: Colors.white,
+          secondary: context.primary01,
+        ),
+        dialogBackgroundColor: Colors.white,
+      ),
+      child: child!,
+    );
   }
 
   void gotoEditJobPage(Job job) {

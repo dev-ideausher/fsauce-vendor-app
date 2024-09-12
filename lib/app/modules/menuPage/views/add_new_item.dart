@@ -62,43 +62,49 @@ class AddNewItem extends StatelessWidget {
             width: 100.w,
             padding: EdgeInsets.symmetric(horizontal: 10.kw),
             decoration: BoxDecoration(
-                color: context.loginSignupTextfieldColor,
-                border: Border.all(color: context.borderColor1),
-                borderRadius: BorderRadius.circular(8)),
+              color: context.loginSignupTextfieldColor,
+              border: Border.all(color: context.borderColor1),
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: Row(
               children: [
                 Expanded(
-                    child: DropdownButtonFormField<CategoryModel>(
-                  style: TextStyleUtil.manrope16w400(),
-                  value: Get.find<MenuPageController>().addItemSelectedCategory,
-                  dropdownColor: const Color(0xffFAFAFA),
-                  onChanged: (val) {
-                    Get.find<MenuPageController>()
-                        .changeSelectedCategory(category: val!);
-                  },
-                  items: Get.find<MenuPageController>()
-                      .categories
-                      .map<DropdownMenuItem<CategoryModel>>(
-                          (CategoryModel value) {
-                    return DropdownMenuItem<CategoryModel>(
-                      value: value,
-                      child: Text(value.name,
+                  child: DropdownButtonFormField<CategoryModel>(
+                    style: TextStyleUtil.manrope16w400(),
+                    value:
+                        Get.find<MenuPageController>().addItemSelectedCategory,
+                    dropdownColor: const Color(0xffFAFAFA),
+                    onChanged: (val) {
+                      Get.find<MenuPageController>()
+                          .changeSelectedCategory(category: val!);
+                    },
+                    items: Get.find<MenuPageController>()
+                        .categories
+                        .map<DropdownMenuItem<CategoryModel>>(
+                            (CategoryModel value) {
+                      return DropdownMenuItem<CategoryModel>(
+                        value: value,
+                        child: Text(
+                          value.name,
                           softWrap: true,
                           style:
-                              const TextStyle(overflow: TextOverflow.ellipsis)),
-                    );
-                  }).toList(),
-                  icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(0),
-                    hintText: StringConstant.selectGender,
-                    hintStyle:
-                        TextStyleUtil.manrope14w400(color: context.black04),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
+                              const TextStyle(overflow: TextOverflow.ellipsis),
+                        ),
+                      );
+                    }).toList(),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(0),
+                      hintText: StringConstant.selectGender,
+                      hintStyle:
+                          TextStyleUtil.manrope14w400(color: context.black04),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                )),
+                ),
               ],
             ),
           ),

@@ -104,8 +104,9 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                     Expanded(
                         child: DropdownButtonFormField<CategoryModel>(
                       style: TextStyleUtil.manrope16w400(),
-                      value:
-                          Get.find<MenuPageController>().addItemSelectedCategory,
+                      isExpanded: true,
+                      value: Get.find<MenuPageController>()
+                          .addItemSelectedCategory,
                       onChanged: (val) {
                         Get.find<MenuPageController>()
                             .changeSelectedCategory(category: val!);
@@ -169,7 +170,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                       }
                     }
                   }),
-              40.kheightBox,
+              60.kheightBox,
             ],
           ),
         ),

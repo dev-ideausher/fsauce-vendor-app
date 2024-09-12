@@ -153,4 +153,20 @@ class LoyaltyController extends GetxController {
   void gotoPreviewScreen() {
     Get.toNamed(Routes.LOYALTY_CARD_PREVIEW);
   }
+
+  Future<void> pickValidTillDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now()
+                                .add(const Duration(days: 2 * 365)),
+    );
+
+    if (pickedDate != null) {
+      validTillDateController.text =
+                                  pickedDate.toString().substring(0, 11);
+                              validTill = pickedDate;
+    }
+  }
 }

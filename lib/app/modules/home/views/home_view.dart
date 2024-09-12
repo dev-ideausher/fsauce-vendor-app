@@ -119,7 +119,7 @@ class HomeView extends GetView<HomeController> {
                   InkWell(
                     onTap: controller.gotoScanQr,
                     child: Container(
-                      height: 103.kh,
+                      // height: 103.kh,
                       width: 100.w,
                       padding: EdgeInsets.all(16.kw),
                       decoration: BoxDecoration(

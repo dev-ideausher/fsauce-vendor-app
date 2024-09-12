@@ -21,7 +21,7 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
 
   RxBool isApple = false.obs;
-  RxBool passwordVisible = false.obs;
+  RxBool passwordVisible = true.obs;
   RxBool isLoginEnabled = false.obs;
 
   final formKey = GlobalKey<FormState>();

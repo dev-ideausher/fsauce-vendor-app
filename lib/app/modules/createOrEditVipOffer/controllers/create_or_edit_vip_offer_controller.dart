@@ -381,4 +381,33 @@ class CreateOrEditVipOfferController extends GetxController {
     }
     return false;
   }
+
+  Future<void> pickValidTillDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      builder: _pickerTheme,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 2 * 365)),
+    );
+
+    if (pickedDate != null) {
+      validTillDateController.text = pickedDate.toString().substring(0, 11);
+    }
+  }
+
+  Future<void> pickDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      builder: _pickerTheme,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      scheduledDate = pickedDate;
+      scheduleDateController.text = pickedDate.toString().substring(0, 11);
+    }
+  }
 }

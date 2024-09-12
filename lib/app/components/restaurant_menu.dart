@@ -118,8 +118,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         child: Text(
                           e.name,
                           style: TextStyleUtil.manrope14w500(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        ).paddingOnly(right: 12.kw),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.kw),

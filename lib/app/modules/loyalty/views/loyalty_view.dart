@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -24,19 +23,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            StringConstant.loyaltyCard,
-            style: TextStyleUtil.manrope18w600(),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, size: 18),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-          centerTitle: true,
-        ),
+        appBar: const CustomAppBar(title: StringConstant.loyaltyCard),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16.kw),
           child: Obx(() => Form(
@@ -168,18 +155,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                         border: Border.all(color: context.black07),
                         suffixIcon: Icons.calendar_month,
                         suffixOnPressed: () {
-                          showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime.now()
-                                .add(const Duration(days: 2 * 365)),
-                          ).then((pickedDate) {
-                            if (pickedDate != null) {
-                              controller.validTillDateController.text =
-                                  pickedDate.toString().substring(0, 11);
-                              controller.validTill = pickedDate;
-                            }
-                          });
+                          controller.pickValidTillDate(context);
                         },
                         hintText: StringConstant.enterValidTill),
                     20.kheightBox,

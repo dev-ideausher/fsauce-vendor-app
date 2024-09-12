@@ -158,16 +158,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                   border: Border.all(color: context.black07),
                   suffixIcon: Icons.calendar_month,
                   suffixOnPressed: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(Duration(days: 2 * 365)),
-                    ).then((pickedDate) {
-                      if (pickedDate != null) {
-                        controller.validTillDateController.text =
-                            pickedDate.toString().substring(0, 11);
-                      }
-                    });
+                    controller.pickValidTillDate(context);
                   },
                   hintText: StringConstant.enterValidTill),
               10.kheightBox,
@@ -340,18 +331,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                         ),
                         IconButton(
                             onPressed: () {
-                              showDatePicker(
-                                      context: context,
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.now()
-                                          .add(const Duration(days: 2 * 365)))
-                                  .then((pickedDate) {
-                                if (pickedDate != null) {
-                                  controller.scheduledDate = pickedDate;
-                                  controller.scheduleDateController.text =
-                                      pickedDate.toString().substring(0, 11);
-                                }
-                              });
+                              controller.pickDate(context);
                             },
                             icon: Icon(
                               Icons.calendar_month,
@@ -387,15 +367,6 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                         IconButton(
                             onPressed: () {
                               controller.setTime(context);
-                              /*showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.now())
-                                  .then((pickedTime) {
-                                if (pickedTime != null) {
-                                  controller.scheduleTimeController.text =
-                                      pickedTime.format(context);
-                                }
-                              });*/
                             },
                             icon: Icon(Icons.watch_later_outlined,
                                 color: context.black01))

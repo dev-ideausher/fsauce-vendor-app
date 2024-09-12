@@ -41,15 +41,15 @@ class CreatePushNotificationView
                 ),
                 10.kheightBox,
                 CustomTextField(
-                  validator: (String? val){
-                    if(val  == null || val.isEmpty){
-                      return StringConstant.notificationTitleEmpty;
-                    } else if(val.length > 100){
-                      return StringConstant.max100CharsAllowed;
-                    }
+                    validator: (String? val) {
+                      if (val == null || val.isEmpty) {
+                        return StringConstant.notificationTitleEmpty;
+                      } else if (val.length > 100) {
+                        return StringConstant.max100CharsAllowed;
+                      }
                       return null;
-                  },
-                  controller: controller.titleController,
+                    },
+                    controller: controller.titleController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     hintText: StringConstant.enterTitle),
@@ -63,23 +63,13 @@ class CreatePushNotificationView
                 ),
                 10.kheightBox,
                 CustomTextField(
-                  readOnly: true,
+                    readOnly: true,
                     controller: controller.scheduledDateController,
                     fillColor: context.loginSignupTextfieldColor,
                     border: Border.all(color: context.black07),
                     suffixIcon: Icons.calendar_month,
                     suffixOnPressed: () {
-                      showDatePicker(
-                        context: context,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 2 * 365)),
-
-                      ).then((pickedDate){
-                        if(pickedDate != null){
-                          controller.selectedDate.value = pickedDate;
-                          controller.scheduledDateController.text = pickedDate.toString().substring(0, 11);
-                        }
-                      });
+                      controller.pickDate(context);
                     },
                     hintText: StringConstant.enterScheduleDate),
                 20.kheightBox,
@@ -89,7 +79,7 @@ class CreatePushNotificationView
                     height: 56.kh,
                     width: 100.w,
                     onPressed: () {
-                      if(controller.formKey.currentState!.validate()){
+                      if (controller.formKey.currentState!.validate()) {
                         controller.addNotification();
                       }
                     })
