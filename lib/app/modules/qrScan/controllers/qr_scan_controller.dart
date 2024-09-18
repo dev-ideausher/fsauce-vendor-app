@@ -31,30 +31,30 @@ class QrScanController extends GetxController {
     });
   }
 
-  Future<void> scanQR() async{
-    if(result != null){
-      try{
+  Future<void> scanQR() async {
+    if (result != null) {
+      try {
         String qrData = result!.code!;
-
-      } catch(e){
+      } catch (e) {
         print("Error while scanning QR: $e");
-        Get.snackbar("Error" , StringConstant.somethingWentWrong);
+        Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     }
   }
 
-  Future<void> redeemCode() async{
-    if(couponCodeController.text.isNotEmpty){
-      try{
-        var response = await APIManager.redeemCouponCode(code: couponCodeController.text);
-        if(response.data['status']){
-          Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.redeemedSuccessfully));
-        } else if(!response.data['status']){
-          Get.snackbar("Error",response.data['message']);
+  Future<void> redeemCode() async {
+    if (couponCodeController.text.isNotEmpty) {
+      try {
+        var response =
+            await APIManager.redeemCouponCode(code: couponCodeController.text);
+        if (response.data['status']) {
+          Get.bottomSheet(const AddedSuccessfullBottomSheet(
+              subTitle: StringConstant.redeemedSuccessfully));
+        } else if (!response.data['status']) {
+          Get.snackbar("Error", response.data['message']);
         }
-      } catch(e){
+      } catch (e) {
         print("Error while scanning QR: $e");
-        Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     }
   }

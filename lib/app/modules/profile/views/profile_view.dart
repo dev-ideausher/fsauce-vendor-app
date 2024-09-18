@@ -20,7 +20,10 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: StringConstant.profile),
+        appBar: const CustomAppBar(
+          title: StringConstant.profile,
+          leading: SizedBox(),
+        ),
         body: SingleChildScrollView(
           padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 16.kh),
           child: Column(
@@ -119,7 +122,7 @@ class ProfileView extends GetView<ProfileController> {
               ProfileOption(
                 svgPath: ImageConstant.pushNotificaion,
                 onTap: controller.gotoPushNotification,
-                text: StringConstant.pushNotifications,
+                text: StringConstant.pushNotification,
               ),
               10.kheightBox,
               InkWell(

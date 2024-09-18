@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
+import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/select_container.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
@@ -15,7 +16,6 @@ import 'package:get/get.dart';
 
 import '../../../components/common_image_view.dart';
 import '../controllers/create_or_edit_vip_offer_controller.dart';
-import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
 class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
   const CreateOrEditVipOfferView({Key? key}) : super(key: key);
@@ -46,11 +46,9 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 ],
               ),
               10.kheightBox,
-              CustomTextField(
-                  controller: controller.titleController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.enterTitle),
+              FsvTextfield(
+                  hintText: StringConstant.enterTitle,
+                  controller: controller.titleController),
               20.kheightBox,
               Row(
                 children: [
@@ -150,17 +148,15 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 ],
               ),
               10.kheightBox,
-              CustomTextField(
-                  readOnly: true,
-                  controller: controller.validTillDateController,
-                  keyboardType: TextInputType.datetime,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  suffixIcon: Icons.calendar_month,
-                  suffixOnPressed: () {
-                    controller.pickValidTillDate(context);
-                  },
-                  hintText: StringConstant.enterValidTill),
+              FsvTextfield(
+                readOnly: true,
+                hintText: StringConstant.enterValidTill,
+                controller: controller.validTillDateController,
+                suffix: Icon(Icons.calendar_month),
+                onTap: () {
+                  controller.pickValidTillDate(context);
+                },
+              ),
               10.kheightBox,
               Row(
                 children: [
@@ -263,11 +259,11 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 ],
               ),
               10.kheightBox,
-              CustomTextBox(
-                  controller: controller.descriptionController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.enterDescription),
+              FsvTextfield(
+                hintText: StringConstant.enterDescription,
+                controller: controller.descriptionController,
+                maxLines: 5,
+              ),
               20.kheightBox,
               Row(
                 children: [
@@ -283,11 +279,11 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 ],
               ),
               10.kheightBox,
-              CustomTextBox(
-                  controller: controller.termsAndConditionsController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.enterTermsAndConditions),
+              FsvTextfield(
+                hintText: StringConstant.enterTermsAndConditions,
+                controller: controller.termsAndConditionsController,
+                maxLines: 5,
+              ),
               20.kheightBox,
               Row(
                 children: [
@@ -305,74 +301,34 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 50.kh,
-                    width: 50.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.black07),
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            maxLines: null,
-                            controller: controller.scheduleDateController,
-                            decoration: InputDecoration(
-                              hintText: StringConstant.enterDate,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              controller.pickDate(context);
-                            },
-                            icon: Icon(
-                              Icons.calendar_month,
-                              color: context.black01,
-                            ))
-                      ],
+                  SizedBox(
+                    width: 45.w,
+                    child: FsvTextfield(
+                      controller: controller.scheduleDateController,
+                      isSuffixPaddingNeeded: false,
+                      readOnly: true,
+                      hintText: StringConstant.enterDate,
+                      suffix: Icon(
+                        Icons.calendar_month,
+                        color: context.black01,
+                      ),
+                      onTap: () {
+                        controller.pickDate(context);
+                      },
                     ),
                   ),
-                  Container(
-                    height: 50.kh,
-                    width: 40.w,
-                    decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.black07),
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            maxLines: null,
-                            controller: controller.scheduleTimeController,
-                            decoration: InputDecoration(
-                              hintText: StringConstant.enterTime,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              controller.setTime(context);
-                            },
-                            icon: Icon(Icons.watch_later_outlined,
-                                color: context.black01))
-                      ],
-                    ),
-                  )
+                  Flexible(
+                      child: FsvTextfield(
+                    hintText: StringConstant.enterTime,
+                    readOnly: true,
+                    isSuffixPaddingNeeded: false,
+                    controller: controller.scheduleTimeController,
+                    onTap: () {
+                      controller.setTime(context);
+                    },
+                    suffix: Icon(Icons.watch_later_outlined,
+                        color: context.black01),
+                  ))
                 ],
               ),
               30.kheightBox,

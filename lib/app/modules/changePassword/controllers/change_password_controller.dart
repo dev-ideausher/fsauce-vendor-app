@@ -42,6 +42,7 @@ class ChangePasswordController extends GetxController {
         Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: "You will receive a reset password link shortly"));
         return;
       } else {
+        DialogHelper.hideDialog();
         Get.snackbar("Error","Something went wrong!");
         return;
       }

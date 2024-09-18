@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
+import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -40,38 +41,43 @@ class CreatePushNotificationView
                   ],
                 ),
                 10.kheightBox,
-                CustomTextField(
-                    validator: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return StringConstant.notificationTitleEmpty;
-                      } else if (val.length > 100) {
-                        return StringConstant.max100CharsAllowed;
-                      }
-                      return null;
-                    },
-                    controller: controller.titleController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    hintText: StringConstant.enterTitle),
+                FsvTextfield(
+                  hintText: StringConstant.enterTitle,
+                  controller: controller.titleController,
+                  validator: (String? val) {
+                    if (val == null || val.isEmpty) {
+                      return StringConstant.notificationTitleEmpty;
+                    } else if (val.length > 25) {
+                      return StringConstant.max25CharsAllowed;
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
                 20.kheightBox,
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    StringConstant.scheduleDate,
-                    style: TextStyleUtil.manrope14w500(),
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      StringConstant.scheduleDate,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    Text(
+                      "*",
+                      style:
+                          TextStyleUtil.manrope14w500(color: context.primary01),
+                    )
+                  ],
                 ),
                 10.kheightBox,
-                CustomTextField(
-                    readOnly: true,
-                    controller: controller.scheduledDateController,
-                    fillColor: context.loginSignupTextfieldColor,
-                    border: Border.all(color: context.black07),
-                    suffixIcon: Icons.calendar_month,
-                    suffixOnPressed: () {
-                      controller.pickDate(context);
-                    },
-                    hintText: StringConstant.enterScheduleDate),
+                FsvTextfield(
+                  hintText: StringConstant.enterScheduleDate,
+                  readOnly: true,
+                  controller: controller.scheduledDateController,
+                  suffix: const Icon(Icons.calendar_month),
+                  onPressedSuffix: () {
+                    controller.pickDate(context);
+                  },
+                ),
                 20.kheightBox,
                 const Spacer(),
                 CustomRedElevatedButton(

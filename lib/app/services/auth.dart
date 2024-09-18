@@ -53,7 +53,7 @@ class Auth extends GetxService {
     //     Get.snackbar("Error", "Account exists");
     //   }
     // }
-    if(auth.hasUser){
+    if (auth.hasUser) {
       await FirebaseAuthenticationService().logout();
     }
     await auth.signInWithGoogle().then((value) async {
@@ -80,10 +80,13 @@ class Auth extends GetxService {
     await auth.loginWithEmail(email: email, password: pass).then((value) async {
       try {
         if (value.hasError) {
-          if (value.errorMessage == "The supplied auth credential is malformed or has expired.") {
+          if (value.errorMessage ==
+              "The supplied auth credential is malformed or has expired.") {
             createEmailPass(email: email, pass: pass);
           } else {
-            showMySnackbar(title: "Error", msg: value.errorMessage ?? "Something went wrong");
+            showMySnackbar(
+                title: "Error",
+                msg: value.errorMessage ?? "Something went wrong");
           }
         } else {
           if (value.user!.emailVerified) {
@@ -91,14 +94,20 @@ class Auth extends GetxService {
             gotoHomeScreen();
           } else {
             // User created but email not verified
-            showMySnackbar(title: "Email verify", msg: "Please verify your email and continue");
+            showMySnackbar(
+                title: "Email verify",
+                msg: "Please verify your email and continue");
             await value.user!.sendEmailVerification();
           }
         }
       } on FirebaseAuthException catch (e) {
-        showMySnackbar(title: e.code.toLowerCase(), msg: getErrorMessageFromFirebaseException(e));
+        showMySnackbar(
+            title: e.code.toLowerCase(),
+            msg: getErrorMessageFromFirebaseException(e));
       } on Exception catch (e) {
-        showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
+        showMySnackbar(
+            msg:
+                'We could not log into your account at this time. Please try again.');
       }
     });
   }
@@ -116,14 +125,17 @@ class Auth extends GetxService {
   //   // print('EmailPass : ${await result.user?.getIdToken()}');
   // }
 
-  updatePassword({required String newPassword}) async{
-    final result = await auth.updatePassword(newPassword).then((value) async{
+  updatePassword({required String newPassword}) async {
+    bool status = false;
+    final result = await auth.updatePassword(newPassword).then((value) async {
       await handleGetContact();
+      status = true;
     }).catchError((e) {
-      if(e is FirebaseAuthException){
+      if (e is FirebaseAuthException) {        
         showMySnackbar(msg: "An error occurred");
       }
     });
+    return status;
   }
 
   // createEmailPass({required String email, required String pass}) async {
@@ -167,11 +179,12 @@ class Auth extends GetxService {
   //   }
   // }
   createEmailPass({required String email, required String pass}) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: pass)
+    await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: pass)
         .then((value) async {
       await handleGetContact();
     }).catchError((e) {
-      if(e is FirebaseAuthException){
+      if (e is FirebaseAuthException) {
         Get.snackbar("Error", e.message ?? "Something went wrong");
       }
       print("This is from auth, createEmailPass");
@@ -200,10 +213,10 @@ class Auth extends GetxService {
 
   Future<bool> sendResetPasswordMail({required String email}) async {
     final result = await auth.sendResetPasswordLink(email);
-    if(result is bool){
-      if(result){
+    if (result is bool) {
+      if (result) {
         return true;
-      } else{
+      } else {
         return false;
       }
     }

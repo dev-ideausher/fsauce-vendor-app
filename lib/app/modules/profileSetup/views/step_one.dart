@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
+import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
@@ -40,17 +40,11 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextField(
-            validator: (String? val){
-              if(val == null || val.isEmpty){
-                return "Restaurant name cannot be empty!";
-              }
-              return null;
-            },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.restaurantNameController,
+          FsvTextfield(
             hintText: StringConstant.enterRestaurantName,
+            controller: controller.restaurantNameController,
+            validator: (value) => controller.restaurantNameValidator(value),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
 
@@ -72,8 +66,7 @@ class StepOne extends GetView<ProfileSetupController> {
             style: TextStyleUtil.manrope14w500(color: context.black03),
           ),
           6.kheightBox,
-          Obx(() =>
-              InkWell(
+          Obx(() => InkWell(
                 onTap: () => controller.pickImage(controller.restaurantLogo),
                 child: Container(
                   width: 100.w,
@@ -88,38 +81,38 @@ class StepOne extends GetView<ProfileSetupController> {
                   ),
                   child: controller.restaurantLogo.value.isEmpty
                       ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.file_upload_outlined),
-                      10.kheightBox,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            StringConstant.uploadFile,
-                            style: TextStyleUtil.manrope14w500(
-                                color: context.primary01),
-                          ),
-                          4.kwidthBox,
-                          Text(
-                            StringConstant.or,
-                            style: TextStyleUtil.manrope14w500(
-                                color: context.black04),
-                          ),
-                          4.kwidthBox,
-                          Text(
-                            StringConstant.selectFile,
-                            style: TextStyleUtil.manrope14w500(
-                                color: context.primary01),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.file_upload_outlined),
+                            10.kheightBox,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  StringConstant.uploadFile,
+                                  style: TextStyleUtil.manrope14w500(
+                                      color: context.primary01),
+                                ),
+                                4.kwidthBox,
+                                Text(
+                                  StringConstant.or,
+                                  style: TextStyleUtil.manrope14w500(
+                                      color: context.black04),
+                                ),
+                                4.kwidthBox,
+                                Text(
+                                  StringConstant.selectFile,
+                                  style: TextStyleUtil.manrope14w500(
+                                      color: context.primary01),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
                       : Image.file(
-                    File(controller.restaurantLogo.value),
-                    fit: BoxFit.contain,
-                  ),
+                          File(controller.restaurantLogo.value),
+                          fit: BoxFit.contain,
+                        ),
                 ),
               )),
           10.kheightBox,
@@ -137,8 +130,7 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          Obx(() =>
-              InkWell(
+          Obx(() => InkWell(
                 onTap: () => controller.pickImage(controller.restaurantBanner),
                 child: Container(
                   height: 160.kh,
@@ -150,23 +142,23 @@ class StepOne extends GetView<ProfileSetupController> {
                   ),
                   child: controller.restaurantBanner.value.isEmpty
                       ? Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.file_upload_outlined),
-                        2.kwidthBox,
-                        Text(
-                          StringConstant.uploadPhoto,
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.file_upload_outlined),
+                              2.kwidthBox,
+                              Text(
+                                StringConstant.uploadPhoto,
+                                style: TextStyleUtil.manrope14w400(
+                                    color: context.black03),
+                              )
+                            ],
+                          ),
                         )
-                      ],
-                    ),
-                  )
                       : Image.file(
-                    File(controller.restaurantBanner.value),
-                    fit: BoxFit.cover,
-                  ),
+                          File(controller.restaurantBanner.value),
+                          fit: BoxFit.cover,
+                        ),
                 ),
               )),
           10.kheightBox,
@@ -184,18 +176,12 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextField(
-            validator: (String? val) {
-              if(val == null || val.isEmpty || int.parse(val) == 0){
-                return "Average price for 2 cannot be empty!";
-              }
-              return null;
-            },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.averagePriceController,
+          FsvTextfield(
             hintText: StringConstant.enterPrice,
             keyboardType: TextInputType.number,
+            controller: controller.averagePriceController,
+            validator: (value) => controller.pricingValidator(value),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
 
@@ -213,17 +199,17 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextBox(
-            validator: (String? val){
-              if(val == null || val.isEmpty){
+          FsvTextfield(
+            hintText: StringConstant.enterDescription,
+            controller: controller.descriptionController,
+            maxLines: 5,
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return "Description cannot be empty!";
               }
               return null;
             },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.descriptionController,
-            hintText: StringConstant.enterDescription,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
           Row(
@@ -251,32 +237,32 @@ class StepOne extends GetView<ProfileSetupController> {
                 Obx(() {
                   return Expanded(
                       child: DropdownButtonFormField<CuisineModel>(
-                        dropdownColor: Colors.white,
-                        style: TextStyleUtil.manrope16w400(),
-                        onChanged: (val) {
-                          if (val != null) {
-                            controller.selectedCuisines.add(val);
-                          }
-                        },
-                        items: controller.cuisineModels
-                            .map<DropdownMenuItem<CuisineModel>>((
-                            CuisineModel value) {
-                          return DropdownMenuItem<CuisineModel>(
-                            value: value,
-                            child: Text(value.name!),
-                          );
-                        }).toList(),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(0),
-                          hintText: StringConstant.selectCuisine,
-                          hintStyle: TextStyleUtil.manrope14w400(
-                              color: context.black04),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ));
+                    dropdownColor: Colors.white,
+                    style: TextStyleUtil.manrope16w400(),
+                    onChanged: (val) {
+                      if (val != null) {
+                        controller.selectedCuisines.add(val);
+                      }
+                    },
+                    items: controller.cuisineModels
+                        .map<DropdownMenuItem<CuisineModel>>(
+                            (CuisineModel value) {
+                      return DropdownMenuItem<CuisineModel>(
+                        value: value,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(0),
+                      hintText: StringConstant.selectCuisine,
+                      hintStyle:
+                          TextStyleUtil.manrope14w400(color: context.black04),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ));
                 }),
               ],
             ),
@@ -285,7 +271,9 @@ class StepOne extends GetView<ProfileSetupController> {
           Row(
             children: <Widget>[
               Text(
-                StringConstant.location, style: TextStyleUtil.manrope18w600(),),
+                StringConstant.location,
+                style: TextStyleUtil.manrope18w600(),
+              ),
               4.kwidthBox,
               const Divider(),
             ],
@@ -293,8 +281,10 @@ class StepOne extends GetView<ProfileSetupController> {
           20.kheightBox,
           Row(
             children: [
-              Text(StringConstant.streetNameNo,
-                style: TextStyleUtil.manrope14w500(),),
+              Text(
+                StringConstant.streetNameNo,
+                style: TextStyleUtil.manrope14w500(),
+              ),
               Text(
                 "*",
                 style: TextStyleUtil.manrope14w500(color: context.primary01),
@@ -302,23 +292,24 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextField(
+          FsvTextfield(
+            hintText: StringConstant.enterLocation,
+            controller: controller.streetNameController,
             validator: (String? val) {
-              if(val == null || val.isEmpty){
+              if (val == null || val.isEmpty) {
                 return "street name cannot be empty!";
               }
               return null;
             },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.streetNameController,
-            hintText: StringConstant.enterLocation,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
           Row(
             children: [
               Text(
-                StringConstant.cityTown, style: TextStyleUtil.manrope14w500(),),
+                StringConstant.cityTown,
+                style: TextStyleUtil.manrope14w500(),
+              ),
               Text(
                 "*",
                 style: TextStyleUtil.manrope14w500(color: context.primary01),
@@ -326,23 +317,24 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextField(
+          FsvTextfield(
+            controller: controller.cityNameController,
+            hintText: StringConstant.enterLocation,
             validator: (String? val) {
-              if(val == null || val.isEmpty){
+              if (val == null || val.isEmpty) {
                 return "city name cannot be empty!";
               }
               return null;
             },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.cityNameController,
-            hintText: StringConstant.enterLocation,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
           Row(
             children: [
               Text(
-                StringConstant.postCode, style: TextStyleUtil.manrope14w500(),),
+                StringConstant.postCode,
+                style: TextStyleUtil.manrope14w500(),
+              ),
               Text(
                 "*",
                 style: TextStyleUtil.manrope14w500(color: context.primary01),
@@ -350,18 +342,18 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          CustomTextField(
+          FsvTextfield(
+            controller: controller.postCodeController,
+            hintText: StringConstant.enterLocation,
             keyboardType: TextInputType.number,
+            maxLength: 6,
             validator: (String? val) {
-              if(val == null || val.isEmpty){
+              if (val == null || val.isEmpty) {
                 return "Post code cannot be empty!";
               }
               return null;
             },
-            fillColor: context.loginSignupTextfieldColor,
-            border: Border.all(color: context.black07),
-            controller: controller.postCodeController,
-            hintText: StringConstant.enterLocation,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           40.kheightBox,
           CustomRedElevatedButton(
@@ -371,7 +363,7 @@ class StepOne extends GetView<ProfileSetupController> {
               height: 56.kh,
               width: 100.w,
               onPressed: () {
-                if(formKey.currentState!.validate()){
+                if (formKey.currentState!.validate()) {
                   controller.stepCount.value < 2
                       ? controller.gotoNextStep()
                       : controller.gotoEnableLocationScreen();

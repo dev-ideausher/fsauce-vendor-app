@@ -5,11 +5,13 @@ import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
+import 'package:fsauce_vendor_app/app/services/custom_button.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../components/fsv_textfield.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -40,43 +42,21 @@ class LoginView extends GetView<LoginController> {
                   style: TextStyleUtil.manrope14w500(),
                 ),
                 6.kheightBox,
-                Container(
-                  height: 53.kh,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                      border: Border.all(color: context.black07)),
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 4.kh),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                  RegExp(r'\s')),
-                            ],
-                            onChanged: (val) {
-                              if (val.isEmpty) {
-                                controller.isLoginEnabled.value = false;
-                              } else {
-                                controller.isLoginEnabled.value = true;
-                              }
-                            },
-                            controller: controller.emailController,
-                            decoration: InputDecoration(
-                              hintText: StringConstant.enterEmailId,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                FsvTextfield(
+                  hintText: StringConstant.enterEmailId,
+                  controller: controller.emailController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                  ],
+                  onchanged: (val) {
+                    if (val != null) {
+                      controller.isLoginEnabled.value = true;
+                    } else {
+                      controller.isLoginEnabled.value = false;
+                    }
+                  },
+                  validator: (val) => controller.validateEmail(val),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 20.kheightBox,
                 Text(
@@ -84,58 +64,39 @@ class LoginView extends GetView<LoginController> {
                   style: TextStyleUtil.manrope14w500(),
                 ),
                 6.kheightBox,
-                Container(
-                  height: 53.kh,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      borderRadius: BorderRadius.circular(8.0.kw),
-                      border: Border.all(color: context.black07)),
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 4.kh),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Obx(() {
-                            return TextField(
-                              maxLength: 64,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(
-                                    RegExp(r'\s')),
-                              ],
-                              onChanged: (val) {
-                                if (val.isEmpty) {
-                                  controller.isLoginEnabled.value = false;
-                                } else {
-                                  controller.isLoginEnabled.value = true;
-                                }
-                              },
-                              obscureText: controller.passwordVisible.value,
-                              controller: controller.passwordController,
-                              decoration: InputDecoration(
-                                counterText: "",
-                                suffixIcon: IconButton(
-                                    onPressed: () {
-                                      controller.togglePasswordVisible();
-                                    },
-                                    icon: controller.passwordVisible.value ? Icon(
-                                      Icons.remove_red_eye_rounded,
-                                      size: 18.kw,
-                                    ) : Icon(Icons.visibility_off, size: 18.kw,)
-                                ),
-                                hintText: StringConstant.enterPassword,
-                                hintStyle: TextStyleUtil.manrope14w400(
-                                    color: context.black04),
-                                border: InputBorder.none,
-                              ),
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
+                Obx(
+                  () => FsvTextfield(
+                    hintText: StringConstant.enterPassword,
+                    onchanged: (val) {
+                      if (val != null) {
+                        controller.isLoginEnabled.value = true;
+                      } else {
+                        controller.isLoginEnabled.value = false;
+                      }
+                    },
+                    obscureText: controller.passwordVisible.value,
+                    controller: controller.passwordController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                    ],
+                    isSuffixPaddingNeeded: false,
+                    validator: (val) => controller.passwordValidator(val),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    suffix: controller.passwordVisible.value
+                        ? Icon(
+                            Icons.visibility_off,
+                            size: 18.kw,
+                          )
+                        : Icon(
+                            Icons.remove_red_eye_rounded,
+                            size: 18.kw,
+                          ),
+                    onPressedSuffix: () {
+                      controller.togglePasswordVisible();
+                    },
                   ),
                 ),
+                6.kheightBox,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -150,30 +111,29 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
                 20.kheightBox,
-                Obx(() {
-                  return CustomRedElevatedButton(
-                      buttonColor: controller.isLoginEnabled.value ? context.primary01 : context.primary06,
-                      buttonText: StringConstant.login,
-                      height: 56.kh,
-                      width: 100.w,
-                      textStyle: controller.isLoginEnabled.value ? null : TextStyleUtil.manrope16w500(color: context.black03),
-                      onPressed: (){
-                        if(controller.formKey.currentState!.validate()){
-                          controller.isLoginEnabled.value ? controller.login() : () {};
-                        } else{
-                          (){};
-                        }
+                Obx(
+                  () => FsvButton(
+                    onPressed: () {
+                      if (controller.formKey.currentState!.validate()) {
+                        controller.isLoginEnabled.value
+                            ? controller.login()
+                            : () {};
+                      } else {
+                        () {};
                       }
-                  );
-                }),
+                    },
+                    isActive: controller.isLoginEnabled.value,
+                    label: StringConstant.login,
+                  ),
+                ),
                 20.kheightBox,
                 Row(
                   children: [
                     Expanded(
                         child: Divider(
-                          color: context.black07,
-                          thickness: 1.5,
-                        )),
+                      color: context.black07,
+                      thickness: 1.5,
+                    )),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -185,9 +145,9 @@ class LoginView extends GetView<LoginController> {
                     ),
                     Expanded(
                         child: Divider(
-                          color: context.black07,
-                          thickness: 1.5,
-                        )),
+                      color: context.black07,
+                      thickness: 1.5,
+                    )),
                   ],
                 ),
                 20.kheightBox,

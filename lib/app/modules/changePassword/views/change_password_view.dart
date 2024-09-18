@@ -7,6 +7,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
+import '../../../components/custom_app_bar.dart';
 import '../controllers/change_password_controller.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
@@ -16,9 +17,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text(''),
-        ),
+        appBar: const CustomAppBar(title: "", leading: SizedBox()),
         body: Padding(
           padding: EdgeInsets.all(16.kw),
           child:

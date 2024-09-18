@@ -121,77 +121,6 @@ class DealsOfTheDayCardDate extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  isActive
-                      ? Padding(
-                          padding: EdgeInsets.only(bottom: 10.kh),
-                          child: PopupMenuButton<int>(
-                            color: Colors.white,
-                            onSelected: (item) => handleClick(item),
-                            itemBuilder: (context) => [
-                              PopupMenuItem<int>(
-                                  onTap: () {
-                                    Get.find<VipOffersController>()
-                                        .gotoEditVipOffer(coupon);
-                                  },
-                                  value: 1,
-                                  child: Text(
-                                    StringConstant.edit,
-                                    style: TextStyleUtil.manrope14w400(),
-                                  )),
-                              PopupMenuItem<int>(
-                                  onTap: () {
-                                    Get.find<VipOffersController>()
-                                        .showInactiveDialog(coupon);
-                                  },
-                                  value: 1,
-                                  child: Text(
-                                    StringConstant.inactiveOffer,
-                                    style: TextStyleUtil.manrope14w400(),
-                                  )),
-                              PopupMenuItem<int>(
-                                  onTap: () {
-                                    Get.find<VipOffersController>()
-                                        .showDeleteDialog(coupon);
-                                  },
-                                  value: 1,
-                                  child: Text(
-                                    StringConstant.deleteOffer,
-                                    style: TextStyleUtil.manrope14w400(
-                                      color: context.primary01,
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        )
-                      : Padding(
-                          padding: EdgeInsets.only(bottom: 10.kh),
-                          child: PopupMenuButton<int>(
-                            color: Colors.white,
-                            onSelected: (item) => handleClick(item),
-                            itemBuilder: (context) => [
-                              PopupMenuItem<int>(
-                                  onTap: () {
-                                    Get.find<VipOffersController>()
-                                        .gotoEditVipOffer(coupon);
-                                  },
-                                  value: 1,
-                                  child: Text(
-                                    StringConstant.edit,
-                                    style: TextStyleUtil.manrope14w400(),
-                                  )),
-                              PopupMenuItem<int>(
-                                  onTap: () {
-                                    Get.find<VipOffersController>()
-                                        .showActiveDialog(coupon);
-                                  },
-                                  value: 1,
-                                  child: Text(
-                                    StringConstant.activeOffer,
-                                    style: TextStyleUtil.manrope14w400(),
-                                  )),
-                            ],
-                          ),
-                        )
                 ],
               ),
             ),
@@ -212,6 +141,82 @@ class DealsOfTheDayCardDate extends StatelessWidget {
             ),
           ],
         ),
+        Positioned(
+            right: 0,
+            top: 40,
+            child: isActive
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: 10.kh),
+                    child: PopupMenuButton<int>(
+                      color: Colors.white,
+                      iconColor: context.white,
+                      onSelected: (item) => handleClick(item),
+                      itemBuilder: (context) => [
+                        PopupMenuItem<int>(
+                            onTap: () {
+                              Get.find<VipOffersController>()
+                                  .gotoEditVipOffer(coupon);
+                            },
+                            value: 1,
+                            child: Text(
+                              StringConstant.edit,
+                              style: TextStyleUtil.manrope14w400(),
+                            )),
+                        PopupMenuItem<int>(
+                            onTap: () {
+                              Get.find<VipOffersController>()
+                                  .showInactiveDialog(coupon);
+                            },
+                            value: 1,
+                            child: Text(
+                              StringConstant.inactiveOffer,
+                              style: TextStyleUtil.manrope14w400(),
+                            )),
+                        PopupMenuItem<int>(
+                            onTap: () {
+                              Get.find<VipOffersController>()
+                                  .showDeleteDialog(coupon);
+                            },
+                            value: 1,
+                            child: Text(
+                              StringConstant.deleteOffer,
+                              style: TextStyleUtil.manrope14w400(
+                                color: context.primary01,
+                              ),
+                            )),
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(bottom: 10.kh),
+                    child: PopupMenuButton<int>(
+                      color: Colors.white,
+                      iconColor: context.white,
+                      onSelected: (item) => handleClick(item),
+                      itemBuilder: (context) => [
+                        PopupMenuItem<int>(
+                            onTap: () {
+                              Get.find<VipOffersController>()
+                                  .gotoEditVipOffer(coupon);
+                            },
+                            value: 1,
+                            child: Text(
+                              StringConstant.edit,
+                              style: TextStyleUtil.manrope14w400(),
+                            )),
+                        PopupMenuItem<int>(
+                            onTap: () {
+                              Get.find<VipOffersController>()
+                                  .showActiveDialog(coupon);
+                            },
+                            value: 1,
+                            child: Text(
+                              StringConstant.activeOffer,
+                              style: TextStyleUtil.manrope14w400(),
+                            )),
+                      ],
+                    ),
+                  )),
       ]),
     );
   }

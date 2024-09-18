@@ -11,13 +11,16 @@ class PushNotificationController extends GetxController {
   //TODO: Implement PushNotificationController
 
   RxList<PushNotification> notificationList = <PushNotification>[].obs;
+  RxBool isLoad = false.obs;
 
   Future<void> getNotifications() async{
     try{
+      isLoad.value = true;
       var response = await APIManager.getNotifications();
       List<dynamic> data = response.data['data'];
       notificationList.value = [];
       notificationList.value = data.map((e) => PushNotification.fromJson(e)).toList();
+      isLoad.value = false;
     } catch(e){
       print(e.toString());
       Get.snackbar("Error", e.toString());

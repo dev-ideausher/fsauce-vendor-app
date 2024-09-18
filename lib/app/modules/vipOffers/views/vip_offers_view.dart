@@ -30,7 +30,7 @@ class VipOffersView extends GetView<VipOffersController> {
               indicatorColor: context.primary01,
               labelStyle: TextStyleUtil.manrope14w500(),
               labelColor: context.primary01,
-              tabs: const <Widget> [
+              tabs: const <Widget>[
                 Tab(
                   text: StringConstant.activeOffers,
                 ),
@@ -58,14 +58,11 @@ class VipOffersView extends GetView<VipOffersController> {
             height: 100.h,
             width: 100.w,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.kw),
-              child: const TabBarView(
-                  children: [
-                    ActiveOffersView(),
-                    InactiveOffersView(),
-                  ]
-              )
-            ),
+                padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 6.kh),
+                child: const TabBarView(children: [
+                  ActiveOffersView(),
+                  InactiveOffersView(),
+                ])),
           )),
     );
   }

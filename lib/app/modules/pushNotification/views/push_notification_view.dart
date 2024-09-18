@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/components/push_notification_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
-import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
@@ -27,13 +24,13 @@ class PushNotificationView extends GetView<PushNotificationController> {
 
     return Scaffold(
         appBar: const CustomAppBar(
-          title: StringConstant.pushNotifications,
+          title: StringConstant.pushNotification,
         ),
         floatingActionButton: Container(
           height: 41.kh,
           width: 41.kw,
           decoration:
-          BoxDecoration(shape: BoxShape.circle, color: context.primary01),
+              BoxDecoration(shape: BoxShape.circle, color: context.primary01),
           child: IconButton(
               padding: EdgeInsets.zero,
               icon: Icon(
@@ -43,33 +40,41 @@ class PushNotificationView extends GetView<PushNotificationController> {
               ),
               onPressed: controller.createPushNotification),
         ),
-        body: Obx(() {
-          if(controller.notificationList.isNotEmpty){
-            return SingleChildScrollView(
-              padding: EdgeInsets.all(16.kw),
-              child: Column(
-                children: [
-                  20.kheightBox,
-                  ListView.separated(
-                    shrinkWrap: true,
-                      itemBuilder: (ctx, index){
-                    return PushNotificationCard(
-                      isActivate: controller.notificationList[index].sheduledDate == null ? true : DateTime.parse(controller.notificationList[index].sheduledDate!).isAfter(DateTime.now()),
-                      notification: controller.notificationList[index],
-                    );
-                  }, separatorBuilder: (ctx, index){
-                    return 10.kheightBox;
-                  }, itemCount: controller.notificationList.length)
-                ],
-              ),
-            );
-          } else if(controller.notificationList.isEmpty){
-            return Center(child: EmptyWidget(
-              title: StringConstant.noNotificationsCreated,
-            ));
-          } else{
-            return const Center(child: CircularProgressIndicator());
-          }
-        }));
+        body: SingleChildScrollView(
+          child: Obx(
+            () => controller.isLoad.value
+                ? const SizedBox()
+                : controller.notificationList.isEmpty
+                    ? Center(
+                        child: EmptyWidget(
+                        title: StringConstant.noNotificationsCreated,
+                      ))
+                    : Column(
+                        children: [
+                          20.kheightBox,
+                          ListView.separated(
+                              shrinkWrap: true,
+                              itemBuilder: (ctx, index) {
+                                return PushNotificationCard(
+                                  isActivate: controller.notificationList[index]
+                                              .sheduledDate ==
+                                          null
+                                      ? true
+                                      : DateTime.parse(controller
+                                              .notificationList[index]
+                                              .sheduledDate!)
+                                          .isAfter(DateTime.now()),
+                                  notification:
+                                      controller.notificationList[index],
+                                );
+                              },
+                              separatorBuilder: (ctx, index) {
+                                return 10.kheightBox;
+                              },
+                              itemCount: controller.notificationList.length)
+                        ],
+                      ).paddingSymmetric(horizontal: 16.kh),
+          ),
+        ));
   }
 }

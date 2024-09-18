@@ -9,6 +9,7 @@ import 'package:fsauce_vendor_app/app/modules/home/views/weekly_analysis.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/yearly_analysis.dart';
 import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/navBar/views/nav_bar_view.dart';
+import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -36,7 +37,7 @@ class HomeView extends GetView<HomeController> {
                     height: 155.kh,
                     width: 100.w,
                     padding:
-                    EdgeInsets.only(top: 79.kh, left: 16.kw, right: 16.kw),
+                        EdgeInsets.only(top: 79.kh, left: 16.kw, right: 16.kw),
                     decoration: BoxDecoration(
                       color: context.primary02,
                       borderRadius: BorderRadius.only(
@@ -79,12 +80,12 @@ class HomeView extends GetView<HomeController> {
                                     4.kwidthBox,
                                     Obx(() {
                                       return Text(
-                                        controller.restaurantDetails.value
-                                            .location,
+                                        controller
+                                            .restaurantDetails.value.location,
                                         style: TextStyleUtil.manrope14w400(
                                           color: Colors.white,
                                           textDecoration:
-                                          TextDecoration.underline,
+                                              TextDecoration.underline,
                                           decorationColor: Colors.white,
                                         ),
                                       );
@@ -95,9 +96,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                             IconButton(
                               onPressed:
-                              Get
-                                  .find<HomeController>()
-                                  .gotoNotifications,
+                                  Get.find<HomeController>().gotoNotifications,
                               padding: const EdgeInsets.all(0),
                               icon: CommonImageView(
                                 svgPath: ImageConstant.notificationIcon,
@@ -185,8 +184,8 @@ class HomeView extends GetView<HomeController> {
                             padding: EdgeInsets.zero,
                             dividerColor: Colors.transparent,
                             indicator: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(50.kh), // Creates border
+                              borderRadius: BorderRadius.circular(
+                                  50.kh), // Creates border
                               color: Colors.white,
                             ),
                             tabs: [
@@ -222,7 +221,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                         SizedBox(
                           height:
-                          100.h - 200, // Set a fixed height for TabBarView
+                              100.h - 200, // Set a fixed height for TabBarView
                           child: TabBarView(
                             children: [
                               SingleChildScrollView(child: WeeklyAnalysis()),

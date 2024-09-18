@@ -18,17 +18,11 @@ class PlanCard extends StatelessWidget {
     List<String?> features = plan.features ?? [];
     final controller = Get.find<SubscriptionController>();
     return Container(
-      // padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
-      height: 204.kh,
-      width: 400.kw,
+      padding: EdgeInsets.only(bottom: 16.kh),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [BoxShadow(
-              color: context.black05,
-              blurRadius: 4
-          )
-          ]),
+          boxShadow: [BoxShadow(color: context.black05, blurRadius: 4)]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -38,15 +32,14 @@ class PlanCard extends StatelessWidget {
             children: <Widget>[
               Obx(() {
                 return Radio<PlanModel>(
-                  activeColor: context.primary01,
+                    activeColor: context.primary01,
                     value: plan,
                     groupValue: controller.selectedPlan.value,
-                    onChanged: (PlanModel? model){
-                      if(model != null){
+                    onChanged: (PlanModel? model) {
+                      if (model != null) {
                         controller.selectedPlan.value = model;
                       }
-                    }
-                );
+                    });
               }),
               32.kwidthBox,
               Text(
@@ -54,44 +47,56 @@ class PlanCard extends StatelessWidget {
                 style: TextStyleUtil.manrope18w600(),
               ),
               Expanded(child: Container()),
-              controller.selectedPlan.value.Id == plan.Id ?
-              Container(
-                padding: EdgeInsets.all(8.kw),
-                decoration: BoxDecoration(
-                  color: context.primary03,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8.kw), bottomLeft: Radius.circular(8.kw))
-                ),
-                child: Center(
-                  child: Text(StringConstant.currentPlan, style: TextStyleUtil.manrope12w400(color: Colors.white))
-                )
-              ) : Container(),
+              controller.selectedPlan.value.Id == plan.Id
+                  ? Container(
+                      padding: EdgeInsets.all(8.kw),
+                      decoration: BoxDecoration(
+                          color: context.primary03,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8.kw),
+                              bottomLeft: Radius.circular(8.kw))),
+                      child: Center(
+                          child: Text(StringConstant.currentPlan,
+                              style: TextStyleUtil.manrope12w400(
+                                  color: Colors.white))))
+                  : Container(),
             ],
           ),
           10.kheightBox,
-          features.isNotEmpty ? SizedBox(
-            width: 200.kw,
-            child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (ctx, index) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(Icons.circle, size: 4, color: context.black03,),
-                      8.kwidthBox,
-                      Text(
-                        features[index] ?? "",
-                        style: TextStyleUtil.manrope14w400(
-                            color: context.black03),
-                      )
-                    ],
-                  );
-                },
-                separatorBuilder: (ctx, index) {
-                  return 4.kheightBox;
-                },
-                itemCount: features.length),
-          ) : Container(),
+          features.isNotEmpty
+              ? IntrinsicWidth(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisSize: MainAxisSize
+                          .min, // Ensures the Column takes up only the space it needs
+                      children: List.generate(features.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 4.0), // Add padding between items
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Icon(
+                                Icons.circle,
+                                size: 4,
+                                color: context.black03,
+                              ),
+                              8.kwidthBox,
+                              Text(
+                                features[index] ?? "",
+                                style: TextStyleUtil.manrope14w400(
+                                    color: context.black03),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
           28.kheightBox,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

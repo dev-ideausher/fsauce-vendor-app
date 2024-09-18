@@ -94,7 +94,7 @@ class StringConstant {
   static const String login = "Login";
   static const String termsAndcons1 = "By continuing, you agree to our ";
   static const String termsCons2 = "Terms and Conditions";
-  static const String and = " and";
+  static const String and = " and ";
   static const String privacyPolicy = "Privacy Policy";
   static const String contentPolicy = " Content Policy";
   static const String verify = "Verify";
@@ -254,7 +254,7 @@ class StringConstant {
       "Choose a category and sub-category to add\nan item.";
   static const String restaurantDetails = "Restaurant Details";
   static const String scanRedemptionRecord = "Scan Redemption Record";
-  static const String pushNotifications = "Push Notifications";
+  static const String pushNotification = "Push Notification";
   static const String featuresTimings = "Features & Timings";
   static const String searchBydate = "Search by date";
   static const String viewScanningHistory = "View scanning history";
@@ -316,7 +316,7 @@ class StringConstant {
   static const String jobTitle = "Job Title";
   static const String enterJobTitle = "Enter Job Title";
   static const String salaryOffered = "Salary Offered";
-  static const String perYear = " per year";
+  static const String perYear = "per year";
   static const String minSalaryOffered = "Min. salary offered";
   static const String maxSalaryOffered = "Max. salary offered";
   static const String lastDateToApply = "Last Date to Apply";
@@ -585,8 +585,13 @@ class StringConstant {
 
   static var expiryDate = "Expiry date";
 
+  static var expiryDateMMYY = "MM/YY";
+
   static var enterCVV = "Enter CVV";
 
   static var enterCardHolderName = "Enter card holder's name";
+
+  static var newPasswordCannotBeSameAsOldPassword =
+      "New password cannot be same as old password";
   // static const String
 }

@@ -63,4 +63,6 @@ extension ColorUtil on BuildContext {
       dynamicColour(light: HexColor("#E6E6E6"), dark: HexColor("#E6E6E6"));
   Color get white =>
       dynamicColour(light: HexColor("#FFFFFF"), dark: HexColor("#FFFFFF"));
+
+  static const Color kErrorColor = Color(0xffde2121);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
+import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -32,52 +33,20 @@ class ChangePasswordProfileView
                 style: TextStyleUtil.manrope14w500(),
               ),
               6.kheightBox,
-              Container(
-                height: 53.kh,
-                width: 100.w,
-                decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.0.kw),
-                    border: Border.all(color: context.black07)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 4.kh),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          return TextFormField(
-                            obscureText: controller.isOldPasswordVisible.value,
-                            controller: controller.oldPasswordController,
-                            validator: (String? val) {
-                              if (val == null || val.isEmpty) {
-                                return StringConstant.oldPasswordCannotBeEmpty;
-                              } else if(val.length > 15){
-                                return StringConstant.max15CharsAllowed;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    controller.isOldPasswordVisible.value =
-                                    !controller.isOldPasswordVisible.value;
-                                  },
-                                  icon: controller.isOldPasswordVisible.value ? Icon(
-                                    Icons.remove_red_eye_rounded,
-                                    size: 18.kw,
-                                  ) : Icon(Icons.visibility_off, size: 18.kw)
-                              ),
-                              hintText: StringConstant.enterPassword,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
+              Obx(
+                () => FsvTextfield(
+                  obscureText: controller.isOldPasswordVisible.value,
+                  controller: controller.oldPasswordController,
+                  hintText: StringConstant.enterPassword,
+                  validator: (value) => controller.oldPasswordValidator(value),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  onPressedSuffix: () {
+                    controller.isOldPasswordVisible.value =
+                        !controller.isOldPasswordVisible.value;
+                  },
+                  suffix: controller.isOldPasswordVisible.value
+                      ? Icon(Icons.visibility_off, size: 18.kw)
+                      : Icon(Icons.remove_red_eye_rounded, size: 18.kw),
                 ),
               ),
               20.kheightBox,
@@ -89,58 +58,26 @@ class ChangePasswordProfileView
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w400(
-                        color: context.primary01),
+                    style:
+                        TextStyleUtil.manrope14w400(color: context.primary01),
                   )
                 ],
               ),
               6.kheightBox,
-              Container(
-                height: 53.kh,
-                width: 100.w,
-                decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.0.kw),
-                    border: Border.all(color: context.black07)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 4.kh),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          return TextFormField(
-                            controller: controller.newPasswordController,
-                            validator: (String? val) {
-                              if (val == null || val.isEmpty) {
-                                return StringConstant.newPasswordCannotBeEmpty;
-                              } else if(val.length > 15){
-                                return StringConstant.max15CharsAllowed;
-                              }
-                              return null;
-                            },
-                            obscureText: controller.isNewPasswordVisible.value,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    controller.isNewPasswordVisible.value =
-                                    !controller.isNewPasswordVisible.value;
-                                  },
-                                  icon: controller.isNewPasswordVisible.value ? Icon(
-                                    Icons.remove_red_eye_rounded,
-                                    size: 18.kw,
-                                  ) : Icon(Icons.visibility_off, size: 18.kw,)
-                              ),
-                              hintText: StringConstant.enterNewPassword,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
+              Obx(
+                () => FsvTextfield(
+                  hintText: StringConstant.enterNewPassword,
+                  controller: controller.newPasswordController,
+                  obscureText: controller.isNewPasswordVisible.value,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => controller.newPasswordValidator(value),
+                  onPressedSuffix: () {
+                    controller.isNewPasswordVisible.value =
+                        !controller.isNewPasswordVisible.value;
+                  },
+                  suffix: controller.isNewPasswordVisible.value
+                      ? Icon(Icons.visibility_off, size: 18.kw)
+                      : Icon(Icons.remove_red_eye_rounded, size: 18.kw),
                 ),
               ),
               20.kheightBox,
@@ -152,61 +89,27 @@ class ChangePasswordProfileView
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w400(
-                        color: context.primary01),
+                    style:
+                        TextStyleUtil.manrope14w400(color: context.primary01),
                   )
                 ],
               ),
               6.kheightBox,
-              Container(
-                height: 53.kh,
-                width: 100.w,
-                decoration: BoxDecoration(
-                    color: context.loginSignupTextfieldColor,
-                    borderRadius: BorderRadius.circular(8.0.kw),
-                    border: Border.all(color: context.black07)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 4.kh),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          return TextFormField(
-                            controller: controller.confirmPasswordController,
-                            validator: (String? val){
-                              if(val == null || val.isEmpty){
-                                return StringConstant.confirmPasswordCannotBeEmpty;
-                              } else if(val != controller.newPasswordController.text){
-                                return StringConstant.passwordsDoNotMatch;
-                              } else if(val.length > 15){
-                                return StringConstant.max15CharsAllowed;
-                              }
-                              return null;
-                            },
-                            obscureText: controller.isConfirmPasswordVisible
-                                .value,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    controller.isConfirmPasswordVisible.value =
-                                    !controller.isConfirmPasswordVisible.value;
-                                  },
-                                  icon: controller.isConfirmPasswordVisible.value ? Icon(
-                                    Icons.remove_red_eye_rounded,
-                                    size: 18.kw,
-                                  ) : Icon(Icons.visibility_off, size: 18.kw)
-                              ),
-                              hintText: StringConstant.confirmPassword,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: InputBorder.none,
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
+              Obx(
+                () => FsvTextfield(
+                  hintText: StringConstant.confirmPassword,
+                  controller: controller.confirmPasswordController,
+                  validator: (value) =>
+                      controller.confirmPasswordValidator(value),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  obscureText: controller.isConfirmPasswordVisible.value,
+                  onPressedSuffix: () {
+                    controller.isConfirmPasswordVisible.value =
+                        !controller.isConfirmPasswordVisible.value;
+                  },
+                  suffix: controller.isConfirmPasswordVisible.value
+                      ? Icon(Icons.visibility_off, size: 18.kw)
+                      : Icon(Icons.remove_red_eye_rounded, size: 18.kw),
                 ),
               ),
               const Spacer(),
@@ -214,10 +117,12 @@ class ChangePasswordProfileView
                   buttonText: StringConstant.save,
                   height: 56.kh,
                   width: 100.w,
-                  onPressed: (){
-                    if(controller.formKey.currentState!.validate()){
-                      if(controller.newPasswordController.text == controller.confirmPasswordController.text){
-                        controller.updatePassword(controller.newPasswordController.text);
+                  onPressed: () {
+                    if (controller.formKey.currentState!.validate()) {
+                      if (controller.newPasswordController.text ==
+                          controller.confirmPasswordController.text) {
+                        controller.updatePassword(
+                            controller.newPasswordController.text);
                       }
                     }
                   }),

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -18,17 +21,8 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back)),
-        title: Text(
-          StringConstant.paymentMethod,
-          style: TextStyleUtil.manrope18w600(),
-        ),
+      appBar: const CustomAppBar(
+        title: StringConstant.paymentMethod,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.kw),
@@ -48,10 +42,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                     itemBuilder: (ctx, index) {
                       return Container(
                         height: 58.kh,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.9,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.kh),
                             color: Colors.white),
@@ -62,31 +53,29 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                                 child: Row(
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.remove_circle_outline, color: context.primary01),
-                                      onPressed: (){
-                                        controller.showDelCardDialog(
-                                            controller.cardsList[index]);
-                                      }
-                                    ),
+                                        icon: Icon(Icons.remove_circle_outline,
+                                            color: context.primary01),
+                                        onPressed: () {
+                                          controller.showDelCardDialog(
+                                              controller.cardsList[index]);
+                                        }),
                                     Container(
                                         height: 44.kh,
                                         width: 48.kh,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8.kh),
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh),
                                           color: context.black07,
                                         ),
                                         child: Center(
                                             child: CommonImageView(
-                                              svgPath: Assets.svgsVisaLogo,
-                                            )
-                                        )
-                                    ),
+                                          svgPath: Assets.svgsVisaLogo,
+                                        ))),
                                   ],
                                 ),
                               ),
                               title: Text(
-                                  "**** **** *${controller.cardsList[index]
-                                      .last4 ?? "1212"}",
+                                  "**** **** *${controller.cardsList[index].last4 ?? "1212"}",
                                   style: TextStyleUtil.manrope14w400()),
                               trailing: Obx(() {
                                 return Radio<CardModel>(
@@ -99,8 +88,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                                     }
                                   },
                                 );
-                              })
-                          ),
+                              })),
                         ),
                       );
                     },
@@ -111,7 +99,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
               } else if (controller.cardsList.isEmpty) {
                 return EmptyWidget(title: "No cards saved yet");
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             }),
             32.kheightBox,
@@ -123,120 +111,99 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
             ListView(
               shrinkWrap: true,
               children: [
-                InkWell(
-                  onTap: () {
-                    controller.goToCardDetailsView();
-                  },
-                  child: Container(
-                    height: 60.kh,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.9,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kh),
-                        color: Colors.white),
-                    child: Center(
-                      child: ListTile(
-                          leading: Container(
-                              height: 44.kh,
-                              width: 48.kh,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.kh),
-                                color: context.black07,
-                              ),
-                              child: Center(
-                                  child: CommonImageView(
-                                    svgPath: Assets.svgsVisaLogo,
-                                  )
-                              )
+                Container(
+                  height: 60.kh,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.kh),
+                      color: Colors.white),
+                  child: Center(
+                    child: ListTile(
+                      leading: Container(
+                          height: 44.kh,
+                          width: 48.kh,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.kh),
+                            color: context.black07,
                           ),
-                          title: Text(StringConstant.creditDebitCard,
-                              style: TextStyleUtil.manrope14w500()),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
-                          )
+                          child: Center(
+                              child: CommonImageView(
+                            svgPath: Assets.svgsVisaLogo,
+                          ))),
+                      title: Text(StringConstant.creditDebitCard,
+                          style: TextStyleUtil.manrope14w500()),
+                      onTap: () {
+                        controller.goToCardDetailsView();
+                      },
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16.kh,
                       ),
                     ),
                   ),
                 ),
                 8.kheightBox,
-                InkWell(
-                  onTap: () {
-                    //ToDo: Implement apply pay.
-                  },
+                Visibility(
+                  visible: Platform.isIOS,
                   child: Container(
                     height: 60.kh,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.9,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.kh),
                         color: Colors.white),
                     child: Center(
                       child: ListTile(
-                          leading: Container(
-                              height: 44.kh,
-                              width: 48.kh,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.kh),
-                                color: context.black07,
-                              ),
-                              child: Center(
-                                  child: CommonImageView(
-                                      svgPath: Assets.svgsApplePayLogo
-                                  )
-                              )
-                          ),
-                          title: Text(StringConstant.applePay,
-                              style: TextStyleUtil.manrope14w500()),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
-                          )
+                        leading: Container(
+                            height: 44.kh,
+                            width: 48.kh,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.kh),
+                              color: context.black07,
+                            ),
+                            child: Center(
+                                child: CommonImageView(
+                                    svgPath: Assets.svgsApplePayLogo))),
+                        title: Text(StringConstant.applePay,
+                            style: TextStyleUtil.manrope14w500()),
+                        onTap: () {
+                          //TODO: Implement apply pay.
+                        },
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16.kh,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 8.kheightBox,
-                InkWell(
-                  onTap: () {
-                    //ToDo: Implement google pay.
-                  },
-                  child: Container(
-                    height: 60.kh,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.9,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kh),
-                        color: Colors.white),
-                    child: Center(
-                      child: ListTile(
-                          leading: Container(
-                              height: 44.kh,
-                              width: 48.kh,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.kh),
-                                color: context.black07,
-                              ),
-                              child: Center(
-                                  child: CommonImageView(
-                                    svgPath: Assets.svgsGooglePayLogo,
-                                  )
-                              )
+                Container(
+                  height: 60.kh,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.kh),
+                      color: Colors.white),
+                  child: Center(
+                    child: ListTile(
+                      leading: Container(
+                          height: 44.kh,
+                          width: 48.kh,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.kh),
+                            color: context.black07,
                           ),
-                          title: Text(StringConstant.googlePay,
-                              style: TextStyleUtil.manrope14w500()),
-                          trailing: IconButton(
-                            onPressed: () {
-
-                            },
-                            icon: Icon(Icons.arrow_forward_ios, size: 16.kh,),
-                          )
+                          child: Center(
+                              child: CommonImageView(
+                            svgPath: Assets.svgsGooglePayLogo,
+                          ))),
+                      title: Text(StringConstant.googlePay,
+                          style: TextStyleUtil.manrope14w500()),
+                      onTap: () {
+                        //ToDo: Implement google pay.
+                      },
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16.kh,
                       ),
                     ),
                   ),
@@ -250,10 +217,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
       floatingActionButton: CustomRedElevatedButton(
           buttonText: StringConstant.save,
           height: 56.kh,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.9,
+          width: MediaQuery.of(context).size.width * 0.9,
           onPressed: () {
             // controller.goToCardDetailsView();
             Get.back();

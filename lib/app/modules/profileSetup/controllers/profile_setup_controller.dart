@@ -27,18 +27,14 @@ import 'package:mime/mime.dart';
 import '../views/get_location_view.dart';
 
 class ProfileSetupController extends GetxController {
-
   final stepCount = 0.obs;
   RxList<CuisineModel> selectedCuisines = <CuisineModel>[].obs;
   RxList<FeatureModel> features = <FeatureModel>[].obs;
-  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
+  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures =
+      <MultiSelectItem<FeatureModel>>[].obs;
   RxList<CuisineModel> cuisineModels = <CuisineModel>[].obs;
 
-  final List<Widget> steps = [
-    StepOne(),
-    StepTwo(),
-    StepThree()
-  ];
+  final List<Widget> steps = [StepOne(), StepTwo(), StepThree()];
 
   @override
   void onInit() {
@@ -59,33 +55,36 @@ class ProfileSetupController extends GetxController {
     restaurantNameController.dispose();
   }
 
-  Future<void> getFeatures() async{
-    try{
+  Future<void> getFeatures() async {
+    try {
       var response = await APIManager.getFeatures();
-      if(response.data['status']){
+      if (response.data['status']) {
         List<dynamic> data = response.data['data'];
         features.value = [];
         features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
-        multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
-      } else{
+        multiSelectFeatures.value = features
+            .map((e) => MultiSelectItem<FeatureModel>(e, e.name!))
+            .toList();
+      } else {
         Get.snackbar("Error", response.data['message']);
       }
-    } catch(error){
+    } catch (error) {
       Get.snackbar("Error", error.toString());
     }
   }
 
-  Future<void> getCuisines() async{
-    try{
+  Future<void> getCuisines() async {
+    try {
       var response = await APIManager.getCuisines();
-      if(response.data['status']){
+      if (response.data['status']) {
         List<dynamic> data = response.data['data'];
         cuisineModels.value = [];
-        cuisineModels.value = data.map((e) => CuisineModel.fromJson(e)).toList();
-      } else{
+        cuisineModels.value =
+            data.map((e) => CuisineModel.fromJson(e)).toList();
+      } else {
         Get.snackbar("Error", response.data['message']);
       }
-    } catch(error){
+    } catch (error) {
       Get.snackbar("Error", error.toString());
     }
   }
@@ -139,20 +138,20 @@ class ProfileSetupController extends GetxController {
         .toList();
     var response = await APIManager.updateVendor(
         restaurantDetails: RestaurantDetails(
-          restaurantName: restaurantNameController.text.trim(),
-          restaurantLogo: restaurantLogoUrl,
-          restaurantBanner: restaurantBannerUrl,
-          location: "${streetNameController.text} ${cityNameController.text}",
-          //locationController.text.trim()
-          avgPrice: int.parse(averagePriceController.text.trim()),
-          description: descriptionController.text.trim(),
-          features: selectedFeatures,
-          lat: "",
-          lon: "",
-          timing: timings,
-          media: selectedFilesUrl,
-          cuisine: selectedCuisines,
-        ));
+      restaurantName: restaurantNameController.text.trim(),
+      restaurantLogo: restaurantLogoUrl,
+      restaurantBanner: restaurantBannerUrl,
+      location: "${streetNameController.text} ${cityNameController.text}",
+      //locationController.text.trim()
+      avgPrice: int.parse(averagePriceController.text.trim()),
+      description: descriptionController.text.trim(),
+      features: selectedFeatures,
+      lat: "",
+      lon: "",
+      timing: timings,
+      media: selectedFilesUrl,
+      cuisine: selectedCuisines,
+    ));
 
     if (response.statusCode == 200) {
       return true;
@@ -169,7 +168,6 @@ class ProfileSetupController extends GetxController {
   TextEditingController streetNameController = TextEditingController();
   TextEditingController cityNameController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
-
 
   void increment() => stepCount.value++;
 
@@ -226,24 +224,56 @@ class ProfileSetupController extends GetxController {
   String restaurantBannerUrl = "";
 
   void gotoNextStep() async {
-    if (stepCount.value == 0 && restaurantLogo.isNotEmpty && restaurantBanner.isNotEmpty) {
+    if (stepCount.value == 0 &&
+        restaurantLogo.isNotEmpty &&
+        restaurantBanner.isNotEmpty) {
       DialogHelper.showLoading();
-      try{
+      try {
         var response1 =
-        await APIManager.uploadFile(filePath: restaurantLogo.value);
+            await APIManager.uploadFile(filePath: restaurantLogo.value);
         var response2 =
-        await APIManager.uploadFile(filePath: restaurantBanner.value);
+            await APIManager.uploadFile(filePath: restaurantBanner.value);
 
         restaurantLogoUrl = response1.data["data"];
         restaurantBannerUrl = response2.data["data"];
 
         DialogHelper.hideDialog();
         increment();
-      } catch(e) {
+      } catch (e) {
         debugPrint(e.toString());
       }
     } else {
       increment();
     }
+  }
+
+  String? restaurantNameValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+
+    // Check if the value contains only letters (and optionally spaces)
+    final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+    if (!nameExp.hasMatch(value)) {
+      return 'Please enter a valid name';
+    }
+
+    return null; // Return null if the value is valid
+  }
+
+  String? pricingValidator(String? val) {
+    if (val == null || val.isEmpty) {
+      return "Average price for 2 cannot be empty!";
+    }
+    // Check if input is a valid number
+    final numValue = int.tryParse(val);
+    if (numValue == null) {
+      return "Invalid price! Please enter a valid number.";
+    }
+    if (numValue <= 0) {
+      return "Average price for 2 cannot be zero or negative!";
+    }
+    return null;
   }
 }

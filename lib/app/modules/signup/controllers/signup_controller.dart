@@ -39,15 +39,15 @@ class SignupController extends GetxController {
     passwordController.dispose();
   }
 
-  void getOS(){
-    if(Platform.isAndroid){
+  void getOS() {
+    if (Platform.isAndroid) {
       isApple.value = false;
-    } else if(Platform.isIOS){
+    } else if (Platform.isIOS) {
       isApple.value = true;
     }
   }
 
-  void togglePasswordVisible(){
+  void togglePasswordVisible() {
     passwordVisible.value = !passwordVisible.value;
   }
 
@@ -127,11 +127,59 @@ class SignupController extends GetxController {
     return password.length >= 6;
   }
 
-  void goToTermsAndConditions(){
+  void goToTermsAndConditions() {
     Get.toNamed(Routes.TERMSANDCONDITIONS);
   }
 
   void replaceSignupWithLogin() {
     Get.offNamed(Routes.LOGIN);
+  }
+
+  String? validateEmail(String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter your email';
+    } else if (!GetUtils.isEmail(val)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? passwordValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+
+    // Check if the password meets the criteria (e.g., length, complexity)
+    // For example, let's enforce a minimum length of 8 characters and at least one uppercase letter, one lowercase letter, one digit, and one special character.
+    final RegExp upperCaseRegExp = RegExp(r'[A-Z]');
+    final RegExp lowerCaseRegExp = RegExp(r'[a-z]');
+    final RegExp digitRegExp = RegExp(r'[0-9]');
+    final RegExp specialCharacterRegExp = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
+
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+
+    if (value.length > 25) {
+      return 'Password cannot be of more than 25 characters';
+    }
+
+    if (!upperCaseRegExp.hasMatch(value)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!lowerCaseRegExp.hasMatch(value)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!digitRegExp.hasMatch(value)) {
+      return 'Password must contain at least one digit';
+    }
+
+    if (!specialCharacterRegExp.hasMatch(value)) {
+      return 'Password must contain at least one special character';
+    }
+    return null; // Return null if the value is valid
   }
 }

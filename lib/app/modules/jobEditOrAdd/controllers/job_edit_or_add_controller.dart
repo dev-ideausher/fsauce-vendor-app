@@ -17,9 +17,8 @@ import '../../../components/confirmation_dialog.dart';
 import '../../../services/auth.dart';
 
 class JobEditOrAddController extends GetxController {
-
   @override
-  void onInit(){
+  void onInit() {
     super.onInit();
     getToEdit();
     Get.find<HomeController>().getRestaurantDetails();
@@ -46,26 +45,29 @@ class JobEditOrAddController extends GetxController {
 
   RxBool toEdit = false.obs;
 
-  void getToEdit(){
+  void getToEdit() {
     toEdit = Get.find<JobsController>().toEdit;
   }
 
   void addJob() async {
-    if(Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null){
+    if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
+        null) {
       if (_validateForm()) {
         try {
           Map<String, dynamic> data = {
-            "title" : jobTitleController.text.trim() ?? "Default job title",
+            "title": jobTitleController.text.trim() ?? "Default job title",
             "description": descriptionController.text ?? "Default description",
             "lastDate": lastDateToApplyController.text ?? "Default last date",
-            "minSalary": minSalaryController.text.trim().contains(".") ? double.parse(minSalaryController.text.trim()) :
-            int.parse(minSalaryController.text.trim()) ?? 0,
-            "maxSalary": maxSalaryController.text.trim().contains(".") ? double.parse(minSalaryController.text.trim()) :
-            int.parse(maxSalaryController.text.trim()) ?? 0,
+            "minSalary": minSalaryController.text.trim().contains(".")
+                ? double.parse(minSalaryController.text.trim())
+                : int.parse(minSalaryController.text.trim()) ?? 0,
+            "maxSalary": maxSalaryController.text.trim().contains(".")
+                ? double.parse(minSalaryController.text.trim())
+                : int.parse(maxSalaryController.text.trim()) ?? 0,
             "howToApply": howToApplyController.text ?? "Default how to apply"
           };
           var response = await APIManager.addNewJob(data: data);
-          if(response.data['status']){
+          if (response.data['status']) {
             JobsController jobsController = Get.find<JobsController>();
             jobsController.updateJobs();
             Get.back();
@@ -76,24 +78,22 @@ class JobEditOrAddController extends GetxController {
           // Fetch updated jobs list after adding a new job
         } catch (e) {
           print("Error occurred while creating new job: ${e.toString()}");
-          Get.snackbar("Error",e.toString());
+          Get.snackbar("Error", e.toString());
           return;
         }
       }
-    } else{
-      Get.dialog(
-          ConfrimationDialog(
-              title: StringConstant.subscriptionRequired,
-              subTitle: StringConstant.subscriptionRequiredText,
-              yesButtonText: StringConstant.checkoutSubscriptions,
-              noButtonText: StringConstant.close,
-              onYesTap: () async{
-                // Get.find<GetStorageService>().logout();
-                Get.back();
-                Get.offNamed(Routes.SUBSCRIPTION);
-              },
-              onNoTap: Get.back)
-      );
+    } else {
+      Get.dialog(ConfrimationDialog(
+          title: StringConstant.subscriptionRequired,
+          subTitle: StringConstant.subscriptionRequiredText,
+          yesButtonText: StringConstant.checkoutSubscriptions,
+          noButtonText: StringConstant.close,
+          onYesTap: () async {
+            // Get.find<GetStorageService>().logout();
+            Get.back();
+            Get.offNamed(Routes.SUBSCRIPTION);
+          },
+          onNoTap: Get.back));
       return;
     }
   }
@@ -123,8 +123,10 @@ class JobEditOrAddController extends GetxController {
       Get.snackbar("Error", StringConstant.enterHowToApply);
       return false;
     }
-    if(int.parse(maxSalaryController.text.toString()) < int.parse(minSalaryController.text.toString())){
-      Get.snackbar("Error", "Max salary offered cannot be less than Min salary offered.");
+    if (double.parse(maxSalaryController.text.toString()) <
+        double.parse(minSalaryController.text.toString())) {
+      Get.snackbar("Error",
+          "Max salary offered cannot be less than Min salary offered.");
       return false;
     }
     return true;
@@ -172,12 +174,11 @@ class JobEditOrAddController extends GetxController {
     id = job.id;
   }
 
-  void emptyAddJobVariables(){
+  void emptyAddJobVariables() {
     jobTitleController.text = "";
     minSalaryController.text = "";
     maxSalaryController.text = "";
-    lastDateToApplyController.text =
-        "";
+    lastDateToApplyController.text = "";
     descriptionController.text = "";
     howToApplyController.text = "";
     id = "";

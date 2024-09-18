@@ -52,14 +52,22 @@ class DealsBottomSheet extends GetView<VipOffersController> {
               ],
             ),
             coupon.typeOfOffer != "Normal offer" ? 8.kheightBox : Container(),
-            coupon.typeOfOffer != "Normal offer" ? Center(child: CommonImageView(svgPath: Assets.svgsDealOfTheDay, width: 143.kw, height: 29.kh,)) : Container(),
+            coupon.typeOfOffer != "Normal offer"
+                ? Center(
+                    child: CommonImageView(
+                    svgPath: Assets.svgsDealOfTheDay,
+                    width: 143.kw,
+                    height: 29.kh,
+                  ))
+                : Container(),
             coupon.typeOfOffer != "Normal offer" ? 8.kheightBox : Container(),
             Container(
               width: 100.w,
               padding: EdgeInsets.only(top: 10.kh),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border(bottom: BorderSide(color: context.borderColor1)),
+                  border:
+                      Border(bottom: BorderSide(color: context.borderColor1)),
                   boxShadow: [BoxShadow(color: context.borderColor1)],
                   borderRadius: BorderRadius.circular(8.kw)),
               child: Column(
@@ -67,8 +75,8 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                 children: [
                   20.kheightBox,
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 14.kw, right: 2.kw, bottom: 10.kh),
+                    padding: EdgeInsets.only(
+                        left: 14.kw, right: 2.kw, bottom: 10.kh),
                     child: Row(
                       children: [
                         CommonImageView(
@@ -86,24 +94,52 @@ class DealsBottomSheet extends GetView<VipOffersController> {
               ),
             ),
             20.kheightBox,
-            coupon.couponCode!.isNotEmpty ? Text(StringConstant.couponCode, style: TextStyleUtil.manrope16w500(),) : Container(),
+            coupon.couponCode!.isNotEmpty
+                ? Text(
+                    StringConstant.couponCode,
+                    style: TextStyleUtil.manrope16w500(),
+                  )
+                : Container(),
             coupon.couponCode!.isNotEmpty ? 4.kheightBox : Container(),
-            coupon.couponCode!.isNotEmpty ? Text(coupon.couponCode ?? "", style: TextStyleUtil.manrope14w400(color: context.black02),) : Container(),
+            coupon.couponCode!.isNotEmpty
+                ? Text(
+                    coupon.couponCode ?? "",
+                    style: TextStyleUtil.manrope14w400(color: context.black02),
+                  )
+                : Container(),
             coupon.couponCode!.isNotEmpty ? 20.kheightBox : Container(),
-            Text(StringConstant.validTill, style: TextStyleUtil.manrope16w500(),),
+            Text(
+              StringConstant.validTill,
+              style: TextStyleUtil.manrope16w500(),
+            ),
             4.kheightBox,
-            Text(coupon.validTill.substring(0, 10), style: TextStyleUtil.manrope14w400(color: context.black02),),
+            Text(
+              coupon.validTill.substring(0, 10),
+              style: TextStyleUtil.manrope14w400(color: context.black02),
+            ),
             20.kheightBox,
-            Text(StringConstant.validFor, style: TextStyleUtil.manrope16w500(),),
+            Text(
+              StringConstant.validFor,
+              style: TextStyleUtil.manrope16w500(),
+            ),
             4.kheightBox,
-            Text(coupon.typeOfOffer, style: TextStyleUtil.manrope14w400(color: context.black02),),
+            Text(
+              coupon.typeOfOffer,
+              style: TextStyleUtil.manrope14w400(color: context.black02),
+            ),
             20.kheightBox,
-            Text(StringConstant.description, style: TextStyleUtil.manrope16w500(),),
+            Text(
+              StringConstant.description,
+              style: TextStyleUtil.manrope16w500(),
+            ),
             4.kheightBox,
-            SizedBox(
-              width: 40.w,
-              child:
-              Text(coupon.description, style: TextStyleUtil.manrope14w400(color: context.black02),),
+            Wrap(
+              children: [
+                Text(
+                  coupon.description,
+                  style: TextStyleUtil.manrope14w400(color: context.black02),
+                ),
+              ],
             ),
             20.kheightBox,
             Text(
@@ -113,7 +149,7 @@ class DealsBottomSheet extends GetView<VipOffersController> {
             4.kheightBox,
             ...coupon.termsAndConditions.map((e) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 5.kh),
-                  child: Row(
+                  child: Wrap(
                     children: [
                       // Container(
                       //   height: 16.kh,

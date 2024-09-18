@@ -30,18 +30,23 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                 itemBuilder: (ctx, index) {
                   return Obx(() {
                     return LoyaltyCard(
-                        brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
+                        brandName: Get.find<HomeController>()
+                            .restaurantDetails
+                            .value
+                            .restaurantName,
                         offer: controller.activeLoyaltyCards[index].title,
-                        brandColor: Color(int.parse(
-                            controller.activeLoyaltyCards[index]
-                                .cardBackgroundColor)),
+                        brandColor: Color(int.parse(controller
+                            .activeLoyaltyCards[index].cardBackgroundColor)),
                         onAddPressed: () {
                           //ToDo: When the loyalty card is pressed.
                         },
-                        noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
+                        noOfStamps:
+                            controller.activeLoyaltyCards[index].noOfStamps,
                         width: 100.w,
-                        brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
-                    );
+                        brandLogo: Get.find<HomeController>()
+                            .restaurantDetails
+                            .value
+                            .restaurantLogo);
                   });
                 },
                 separatorBuilder: (ctx, index) {
@@ -50,25 +55,28 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                 itemCount: controller.activeLoyaltyCards.length),
           );
         } else if (controller.activeLoyaltyCards.isEmpty) {
-          return EmptyWidget(title: StringConstant.noLoyaltyCardFound, subTitle: StringConstant.getStartedWithLoyaltyCards);
+          return EmptyWidget(
+              title: StringConstant.noLoyaltyCardFound,
+              subTitle: StringConstant.getStartedWithLoyaltyCards);
         } else {
           return const Center(
-              child: CircularProgressIndicator(color: Colors.red,));
+              child: CircularProgressIndicator(
+            color: Colors.red,
+          ));
         }
       }),
-      floatingActionButton: Container(
-        height: 41.kh,
-        width: 41.kw,
-        decoration:
-        BoxDecoration(shape: BoxShape.circle, color: context.primary01),
-        child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 30.kw,
-            ),
-            onPressed: controller.gotoEditLoyaltyPage),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: context.primary01,
+        foregroundColor: context.white,
+        shape: const CircleBorder(),
+        child: Icon(
+          Icons.add,
+          size: 30.kh,
+        ),
+        onPressed: () {
+          controller.gotoEditLoyaltyPage();
+        },
       ),
     );
   }

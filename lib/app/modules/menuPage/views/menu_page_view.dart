@@ -20,20 +20,18 @@ class MenuPageView extends GetView<MenuPageController> {
           title: StringConstant.menu,
           leading: SizedBox(),
         ),
-        floatingActionButton: Container(
-          height: 41.kh,
-          width: 41.kw,
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: context.primary01),
-          child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 30.kw,
-              ),
-              onPressed: controller.shoeAddCategoryOrItem),
-        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: context.primary01,
+            foregroundColor: context.white,
+            shape: const CircleBorder(),
+            child: Icon(
+              Icons.add,
+              size: 30.kw,
+            ),
+            onPressed: () {
+              controller.shoeAddCategoryOrItem();
+            }),
         body: Padding(
           padding: EdgeInsets.only(top: 16.kh, left: 16.kw, right: 16.kw),
           child: Obx(() {

@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
+import 'package:fsauce_vendor_app/app/services/custom_button.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
@@ -27,28 +28,19 @@ class OnboardingView extends GetView<OnboardingController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.transparent,
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 4, // adjust elevation as needed
-                        backgroundColor: context.primary06, // background color
-                      ),
-                      onPressed: controller.gotoSignupScreen,
-                      child: SizedBox(
+                    FsvButton(
+                        onPressed: controller.gotoSignupScreen,
                         height: 37.kh,
                         width: 77.kw,
+                        color: context.primary06,
+                        padding: const EdgeInsets.all(0),
                         child: Center(
                           child: Text(
                             StringConstant.skip,
-                            style: TextStyleUtil.manrope14w500(),
+                            style: TextStyleUtil.manrope14w500(
+                                color: context.black01),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   ],
                 ),
                 SizedBox(
@@ -124,20 +116,16 @@ class OnboardingView extends GetView<OnboardingController> {
                 30.kheightBox,
                 const PageIndicator(),
                 50.kheightBox,
-                CustomRedElevatedButton(
+                FsvButton(
                   onPressed: controller.gotoLoginScreen,
-                  buttonText: StringConstant.login,
-                  textStyle: TextStyleUtil.manrope16w500(color: Colors.white),
-                  height: 56.kh,
-                  width: 100.w,
+                  label: StringConstant.login,
                 ),
                 10.kheightBox,
-                CustomRedElevatedButtonWithBorder(
+                FsvButton(
                   onPressed: controller.gotoSignupScreen,
-                  buttonText: StringConstant.signup,
-                  textStyle: TextStyleUtil.manrope16w500(color: context.primary01),
-                  height: 56.kh,
-                  width: 100.w,
+                  label: StringConstant.signup,
+                  isBorder: true,
+                  labelColor: context.primary01,
                 ),
               ],
             ),

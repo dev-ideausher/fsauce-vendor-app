@@ -170,7 +170,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                       }
                     }
                   }),
-              60.kheightBox,
+              80.kheightBox,
             ],
           ),
         ),

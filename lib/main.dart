@@ -26,18 +26,21 @@ Future<void> main() async {
 
   Get.lazyPut<Auth>(() => Auth());
 
-  return runApp(GetMaterialApp(
-    // theme: AppTheme.light,
-    theme: ThemeData(scaffoldBackgroundColor: const Color(0xffFAFAFA)),
-    // darkTheme: AppTheme.dark,
-    defaultTransition: Transition.fade,
-    smartManagement: SmartManagement.full,
-    debugShowCheckedModeBanner: false,
-    locale: const Locale('en', 'US'),
-    // translationsKeys: AppTranslation.translations,
-    initialRoute: Routes.SPLASHVIEW,
-    initialBinding: SplashBinding(),
-    getPages: AppPages.routes,
+  return runApp(GestureDetector(
+    onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+    child: GetMaterialApp(
+      // theme: AppTheme.light,
+      theme: ThemeData(scaffoldBackgroundColor: const Color(0xffFAFAFA)),
+      // darkTheme: AppTheme.dark,
+      defaultTransition: Transition.fade,
+      smartManagement: SmartManagement.full,
+      debugShowCheckedModeBanner: false,
+      locale: const Locale('en', 'US'),
+      // translationsKeys: AppTranslation.translations,
+      initialRoute: Routes.SPLASHVIEW,
+      initialBinding: SplashBinding(),
+      getPages: AppPages.routes,
+    ),
   ));
 }
 

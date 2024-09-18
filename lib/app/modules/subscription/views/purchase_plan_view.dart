@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
+import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/selected_plan_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -15,17 +16,8 @@ class PurchasePlanView extends GetView<SubscriptionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back)),
-        title: Text(
-          StringConstant.purchasePlan,
-          style: TextStyleUtil.manrope18w600(),
-        ),
+      appBar: const CustomAppBar(
+        title: StringConstant.purchasePlan,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.kw),
@@ -37,12 +29,9 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                 16.kheightBox,
                 Container(
                   height: 88.kh,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   padding:
-                  EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
+                      EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.kh),
                     color: Colors.white,
@@ -55,10 +44,11 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                       ),
                       subtitle: Obx(() {
                         return Text(
-                          controller.selectedCard.value.id == null ? StringConstant.razorPay : "**** **** *${controller.selectedCard.value
-                              .last4 ?? "1212"}",
-                          style:
-                          TextStyleUtil.manrope14w500(color: context.black03),
+                          controller.selectedCard.value.id == null
+                              ? StringConstant.razorPay
+                              : "**** **** *${controller.selectedCard.value.last4 ?? "1212"}",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.black03),
                         );
                       }),
                       trailing: TextButton(
@@ -82,12 +72,9 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                 16.kheightBox,
                 Container(
                     height: 56.kh,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.9,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     padding:
-                    EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
+                        EdgeInsets.symmetric(horizontal: 12.kw, vertical: 8.kh),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.kh),
                       color: Colors.white,
@@ -117,10 +104,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                 36.kheightBox,
                 Container(
                   height: 166.kh,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   padding: EdgeInsets.all(16.kh),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.kh),
@@ -152,20 +136,22 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                         ],
                       ),
                       8.kheightBox,
-                      controller.promoCodeController.text.isNotEmpty ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            StringConstant.totalAmount,
-                            style: TextStyleUtil.manrope14w500(
-                                color: context.black03),
-                          ),
-                          Text(
-                            "\$50",
-                            style: TextStyleUtil.manrope14w500(),
-                          ),
-                        ],
-                      ) : Container(),
+                      controller.promoCodeController.text.isNotEmpty
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  StringConstant.totalAmount,
+                                  style: TextStyleUtil.manrope14w500(
+                                      color: context.black03),
+                                ),
+                                Text(
+                                  "\$50",
+                                  style: TextStyleUtil.manrope14w500(),
+                                ),
+                              ],
+                            )
+                          : Container(),
                       8.kheightBox,
                       Divider(
                         color: context.black07,
@@ -198,10 +184,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
       floatingActionButton: CustomRedElevatedButton(
           buttonText: StringConstant.proceed,
           height: 56.kh,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.9,
+          width: MediaQuery.of(context).size.width * 0.9,
           onPressed: () {
             controller.addVendorSubscription();
           }),

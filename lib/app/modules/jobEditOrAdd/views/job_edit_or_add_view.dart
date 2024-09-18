@@ -4,6 +4,7 @@ import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart
 import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield_half.dart';
+import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -40,18 +41,17 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               ],
             ),
             10.kheightBox,
-            CustomTextField(
+            FsvTextfield(
+              hintText: StringConstant.enterJobTitle,
               controller: controller.jobTitleController,
               maxLength: 30,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
                   return StringConstant.emptyJobTitle;
                 }
                 return null;
               },
-              fillColor: context.loginSignupTextfieldColor,
-              border: Border.all(color: context.black07),
-              hintText: StringConstant.enterJobTitle,
             ),
             20.kheightBox,
             Row(
@@ -61,7 +61,7 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
                   style: TextStyleUtil.manrope14w500(),
                 ),
                 Text(
-                  " (${StringConstant.perYear})",
+                  "(${StringConstant.perYear})",
                   style: TextStyleUtil.manrope14w400(color: context.black03),
                 ),
                 Text(
@@ -109,22 +109,22 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               ],
             ),
             10.kheightBox,
-            CustomTextField(
+            FsvTextfield(
+              hintText: StringConstant.enterLastDateToApply,
               readOnly: true,
+              controller: controller.lastDateToApplyController,
+              suffix: const Icon(
+                Icons.calendar_month,
+              ),
+              onTap: () async {
+                FocusScope.of(context).requestFocus(FocusNode());
+                await controller.pickDate(context);
+              },
               validator: (String? val) {
                 if (val == null || val.isEmpty) {
                   return StringConstant.dateCannotBeEmpty;
                 }
                 return null;
-              },
-              controller: controller.lastDateToApplyController,
-              fillColor: context.loginSignupTextfieldColor,
-              border: Border.all(color: context.black07),
-              suffixIcon: Icons.calendar_month,
-              hintText: StringConstant.enterLastDateToApply,
-              suffixOnPressed: () async {
-                FocusScope.of(context).requestFocus(FocusNode());
-                await controller.pickDate(context);
               },
             ),
             20.kheightBox,
@@ -141,11 +141,10 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               ],
             ),
             10.kheightBox,
-            CustomTextBox(
-              controller: controller.descriptionController,
-              fillColor: context.loginSignupTextfieldColor,
-              border: Border.all(color: context.black07),
+            FsvTextfield(
               hintText: StringConstant.enterDescription,
+              controller: controller.descriptionController,
+              maxLines: 5,
             ),
             20.kheightBox,
             Row(
@@ -161,19 +160,19 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               ],
             ),
             10.kheightBox,
-            CustomTextBox(
-              controller: controller.howToApplyController,
-              fillColor: context.loginSignupTextfieldColor,
-              border: Border.all(color: context.black07),
+            FsvTextfield(
               hintText: StringConstant.enterHowToApply,
+              controller: controller.howToApplyController,
+              maxLines: 5,
             ),
             30.kheightBox,
             CustomRedElevatedButton(
               buttonText: StringConstant.save,
               height: 56.kh,
               width: 100.w,
-              onPressed:
-              controller.toEdit.value ? controller.editJob : controller.addJob,
+              onPressed: controller.toEdit.value
+                  ? controller.editJob
+                  : controller.addJob,
             ),
           ],
         ),
