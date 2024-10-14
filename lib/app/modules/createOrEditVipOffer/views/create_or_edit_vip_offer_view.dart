@@ -152,7 +152,7 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 readOnly: true,
                 hintText: StringConstant.enterValidTill,
                 controller: controller.validTillDateController,
-                suffix: Icon(Icons.calendar_month),
+                suffix: Icon(Icons.calendar_month, color: context.black01),
                 onTap: () {
                   controller.pickValidTillDate(context);
                 },
@@ -308,10 +308,8 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                       isSuffixPaddingNeeded: false,
                       readOnly: true,
                       hintText: StringConstant.enterDate,
-                      suffix: Icon(
-                        Icons.calendar_month,
-                        color: context.black01,
-                      ),
+                      suffix:
+                          Icon(Icons.calendar_month, color: context.black01),
                       onTap: () {
                         controller.pickDate(context);
                       },

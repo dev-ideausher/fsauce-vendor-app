@@ -26,7 +26,7 @@ class ActiveOffersView extends GetView<VipOffersController> {
               }
               return false;
             },
-            child: ListView.separated(
+            child: ListView.builder(
               shrinkWrap: true,
               controller: controller.activeScrollController,
               itemBuilder: (ctx, index) {
@@ -43,7 +43,7 @@ class ActiveOffersView extends GetView<VipOffersController> {
                         controller.selectedCoupon.value =
                             controller.couponsList[index];
                         controller.showDealsBottomSheet();
-                      });
+                      }).paddingOnly(bottom: 12.kh);
                 } else {
                   return DealsOfTheDayCardDate(
                       width: 100.w,
@@ -56,11 +56,8 @@ class ActiveOffersView extends GetView<VipOffersController> {
                         controller.selectedCoupon.value =
                             controller.couponsList[index];
                         controller.showDealsBottomSheet();
-                      });
+                      }).paddingOnly(bottom: 12.kh);
                 }
-              },
-              separatorBuilder: (ctx, index) {
-                return 12.kheightBox;
               },
               itemCount: controller.couponsList.length,
             ),

@@ -29,12 +29,12 @@ class HomeView extends GetView<HomeController> {
         child: Column(
           children: [
             SizedBox(
-              height: 155.kh,
+              // height: 155.kh,
               width: 100.w,
               child: Stack(
                 children: [
                   Container(
-                    height: 155.kh,
+                    // height: 155.kh,
                     width: 100.w,
                     padding:
                         EdgeInsets.only(top: 79.kh, left: 16.kw, right: 16.kw),
@@ -79,19 +79,23 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                     4.kwidthBox,
                                     Obx(() {
-                                      return Text(
-                                        controller
-                                            .restaurantDetails.value.location,
-                                        style: TextStyleUtil.manrope14w400(
-                                          color: Colors.white,
-                                          textDecoration:
-                                              TextDecoration.underline,
-                                          decorationColor: Colors.white,
+                                      return SizedBox(
+                                        width: 240.kw,
+                                        child: Text(
+                                          controller
+                                              .restaurantDetails.value.location,
+                                          style: TextStyleUtil.manrope14w400(
+                                            color: Colors.white,
+                                            textDecoration:
+                                                TextDecoration.underline,
+                                            decorationColor: Colors.white,
+                                          ),
+                                          // overflow: TextOverflow.ellipsis,
                                         ),
                                       );
                                     }),
                                   ],
-                                ),
+                                ).paddingOnly(bottom: 12.kh),
                               ],
                             ),
                             IconButton(

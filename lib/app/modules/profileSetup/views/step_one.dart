@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
@@ -346,6 +347,9 @@ class StepOne extends GetView<ProfileSetupController> {
             controller: controller.postCodeController,
             hintText: StringConstant.enterLocation,
             keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]'))
+            ],
             maxLength: 6,
             validator: (String? val) {
               if (val == null || val.isEmpty) {

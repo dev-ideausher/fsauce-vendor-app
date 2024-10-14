@@ -8,9 +8,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
 
-import '../../../components/common_image_view.dart';
 import '../../../components/custom_red_elevated_button.dart';
-import '../../../services/dialog_helper.dart';
 
 class StepThree extends GetView<ProfileSetupController> {
   const StepThree({super.key});

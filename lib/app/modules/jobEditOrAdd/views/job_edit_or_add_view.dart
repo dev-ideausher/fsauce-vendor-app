@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield_half.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -74,25 +73,34 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomTextFieldHalf(
-                  keyboardType: TextInputType.number,
-                  controller: controller.minSalaryController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.minSalaryOffered,
-                ),
+                SizedBox(
+                    width: 40.w,
+                    child: FsvTextfield(
+                      hintText: StringConstant.minSalaryOffered,
+                      keyboardType: TextInputType.number,
+                      controller: controller.minSalaryController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                      ],
+                      isSuffixNeeded: false,
+                    )),
                 Container(
                   height: 2.kh,
                   width: 6.kw,
                   color: context.black03,
                 ),
-                CustomTextFieldHalf(
-                  keyboardType: TextInputType.number,
-                  controller: controller.maxSalaryController,
-                  fillColor: context.loginSignupTextfieldColor,
-                  border: Border.all(color: context.black07),
-                  hintText: StringConstant.maxSalaryOffered,
-                ),
+                SizedBox(
+                    width: 40.w,
+                    child: FsvTextfield(
+                      hintText: StringConstant.maxSalaryOffered,
+                      keyboardType: TextInputType.number,
+                      controller: controller.maxSalaryController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'[0-9.]')), // Allow digits and decimal point
+                      ],
+                      isSuffixNeeded: false,
+                    )),
               ],
             ),
             20.kheightBox,
