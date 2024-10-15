@@ -14,7 +14,7 @@ import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.d
 import '../../../routes/app_pages.dart';
 
 class CreatePushNotificationController extends GetxController {
-  //TODO: Implement CreatePushNotificationController
+  RxBool isActive = false.obs;
 
   @override
   void onInit() {
@@ -113,5 +113,17 @@ class CreatePushNotificationController extends GetxController {
           onNoTap: Get.back));
       return;
     }
+  }
+
+  titleValidator(String? val) {
+    if (val == null || val.isEmpty) {
+      return StringConstant.notificationTitleEmpty;
+    } else if (val.length > 25) {
+      isActive.value = false;
+      return StringConstant.max25CharsAllowed;
+    } else {
+      isActive.value = true;
+    }
+    return null;
   }
 }

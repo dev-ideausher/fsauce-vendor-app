@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
+import 'package:fsauce_vendor_app/app/services/custom_button.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
@@ -44,15 +45,9 @@ class CreatePushNotificationView
                 FsvTextfield(
                   hintText: StringConstant.enterTitle,
                   controller: controller.titleController,
-                  validator: (String? val) {
-                    if (val == null || val.isEmpty) {
-                      return StringConstant.notificationTitleEmpty;
-                    } else if (val.length > 25) {
-                      return StringConstant.max25CharsAllowed;
-                    }
-                    return null;
-                  },
+                  validator: (val) => controller.titleValidator(val),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  onchanged: (val) => controller.titleValidator(val),
                 ),
                 20.kheightBox,
                 Row(
@@ -80,15 +75,17 @@ class CreatePushNotificationView
                 ),
                 20.kheightBox,
                 const Spacer(),
-                CustomRedElevatedButton(
-                    buttonText: StringConstant.save,
-                    height: 56.kh,
-                    width: 100.w,
+                Obx(
+                  () => FsvButton(
+                    isActive: controller.isActive.value,
+                    label: StringConstant.save,
                     onPressed: () {
                       if (controller.formKey.currentState!.validate()) {
                         controller.addNotification();
                       }
-                    })
+                    },
+                  ),
+                ),
               ],
             ),
           ),

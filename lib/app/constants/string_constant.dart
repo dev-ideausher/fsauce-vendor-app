@@ -595,4 +595,6 @@ class StringConstant {
       "New password cannot be same as old password";
 
   static String sureWantToLogout = "Are you sure you want to logout?";
+
+  static var signUp = "Signup";
 }

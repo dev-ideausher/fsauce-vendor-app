@@ -123,7 +123,7 @@ class OnboardingView extends GetView<OnboardingController> {
                 10.kheightBox,
                 FsvButton(
                   onPressed: controller.gotoSignupScreen,
-                  label: StringConstant.signup,
+                  label: StringConstant.signUp,
                   isBorder: true,
                   labelColor: context.primary01,
                 ),
