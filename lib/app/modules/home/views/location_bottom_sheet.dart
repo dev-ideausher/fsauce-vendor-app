@@ -28,7 +28,8 @@ class LocationBottomSheet extends StatelessWidget {
             height: 5.kh,
             width: 64.kw,
             decoration: BoxDecoration(
-                color: context.black01, borderRadius: BorderRadius.circular(3.kh)),
+                color: context.black01,
+                borderRadius: BorderRadius.circular(3.kh)),
           ),
           20.kheightBox,
           Text(

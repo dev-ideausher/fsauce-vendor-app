@@ -19,7 +19,7 @@ class ProfileController extends GetxController {
   final auth = Get.find<Auth>();
 
   void gotoProfileDetailsScreen() {
-    Get.toNamed(Routes.PROFILE_DETAILS);
+    Get.toNamed(Routes.PROFILE_SETUP);
   }
 
   void gotoChangePasswordScreen() {

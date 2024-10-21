@@ -85,6 +85,19 @@ class CardDetailsView extends GetView<SubscriptionController> {
                                       RegExp(r'\s')),
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'[0-9/]')),
+                                  TextInputFormatter.withFunction(
+                                      (oldValue, newValue) {
+                                    String text = newValue.text;
+                                    if (newValue.text.length == 2 &&
+                                        oldValue.text.length != 3) {
+                                      text += '/';
+                                    }
+                                    if (newValue.text.length == 5 &&
+                                        oldValue.text.length != 6) {
+                                      text += '/';
+                                    }
+                                    return TextEditingValue(text: text);
+                                  })
                                 ],
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,

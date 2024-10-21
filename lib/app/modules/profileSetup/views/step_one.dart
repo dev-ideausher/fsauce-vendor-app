@@ -19,12 +19,10 @@ import '../../../models/cuisine_model.dart';
 class StepOne extends GetView<ProfileSetupController> {
   StepOne({super.key});
 
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: controller.formKey,
       child: Column(
         children: [
           // Restaurant Name
@@ -68,7 +66,8 @@ class StepOne extends GetView<ProfileSetupController> {
           ),
           6.kheightBox,
           Obx(() => InkWell(
-                onTap: () => controller.pickImage(controller.restaurantLogo),
+                onTap: () =>
+                    controller.pickImage(controller.restaurantLogo, false),
                 child: Container(
                   width: 100.w,
                   height: 100.kh,
@@ -76,7 +75,9 @@ class StepOne extends GetView<ProfileSetupController> {
                     color: context.loginSignupTextfieldColor,
                     borderRadius: BorderRadius.circular(8.kw),
                     border: RDottedLineBorder.all(
-                      color: context.black07,
+                      color: controller.isRestLogoPicked.value
+                          ? context.black07
+                          : ColorUtil.kErrorColor,
                       width: 2,
                     ),
                   ),
@@ -132,12 +133,16 @@ class StepOne extends GetView<ProfileSetupController> {
           ),
           6.kheightBox,
           Obx(() => InkWell(
-                onTap: () => controller.pickImage(controller.restaurantBanner),
+                onTap: () =>
+                    controller.pickImage(controller.restaurantBanner, true),
                 child: Container(
                   height: 160.kh,
                   width: 100.w,
                   decoration: BoxDecoration(
-                    border: Border.all(color: context.black07),
+                    border: Border.all(
+                        color: controller.isRestBannerPicked.value
+                            ? context.black07
+                            : ColorUtil.kErrorColor),
                     borderRadius: BorderRadius.circular(8.kw),
                     color: context.loginSignupTextfieldColor,
                   ),
@@ -226,23 +231,27 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           10.kheightBox,
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: context.borderColor2),
-                borderRadius: BorderRadius.circular(8.kw)),
-            padding: EdgeInsets.symmetric(horizontal: 10.kw),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Obx(() {
-                  return Expanded(
+          Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                      color: controller.isCuisinePicked.value
+                          ? context.borderColor2
+                          : ColorUtil.kErrorColor),
+                  borderRadius: BorderRadius.circular(8.kw)),
+              padding: EdgeInsets.symmetric(horizontal: 10.kw),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
                       child: DropdownButtonFormField<CuisineModel>(
                     dropdownColor: Colors.white,
                     style: TextStyleUtil.manrope16w400(),
                     onChanged: (val) {
                       if (val != null) {
                         controller.selectedCuisines.add(val);
+                        controller.isCuisinePicked.value = true;
                       }
                     },
                     items: controller.cuisineModels
@@ -263,9 +272,9 @@ class StepOne extends GetView<ProfileSetupController> {
                         borderSide: BorderSide.none,
                       ),
                     ),
-                  ));
-                }),
-              ],
+                  )),
+                ],
+              ),
             ),
           ),
           20.kheightBox,
@@ -367,11 +376,7 @@ class StepOne extends GetView<ProfileSetupController> {
               height: 56.kh,
               width: 100.w,
               onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  controller.stepCount.value < 2
-                      ? controller.gotoNextStep()
-                      : controller.gotoEnableLocationScreen();
-                }
+                controller.validateStepOneFields();
               }),
           30.kheightBox,
         ],

@@ -36,6 +36,11 @@ class ProfileSetupController extends GetxController {
 
   final List<Widget> steps = [StepOne(), StepTwo(), StepThree()];
 
+  final formKey = GlobalKey<FormState>();
+  RxBool isRestLogoPicked = true.obs;
+  RxBool isRestBannerPicked = true.obs;
+  RxBool isCuisinePicked = true.obs;
+
   @override
   void onInit() {
     getFeatures();
@@ -171,13 +176,18 @@ class ProfileSetupController extends GetxController {
 
   void increment() => stepCount.value++;
 
-  Future<void> pickImage(RxString imagePath) async {
+  Future<void> pickImage(RxString imagePath, bool restBannerImage) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
         await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       imagePath.value = pickedFile.path;
+      if (restBannerImage) {
+        isRestBannerPicked.value = true;
+      } else {
+        isRestLogoPicked.value = true;
+      }
     }
   }
 
@@ -275,5 +285,30 @@ class ProfileSetupController extends GetxController {
       return "Average price for 2 cannot be zero or negative!";
     }
     return null;
+  }
+
+  void validateStepOneFields() {
+    isRestLogoPicked.value = restaurantLogo.value.isNotEmpty;
+    isRestBannerPicked.value = restaurantBanner.value.isNotEmpty;
+    isCuisinePicked.value = selectedCuisines.value.isNotEmpty;
+
+    // Check if all fields are valid
+    if (formKey.currentState!.validate() &&
+        isRestLogoPicked.value &&
+        isRestBannerPicked.value &&
+        isCuisinePicked.value) {
+      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
+    } else {
+      if (!isRestLogoPicked.value) {
+        isRestLogoPicked.value = false;
+      }
+      if (!isRestBannerPicked.value) {
+        isRestBannerPicked.value = false;
+      }
+      if (!isCuisinePicked.value) {
+        isCuisinePicked.value = false;
+      }
+      Get.snackbar("Error", "Please fill all the required fields to proceed");
+    }
   }
 }

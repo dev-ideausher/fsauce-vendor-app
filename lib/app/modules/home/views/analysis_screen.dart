@@ -3,12 +3,10 @@ import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/dashboard_weekly_data_model.dart';
 import 'package:fsauce_vendor_app/app/models/dashboard_yearly_data_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
-import 'package:fsauce_vendor_app/app/modules/home/views/chart.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../models/dashboard_monthly_data_model.dart';
 
@@ -48,26 +46,33 @@ class AnalysisScreen extends GetView<HomeController> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      weeklyData != null ?
-                      Text(
-                        weeklyData!.value!.cards!.totalCoupons.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : monthlyData != null ?
-                      Text(
-                        monthlyData!.value!.cards!.totalCoupons.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : yearlyData != null ?
-                      Text(
-                        yearlyData!.value!.cards!.totalCoupons.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : Text("0", style:
-                      TextStyleUtil.manrope24w700(color: context.primary01)),
+                      weeklyData != null
+                          ? Text(
+                              weeklyData!.value!.cards!.totalCoupons
+                                      .toString() ??
+                                  "0",
+                              style: TextStyleUtil.manrope24w700(
+                                  color: context.primary01),
+                            )
+                          : monthlyData != null
+                              ? Text(
+                                  monthlyData!.value!.cards!.totalCoupons
+                                          .toString() ??
+                                      "0",
+                                  style: TextStyleUtil.manrope24w700(
+                                      color: context.primary01),
+                                )
+                              : yearlyData != null
+                                  ? Text(
+                                      yearlyData!.value!.cards!.totalCoupons
+                                              .toString() ??
+                                          "0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01),
+                                    )
+                                  : Text("0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01)),
                       5.kheightBox,
                       Text(
                         StringConstant.totalStamCollected,
@@ -95,26 +100,33 @@ class AnalysisScreen extends GetView<HomeController> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      weeklyData != null ?
-                      Text(
-                        weeklyData!.value!.cards!.totalRewards.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : monthlyData != null ?
-                      Text(
-                        monthlyData!.value!.cards!.totalRewards.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : yearlyData != null ?
-                      Text(
-                        yearlyData!.value!.cards!.totalRewards.toString() ??
-                            "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : Text("0", style:
-                      TextStyleUtil.manrope24w700(color: context.primary01)),
+                      weeklyData != null
+                          ? Text(
+                              weeklyData!.value!.cards!.totalRewards
+                                      .toString() ??
+                                  "0",
+                              style: TextStyleUtil.manrope24w700(
+                                  color: context.primary01),
+                            )
+                          : monthlyData != null
+                              ? Text(
+                                  monthlyData!.value!.cards!.totalRewards
+                                          .toString() ??
+                                      "0",
+                                  style: TextStyleUtil.manrope24w700(
+                                      color: context.primary01),
+                                )
+                              : yearlyData != null
+                                  ? Text(
+                                      yearlyData!.value!.cards!.totalRewards
+                                              .toString() ??
+                                          "0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01),
+                                    )
+                                  : Text("0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01)),
                       5.kheightBox,
                       Text(
                         StringConstant.totalRewardsRedeemed,
@@ -147,23 +159,33 @@ class AnalysisScreen extends GetView<HomeController> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      weeklyData != null ?
-                      Text(
-                        weeklyData!.value!.cards!.totalCoupons.toString() ?? "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : monthlyData != null ?
-                      Text(
-                        monthlyData!.value!.cards!.totalCoupons.toString() ?? "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : yearlyData != null ?
-                      Text(
-                        yearlyData!.value!.cards!.totalCoupons.toString() ?? "0",
-                        style:
-                        TextStyleUtil.manrope24w700(color: context.primary01),
-                      ) : Text("0", style:
-                      TextStyleUtil.manrope24w700(color: context.primary01)),
+                      weeklyData != null
+                          ? Text(
+                              weeklyData!.value!.cards!.totalCoupons
+                                      .toString() ??
+                                  "0",
+                              style: TextStyleUtil.manrope24w700(
+                                  color: context.primary01),
+                            )
+                          : monthlyData != null
+                              ? Text(
+                                  monthlyData!.value!.cards!.totalCoupons
+                                          .toString() ??
+                                      "0",
+                                  style: TextStyleUtil.manrope24w700(
+                                      color: context.primary01),
+                                )
+                              : yearlyData != null
+                                  ? Text(
+                                      yearlyData!.value!.cards!.totalCoupons
+                                              .toString() ??
+                                          "0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01),
+                                    )
+                                  : Text("0",
+                                      style: TextStyleUtil.manrope24w700(
+                                          color: context.primary01)),
                       5.kheightBox,
                       Text(
                         StringConstant.totalCouponRedemption,

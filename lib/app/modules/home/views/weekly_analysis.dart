@@ -167,7 +167,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                    padding: const EdgeInsets.all(16.0), child: Center(child: EmptyWidget())));
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(child: EmptyWidget())));
           }
         }),
         20.kheightBox,
@@ -184,7 +185,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                    padding: const EdgeInsets.all(16.0), child: Center(child: EmptyWidget())));
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(child: EmptyWidget())));
           }
         }),
         20.kheightBox,
@@ -201,7 +203,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Padding(
-                    padding: const EdgeInsets.all(16.0), child: Center(child: EmptyWidget())));
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(child: EmptyWidget())));
           }
         }),
         270.kheightBox,

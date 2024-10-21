@@ -6,7 +6,6 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
-
 import '../../../components/empty_widget.dart';
 import '../../../constants/string_constant.dart';
 import '../../../models/dashboard_weekly_data_model.dart';
@@ -27,7 +26,7 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
 
   @override
   void initState() {
-   // _tooltip = TooltipBehavior(enable: true);
+    // _tooltip = TooltipBehavior(enable: true);
     super.initState();
   }
 
@@ -48,22 +47,22 @@ class _CouponAnalysisCardState extends State<CouponAnalysisCard> {
             16.kheightBox,
             SfCartesianChart(
               backgroundColor: Colors.white,
-              primaryXAxis:  CategoryAxis(
-                labelStyle: TextStyle(
+              primaryXAxis: CategoryAxis(
+                labelStyle: const TextStyle(
                   fontSize: 12, // Adjust the font size as needed
                   color: Colors.black,
                 ),
-                majorGridLines: MajorGridLines(width: 0),
+                majorGridLines: const MajorGridLines(width: 0),
               ),
-              primaryYAxis:  NumericAxis(
+              primaryYAxis: NumericAxis(
                 minimum: 0,
                 maximum: 80,
                 interval: 20,
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 12, // Adjust the font size as needed
                   color: Colors.black,
                 ),
-                majorGridLines: MajorGridLines(width: 0.5),
+                majorGridLines: const MajorGridLines(width: 0.5),
               ),
               // tooltipBehavior: _tooltip,
               series: <CartesianSeries<ChartData, String>>[
