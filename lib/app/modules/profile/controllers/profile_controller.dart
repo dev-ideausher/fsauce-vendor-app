@@ -5,21 +5,17 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/custom_button.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
-import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
-
   final auth = Get.find<Auth>();
 
   void gotoProfileDetailsScreen() {
-    Get.toNamed(Routes.PROFILE_SETUP);
+    Get.toNamed(Routes.PROFILE_DETAILS);
   }
 
   void gotoChangePasswordScreen() {

@@ -357,7 +357,7 @@ class StepOne extends GetView<ProfileSetupController> {
             hintText: StringConstant.enterLocation,
             keyboardType: TextInputType.number,
             inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]'))
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9 ]'))
             ],
             maxLength: 6,
             validator: (String? val) {

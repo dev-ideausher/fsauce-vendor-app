@@ -24,7 +24,55 @@ class ConfrimationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Dialog(
+      backgroundColor: Colors.white,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 16.kh, horizontal: 24.kw),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyleUtil.manrope18w600(),
+              textAlign: TextAlign.left,
+            ),
+            4.kheightBox,
+            Text(
+              subTitle,
+              style: TextStyleUtil.manrope14w400(color: context.black03),
+              textAlign: TextAlign.left,
+            ),
+            16.kheightBox,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomRedElevatedButtonWithBorder(
+                    buttonText: noButtonText ?? StringConstant.no,
+                    height: 40.kh,
+                    width: 120.kw,
+                    onPressed: () {
+                      onNoTap();
+                    }),
+                CustomRedElevatedButton(
+                    buttonText: yesButtonText ?? StringConstant.yes,
+                    height: 40.kh,
+                    width: 120.kw,
+                    onPressed: () {
+                      onYesTap();
+                    }),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+/*
+     AlertDialog(
       backgroundColor: Colors.white,
       title: Text(
         title,
@@ -53,5 +101,4 @@ class ConfrimationDialog extends StatelessWidget {
             }),
       ],
     );
-  }
-}
+*/

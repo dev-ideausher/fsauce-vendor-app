@@ -42,24 +42,26 @@ class StepThree extends GetView<ProfileSetupController> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (ctx, index) {
                     if (controller.isImage(controller.selectedFiles[index])) {
-                      return Stack(
-                        children: [
-                          Image.file(
+                      return Stack(children: [
+                        Image.file(
                           File(controller.selectedFiles[index]),
-                          fit: BoxFit.contain,),
-                          Positioned(
-                              top: 0,
-                              right: 0,
-                              child: IconButton(
-                                  onPressed: (){
-                                    controller.selectedFiles.removeAt(index);
-                                  }, icon: const Icon(Icons.cancel_outlined, size: 20,))),
-                        ]
-                      );
+                          fit: BoxFit.contain,
+                        ),
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                                onPressed: () {
+                                  controller.selectedFiles.removeAt(index);
+                                },
+                                icon: const Icon(
+                                  Icons.cancel_outlined,
+                                  size: 20,
+                                ))),
+                      ]);
                     } else {
-                      return Stack(
-                        children: [
-                          Container(
+                      return Stack(children: [
+                        Container(
                             height: 400.kh,
                             width: 120.kw,
                             decoration: BoxDecoration(
@@ -67,15 +69,18 @@ class StepThree extends GetView<ProfileSetupController> {
                               borderRadius: BorderRadius.circular(4.kh),
                             ),
                             child: const Center(child: Icon(Icons.videocam))),
-                          Positioned(
-                              top: 0,
-                              right: 0,
-                              child: IconButton(
-                                  onPressed: (){
-                                    controller.selectedFiles.removeAt(index);
-                                  }, icon: const Icon(Icons.cancel_outlined, size: 20,))),
-                        ]
-                      );
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                                onPressed: () {
+                                  controller.selectedFiles.removeAt(index);
+                                },
+                                icon: const Icon(
+                                  Icons.cancel_outlined,
+                                  size: 20,
+                                ))),
+                      ]);
                     }
                   },
                   separatorBuilder: (ctx, index) {
@@ -87,8 +92,7 @@ class StepThree extends GetView<ProfileSetupController> {
             return Container();
           }
         }),
-        Obx(() =>
-            GestureDetector(
+        Obx(() => GestureDetector(
               onTap: () async {
                 await controller.pickMultipleFiles();
               },
@@ -108,10 +112,9 @@ class StepThree extends GetView<ProfileSetupController> {
                       Text(
                         controller.selectedFiles.isEmpty
                             ? StringConstant.uploadPhotosAndVideos
-                            : '${controller.selectedFiles
-                            .length} files selected',
+                            : '${controller.selectedFiles.length} files selected',
                         style:
-                        TextStyleUtil.manrope14w400(color: context.black03),
+                            TextStyleUtil.manrope14w400(color: context.black03),
                       )
                     ],
                   ),
@@ -119,11 +122,11 @@ class StepThree extends GetView<ProfileSetupController> {
               ),
             )),
         Obx(() {
-          if(controller.selectedFiles.isEmpty){
+          if (controller.selectedFiles.isEmpty) {
             return SizedBox(
               height: 24.h,
             );
-          } else{
+          } else {
             return 0.kheightBox;
           }
         }),

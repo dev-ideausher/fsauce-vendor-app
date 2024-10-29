@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -12,19 +11,14 @@ import 'package:fsauce_vendor_app/app/modules/profileSetup/views/step_two.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
-import 'package:fsauce_vendor_app/app/services/dio/client.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../models/feature_model.dart';
 
 import 'package:mime/mime.dart';
-
-import '../views/get_location_view.dart';
 
 class ProfileSetupController extends GetxController {
   final stepCount = 0.obs;

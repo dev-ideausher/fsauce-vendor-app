@@ -4,13 +4,10 @@ import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/views/deals_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class VipOffersController extends GetxController {
-  //TODO: Implement VipOffersController
   ScrollController activeScrollController = ScrollController();
   ScrollController inActiveScrollController = ScrollController();
 
@@ -170,7 +167,7 @@ class VipOffersController extends GetxController {
   }
 
   void gotoCreateVipOffer() {
-    Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [false]);
+    Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [false, couponsList]);
   }
 
   void gotoEditVipOffer(Coupon coupon) {

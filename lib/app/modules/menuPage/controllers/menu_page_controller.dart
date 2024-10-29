@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/confirmation_dialog.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -16,6 +18,9 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 
+import '../../../services/fsv_util.dart';
+import '../../../services/snackbar.dart';
+
 class MenuPageController extends GetxController {
   @override
   void onInit() {
@@ -32,6 +37,7 @@ class MenuPageController extends GetxController {
 
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
   RxString itemImage = "".obs;
+  Rx<File?> selectedItemImage = Rx<File?>(null);
   RxString itemImageUrl = "".obs;
   final RxString itemEditImage = "".obs;
 
@@ -170,12 +176,14 @@ class MenuPageController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
-
+    ImageSource imageSource = ImageSource.gallery;
+    XFile? pickedFile = await FSVutil.compressImage(imageSource);
     if (pickedFile != null) {
+      selectedItemImage.value = File(pickedFile.path);
       itemImage.value = pickedFile.path;
+      update();
+    } else {
+      showMySnackbar(msg: 'No image selected');
     }
   }
 

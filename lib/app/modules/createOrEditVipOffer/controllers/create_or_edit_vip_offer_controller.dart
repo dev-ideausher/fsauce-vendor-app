@@ -15,10 +15,10 @@ import 'package:intl/intl.dart';
 
 import '../../../components/confirmation_dialog.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/fsv_util.dart';
+import '../../../services/snackbar.dart';
 
 class CreateOrEditVipOfferController extends GetxController {
-  //TODO: Implement CreateOrEditVipOfferController
-
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController termsAndConditionsController = TextEditingController();
@@ -33,6 +33,7 @@ class CreateOrEditVipOfferController extends GetxController {
   DateTime scheduledDate = DateTime.now();
 
   RxString couponImageLink = "".obs;
+  RxList<Coupon> couponsList = <Coupon>[].obs;
 
   List<String> typeOfOffers = [
     StringConstant.dealOfTheDay,
@@ -48,6 +49,7 @@ class CreateOrEditVipOfferController extends GetxController {
   void onInit() {
     super.onInit();
     getSelectedCouponDetails();
+    couponsList = Get.arguments[1];
     Get.find<HomeController>().getRestaurantDetails();
   }
 
@@ -63,12 +65,13 @@ class CreateOrEditVipOfferController extends GetxController {
   }
 
   Future<void> pickCouponImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+    ImageSource imageSource = ImageSource.gallery;
+    XFile? pickedFile = await FSVutil.compressImage(imageSource);
 
     if (pickedFile != null) {
       selectedCouponImage.value = pickedFile.path;
+    } else {
+      showMySnackbar(msg: 'No image selected');
     }
   }
 
@@ -104,6 +107,11 @@ class CreateOrEditVipOfferController extends GetxController {
   Future<void> addCoupon() async {
     if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
         null) {
+      if (couponsList.value
+          .any((element) => element.title == titleController.text)) {
+        Get.snackbar("Error", "Title already exists");
+        return;
+      }
       if (titleController.text.trim().isEmpty) {
         Get.snackbar("Error", "Title can't be empty");
         return;

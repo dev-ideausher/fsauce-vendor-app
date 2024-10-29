@@ -63,7 +63,8 @@ class PushNotificationView extends GetView<PushNotificationController> {
                                       : DateTime.parse(controller
                                               .notificationList[index]
                                               .sheduledDate!)
-                                          .isAfter(DateTime.now()),
+                                          .isAfter(DateTime.now().subtract(
+                                              const Duration(days: 1))),
                                   notification:
                                       controller.notificationList[index],
                                 );

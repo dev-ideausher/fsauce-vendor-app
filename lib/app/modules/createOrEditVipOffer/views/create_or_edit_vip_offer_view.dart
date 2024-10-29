@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/select_container.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';

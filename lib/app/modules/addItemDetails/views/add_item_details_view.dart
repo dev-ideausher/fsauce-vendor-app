@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -39,7 +40,8 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                    style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -59,10 +61,10 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                               .itemImage
                               .value
                               .isNotEmpty
-                          ? Image.file(
-                              File(
-                                  Get.find<MenuPageController>().itemImage.value),
-                              fit: BoxFit.cover,
+                          ? CommonImageView(
+                              file: Get.find<MenuPageController>()
+                                  .selectedItemImage
+                                  .value!,
                             )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -144,7 +146,8 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                   ),
                   Text(
                     "*",
-                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                    style:
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -152,19 +155,22 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
               CustomTextField(
                   controller: Get.find<MenuPageController>().itemNameController,
                   fillColor: context.black07,
-                  validator: (value) => controller.validateItemName(value ?? ""),
+                  validator: (value) =>
+                      controller.validateItemName(value ?? ""),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  hintText: StringConstant.enterHere
-              ),
+                  hintText: StringConstant.enterHere),
               220.kheightBox,
               CustomRedElevatedButton(
                   width: 100.w,
                   height: 56.kh,
                   buttonText: StringConstant.save,
                   onPressed: () async {
-                    if(Get.find<MenuPageController>().formKey.currentState!.validate()){
+                    if (Get.find<MenuPageController>()
+                        .formKey
+                        .currentState!
+                        .validate()) {
                       bool status =
-                      await Get.find<MenuPageController>().addMenuItem();
+                          await Get.find<MenuPageController>().addMenuItem();
                       if (status) {
                         Get.back();
                       }

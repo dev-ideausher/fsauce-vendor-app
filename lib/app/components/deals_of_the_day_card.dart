@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
@@ -197,14 +196,3 @@ class DealsOfTheDayCard extends StatelessWidget {
     );
   }
 }
-
-// BoxDecoration(
-// borderRadius: const BorderRadius.only(topLeft: Radius.circular(50), bottomLeft: Radius.circular(50)),
-// image: DecorationImage(
-// fit: BoxFit.fitHeight,
-// alignment: Alignment.centerRight,
-// image: NetworkImage(
-// coupon.image
-// )
-// ),
-// ),
