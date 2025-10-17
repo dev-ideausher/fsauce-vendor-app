@@ -156,7 +156,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.weeklyCouponChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.weeklyCouponChartData,
             );
@@ -174,7 +175,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.weeklyStampsChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.weeklyStampsChartData,
             );
@@ -192,7 +194,8 @@ class WeeklyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.weeklyRewardsChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.weeklyRewardsChartData,
             );

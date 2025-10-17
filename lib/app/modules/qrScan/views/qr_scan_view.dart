@@ -10,7 +10,7 @@ import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import '../../../components/added_successfull_bottomsheet.dart';
 import '../../../routes/app_pages.dart';
@@ -87,12 +87,16 @@ class _QrScanViewState extends State<QrScanView> {
                 // result != null ? Text(result!.code!) : const Text(""),
                 50.kheightBox,
                 Center(
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.REDEEMCOUPONCODE);
-                    },
-                      child: Text(StringConstant.enterCouponCodeBelow, style: TextStyleUtil.manrope16w600(color: context.primary01, textDecoration: TextDecoration.underline),))
-                ),
+                    child: InkWell(
+                        onTap: () {
+                          Get.toNamed(Routes.REDEEMCOUPONCODE);
+                        },
+                        child: Text(
+                          StringConstant.enterCouponCodeBelow,
+                          style: TextStyleUtil.manrope16w600(
+                              color: context.primary01,
+                              textDecoration: TextDecoration.underline),
+                        ))),
               ],
             ),
           )
@@ -113,16 +117,16 @@ class _QrScanViewState extends State<QrScanView> {
         result = scanData;
         return;
       });
-      if(result != null){
+      if (result != null) {
         scanQR(result!.code!);
         return;
       }
     });
   }
 
-  Future<void> scanQR(String data) async{
-    if(result != null){
-      try{
+  Future<void> scanQR(String data) async {
+    if (result != null) {
+      try {
         Map<String, dynamic> loyaltyCardData = jsonStringToMap(result!.code!);
         Map<String, dynamic> cardData = {
           "user": loyaltyCardData['user'],
@@ -130,16 +134,17 @@ class _QrScanViewState extends State<QrScanView> {
           "LoyaltyCard": loyaltyCardData['LoyaltyCard'],
           //669df96980cfd4f7d036b286
         };
-        var response  = await APIManager.scanLoyaltyCard(data: cardData);
-        if(response.data['status']){
+        var response = await APIManager.scanLoyaltyCard(data: cardData);
+        if (response.data['status']) {
           Get.back();
-          Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.redeemedSuccessfully));
+          Get.bottomSheet(const AddedSuccessfullBottomSheet(
+              subTitle: StringConstant.redeemedSuccessfully));
           return;
-        } else if(!response.data['status'] && result != null){
+        } else if (!response.data['status'] && result != null) {
           Get.snackbar("Error", response.data['message']);
           return;
         }
-      } catch(e){
+      } catch (e) {
         Get.snackbar("Error", StringConstant.somethingWentWrong);
         return;
       }
@@ -147,10 +152,15 @@ class _QrScanViewState extends State<QrScanView> {
     }
   }
 
-  Map<String, dynamic> jsonStringToMap(String data){
-    List<String> str = data.replaceAll("{","").replaceAll("}","").replaceAll("\"","").replaceAll("'","").split(",");
-    Map<String,dynamic> result = {};
-    for(int i=0;i<str.length;i++){
+  Map<String, dynamic> jsonStringToMap(String data) {
+    List<String> str = data
+        .replaceAll("{", "")
+        .replaceAll("}", "")
+        .replaceAll("\"", "")
+        .replaceAll("'", "")
+        .split(",");
+    Map<String, dynamic> result = {};
+    for (int i = 0; i < str.length; i++) {
       List<String> s = str[i].split(":");
       result.putIfAbsent(s[0].trim(), () => s[1].trim());
     }

@@ -156,7 +156,8 @@ class YearlyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.yearlyCouponChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.yearlyCouponChartData,
             );
@@ -174,7 +175,8 @@ class YearlyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.yearlyStampsChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.yearlyStampsChartData,
             );
@@ -192,7 +194,8 @@ class YearlyAnalysis extends GetView<HomeController> {
         20.kheightBox,
         Obx(() {
           if (controller.yearlyRewardsChartData.isNotEmpty) {
-            return CouponAnalysisCard(
+            return FlBarChartWidget(
+              barColor: ColorUtil.kErrorColor,
               title: StringConstant.couponAnalysis,
               graphData: controller.yearlyRewardsChartData,
             );

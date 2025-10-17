@@ -14,7 +14,8 @@ import 'app/services/storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = "pk_test_51IDxNdKlUbZkAAt635jlWKPvpeBvKQmkiqQr91KFHKzlEp5DzO8T9DEAOTpdfCUPihlTBZ7kB2gb4yFAYwQOevLk00ekRk7tuH";
+  Stripe.publishableKey =
+      "pk_test_51IDxNdKlUbZkAAt635jlWKPvpeBvKQmkiqQr91KFHKzlEp5DzO8T9DEAOTpdfCUPihlTBZ7kB2gb4yFAYwQOevLk00ekRk7tuH";
   Stripe.merchantIdentifier = "foodsauciety\$\$";
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
