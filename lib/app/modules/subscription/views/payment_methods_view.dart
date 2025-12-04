@@ -78,16 +78,31 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                                   "**** **** *${controller.cardsList[index].last4 ?? "1212"}",
                                   style: TextStyleUtil.manrope14w400()),
                               trailing: Obx(() {
-                                return Radio<CardModel>(
-                                  activeColor: context.primary01,
-                                  value: controller.cardsList[index],
+                                return RadioGroup<CardModel>(
                                   groupValue: controller.selectedCard.value,
-                                  onChanged: (CardModel? value) {
-                                    if (value != null) {
-                                      controller.selectedCard.value = value;
+                                  onChanged: (CardModel? newValue) {
+                                    if (newValue != null) {
+                                      controller.selectedCard.value = newValue;
                                     }
                                   },
+                                  child: Column(
+                                    children: [
+                                      for (final card in controller.cardsList)
+                                        Row(
+                                          children: [
+                                            Radio<CardModel>(
+                                              value: card,         // ✔ valid
+                                              activeColor: context.primary01,
+                                            ),
+                                            Text(card.name??""),       // You handle labels manually
+                                          ],
+                                        ),
+                                    ],
+                                  ),
                                 );
+
+
+
                               })),
                         ),
                       );

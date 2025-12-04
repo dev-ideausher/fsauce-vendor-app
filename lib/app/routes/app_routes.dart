@@ -41,11 +41,11 @@ abstract class Routes {
   static const PAYMENTDETAILS = _Paths.PAYMENTDETAILS;
   static const CARDDETAILS = _Paths.CARDDETAILS;
   static const SPLASHVIEW = _Paths.SPLASHVIEW;
-  static const TERMSANDCONDITIONS = _Paths.TERMSANDCONDITIONS;
   static const REDEEMCOUPONCODE = _Paths.REDEEMCOUPONCODE;
   static const GETLOCATION = _Paths.GETLOCATION;
   static const LOGIN_EMAIL_VERIFICATION = _Paths.LOGIN_EMAIL_VERIFICATION;
   static const CURRENT_SUBSCRIPTION_PLAN = _Paths.CURRENT_SUBSCRIPTION_PLAN;
+  static const TERM_AND_PRIVACY = _Paths.TERM_AND_PRIVACY;
 }
 
 abstract class _Paths {
@@ -88,9 +88,9 @@ abstract class _Paths {
   static const PAYMENTDETAILS = '/payment-details';
   static const CARDDETAILS = '/card-details';
   static const SPLASHVIEW = '/splash-view';
-  static const TERMSANDCONDITIONS = '/terms-conditions';
   static const REDEEMCOUPONCODE = '/redeem-coupon-code';
   static const GETLOCATION = '/get-location';
   static const LOGIN_EMAIL_VERIFICATION = '/login-email-verification';
   static const CURRENT_SUBSCRIPTION_PLAN = '/current-subscription-plan';
+  static const TERM_AND_PRIVACY = '/term-and-privacy';
 }

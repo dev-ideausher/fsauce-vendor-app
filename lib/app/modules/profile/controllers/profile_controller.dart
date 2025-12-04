@@ -68,21 +68,35 @@ class ProfileController extends GetxController {
                     color: ColorUtil.kBlack04,
                     textDecoration: TextDecoration.none),
                 textAlign: TextAlign.center,
-              ).paddingOnly(bottom: 40.kh),
-              Container(
-                alignment: Alignment.centerRight,
-                child: FsvButton(
-                  onPressed: () async {
-                    // Get.find<GetStorageService>().logout();
-                    await Get.find<Auth>().logOutUser();
-                    Get.offAllNamed(Routes.LOGIN);
-                  },
-                  height: 40.kh,
-                  width: 144.kw,
-                  label: StringConstant.logout,
-                  fontSize: 14.kh,
-                  padding: const EdgeInsets.all(8),
-                ),
+              ).paddingOnly(bottom: 30.kh),
+              Row(
+                children: [
+                  FsvButton(
+                    onPressed: () => Get.back(),
+                    height: 40.kh,
+                    width: 130.kw,
+                    label: StringConstant.cancel,
+                    fontSize: 14.kh,
+                    padding: const EdgeInsets.all(8),
+                    color: ColorUtil.kBlack04, // optional styling
+                  ),
+                  10.kwidthBox,
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: FsvButton(
+                      onPressed: () async {
+                        // Get.find<GetStorageService>().logout();
+                        await Get.find<Auth>().logOutUser();
+                        Get.offAllNamed(Routes.LOGIN);
+                      },
+                      height: 40.kh,
+                      width: 120.kw,
+                      label: StringConstant.logout,
+                      fontSize: 14.kh,
+                      padding: const EdgeInsets.all(8),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

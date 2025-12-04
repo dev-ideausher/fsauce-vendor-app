@@ -7,7 +7,6 @@ import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_s
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
 
 class GetLocationView extends StatelessWidget {

@@ -131,6 +131,33 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     Row(
                       children: [
                         Text(
+                          StringConstant.rewardCount,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        Text(
+                          "*",
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        )
+                      ],
+                    ),
+                    10.kheightBox,
+                    CustomTextField(
+                        validator: (String? val) {
+                          if (val == null || val.isEmpty) {
+                            return StringConstant.rewardCountCannotBeEmpty;
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        controller: controller.rewardCountController,
+                        fillColor: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.black07),
+                        hintText: StringConstant.enterRewardCount),
+                    20.kheightBox,
+                    Row(
+                      children: [
+                        Text(
                           StringConstant.validTill,
                           style: TextStyleUtil.manrope14w500(),
                         ),

@@ -13,19 +13,16 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.baseUrl, data: jsonEncode(body));
 
-
   static Future<Response> onboardVendor() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.onboardVendor);
-
 
   static Future<Response> updateVendor({
     required RestaurantDetails restaurantDetails,
   }) async {
     print(restaurantDetails.toJson());
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.updateVendor, data: restaurantDetails.toJson()
-    );
+        .post(Endpoints.updateVendor, data: restaurantDetails.toJson());
   }
 
   static Future<Response> getVendor() async {
@@ -86,9 +83,8 @@ class APIManager {
             data: {"id": categoryId, "image": imgUrl, "name": itemName});
   }
 
-  static Future<Response> addNewJob({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addNewJob(
+      {required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(Endpoints.addJob, data: data);
   }
@@ -106,16 +102,13 @@ class APIManager {
         .delete(Endpoints.deleteJob, queryParameters: {"id": id});
   }
 
-  static Future<Response> editJob({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> editJob({required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(Endpoints.editJob, data: data);
   }
 
-  static Future<Response> addCoupon({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addCoupon(
+      {required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addCoupon,
@@ -165,9 +158,8 @@ class APIManager {
         "${Endpoints.getLoyaltyCards}status=$status&page=$page&limit=$limit");
   }
 
-  static Future<Response> addLoyaltyCard({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addLoyaltyCard(
+      {required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addLoyaltyCard,
@@ -178,10 +170,7 @@ class APIManager {
   static Future<Response> editLoyaltyCard(
       LoyaltyCardModel card, bool isActive) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(
-      Endpoints.editCoupon,
-      data: card.toJson()
-    );
+        .post(Endpoints.editCoupon, data: card.toJson());
   }
 
   static Future<Map<String, dynamic>> deleteLoyaltyCard(String id) async {
@@ -214,12 +203,11 @@ class APIManager {
 
   static Future<Response> getRatings(
       {int rating = 5, required String id}) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
-        Endpoints.getRatings, queryParameters: {
-          'id': id,
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get(Endpoints.getRatings, queryParameters: {
+      'id': id,
       'rating': rating,
-    }
-        );
+    });
   }
 
   static Future<Map<String, dynamic>> deleteRating(String id) async {
@@ -229,9 +217,8 @@ class APIManager {
     });
   }
 
-  static Future<Response> addPushNotification({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addPushNotification(
+      {required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addNotification,
@@ -239,46 +226,78 @@ class APIManager {
     );
   }
 
-  static Future<Response> getNotifications() async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getNotification,);
-  }
-
-  static Future<Response> getFeatures() async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getFeatures);
-  }
-
-  static Future<Response> getCuisines() async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getCuisine);
-  }
-
-  static Future<Response> scanLoyaltyCard({
-    required Map<String, dynamic> data
-  }) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.scanLoyaltyCard, data: data);
-  }
-
-  static Future<Response> getDashboardData({required String dataFor}) async{
-    return await DioClient(
-        Dio(),
-        showSnakbar: true,
-        isOverlayLoader: true
-    ).get(Endpoints.dashboardData, queryParameters: {"dataFor": dataFor});
-  }
-
-  static Future<Response> redeemCouponCode({
-    required String code
-  }) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(Endpoints.redeemCouponCode, data: {
-      "code": code
+  static Future<Response> getNotifications(
+      {int page = 1, int limit = 10}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+        .get(Endpoints.getNotification, queryParameters: {
+      "page": page,
+      "limit": limit,
+      "limit": limit,
     });
   }
 
-  static Future<Response> getSubscriptionPlans() async{
-    return await DioClient(
-        Dio(),
-        showSnakbar: true,
-        isOverlayLoader: true
-    ).get(Endpoints.getSubscriptionPlans);
+  static Future<Response> getVendorNotifications(
+      {int page = 1, int limit = 10}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+        .get(Endpoints.getVendorNotifications, queryParameters: {
+      "page": page,
+      "limit": limit,
+      "limit": limit,
+    });
+  }
+
+  static Future<Map<String, dynamic>> deleteNotification(
+      {required String id}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete(Endpoints.deleteNotification, queryParameters: {"id": id});
+  }
+
+  static Future<Response> editNotification(
+      {required String id, required bool isActive}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .patch(Endpoints.editNotification,
+            data: {"id": id, "isActive": isActive});
+  }
+
+  static Future<Response> getPrivacyPolicy() async {
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+        .get(Endpoints.getPrivacyPolicy);
+  }
+
+  static Future<Response> getTermsAndConditions() async {
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+        .get(Endpoints.getTermsAndConditions);
+  }
+
+  static Future<Response> getFeatures() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+        .get(Endpoints.getFeatures);
+  }
+
+  static Future<Response> getCuisines() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get(Endpoints.getCuisine);
+  }
+
+  static Future<Response> scanLoyaltyCard(
+      {required Map<String, dynamic> data}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(Endpoints.scanLoyaltyCard, data: data);
+  }
+
+  static Future<Response> getDashboardData({required String dataFor}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get(Endpoints.dashboardData, queryParameters: {"dataFor": dataFor});
+  }
+
+  static Future<Response> redeemCouponCode({required String code}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(Endpoints.redeemCouponCode, data: {"code": code});
+  }
+
+  static Future<Response> getSubscriptionPlans() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .get(Endpoints.getSubscriptionPlans);
   }
 
   static Future<Response> deleteCard(String id) async {
@@ -286,9 +305,8 @@ class APIManager {
         .get("${Endpoints.delCard}$id");
   }
 
-  static Future<Response> addVendorSubscription({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addVendorSubscription(
+      {required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.vendorSubscription,
@@ -296,9 +314,7 @@ class APIManager {
     );
   }
 
-  static Future<Response> addCard({
-    required Map<String, dynamic> data
-  }) async {
+  static Future<Response> addCard({required Map<String, dynamic> data}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .post(
       Endpoints.addCard,
@@ -306,19 +322,20 @@ class APIManager {
     );
   }
 
-  static Future<Response> getCardDataList() async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .get(
+  static Future<Response> getCardDataList() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(
       Endpoints.getCardList,
     );
   }
-  
-  static Future<Response> cancelSubscription({required Map<String, dynamic> data}) async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
-        Endpoints.cancelSubscription, data: data);
+
+  static Future<Response> cancelSubscription(
+      {required Map<String, dynamic> data}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .post(Endpoints.cancelSubscription, data: data);
   }
 
-  static Future<Map<String, dynamic>> deleteAccount() async{
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).delete(Endpoints.deleteVendor);
+  static Future<Map<String, dynamic>> deleteAccount() async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+        .delete(Endpoints.deleteVendor);
   }
 }

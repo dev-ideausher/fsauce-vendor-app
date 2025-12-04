@@ -52,63 +52,29 @@ class OnboardingView extends GetView<OnboardingController> {
                       controller.changePageCount(n: value);
                     },
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          30.kheightBox,
-                          const Spacer(),
-                          Text(
-                            StringConstant.onboardingHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope24w700(),
-                          ),
-                          16.kheightBox,
-                          Text(
-                            StringConstant.onboardingSubHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope16w400(
-                              color: context.black03,
-                            ),
-                          ),
-                        ],
+                      _buildPage(
+                        context,
+                        image: ImageConstant.onboarding1Image1,
+                        title: StringConstant.onboardingHeading1,
+                        subtitle: StringConstant.onboardingSubHeading1,
                       ),
-                      Column(
-                        children: [
-                          30.kheightBox,
-                          const Spacer(),
-                          Text(
-                            StringConstant.onboardingHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope24w700(),
-                          ),
-                          16.kheightBox,
-                          Text(
-                            StringConstant.onboardingSubHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope16w400(
-                              color: context.black03,
-                            ),
-                          ),
-                        ],
+                      _buildPage(
+                        context,
+                        image: ImageConstant.onboarding1Image2,
+                        title: StringConstant.onboardingHeading2,
+                        subtitle: StringConstant.onboardingSubHeading2,
                       ),
-                      Column(
-                        children: [
-                          30.kheightBox,
-                          const Spacer(),
-                          Text(
-                            StringConstant.onboardingHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope24w700(),
-                          ),
-                          16.kheightBox,
-                          Text(
-                            StringConstant.onboardingSubHeading1,
-                            textAlign: TextAlign.start,
-                            style: TextStyleUtil.manrope16w400(
-                              color: context.black03,
-                            ),
-                          ),
-                        ],
+                      _buildPage(
+                        context,
+                        image: ImageConstant.onboarding1Image3,
+                        title: StringConstant.onboardingHeading3,
+                        subtitle: StringConstant.onboardingSubHeading3,
+                      ),
+                      _buildPage(
+                        context,
+                        image: ImageConstant.onboarding1Image4,
+                        title: StringConstant.onboardingHeading4,
+                        subtitle: StringConstant.onboardingSubHeading4,
                       ),
                     ],
                   ),
@@ -134,6 +100,39 @@ class OnboardingView extends GetView<OnboardingController> {
       ),
     );
   }
+
+  Widget _buildPage(BuildContext context,
+      {required String image,
+      required String title,
+      required String subtitle}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        30.kheightBox,
+        Center(
+          child: CommonImageView(
+            svgPath: image,
+            height: 35.h,
+            fit: BoxFit.contain,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          title,
+          textAlign: TextAlign.start,
+          style: TextStyleUtil.manrope24w700(),
+        ),
+        16.kheightBox,
+        Text(
+          subtitle,
+          textAlign: TextAlign.start,
+          style: TextStyleUtil.manrope16w400(
+            color: context.black03,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class PageIndicator extends StatelessWidget {
@@ -145,7 +144,7 @@ class PageIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<OnboardingController>();
     return Obx(() => Row(
-          children: [0, 1, 2]
+          children: [0, 1, 2, 3]
               .map((e) => Padding(
                     padding: EdgeInsets.only(right: 10.kw),
                     child: Container(

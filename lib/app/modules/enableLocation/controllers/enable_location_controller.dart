@@ -24,9 +24,7 @@ class EnableLocationController extends GetxController {
           avgPrice: 0,
           description: "",
           features: [FeatureModel(id: "", name: "")],
-          timing: [
-            Timing(day: "", startTime: "", closeTime: "", isActive: false)
-          ],
+          timing: [Timing(day: "", startTime: "", closeTime: "", isActive: false)],
           media: [""],
           cuisine: [CuisineModel(id: "", name: "", image: "")],
           lat: "",
@@ -55,10 +53,9 @@ class EnableLocationController extends GetxController {
     PermissionStatus status = await Permission.location.request();
     if (status.isGranted) {
       print("Location: ${Permission.location.value}");
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
       locationText += "Lat: ${position.latitude} & Long: ${position.longitude}";
-      try{
+      try {
         var response = await APIManager.updateVendor(
             restaurantDetails: RestaurantDetails(
                 restaurantName: details.value.restaurantName,
@@ -73,19 +70,18 @@ class EnableLocationController extends GetxController {
                 cuisine: details.value.cuisine,
                 lat: position.latitude.toString(),
                 lon: position.longitude.toString()));
-        if(response.statusCode == 200){
+        if (response.statusCode == 200) {
           print(locationText);
           Get.find<GetStorageService>().isLoggedIn = true;
           gotoNavBar();
-        } else{
+        } else {
           Get.snackbar("Error", StringConstant.somethingWentWrong);
         }
-      } catch(e){
+      } catch (e) {
         Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     } else {
-      Get.snackbar(StringConstant.permissionDenied,
-          StringConstant.locationPermissionDenied);
+      Get.snackbar(StringConstant.permissionDenied, StringConstant.locationPermissionDenied);
     }
   }
 }

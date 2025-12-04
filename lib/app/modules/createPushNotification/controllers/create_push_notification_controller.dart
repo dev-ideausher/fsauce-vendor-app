@@ -70,32 +70,28 @@ class CreatePushNotificationController extends GetxController {
     if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
         null) {
       if (titleController.text.isEmpty) {
-        Get.snackbar("Error", StringConstant.titleEmpty);
+        DialogHelper.showError(StringConstant.titleEmpty);
         return;
       } else {
         try {
-          PushNotification notification = PushNotification(
-              title: titleController.text,
-              sheduledDate: scheduledDateController.text.isEmpty
-                  ? null
-                  : selectedDate.value.toString());
+
           var response =
-              await APIManager.addPushNotification(data: notification.toJson());
+              await APIManager.addPushNotification(data: {"title":titleController.text.trim(),"sheduledDate":scheduledDateController.text.isEmpty
+                  ? null
+                  : selectedDate.value.toString()});
           if (response.data['status']) {
             Get.back();
             DialogHelper.showSuccess(
                 StringConstant.notificationSentSuccessfully);
             Get.find<PushNotificationController>().getNotifications();
-            Get.find<PushNotificationController>()
-                .notificationList
-                .add(notification);
+
             return;
           } else {
-            Get.snackbar("Error", response.data['message']);
+            DialogHelper.showError(response.data['message']);
             return;
           }
         } catch (e) {
-          Get.snackbar("Error", e.toString());
+          DialogHelper.showError(e.toString());
           return;
         }
       }
@@ -106,8 +102,6 @@ class CreatePushNotificationController extends GetxController {
           yesButtonText: StringConstant.checkoutSubscriptions,
           noButtonText: StringConstant.close,
           onYesTap: () async {
-            // Get.find<GetStorageService>().logout();
-            Get.back();
             Get.offNamed(Routes.SUBSCRIPTION);
           },
           onNoTap: Get.back));

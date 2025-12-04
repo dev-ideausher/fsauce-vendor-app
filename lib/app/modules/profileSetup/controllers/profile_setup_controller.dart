@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -15,9 +14,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-
 import '../../../models/feature_model.dart';
-
 import 'package:mime/mime.dart';
 
 class ProfileSetupController extends GetxController {
@@ -31,6 +28,9 @@ class ProfileSetupController extends GetxController {
   final List<Widget> steps = [StepOne(), StepTwo(), StepThree()];
 
   final formKey = GlobalKey<FormState>();
+  // final formKey1 = GlobalKey<FormState>();
+  // final formKey2 = GlobalKey<FormState>();
+  // final formKey3 = GlobalKey<FormState>();
   RxBool isRestLogoPicked = true.obs;
   RxBool isRestBannerPicked = true.obs;
   RxBool isCuisinePicked = true.obs;
@@ -59,10 +59,16 @@ class ProfileSetupController extends GetxController {
       var response = await APIManager.getFeatures();
       if (response.data['status']) {
         List<dynamic> data = response.data['data'];
-        features.value = [];
+
         features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
+
         multiSelectFeatures.value = features
-            .map((e) => MultiSelectItem<FeatureModel>(e, e.name!))
+            .map(
+              (e) => MultiSelectItem<FeatureModel>(
+                e,
+                e.name ?? "Unnamed Feature",
+              ),
+            )
             .toList();
       } else {
         Get.snackbar("Error", response.data['message']);

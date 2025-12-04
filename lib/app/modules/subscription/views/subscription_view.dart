@@ -59,36 +59,36 @@ class SubscriptionView extends GetView<SubscriptionController> {
             return Container();
           }
         }),
-        body: Column(
-          children: [
-            10.kheightBox,
-            Obx(() {
-              if (controller.showList.value) {
-                return Text(
-                  StringConstant.buySubscriptionText,
-                  style: TextStyleUtil.manrope16w600(),
-                );
-              } else {
-                return Container();
-              }
-            }),
-            10.kheightBox,
-            Obx(() {
-              if (!controller.showList.value) {
-                String validTill = Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .subscriptionModel ==
-                        null
-                    ? ""
-                    : Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .subscriptionModel!
-                            .endDate ??
-                        "";
-                return SingleChildScrollView(
-                  child: Padding(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              10.kheightBox,
+              Obx(() {
+                if (controller.showList.value) {
+                  return Text(
+                    StringConstant.buySubscriptionText,
+                    style: TextStyleUtil.manrope16w600(),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+              10.kheightBox,
+              Obx(() {
+                if (!controller.showList.value) {
+                  String validTill = Get.find<HomeController>()
+                              .restaurantDetails
+                              .value
+                              .subscriptionModel ==
+                          null
+                      ? ""
+                      : Get.find<HomeController>()
+                              .restaurantDetails
+                              .value
+                              .subscriptionModel!
+                              .endDate ??
+                          "";
+                  return Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.kw, vertical: 16.kh),
                     child: Column(
@@ -214,28 +214,29 @@ class SubscriptionView extends GetView<SubscriptionController> {
                         })
                       ],
                     ),
-                  ),
-                );
-              } else if (controller.showList.value) {
-                return ListView.separated(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, index) {
-                      return PlanCard(
-                          plan: controller.subscriptionPlans[index]);
-                    },
-                    separatorBuilder: (ctx, index) {
-                      return 4.kheightBox;
-                    },
-                    itemCount: controller.subscriptionPlans.length);
-              } else if (controller.subscriptionPlans.isEmpty) {
-                return Center(child: EmptyWidget());
-              } else {
-                return Container();
-              }
-            })
-          ],
+                  );
+                } else if (controller.showList.value) {
+                  return ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.kh, horizontal: 16.kw),
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, index) {
+                        return PlanCard(
+                            plan: controller.subscriptionPlans[index]);
+                      },
+                      separatorBuilder: (ctx, index) {
+                        return 4.kheightBox;
+                      },
+                      itemCount: controller.subscriptionPlans.length);
+                } else if (controller.subscriptionPlans.isEmpty) {
+                  return Center(child: EmptyWidget());
+                } else {
+                  return Container();
+                }
+              })
+            ],
+          ),
         ));
   }
 }

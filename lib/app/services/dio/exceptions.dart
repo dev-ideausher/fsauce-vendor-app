@@ -47,7 +47,13 @@ class DioExceptions implements Exception {
       case 404:
         return "Not Found";
       case 500:
-        return 'Internal server error';
+        try {
+          return error['message'];
+
+        } catch (e) {
+          return 'Internal server error';
+
+        }
       case 502:
         return 'Bad gateway';
       default:

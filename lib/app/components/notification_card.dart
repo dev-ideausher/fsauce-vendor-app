@@ -6,9 +6,9 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 class NotificationCard extends StatelessWidget {
   const NotificationCard(
       {super.key,
-      required this.subTitle,
-      required this.timeAgo,
-      required this.title});
+        required this.subTitle,
+        required this.timeAgo,
+        required this.title});
   final String title;
   final String subTitle;
   final String timeAgo;
@@ -45,7 +45,7 @@ class NotificationCard extends StatelessWidget {
                     Text(
                       subTitle,
                       style:
-                          TextStyleUtil.manrope14w400(color: context.black03),
+                      TextStyleUtil.manrope14w400(color: context.black03),
                     )
                   ],
                 ),

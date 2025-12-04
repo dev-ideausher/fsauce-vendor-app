@@ -20,6 +20,12 @@ class AppInterceptors extends Interceptor {
   @override
   FutureOr<dynamic> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    if (options.path.contains("getPrivacyPolicy") ||
+        options.path.contains("getTermsAndConditions")) {
+      super.onRequest(options, handler);
+      return;
+    }
+
     isOverlayLoader ? DialogHelper.showLoading() : null;
     await Helpers.validateToken(
       onSuccess: () {

@@ -20,36 +20,45 @@ class NotificationsView extends GetView<NotificationsController> {
           title: StringConstant.notifications,
         ),
         body: Obx(() {
-          if(controller.notifications.isNotEmpty){
+          if (controller.isLoading.value && controller.notifications.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (controller.notifications.isNotEmpty) {
             return Container(
               height: 100.h,
               width: 100.w,
               margin: EdgeInsets.only(left: 16.kw, right: 16.kw),
               child: ListView.builder(
+                  controller: controller.scrollController,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 20,
-                  itemBuilder: (context, index) =>
-                  const NotificationCard(
-                    subTitle:
-                    "New offer available! Get 30% off your next meal at Pizza Paradise.",
-                    timeAgo: "1h AGo",
-                    title: "Summer special offer",
-                  )),
+                  itemCount: controller.notifications.length +
+                      (controller.isMoreLoading.value ? 1 : 0),
+                  itemBuilder: (context, index) {
+                    if (index == controller.notifications.length) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final notification = controller.notifications[index];
+                    return NotificationCard(
+                      subTitle: notification.body ?? "",
+                      timeAgo: notification.timeAgo,
+                      title: notification.title ?? "",
+                    );
+                  }),
             );
-          } else{
+          } else {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  CommonImageView(
-                    svgPath: Assets.svgsEmptyNotification
-                  ),
+                  CommonImageView(svgPath: Assets.svgsEmptyNotification),
                   10.kheightBox,
-                  Text(StringConstant.noNotificationFound, style: TextStyleUtil.manrope24w600()),
+                  Text(StringConstant.noNotificationFound,
+                      style: TextStyleUtil.manrope24w600()),
                   6.kheightBox,
-                  Text(StringConstant.pleaseTryAgain, style: TextStyleUtil.manrope16w400(color: context.black04)),
+                  Text(StringConstant.pleaseTryAgain,
+                      style:
+                          TextStyleUtil.manrope16w400(color: context.black04)),
                 ],
               ),
             );

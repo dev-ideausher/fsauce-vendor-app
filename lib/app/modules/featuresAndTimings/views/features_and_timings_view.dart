@@ -38,7 +38,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -73,8 +73,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   ),
                   buttonText: Text(
                     StringConstant.enterFeatures,
-                    style:
-                    TextStyleUtil.manrope14w400(color: context.black04),
+                    style: TextStyleUtil.manrope14w400(color: context.black04),
                   ),
                   onConfirm: (results) {
                     controller.selectedFeatures.value = [];
@@ -84,23 +83,25 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                 ),
               ),
               10.kheightBox,
-              Obx((){
-                return !controller.isFeatureSelected.value ?
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    StringConstant.selectedFeatures,
-                    style: TextStyleUtil.manrope14w500(),
-                  ),
-                ) : const Text("");
+              Obx(() {
+                return !controller.isFeatureSelected.value
+                    ? Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          StringConstant.selectedFeatures,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                      )
+                    : const Text("");
               }),
               10.kheightBox,
               Obx(() {
-                if(controller.isFeatureSelected.value){
+                if (controller.isFeatureSelected.value) {
                   return Container();
                 }
                 return SizedBox(
-                  height: 50.kh, width: double.infinity,
+                  height: 50.kh,
+                  width: double.infinity,
                   child: ListView.separated(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
@@ -109,7 +110,11 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                         backgroundColor: context.primary01,
                         side: BorderSide.none,
                         avatar: const Icon(Icons.check, color: Colors.white),
-                        label: Text(controller.selectedFeatures[index].name!, style: TextStyleUtil.manrope14w600(color: Colors.white),),
+                        label: Text(
+                          controller.selectedFeatures[index].name ?? "",
+                          style:
+                              TextStyleUtil.manrope14w600(color: Colors.white),
+                        ),
                       );
                     },
                     separatorBuilder: (ctx, index) {
@@ -129,7 +134,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                   Text(
                     "*",
                     style:
-                    TextStyleUtil.manrope14w500(color: context.primary01),
+                        TextStyleUtil.manrope14w500(color: context.primary01),
                   )
                 ],
               ),
@@ -142,8 +147,7 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                 "Friday",
                 "Saturday",
                 "Sunday"
-              ].map((e) =>
-                  FilterAnimatedOption(
+              ].map((e) => FilterAnimatedOption(
                     title: e,
                     controller: controller.timingControllers[e]!,
                   )),

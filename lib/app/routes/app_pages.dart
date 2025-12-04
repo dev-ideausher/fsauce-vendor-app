@@ -1,4 +1,3 @@
-import 'package:fsauce_vendor_app/app/modules/subscription/views/current_subscription_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/addItemDetails/bindings/add_item_details_binding.dart';
@@ -66,14 +65,16 @@ import '../modules/scanRedemptionRecord/bindings/scan_redemption_record_binding.
 import '../modules/scanRedemptionRecord/views/scan_redemption_record_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
-import '../modules/signup/views/terms_conditions_view.dart';
 import '../modules/splash/binding/splash_binding.dart';
 import '../modules/splash/view/splash_view.dart';
 import '../modules/subscription/bindings/subscription_binding.dart';
 import '../modules/subscription/views/card_details_view.dart';
+import '../modules/subscription/views/current_subscription_view.dart';
 import '../modules/subscription/views/payment_methods_view.dart';
 import '../modules/subscription/views/purchase_plan_view.dart';
 import '../modules/subscription/views/subscription_view.dart';
+import '../modules/term_and_privacy/bindings/term_and_privacy_binding.dart';
+import '../modules/term_and_privacy/views/term_and_privacy_view.dart';
 import '../modules/verification/bindings/verification_binding.dart';
 import '../modules/verification/views/verification_view.dart';
 import '../modules/vipOffers/bindings/vip_offers_binding.dart';
@@ -99,11 +100,7 @@ class AppPages {
       page: () => RedeemCouponCode(),
       binding: QrScanBinding(),
     ),
-    GetPage(
-      name: _Paths.TERMSANDCONDITIONS,
-      page: () => TermsConditionsView(),
-      binding: SignupBinding(),
-    ),
+
     GetPage(
       name: _Paths.ONBOARDING,
       page: () => const OnboardingView(),
@@ -300,6 +297,11 @@ class AppPages {
         LoginEmailVerificationBinding(),
         LoginBinding(),
       ],
+    ),
+    GetPage(
+      name: _Paths.TERM_AND_PRIVACY,
+      page: () => const TermAndPrivacyView(),
+      binding: TermAndPrivacyBinding(),
     ),
   ];
 }

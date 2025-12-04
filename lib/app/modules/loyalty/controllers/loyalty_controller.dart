@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
@@ -15,14 +14,13 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
-
 import '../../../components/confirmation_dialog.dart';
-
 
 class LoyaltyController extends GetxController {
   //TODO: Implement LoyaltyController
 
   TextEditingController cardTitleController = TextEditingController();
+  TextEditingController rewardCountController = TextEditingController();
   RxInt noOfStamps = 1.obs;
   DateTime validTill = DateTime.now();
   TextEditingController validTillDateController = TextEditingController();
@@ -30,7 +28,7 @@ class LoyaltyController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   @override
-  void onInit(){
+  void onInit() {
     super.onInit();
     Get.find<HomeController>().getRestaurantDetails();
   }
@@ -42,29 +40,26 @@ class LoyaltyController extends GetxController {
     super.onClose();
   }
 
-  Future<void> createLoyaltyCard() async{
-    if(
-    Get.find<HomeController>().restaurantDetails.value.subscriptionModel != null
-    ){
-      if(cardTitleController.text.isEmpty){
+  Future<void> createLoyaltyCard() async {
+    if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
+        null) {
+      if (cardTitleController.text.isEmpty) {
         Get.snackbar("Error", StringConstant.offerTitleErrorMsg);
         return;
-      }
-      else if(backgroundColor.value.toString().isEmpty){
+      } else if (backgroundColor.value.toString().isEmpty) {
         Get.snackbar("Error", StringConstant.bgColorCannotBeEmpty);
         return;
-      }
-      else if(textColor.value.toString().isEmpty){
+      } else if (textColor.value.toString().isEmpty) {
         Get.snackbar("Error", StringConstant.textColorCannotBeEmpty);
         return;
-      }
-      else if(stampBackgroundColor.value.toString().isEmpty){
+      } else if (stampBackgroundColor.value.toString().isEmpty) {
         Get.snackbar("Error", StringConstant.stampBGErrorMsg);
         return;
-      }
-      else if(stampTextColor.value.toString().isEmpty){
+      } else if (stampTextColor.value.toString().isEmpty) {
         Get.snackbar("Error", StringConstant.stampColorErrorMsg);
         return;
+      } else if (rewardCountController.text.isEmpty) {
+        Get.snackbar("Error", StringConstant.rewardCountCannotBeEmpty);
       }
 
       String vendorId = Get.find<HomeController>().vendor;
@@ -77,31 +72,36 @@ class LoyaltyController extends GetxController {
         "stampColor": stampTextColor.value.toString(),
         "vendor": vendorId, //"66728075a065bac72ace0f09"
         "validTill": validTill.toString(),
-        "isActive": true
+        "isActive": true,
+        "rewardCount": rewardCountController.text,
+        "isGift": (double.tryParse(rewardCountController.text) ?? 0) > 0
+            ? true
+            : false,
       };
       var response = await APIManager.addLoyaltyCard(data: data);
-      if(response.data['status']){
+      if (response.data['status']) {
+        print(data);
+        print(response.data);
         Get.back();
-        Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
+        Get.bottomSheet(const AddedSuccessfullBottomSheet(
+            subTitle: StringConstant.loyaltyCardCreatedSuccessfully));
         DialogHelper.showSuccess(StringConstant.loyaltyAddedMessage);
         Get.find<LoyaltyCardsController>().getLoyaltyCards();
-      } else if(!response.data['status']){
-        Get.snackbar("Error",StringConstant.anErrorOccurred);
+      } else if (!response.data['status']) {
+        Get.snackbar("Error", StringConstant.anErrorOccurred);
       }
-    } else{
-      Get.dialog(
-          ConfrimationDialog(
-              title: StringConstant.subscriptionRequired,
-              subTitle: StringConstant.subscriptionRequiredText,
-              yesButtonText: StringConstant.checkoutSubscriptions,
-              noButtonText: StringConstant.close,
-              onYesTap: () async{
-                // Get.find<GetStorageService>().logout();
-                Get.back();
-                Get.offNamed(Routes.SUBSCRIPTION);
-              },
-              onNoTap: Get.back)
-      );
+    } else {
+      Get.dialog(ConfrimationDialog(
+          title: StringConstant.subscriptionRequired,
+          subTitle: StringConstant.subscriptionRequiredText,
+          yesButtonText: StringConstant.checkoutSubscriptions,
+          noButtonText: StringConstant.close,
+          onYesTap: () async {
+            // Get.find<GetStorageService>().logout();
+            Get.back();
+            Get.offNamed(Routes.SUBSCRIPTION);
+          },
+          onNoTap: Get.back));
       return;
     }
   }
@@ -159,14 +159,12 @@ class LoyaltyController extends GetxController {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate: DateTime.now()
-                                .add(const Duration(days: 2 * 365)),
+      lastDate: DateTime.now().add(const Duration(days: 2 * 365)),
     );
 
     if (pickedDate != null) {
-      validTillDateController.text =
-                                  pickedDate.toString().substring(0, 11);
-                              validTill = pickedDate;
+      validTillDateController.text = pickedDate.toString().substring(0, 11);
+      validTill = pickedDate;
     }
   }
 }

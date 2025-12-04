@@ -45,7 +45,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                       subtitle: Obx(() {
                         return Text(
                           controller.selectedCard.value.id == null
-                              ? StringConstant.razorPay
+                              ? "Select Payment Method"
                               : "**** **** *${controller.selectedCard.value.last4 ?? "1212"}",
                           style: TextStyleUtil.manrope14w500(
                               color: context.black03),

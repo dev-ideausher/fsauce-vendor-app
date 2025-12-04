@@ -97,7 +97,7 @@ class ChangePasswordProfileView
               6.kheightBox,
               Obx(
                 () => FsvTextfield(
-                  hintText: StringConstant.confirmPassword,
+                  hintText: StringConstant.enterconfirmPassword,
                   controller: controller.confirmPasswordController,
                   validator: (value) =>
                       controller.confirmPasswordValidator(value),

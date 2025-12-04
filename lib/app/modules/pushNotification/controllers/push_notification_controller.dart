@@ -10,20 +10,22 @@ import '../../../models/push_notification_model.dart';
 class PushNotificationController extends GetxController {
   //TODO: Implement PushNotificationController
 
-  RxList<PushNotification> notificationList = <PushNotification>[].obs;
+  RxList<PushNotificationData> notificationList = <PushNotificationData>[].obs;
   RxBool isLoad = false.obs;
 
-  Future<void> getNotifications() async{
-    try{
+  Future<void> getNotifications() async {
+    try {
       isLoad.value = true;
       var response = await APIManager.getNotifications();
       List<dynamic> data = response.data['data'];
       notificationList.value = [];
-      notificationList.value = data.map((e) => PushNotification.fromJson(e)).toList();
+      notificationList.value =
+          data.map((e) => PushNotificationData.fromJson(e)).toList();
       isLoad.value = false;
-    } catch(e){
+    } catch (e) {
+      isLoad.value = false;
       print(e.toString());
-      Get.snackbar("Error", e.toString());
+      DialogHelper.showError(e.toString());
     }
   }
 
@@ -33,27 +35,71 @@ class PushNotificationController extends GetxController {
     super.onInit();
   }
 
-  void showInactiveDialog() {
+  void showInactiveDialog(String id) {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.inactivateNotification,
         subTitle: StringConstant.inactiveNotificationSub,
-        onYesTap: () {},
+        onYesTap: () async {
+          try {
+            Get.back();
+            var response =
+                await APIManager.editNotification(id: id, isActive: false);
+            if (response.data['status']) {
+              DialogHelper.showSuccess(response.data['message']);
+              getNotifications();
+            } else {
+              DialogHelper.showError(response.data['message'] ??
+                  StringConstant.somethingWentWrong);
+            }
+          } catch (e) {
+            DialogHelper.showError(e.toString());
+          }
+        },
         onNoTap: Get.back));
   }
 
-  void showDeleteDialog() {
+  void showDeleteDialog(String id) {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.deleteNotification,
         subTitle: StringConstant.deleteNotificationSub,
-        onYesTap: () {},
+        onYesTap: () async {
+          try {
+            Get.back();
+            var response = await APIManager.deleteNotification(id: id);
+            if (response['status']) {
+              DialogHelper.showSuccess(StringConstant.deletedSuccessfully);
+              getNotifications();
+            } else {
+              DialogHelper.showError(
+                  response['message'] ?? StringConstant.somethingWentWrong);
+            }
+          } catch (e) {
+            DialogHelper.showError(e.toString());
+          }
+        },
         onNoTap: Get.back));
   }
 
-  void showActiveDialog() {
+  void showActiveDialog(String id) {
     Get.dialog(ConfrimationDialog(
         title: StringConstant.activateNotification,
         subTitle: StringConstant.activateNotificationSub,
-        onYesTap: () {},
+        onYesTap: () async {
+          try {
+            Get.back();
+            var response =
+                await APIManager.editNotification(id: id, isActive: true);
+            if (response.data['status']) {
+              DialogHelper.showSuccess(response.data['message']);
+              getNotifications();
+            } else {
+              DialogHelper.showError(response.data['message'] ??
+                  StringConstant.somethingWentWrong);
+            }
+          } catch (e) {
+            DialogHelper.showError(e.toString());
+          }
+        },
         onNoTap: Get.back));
   }
 

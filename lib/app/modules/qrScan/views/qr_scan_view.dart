@@ -27,6 +27,7 @@ class _QrScanViewState extends State<QrScanView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
+  bool isScanning = false;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -112,14 +113,15 @@ class _QrScanViewState extends State<QrScanView> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
+      if (isScanning) return;
+      isScanning = true;
       setState(() {
         result = scanData;
-        return;
       });
       if (result != null) {
+        await controller.pauseCamera();
         scanQR(result!.code!);
-        return;
       }
     });
   }
@@ -127,7 +129,7 @@ class _QrScanViewState extends State<QrScanView> {
   Future<void> scanQR(String data) async {
     if (result != null) {
       try {
-        Map<String, dynamic> loyaltyCardData = jsonStringToMap(result!.code!);
+        Map<String, dynamic> loyaltyCardData = jsonStringToMap(data);
         Map<String, dynamic> cardData = {
           "user": loyaltyCardData['user'],
           //6694b2a1f3acdcf9ad0955a2
@@ -139,16 +141,20 @@ class _QrScanViewState extends State<QrScanView> {
           Get.back();
           Get.bottomSheet(const AddedSuccessfullBottomSheet(
               subTitle: StringConstant.redeemedSuccessfully));
-          return;
-        } else if (!response.data['status'] && result != null) {
-          Get.snackbar("Error", response.data['message']);
-          return;
+        } else {
+          if (result != null) {
+            Get.snackbar("Error", response.data['message']);
+          }
+          await Future.delayed(const Duration(seconds: 2));
+          isScanning = false;
+          await controller?.resumeCamera();
         }
       } catch (e) {
-        Get.snackbar("Error", StringConstant.somethingWentWrong);
-        return;
+        // Get.snackbar("Error", StringConstant.somethingWentWrong);
+        await Future.delayed(const Duration(seconds: 2));
+        isScanning = false;
+        await controller?.resumeCamera();
       }
-      return;
     }
   }
 

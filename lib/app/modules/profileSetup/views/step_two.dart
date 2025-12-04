@@ -3,15 +3,11 @@ import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-
 import '../../../components/custom_red_elevated_button.dart';
-import '../../../models/feature_model.dart';
 
 class StepTwo extends GetView<ProfileSetupController> {
   const StepTwo({super.key});
@@ -85,8 +81,7 @@ class StepTwo extends GetView<ProfileSetupController> {
           "Friday",
           "Saturday",
           "Sunday"
-        ].map((e) =>
-            FilterAnimatedOption(
+        ].map((e) => FilterAnimatedOption(
               title: e,
               controller: controller.timingControllers[e]!,
             )),
@@ -104,8 +99,8 @@ class StepTwo extends GetView<ProfileSetupController> {
                       ? controller.gotoNextStep()
                       : controller.gotoEnableLocationScreen();
                 } else {
-                  Get.snackbar("Error",
-                      StringConstant.plsSelectFeaturesAndTimings);
+                  Get.snackbar(
+                      "Error", StringConstant.plsSelectFeaturesAndTimings);
                 }
               });
         }),

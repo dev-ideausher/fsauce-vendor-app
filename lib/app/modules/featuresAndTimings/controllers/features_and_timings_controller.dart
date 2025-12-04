@@ -19,8 +19,8 @@ class FeaturesAndTimingsController extends GetxController {
   //TODO: Implement FeaturesAndTimingsController
 
   RxList<FeatureModel> features = <FeatureModel>[].obs;
-  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures = <MultiSelectItem<FeatureModel>>[].obs;
-
+  RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures =
+      <MultiSelectItem<FeatureModel>>[].obs;
   RxList<FeatureModel> selectedFeatures = <FeatureModel>[].obs;
 
   RxBool isFeatureSelected = false.obs;
@@ -31,8 +31,8 @@ class FeaturesAndTimingsController extends GetxController {
     getFeaturesAndTimings();
     super.onInit();
   }
-  
-  Future<void> getFeatures() async{
+
+  Future<void> getFeatures() async {
     RestaurantDetails details =
         Get.find<HomeController>().restaurantDetails.value;
     if (details.features.isNotEmpty) {
@@ -40,17 +40,25 @@ class FeaturesAndTimingsController extends GetxController {
       selectedFeatures.value = details.features;
     }
     debugPrint(selectedFeatures.length.toString());
-    try{
+    try {
       var response = await APIManager.getFeatures();
-      if(response.data['status']){
+      if (response.data['status']) {
         List<dynamic> data = response.data['data'];
-        features.value = [];
+
         features.value = data.map((e) => FeatureModel.fromJson(e)).toList();
-        multiSelectFeatures.value = features.map((e) => MultiSelectItem<FeatureModel>(e, e.name!)).toList();
-      } else{
+
+        multiSelectFeatures.value = features
+            .map(
+              (e) => MultiSelectItem<FeatureModel>(
+                e,
+                e.name ?? "Unnamed Feature",
+              ),
+            )
+            .toList();
+      } else {
         Get.snackbar("Error", response.data['message']);
       }
-    } catch(error){
+    } catch (error) {
       Get.snackbar("Error", error.toString());
     }
   }
@@ -70,7 +78,8 @@ class FeaturesAndTimingsController extends GetxController {
         Get.find<HomeController>().restaurantDetails.value;
     if (details.timing.isNotEmpty) {
       for (Timing timing in details.timing) {
-        timingControllers.forEach((String e, FilterOptionController optionController){
+        timingControllers
+            .forEach((String e, FilterOptionController optionController) {
           if (e == "Monday" && timing.day == "Monday") {
             optionController.isActivated = timing.isActive;
             optionController.openingTime = TimeOfDay(
@@ -172,9 +181,9 @@ class FeaturesAndTimingsController extends GetxController {
       features: selectedFeatures,
       timing: timings,
       media: details.media,
-          cuisine: details.cuisine,
-          lat: details.lat,
-          lon: details.lon,
+      cuisine: details.cuisine,
+      lat: details.lat,
+      lon: details.lon,
     ));
     if (response.data['status']) {
       Get.find<HomeController>().getRestaurantDetails();

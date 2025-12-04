@@ -7,6 +7,7 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
+import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
@@ -58,13 +59,15 @@ class SignupController extends GetxController {
 
     if (!_isEmailValid(email)) {
       await DialogHelper.hideDialog();
-      Get.snackbar(StringConstant.error, StringConstant.plsEnterValidEmail);
+      showMySnackbar(
+          msg: StringConstant.plsEnterValidEmail, title: StringConstant.error);
       return;
     }
 
     if (!_isPasswordValid(password)) {
       await DialogHelper.hideDialog();
-      Get.snackbar(StringConstant.error, StringConstant.password6characters);
+      showMySnackbar(
+          msg: StringConstant.password6characters, title: StringConstant.error);
       return;
     }
 
@@ -82,7 +85,8 @@ class SignupController extends GetxController {
       return;
     } else {
       await DialogHelper.hideDialog();
-      Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
+      showMySnackbar(
+          msg: StringConstant.emailPasswordEmpty, title: StringConstant.error);
       return;
     }
   }
@@ -91,7 +95,7 @@ class SignupController extends GetxController {
     try {
       await auth.google();
     } catch (e) {
-      Get.snackbar(StringConstant.error, e.toString());
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 
@@ -100,7 +104,7 @@ class SignupController extends GetxController {
       await auth.facebook();
       gotoVerificationScreen();
     } catch (e) {
-      Get.snackbar(StringConstant.error, e.toString());
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 
@@ -109,7 +113,7 @@ class SignupController extends GetxController {
       await auth.apple();
       gotoVerificationScreen();
     } catch (e) {
-      Get.snackbar(StringConstant.error, e.toString());
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 
@@ -127,8 +131,10 @@ class SignupController extends GetxController {
     return password.length >= 6;
   }
 
-  void goToTermsAndConditions() {
-    Get.toNamed(Routes.TERMSANDCONDITIONS);
+  void goToTermsAndConditions({required bool isTerm}) {
+    Get.toNamed(Routes.TERM_AND_PRIVACY, arguments: {
+      'isTerm': isTerm,
+    });
   }
 
   void replaceSignupWithLogin() {
@@ -182,4 +188,6 @@ class SignupController extends GetxController {
     }
     return null; // Return null if the value is valid
   }
+
+
 }

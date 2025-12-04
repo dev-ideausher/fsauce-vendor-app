@@ -63,24 +63,23 @@ class StringConstant {
   static const String description = "Description";
   static const String seeAllPhotos = "All Photos and Videos";
   static const String skip = "Skip";
-  static const String onboardingHeading1 =
-      "Lorem ipsum dolor sit amet consectetur.";
+  static const String onboardingHeading1 = "Manage Your Business Profile";
   static const String onboardingSubHeading1 =
-      "Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.";
-  static const String onboardingHeading2 = "Share and Vote With Your\nFriends";
+      "Showcase your brand with a custom logo, banner, and detailed business information.";
+  static const String onboardingHeading2 = "Create & Manage Coupons";
   static const String onboardingSubHeading2 =
-      "Create a group chat and share places you are interested in. Swipe to vote as a group to make deciding on a place to eat that much easier.";
-  static const String onboardingHeading3 = "Unlock VIP Benefits";
+      "Boost your sales by creating attractive deals and managing them in real-time.";
+  static const String onboardingHeading3 = "Digital Loyalty Program";
   static const String onboardingSubHeading3 =
-      "Add to get up to 25% discount at your\nfavorite places.";
-  static const String onboardingHeading4 = "Redeem Loyalty Awards";
+      "Retain customers by designing unique loyalty cards and tracking their rewards.";
+  static const String onboardingHeading4 = "Seamless Redemptions";
   static const String onboardingSubHeading4 =
-      "Collect stamp at your favorite food places\nand redeem awards.";
+      "Easily scan QR codes to redeem offers and track your business performance.";
 
   static const String next = "Next";
-  static const String getStartedHeading = "Let's Eat & Save!";
+  static const String getStartedHeading = "Partner with Us!";
   static const String getStartedSubHeading =
-      "Sign up now to start enjoying amazing discounts with your digital card.";
+      "Sign up now to manage your business, create offers, and build customer loyalty.";
   static const String letsGetStarted = "Let’s Get Started !";
   static const String createAccount = "Create an account";
   static const String enterYourDetails = "Enter your details ";
@@ -201,6 +200,7 @@ class StringConstant {
   static const String deleteAccount = "Delete Account";
   static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm Password";
+  static const String enterconfirmPassword = "Enter confirm Password";
   static const String enjoyApp = "Enjoying “The Food Sauciety “ App ?";
   static const maybeLater = "Maybe Later";
   static const String confirmLogout = "Confirm Logout";
@@ -297,6 +297,9 @@ class StringConstant {
 
   static const String cardDetails = "Card Details";
   static const String offerTitle = "Offer Title";
+  static const String rewardCount = "Reward Count";
+
+  static const String enterRewardCount = "Enter reward count";
   static const String enterOfferTitle = "Enter offer title";
   static const String numberOfStamps = "Number of Stamps";
   static const String selectNumberOfStamps = "Select number of stamps";
@@ -547,6 +550,8 @@ class StringConstant {
       "New password cannot be empty!";
   static const String passwordsDoNotMatch = "Passwords do not match!";
   static const String offerTitleCannotBeEmpty = "Offer title cannot be empty!";
+  static const String rewardCountCannotBeEmpty =
+      "Reward count cannot be empty!";
   static const String noOfStampsCannotBeEmpty =
       "Number of stamps cannot be empty!";
   static const String dateCannotBeEmpty = "Valid till date cannot be empty!";

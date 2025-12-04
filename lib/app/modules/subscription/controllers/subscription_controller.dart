@@ -19,13 +19,18 @@ import '../../../components/confirmation_dialog.dart';
 import '../../../models/card_data_model.dart';
 import '../../../services/enigma.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/snackbar.dart' as MyUtil;
 
 class SubscriptionController extends GetxController {
   TextEditingController promoCodeController = TextEditingController();
 
-  TextEditingController cardNumberController = TextEditingController();
-  TextEditingController expiresController = TextEditingController();
-  TextEditingController cvvController = TextEditingController();
+  late TextEditingController eCardHolderName = TextEditingController();
+  final cardNumber = ''.obs;
+  final expiryDate = ''.obs;
+  final cardHolderName = ''.obs;
+  final cvvCode = ''.obs;
+  final isCvvFocused = false.obs;
+  var cardDetails = Rx<CardFieldInputDetails?>(null);
   TextEditingController nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
@@ -71,26 +76,63 @@ class SubscriptionController extends GetxController {
         for (Map<String, dynamic> planData in response.data["data"]) {
           subscriptionPlans.add(PlanModel.fromJson(planData));
         }
-        String? currentPlanId = Get.find<HomeController>().restaurantDetails.value.subscriptionModel == null ?
-        "" : Get.find<HomeController>().restaurantDetails.value.subscriptionModel!.plan ?? "";
+        String? currentPlanId = Get.find<HomeController>()
+                    .restaurantDetails
+                    .value
+                    .subscriptionModel ==
+                null
+            ? ""
+            : Get.find<HomeController>()
+                    .restaurantDetails
+                    .value
+                    .subscriptionModel!
+                    .plan ??
+                "";
         planId.value = currentPlanId ?? "";
         print("This is the plan id: $planId");
 
-        String? currentSubscriptionId = Get.find<HomeController>().restaurantDetails.value.subscriptionModel == null ?
-        "" : Get.find<HomeController>().restaurantDetails.value.subscriptionModel!.stripeSubscriptionObj == null ? ""
-        : Get.find<HomeController>().restaurantDetails.value.subscriptionModel!.stripeSubscriptionObj!.id ?? "";
+        String? currentSubscriptionId = Get.find<HomeController>()
+                    .restaurantDetails
+                    .value
+                    .subscriptionModel ==
+                null
+            ? ""
+            : Get.find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .subscriptionModel!
+                        .stripeSubscriptionObj ==
+                    null
+                ? ""
+                : Get.find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .subscriptionModel!
+                        .stripeSubscriptionObj!
+                        .id ??
+                    "";
         subscriptionId.value = currentSubscriptionId ?? "";
         print("This is the subscription id: $subscriptionId");
 
-        bool? isCancelledSub = Get.find<HomeController>().restaurantDetails.value.subscriptionModel == null ?
-        false : Get.find<HomeController>().restaurantDetails.value.subscriptionModel!.isCancelled ?? false;
+        bool? isCancelledSub = Get.find<HomeController>()
+                    .restaurantDetails
+                    .value
+                    .subscriptionModel ==
+                null
+            ? false
+            : Get.find<HomeController>()
+                    .restaurantDetails
+                    .value
+                    .subscriptionModel!
+                    .isCancelled ??
+                false;
         isCancelled.value = isCancelledSub;
         print("Was the sub cancelled: ${isCancelled.value}");
 
         showList.value = subscriptionId.isEmpty;
-        if(subscriptionId.isNotEmpty){
-          currentPlan.value = subscriptionPlans.firstWhere((
-              PlanModel model) => model.Id == planId.value);
+        if (subscriptionId.isNotEmpty) {
+          currentPlan.value = subscriptionPlans
+              .firstWhere((PlanModel model) => model.Id == planId.value);
         }
       } else {
         DialogHelper.showError(response.data["message"] ?? "");
@@ -106,27 +148,27 @@ class SubscriptionController extends GetxController {
   void onClose() {
     super.onClose();
     promoCodeController.dispose();
-    cardNumberController.dispose();
-    cvvController.dispose();
-    expiresController.dispose();
     nameController.dispose();
   }
 
   static Future<String?> generateStripeToken(
-      {required String card, required String name, required String expiryDate, required String cvv}) async {
+      {required String card,
+      required String name,
+      required String expiryDate,
+      required String cvv}) async {
     var prAge = expiryDate.split("/");
     var month = prAge[0].trim();
     var year = prAge[1].trim();
-    CardTokenParams cardParams = CardTokenParams(
-        type: TokenType.Card, name: name, currency: "MAD");
-    await Stripe.instance
-        .dangerouslyUpdateCardDetails(CardDetails(number: card,
+    CardTokenParams cardParams =
+        CardTokenParams(type: TokenType.Card, name: name, currency: "MAD");
+    await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
+        number: card,
         cvc: cvv,
         expirationMonth: int.tryParse(month),
         expirationYear: int.tryParse("20$year")));
     try {
-      TokenData token = await Stripe.instance.createToken(
-          CreateTokenParams.card(params: cardParams));
+      TokenData token = await Stripe.instance
+          .createToken(CreateTokenParams.card(params: cardParams));
       return token.id;
     } on StripeException catch (e) {
       // showMySnackbar(title: e.error.message ?? "", msg: '');
@@ -136,26 +178,56 @@ class SubscriptionController extends GetxController {
   }
 
   Future<void> addCard() async {
-    final String token =
-        await generateStripeToken(card: cardNumberController.text,
+    if (cardDetails.value == null || !(cardDetails.value?.complete ?? false)) {
+      showMySnackbar( msg: 'Please enter valid card details');
+      return;
+    }
+
+    if (eCardHolderName.text.trim().isEmpty) {
+      showMySnackbar( msg: 'Please enter cardholder name');
+      return;
+    }
+    TokenData? tokenData;
+    try {
+      tokenData = await Stripe.instance.createToken(
+        CreateTokenParams.card(
+          params: CardTokenParams(
+            name: nameController.text.trim(),
+            currency: 'MAD', // Or gbp etc
+          ),
+        ),
+      );
+    } on StripeException catch (error) {
+      showMySnackbar( msg: error.error.message.toString());
+      return;
+    } catch (e) {
+      print(e);
+      return;
+    }
+
+    final token = tokenData.id;
+   /* final String token = await generateStripeToken(
+            card: cardNumberController.text,
             name: nameController.text,
             expiryDate: expiresController.text,
             cvv: cvvController.text) ??
-            "";
+        "";*/
     if (token.isNotEmpty) {
       print("Token is not empty: $token");
-      final String? encryptToken = encryptAESCryptoJS(
-          jsonEncode({"token": token, "default": "true"}));
+      final String? encryptToken =
+          encryptAESCryptoJS(jsonEncode({"token": token, "default": "true"}));
       try {
         print("Below is the encrypt token: $encryptToken");
         final response = await APIManager.addCard(data: {
           "token": encryptToken,
         });
         if (response.data['status']) {
+
           Get.back();
-          DialogHelper.showSuccess("Card Added!");
+
           getCardList();
         } else {
+          print("-------> ${response.data}");
           DialogHelper.showError(response.data['message'] ?? "");
         }
       } catch (e) {
@@ -168,11 +240,35 @@ class SubscriptionController extends GetxController {
   Future<void> getCardList() async {
     try {
       final response = await APIManager.getCardDataList();
+      print("GetCardList Response Data: ${response.data}");
       if (response.statusCode == 200) {
-        cardsList.value = [];
+        cardsList.assignAll([]);
         for (Map<String, dynamic> cardData in response.data['data']) {
           cardsList.add(CardModel.fromJson(cardData));
         }
+        if (cardsList.isNotEmpty) {
+          if (selectedCard.value.id != null) {
+            CardModel? previouslySelected = cardsList
+                .firstWhereOrNull((c) => c.id == selectedCard.value.id);
+            if (previouslySelected != null) {
+              selectedCard.value = previouslySelected;
+            } else {
+              CardModel? defaultCard =
+                  cardsList.firstWhereOrNull((c) => c.isDefautl == true);
+              selectedCard.value = defaultCard ?? cardsList.first;
+            }
+          } else {
+            CardModel? defaultCard =
+                cardsList.firstWhereOrNull((c) => c.isDefautl == true);
+            selectedCard.value = defaultCard ?? cardsList.first;
+          }
+        } else {
+          selectedCard.value = CardModel();
+        }
+        print("Cards fetched: ${cardsList.length}");
+        print("Selected Card ID: ${selectedCard.value.id}");
+        cardsList.refresh();
+        selectedCard.refresh();
       } else {
         // showMySnackbar(msg: response.data['message'] ?? "");
         DialogHelper.showError(response.data['message'] ?? "");
@@ -186,21 +282,19 @@ class SubscriptionController extends GetxController {
   }
 
   void showDelCardDialog(CardModel card) {
-    Get.dialog(
-        ConfrimationDialog(
-            title: "Delete card?",
-            subTitle: "This card will be removed from saved cards.",
-            onYesTap: () async {
-              String id = card.id ?? "";
-              if(id.isNotEmpty){
-                print("Entered dialog for delete card");
-                await delCard(card);
-              } else if(id.isEmpty){
-                Get.snackbar(StringConstant.error, "Cannot delete card");
-              }
-            },
-            onNoTap: Get.back)
-    );
+    Get.dialog(ConfrimationDialog(
+        title: "Delete card?",
+        subTitle: "This card will be removed from saved cards.",
+        onYesTap: () async {
+          String id = card.id ?? "";
+          if (id.isNotEmpty) {
+            print("Entered dialog for delete card");
+            await delCard(card);
+          } else if (id.isEmpty) {
+            Get.snackbar(StringConstant.error, "Cannot delete card");
+          }
+        },
+        onNoTap: Get.back));
   }
 
   Future<void> delCard(CardModel card) async {
@@ -222,12 +316,27 @@ class SubscriptionController extends GetxController {
   }
 
   Future<void> addVendorSubscription() async {
+    // Safety fallback: If no card is selected but we have cards, select the first one.
+    if (selectedCard.value.id == null && cardsList.isNotEmpty) {
+      print("Auto-selecting first card as fallback.");
+      selectedCard.value = cardsList.first;
+    }
+
+    print(
+        "Attempting to add subscription. Plan: ${selectedPlan.value.Id}, Card: ${selectedCard.value.id}");
+
     if (selectedPlan.value.Id == null ||
         selectedPlan.value.billedFrequency == null) {
       DialogHelper.showError("No plan selected!");
       return;
     } else if (selectedCard.value.id == null) {
-      DialogHelper.showError("No card selected!");
+
+        if (cardsList.isEmpty) {
+          showMySnackbar(msg:"Please add a payment method first.");
+        } else {
+          showMySnackbar(msg:"No card selected!");
+        }
+
       return;
     } else {
       Map<String, dynamic> data = {
@@ -244,8 +353,7 @@ class SubscriptionController extends GetxController {
           getPlans();
           isCancelled.value = false;
           return;
-        }
-        else {
+        } else {
           DialogHelper.showError(response.data['message']);
           return;
         }
@@ -257,42 +365,38 @@ class SubscriptionController extends GetxController {
     }
   }
 
-  void confirmCancelSubscription() async{
-    Get.dialog(
-        ConfrimationDialog(
-            title: "Cancel Subscription?",
-            subTitle: "The current subscription will be cancelled.",
-            onYesTap: () async {
-              print("Entered dialog for cancel subscription");
-              if(subscriptionId.value.isNotEmpty){
-                await cancelSubscription();
-              } else if(subscriptionId.value.isEmpty){
-                Get.snackbar(StringConstant.error, "No current subscription plan");
-              }
-            },
-            onNoTap: Get.back)
-    );
+  void confirmCancelSubscription() async {
+    Get.dialog(ConfrimationDialog(
+        title: "Cancel Subscription?",
+        subTitle: "The current subscription will be cancelled.",
+        onYesTap: () async {
+          print("Entered dialog for cancel subscription");
+          if (subscriptionId.value.isNotEmpty) {
+            await cancelSubscription();
+          } else if (subscriptionId.value.isEmpty) {
+            Get.snackbar(StringConstant.error, "No current subscription plan");
+          }
+        },
+        onNoTap: Get.back));
   }
 
-  Future<void> cancelSubscription() async{
+  Future<void> cancelSubscription() async {
     String subId = subscriptionId.value ?? "";
     print("Here is the subId: $subId");
-    final Map<String, dynamic> data = {
-      "subscriptionId":"$subId"
-    };
-    try{
+    final Map<String, dynamic> data = {"subscriptionId": "$subId"};
+    try {
       final response = await APIManager.cancelSubscription(data: data);
-      if(response.data['code'] == 201 || response.data['code'] == 200){
-        Get.snackbar(StringConstant.success, "Subscription cancelled successfully!");
+      if (response.data['code'] == 201 || response.data['code'] == 200) {
+        Get.snackbar(
+            StringConstant.success, "Subscription cancelled successfully!");
         isCancelled.value = true;
         return;
-      }
-      else if(response.data['code'] != 201 || response.data['code'] != 200){
+      } else if (response.data['code'] != 201 || response.data['code'] != 200) {
         Get.snackbar("Message", response.data['message']);
         isCancelled.value = true;
         return;
       }
-    } catch(e){
+    } catch (e) {
       print("An error occurred while cancelling subscription! ${e.toString()}");
       Get.snackbar(StringConstant.error, e.toString());
     }

@@ -64,7 +64,8 @@ class LoginController extends GetxController {
 
     if (!_isEmailValid(email)) {
       await DialogHelper.hideDialog();
-      Get.snackbar(StringConstant.error, StringConstant.plsEnterValidEmail);
+      showMySnackbar(
+          msg: StringConstant.plsEnterValidEmail, title: StringConstant.error);
       return;
     }
 
@@ -75,12 +76,13 @@ class LoginController extends GetxController {
         return;
       } catch (e) {
         await DialogHelper.hideDialog();
-        Get.snackbar(StringConstant.error, e.toString());
+        showMySnackbar(msg: e.toString(), title: StringConstant.error);
         return;
       }
     } else {
       await DialogHelper.hideDialog();
-      Get.snackbar(StringConstant.error, StringConstant.emailPasswordEmpty);
+      showMySnackbar(
+          msg: StringConstant.emailPasswordEmpty, title: StringConstant.error);
       return;
     }
   }
@@ -91,7 +93,7 @@ class LoginController extends GetxController {
       auth.gotoHomeScreen();
     } catch (e) {
       print("Error : ${e.toString()}");
-      Get.snackbar(StringConstant.error, e.toString());
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 
@@ -99,7 +101,8 @@ class LoginController extends GetxController {
     try {
       await auth.facebook();
     } catch (e) {
-      Get.snackbar(StringConstant.error, e.toString());
+      print(e.toString());
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 
@@ -107,7 +110,8 @@ class LoginController extends GetxController {
     try {
       await auth.apple();
     } catch (e) {
-      Get.snackbar(StringConstant.error, e.toString());
+    } catch (e) {
+      showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }
   }
 

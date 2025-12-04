@@ -9,7 +9,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 class PushNotificationCard extends StatelessWidget {
-  PushNotification notification;
+  PushNotificationData notification;
   PushNotificationCard(
       {super.key, required this.isActivate, required this.notification});
   final bool isActivate;
@@ -75,10 +75,14 @@ class PushNotificationCard extends StatelessWidget {
                           PopupMenuItem<int>(
                               onTap: notification.sheduledDate != null
                                   ? isActivate
-                                      ? Get.find<PushNotificationController>()
-                                          .showInactiveDialog
-                                      : Get.find<PushNotificationController>()
-                                          .showActiveDialog
+                                      ? () =>
+                                          Get.find<PushNotificationController>()
+                                              .showInactiveDialog(
+                                                  notification.Id ?? "")
+                                      : () =>
+                                          Get.find<PushNotificationController>()
+                                              .showActiveDialog(
+                                                  notification.Id ?? "")
                                   : () {},
                               value: 1,
                               child: Text(
@@ -90,8 +94,9 @@ class PushNotificationCard extends StatelessWidget {
                                 style: TextStyleUtil.manrope14w400(),
                               )),
                           PopupMenuItem<int>(
-                              onTap: Get.find<PushNotificationController>()
-                                  .showDeleteDialog,
+                              onTap: () =>
+                                  Get.find<PushNotificationController>()
+                                      .showDeleteDialog(notification.Id ?? ""),
                               value: 1,
                               child: Text(
                                 StringConstant.deleteNotification,

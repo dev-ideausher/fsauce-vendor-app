@@ -40,31 +40,24 @@ class PushNotificationView extends GetView<PushNotificationController> {
               ),
               onPressed: controller.createPushNotification),
         ),
-        body: SingleChildScrollView(
-          child: Obx(
-            () => controller.isLoad.value
-                ? const SizedBox()
-                : controller.notificationList.isEmpty
-                    ? Center(
-                        child: EmptyWidget(
-                        title: StringConstant.noNotificationsCreated,
-                      ))
-                    : Column(
+        body: Obx(
+          () => controller.isLoad.value
+              ? const Center(child: CircularProgressIndicator(),)
+              : controller.notificationList.isEmpty
+                  ? Center(
+                      child: EmptyWidget(
+                      title: StringConstant.noNotificationsCreated,
+                    ))
+                  : SingleChildScrollView(
+                    child: Column(
                         children: [
                           20.kheightBox,
                           ListView.separated(
                               shrinkWrap: true,
                               itemBuilder: (ctx, index) {
                                 return PushNotificationCard(
-                                  isActivate: controller.notificationList[index]
-                                              .sheduledDate ==
-                                          null
-                                      ? true
-                                      : DateTime.parse(controller
-                                              .notificationList[index]
-                                              .sheduledDate!)
-                                          .isAfter(DateTime.now().subtract(
-                                              const Duration(days: 1))),
+                                  isActivate:( controller.notificationList[index]
+                                              .isActive ??false),
                                   notification:
                                       controller.notificationList[index],
                                 );
@@ -75,7 +68,7 @@ class PushNotificationView extends GetView<PushNotificationController> {
                               itemCount: controller.notificationList.length)
                         ],
                       ).paddingSymmetric(horizontal: 16.kh),
-          ),
+                  ),
         ));
   }
 }
