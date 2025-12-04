@@ -19,12 +19,13 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
         appBar: AppBar(
           title: const Text(''),
         ),
-        body: Padding(
+        body: SafeArea(
+            child: Padding(
           padding: EdgeInsets.all(16.kw),
-          child:
-          Form(
+          child: Form(
             key: controller.formKey,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 StringConstant.resetPassword,
                 style: TextStyleUtil.manrope32w700(),
@@ -86,12 +87,16 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
               Obx(() {
                 return CustomRedElevatedButton(
                     buttonText: StringConstant.sendResetPasswordLink,
-                    textStyle: controller.isEmailEmpty.value ? TextStyleUtil.manrope16w500(color: context.black03) : null,
-                    buttonColor: controller.isEmailEmpty.value ? context.primary06 : context.primary01,
+                    textStyle: controller.isEmailEmpty.value
+                        ? TextStyleUtil.manrope16w500(color: context.black03)
+                        : null,
+                    buttonColor: controller.isEmailEmpty.value
+                        ? context.primary06
+                        : context.primary01,
                     height: 56.kh,
                     width: 100.w,
                     onPressed: () {
-                      if(controller.formKey.currentState!.validate()){
+                      if (controller.formKey.currentState!.validate()) {
                         controller.sendResetPasswordLink();
                       }
                     });
@@ -99,6 +104,6 @@ class ChangePasswordVerifyView extends GetView<ChangePasswordController> {
               20.kheightBox,
             ]),
           ),
-        ));
+        )));
   }
 }

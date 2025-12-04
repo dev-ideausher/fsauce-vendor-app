@@ -83,7 +83,7 @@ class FsvTextfield extends StatelessWidget {
           ),
         ) : const SizedBox(),
         prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 16.kw, right: 8.kw, top: 1.kh),
+          padding: EdgeInsets.only(right: 8.kw, top: 1.kh),
           child: prefix,
         ),
         suffixIconConstraints: BoxConstraints(minHeight: 24.kh),

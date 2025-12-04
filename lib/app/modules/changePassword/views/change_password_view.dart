@@ -18,8 +18,9 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: const CustomAppBar(title: "", leading: SizedBox()),
-        body: Padding(
-          padding: EdgeInsets.all(16.kw),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(16.kw),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
@@ -116,6 +117,6 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                 onPressed: controller.gotoChangePasswordDoneScreen),
             20.kheightBox,
           ]),
-        ));
+        )));
   }
 }

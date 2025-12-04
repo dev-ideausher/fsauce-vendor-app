@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fsauce_vendor_app/app/components/custom_text_box.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
@@ -17,13 +15,15 @@ import '../../../components/custom_red_elevated_button.dart';
 import '../../../models/cuisine_model.dart';
 
 class StepOne extends GetView<ProfileSetupController> {
-  StepOne({super.key});
+  const StepOne({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: controller.formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Restaurant Name
           Row(
@@ -234,13 +234,13 @@ class StepOne extends GetView<ProfileSetupController> {
           Obx(
             () => Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.loginSignupTextfieldColor,
                   border: Border.all(
                       color: controller.isCuisinePicked.value
-                          ? context.borderColor2
+                          ? context.black07
                           : ColorUtil.kErrorColor),
                   borderRadius: BorderRadius.circular(8.kw)),
-              padding: EdgeInsets.symmetric(horizontal: 10.kw),
+              padding: EdgeInsets.symmetric(horizontal: 16.kw),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

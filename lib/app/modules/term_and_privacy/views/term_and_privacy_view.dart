@@ -22,18 +22,20 @@ class TermAndPrivacyView extends GetView<TermAndPrivacyController> {
         if (controller.isTermsLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        return SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text(
-                controller.termsContent.value,
-                style: TextStyleUtil.manrope14w400(),
-              ),
-            ],
-          ).paddingSymmetric(horizontal: 16.kw, vertical: 16.kh),
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(
+                  controller.termsContent.value,
+                  style: TextStyleUtil.manrope14w400(),
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 16.kw, vertical: 16.kh),
+          ),
         );
       }),
     );

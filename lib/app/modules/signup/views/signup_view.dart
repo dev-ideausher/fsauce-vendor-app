@@ -2,10 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/services/custom_button.dart';
-import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
-import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
@@ -21,7 +19,8 @@ class SignupView extends GetView<SignupController> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Padding(
+        body: SafeArea(
+            child: Padding(
           padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 88.kh),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,6 +293,6 @@ class SignupView extends GetView<SignupController> {
               30.kheightBox,
             ],
           ),
-        ));
+        )));
   }
 }

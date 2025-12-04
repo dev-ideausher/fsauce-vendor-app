@@ -21,7 +21,8 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Padding(
+        body: SafeArea(
+            child: Padding(
           padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 88.kh),
           child: Form(
             key: controller.formKey,
@@ -256,6 +257,6 @@ class LoginView extends GetView<LoginController> {
               ],
             ),
           ),
-        ));
+        )));
   }
 }
