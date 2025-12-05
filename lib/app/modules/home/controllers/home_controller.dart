@@ -1,14 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/dashboard_weekly_data_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/location_bottom_sheet.dart';
-import 'package:fsauce_vendor_app/app/modules/navBar/controllers/nav_bar_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 

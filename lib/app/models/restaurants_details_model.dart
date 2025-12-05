@@ -48,20 +48,24 @@ class RestaurantDetails {
         lon = json['lon'] ?? "",
         stripeCustomerId = json['stripeCustomerId'],
         stripeCardId = json['stripeCardId'],
-        subscriptionModel = json['subscription'] != null ?
-        Subscription.fromJson(json['subscription']) : null,
-        features =
-            json['features'] != null
-                ? (json['features'] as List)
+        subscriptionModel = json['subscription'] != null
+            ? Subscription.fromJson(json['subscription'])
+            : null,
+        features = json['features'] != null
+            ? (json['features'] as List)
                 .map((featureJson) => FeatureModel.fromJson(featureJson))
-                .toList() : [],
+                .toList()
+            : [],
         timing = json['timing'] != null
             ? (json['timing'] as List)
                 .map((timingJson) => Timing.fromJson(timingJson))
                 .toList()
             : [],
         cuisine = json['cuisine'] != null
-                  ? (json['cuisine'] as List).map((cuisineJson) => CuisineModel.fromJson(cuisineJson)).toList() : [],
+            ? (json['cuisine'] as List)
+                .map((cuisineJson) => CuisineModel.fromJson(cuisineJson))
+                .toList()
+            : [],
         media = json['media'] != null ? List<String>.from(json['media']) : [];
 
   Map<String, dynamic> toJson() => {
@@ -96,21 +100,20 @@ class RestaurantDetails {
     List<CuisineModel>? cuisine,
   }) =>
       RestaurantDetails(
-        restaurantName: restaurantName ?? this.restaurantName,
-        restaurantLogo: restaurantLogo ?? this.restaurantLogo,
-        restaurantBanner: restaurantBanner ?? this.restaurantBanner,
-        location: location ?? this.location,
-        avgPrice: avgPrice ?? this.avgPrice,
-        description: description ?? this.description,
-        features: features ?? this.features,
-        timing: timing ?? this.timing,
-        media: media ?? this.media,
-        cuisine: cuisine ?? this.cuisine,
-        lat: lat ?? this.lat,
-        lon: lon ?? this.lon,
-        stripeCustomerId: this.stripeCustomerId,
-        stripeCardId: this.stripeCardId
-      );
+          restaurantName: restaurantName ?? this.restaurantName,
+          restaurantLogo: restaurantLogo ?? this.restaurantLogo,
+          restaurantBanner: restaurantBanner ?? this.restaurantBanner,
+          location: location ?? this.location,
+          avgPrice: avgPrice ?? this.avgPrice,
+          description: description ?? this.description,
+          features: features ?? this.features,
+          timing: timing ?? this.timing,
+          media: media ?? this.media,
+          cuisine: cuisine ?? this.cuisine,
+          lat: lat ?? lat,
+          lon: lon ?? lon,
+          stripeCustomerId: stripeCustomerId,
+          stripeCardId: stripeCardId);
 }
 
 class Timing {

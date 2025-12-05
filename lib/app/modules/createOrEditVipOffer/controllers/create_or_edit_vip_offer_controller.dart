@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -362,7 +361,7 @@ class CreateOrEditVipOfferController extends GetxController {
           onPrimary: Colors.white,
           secondary: context.primary01,
         ),
-        dialogBackgroundColor: Colors.white,
+        dialogTheme: DialogThemeData(backgroundColor: Colors.white),
       ),
       child: child!,
     );

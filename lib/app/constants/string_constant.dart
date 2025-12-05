@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class StringConstant {
   static const String welcome = "Welcome";
   static const String homeSearch = "Search “restaurant , food , job”";

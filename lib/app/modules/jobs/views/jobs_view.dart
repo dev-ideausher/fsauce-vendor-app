@@ -5,7 +5,6 @@ import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/jobEditOrAdd/controllers/job_edit_or_add_controller.dart';
-import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -15,7 +14,8 @@ import '../controllers/jobs_controller.dart';
 
 class JobsView extends GetView<JobsController> {
   JobsView({super.key});
-  final editJobController = Get.put<JobEditOrAddController>(JobEditOrAddController());
+  final editJobController =
+      Get.put<JobEditOrAddController>(JobEditOrAddController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class JobsView extends GetView<JobsController> {
             color: Colors.white,
             size: 30.kw,
           ),
-          onPressed: (){
+          onPressed: () {
             controller.gotoAddJobPage(isEdit: false);
             // Get.toNamed(Routes.JOB_EDIT_OR_ADD, arguments: [false]);
           },
@@ -49,13 +49,13 @@ class JobsView extends GetView<JobsController> {
               controller.currentPage != 1) {
             return Center(
                 child: CircularProgressIndicator(
-                  color: context.primary01,
-                ));
+              color: context.primary01,
+            ));
           } else if (controller.jobs.isEmpty && !controller.isLoading.value) {
-            return EmptyWidget(title: StringConstant.noJobsFound,
+            return EmptyWidget(
+                title: StringConstant.noJobsFound,
                 subTitle: StringConstant.createJobListings);
-          }
-          else {
+          } else {
             return NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
                 if (!controller.isLoading.value &&
@@ -71,11 +71,11 @@ class JobsView extends GetView<JobsController> {
                   if (index == controller.jobs.length) {
                     return controller.isMoreDataAvailable.value
                         ? Center(
-                        child: controller.currentPage != 1
-                            ? CircularProgressIndicator(
-                          color: context.primary01,
-                        )
-                            : null)
+                            child: controller.currentPage != 1
+                                ? CircularProgressIndicator(
+                                    color: context.primary01,
+                                  )
+                                : null)
                         : Container();
                   } else {
                     Job job = controller.jobs[index];
@@ -109,8 +109,7 @@ class JobsView extends GetView<JobsController> {
                               PopupMenuButton<int>(
                                 color: Colors.white,
                                 onSelected: (item) => {},
-                                itemBuilder: (context) =>
-                                [
+                                itemBuilder: (context) => [
                                   PopupMenuItem<int>(
                                       onTap: () {
                                         controller.selectedJob.value = job;
@@ -143,8 +142,7 @@ class JobsView extends GetView<JobsController> {
                               ),
                               8.kwidthBox,
                               Text(
-                                "£${job.minSalary}–${job
-                                    .maxSalary} ${StringConstant.perYear}",
+                                "£${job.minSalary}–${job.maxSalary} ${StringConstant.perYear}",
                                 style: TextStyleUtil.manrope16w400(),
                               ),
                             ],

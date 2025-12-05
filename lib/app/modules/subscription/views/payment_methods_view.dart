@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -78,31 +76,16 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                                   "**** **** *${controller.cardsList[index].last4 ?? "1212"}",
                                   style: TextStyleUtil.manrope14w400()),
                               trailing: Obx(() {
-                                return RadioGroup<CardModel>(
+                                return Radio<CardModel>(
+                                  value: controller.cardsList[index],
                                   groupValue: controller.selectedCard.value,
-                                  onChanged: (CardModel? newValue) {
-                                    if (newValue != null) {
-                                      controller.selectedCard.value = newValue;
+                                  activeColor: context.primary01,
+                                  onChanged: (CardModel? val) {
+                                    if (val != null) {
+                                      controller.selectedCard.value = val;
                                     }
                                   },
-                                  child: Column(
-                                    children: [
-                                      for (final card in controller.cardsList)
-                                        Row(
-                                          children: [
-                                            Radio<CardModel>(
-                                              value: card,         // ✔ valid
-                                              activeColor: context.primary01,
-                                            ),
-                                            Text(card.name??""),       // You handle labels manually
-                                          ],
-                                        ),
-                                    ],
-                                  ),
                                 );
-
-
-
                               })),
                         ),
                       );
@@ -158,7 +141,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                   ),
                 ),
                 8.kheightBox,
-                Visibility(
+                /*  Visibility(
                   visible: Platform.isIOS,
                   child: Container(
                     height: 60.kh,
@@ -222,7 +205,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
               ],
             )
           ],

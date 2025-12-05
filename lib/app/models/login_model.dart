@@ -201,17 +201,17 @@ class LoginModelUser {
     if (features != null) {
       final v = features;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['features'] = arr0;
     }
     if (media != null) {
       final v = media;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['media'] = arr0;
     }
     data['role'] = role;
@@ -221,9 +221,9 @@ class LoginModelUser {
     if (timing != null) {
       final v = timing;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['timing'] = arr0;
     }
     data['createdAt'] = createdAt;
@@ -292,7 +292,8 @@ class LoginModel {
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    user = (json['user'] != null) ? LoginModelUser.fromJson(json['user']) : null;
+    user =
+        (json['user'] != null) ? LoginModelUser.fromJson(json['user']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

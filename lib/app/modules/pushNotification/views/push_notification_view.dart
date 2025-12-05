@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import '../controllers/push_notification_controller.dart';
 
 class PushNotificationView extends GetView<PushNotificationController> {
-  const PushNotificationView({Key? key}) : super(key: key);
+  const PushNotificationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +42,25 @@ class PushNotificationView extends GetView<PushNotificationController> {
         ),
         body: Obx(
           () => controller.isLoad.value
-              ? const Center(child: CircularProgressIndicator(),)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
               : controller.notificationList.isEmpty
                   ? Center(
                       child: EmptyWidget(
                       title: StringConstant.noNotificationsCreated,
                     ))
                   : SingleChildScrollView(
-                    child: Column(
+                      child: Column(
                         children: [
                           20.kheightBox,
                           ListView.separated(
                               shrinkWrap: true,
                               itemBuilder: (ctx, index) {
                                 return PushNotificationCard(
-                                  isActivate:( controller.notificationList[index]
-                                              .isActive ??false),
+                                  isActivate: (controller
+                                          .notificationList[index].isActive ??
+                                      false),
                                   notification:
                                       controller.notificationList[index],
                                 );
@@ -68,7 +71,7 @@ class PushNotificationView extends GetView<PushNotificationController> {
                               itemCount: controller.notificationList.length)
                         ],
                       ).paddingSymmetric(horizontal: 16.kh),
-                  ),
+                    ),
         ));
   }
 }

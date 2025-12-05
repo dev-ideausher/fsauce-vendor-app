@@ -4,7 +4,6 @@ import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import '../../../services/auth.dart';
-import '../../../services/storage.dart';
 
 class OnboardingController extends GetxController {
   //TODO: Implement OnboardingController
@@ -23,9 +22,7 @@ class OnboardingController extends GetxController {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
-    } else {
-
-    }
+    } else {}
   }
 
   void changePageCount({required int n}) {

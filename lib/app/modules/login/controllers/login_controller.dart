@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/models/login_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
-import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/snackbar.dart';
-import 'package:fsauce_vendor_app/app/services/storage.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
@@ -109,7 +106,6 @@ class LoginController extends GetxController {
   void loginWithApple() async {
     try {
       await auth.apple();
-    } catch (e) {
     } catch (e) {
       showMySnackbar(msg: e.toString(), title: StringConstant.error);
     }

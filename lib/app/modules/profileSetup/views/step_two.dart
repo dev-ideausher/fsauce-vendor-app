@@ -94,14 +94,7 @@ class StepTwo extends GetView<ProfileSetupController> {
               height: 56.kh,
               width: 100.w,
               onPressed: () {
-                if (controller.selectedFeatures.isNotEmpty) {
-                  controller.stepCount.value < 2
-                      ? controller.gotoNextStep()
-                      : controller.gotoEnableLocationScreen();
-                } else {
-                  Get.snackbar(
-                      "Error", StringConstant.plsSelectFeaturesAndTimings);
-                }
+                controller.validateStepTwoFields();
               });
         }),
         30.kheightBox,

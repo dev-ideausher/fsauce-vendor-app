@@ -59,6 +59,7 @@ class CustomTextField extends StatelessWidget {
           Expanded(
             child: TextFormField(
               maxLength: maxLength,
+              buildCounter: (context, {required currentLength, required isFocused, required maxLength}) => SizedBox(),
               readOnly: readOnly,
               validator: validator,
               controller: controller,

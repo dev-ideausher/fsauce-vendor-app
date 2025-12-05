@@ -19,7 +19,7 @@ class CommonImageView extends StatelessWidget {
   ///a [CommonNetworkImageView] it can be used for showing any network images
   /// it will shows the placeholder image if image is not found on network
   CommonImageView({
-    Key? key,
+    super.key,
     this.url,
     this.imagePath,
     this.svgPath,
@@ -29,7 +29,7 @@ class CommonImageView extends StatelessWidget {
     this.width,
     this.fit = BoxFit.cover,
     this.placeHolder = 'assets/images/image_not_found.png',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

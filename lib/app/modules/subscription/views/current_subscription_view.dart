@@ -10,7 +10,7 @@ import '../../../services/text_style_util.dart';
 import '../controllers/subscription_controller.dart';
 
 class CurrentSubscriptionView extends GetView<SubscriptionController> {
-  const CurrentSubscriptionView({Key? key}) : super(key: key);
+  const CurrentSubscriptionView({super.key});
 
   @override
   Widget build(BuildContext context) {

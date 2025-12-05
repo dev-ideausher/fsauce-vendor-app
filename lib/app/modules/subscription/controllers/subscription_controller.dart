@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/plan_model.dart';
-import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:intl/intl.dart';
 
 import '../../../components/added_successfull_bottomsheet.dart';
@@ -19,7 +17,6 @@ import '../../../components/confirmation_dialog.dart';
 import '../../../models/card_data_model.dart';
 import '../../../services/enigma.dart';
 import '../../../services/snackbar.dart';
-import '../../../services/snackbar.dart' as MyUtil;
 
 class SubscriptionController extends GetxController {
   TextEditingController promoCodeController = TextEditingController();
@@ -179,12 +176,12 @@ class SubscriptionController extends GetxController {
 
   Future<void> addCard() async {
     if (cardDetails.value == null || !(cardDetails.value?.complete ?? false)) {
-      showMySnackbar( msg: 'Please enter valid card details');
+      showMySnackbar(msg: 'Please enter valid card details');
       return;
     }
 
     if (eCardHolderName.text.trim().isEmpty) {
-      showMySnackbar( msg: 'Please enter cardholder name');
+      showMySnackbar(msg: 'Please enter cardholder name');
       return;
     }
     TokenData? tokenData;
@@ -198,7 +195,7 @@ class SubscriptionController extends GetxController {
         ),
       );
     } on StripeException catch (error) {
-      showMySnackbar( msg: error.error.message.toString());
+      showMySnackbar(msg: error.error.message.toString());
       return;
     } catch (e) {
       print(e);
@@ -206,7 +203,7 @@ class SubscriptionController extends GetxController {
     }
 
     final token = tokenData.id;
-   /* final String token = await generateStripeToken(
+    /* final String token = await generateStripeToken(
             card: cardNumberController.text,
             name: nameController.text,
             expiryDate: expiresController.text,
@@ -214,7 +211,7 @@ class SubscriptionController extends GetxController {
         "";*/
     if (token.isNotEmpty) {
       print("Token is not empty: $token");
-      final String? encryptToken =
+      final String encryptToken =
           encryptAESCryptoJS(jsonEncode({"token": token, "default": "true"}));
       try {
         print("Below is the encrypt token: $encryptToken");
@@ -222,7 +219,6 @@ class SubscriptionController extends GetxController {
           "token": encryptToken,
         });
         if (response.data['status']) {
-
           Get.back();
 
           getCardList();
@@ -330,12 +326,11 @@ class SubscriptionController extends GetxController {
       DialogHelper.showError("No plan selected!");
       return;
     } else if (selectedCard.value.id == null) {
-
-        if (cardsList.isEmpty) {
-          showMySnackbar(msg:"Please add a payment method first.");
-        } else {
-          showMySnackbar(msg:"No card selected!");
-        }
+      if (cardsList.isEmpty) {
+        showMySnackbar(msg: "Please add a payment method first.");
+      } else {
+        showMySnackbar(msg: "No card selected!");
+      }
 
       return;
     } else {
@@ -383,7 +378,7 @@ class SubscriptionController extends GetxController {
   Future<void> cancelSubscription() async {
     String subId = subscriptionId.value ?? "";
     print("Here is the subId: $subId");
-    final Map<String, dynamic> data = {"subscriptionId": "$subId"};
+    final Map<String, dynamic> data = {"subscriptionId": subId};
     try {
       final response = await APIManager.cancelSubscription(data: data);
       if (response.data['code'] == 201 || response.data['code'] == 200) {

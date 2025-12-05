@@ -39,6 +39,7 @@ class Endpoints {
   static const String deleteNotification = "vendor/deleteNotification";
   static const String editNotification = "vendor/updateNotificationStatus";
   static const String getPrivacyPolicy = "vendor/getPrivacyPolicy";
+  static const String getContentPolicy = "vendor/getContentPolicy";
   static const String getTermsAndConditions = "vendor/getTermsAndConditions";
 
   //Dashboard end points
@@ -74,7 +75,7 @@ class Endpoints {
   static const String editCoupon = "vendor/coupon/editCoupon";
   static const String deleteCoupon = "/vendor/coupon/deleteCoupon?id=";
   static const String redeemCouponCode =
-      "vendor/loyaltycard/redeemLoyaltyCardByCode";
+      "v1/vendor/coupon/redeemCoupon";
 
   // receiveTimeout
   static const int receiveTimeout = 15000;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
-import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -13,7 +11,7 @@ import 'package:get/get.dart';
 import '../controllers/scan_history_controller.dart';
 
 class ScanHistoryView extends GetView<ScanHistoryController> {
-  const ScanHistoryView({Key? key}) : super(key: key);
+  const ScanHistoryView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

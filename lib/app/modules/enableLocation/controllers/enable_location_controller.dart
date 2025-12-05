@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/feature_model.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
-import 'package:fsauce_vendor_app/app/modules/profileSetup/controllers/profile_setup_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -24,7 +21,9 @@ class EnableLocationController extends GetxController {
           avgPrice: 0,
           description: "",
           features: [FeatureModel(id: "", name: "")],
-          timing: [Timing(day: "", startTime: "", closeTime: "", isActive: false)],
+          timing: [
+            Timing(day: "", startTime: "", closeTime: "", isActive: false)
+          ],
           media: [""],
           cuisine: [CuisineModel(id: "", name: "", image: "")],
           lat: "",
@@ -53,7 +52,8 @@ class EnableLocationController extends GetxController {
     PermissionStatus status = await Permission.location.request();
     if (status.isGranted) {
       print("Location: ${Permission.location.value}");
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
       locationText += "Lat: ${position.latitude} & Long: ${position.longitude}";
       try {
         var response = await APIManager.updateVendor(
@@ -81,7 +81,8 @@ class EnableLocationController extends GetxController {
         Get.snackbar("Error", StringConstant.somethingWentWrong);
       }
     } else {
-      Get.snackbar(StringConstant.permissionDenied, StringConstant.locationPermissionDenied);
+      Get.snackbar(StringConstant.permissionDenied,
+          StringConstant.locationPermissionDenied);
     }
   }
 }

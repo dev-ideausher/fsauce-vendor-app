@@ -102,7 +102,7 @@ class EditMenuItem extends StatelessWidget {
                         child: DropdownButtonFormField<CategoryModel>(
                       style: TextStyleUtil.manrope16w400(),
                       isExpanded: true,
-                      value: Get.find<MenuPageController>()
+                      initialValue: Get.find<MenuPageController>()
                           .addItemSelectedCategory,
                       onChanged: (val) {
                         Get.find<MenuPageController>()

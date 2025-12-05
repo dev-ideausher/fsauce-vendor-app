@@ -13,7 +13,17 @@ class VipOffersController extends GetxController {
 
   RxList<Coupon> couponsList = <Coupon>[].obs;
   RxList<Coupon> inactiveCouponList = <Coupon>[].obs;
-  Rx<Coupon> selectedCoupon = Coupon(title: '', typeOfOffer: '', validFor: '', validTill: '', description: '', termsAndConditions: [''], id: '', isActive: true, image: '').obs;
+  Rx<Coupon> selectedCoupon = Coupon(
+          title: '',
+          typeOfOffer: '',
+          validFor: '',
+          validTill: '',
+          description: '',
+          termsAndConditions: [''],
+          id: '',
+          isActive: true,
+          image: '')
+      .obs;
 
   int currentActivePage = 1;
   final int activeLimit = 5;
@@ -29,7 +39,8 @@ class VipOffersController extends GetxController {
   void onInit() {
     getCoupons();
     activeScrollController = ScrollController()..addListener(_scrollListener);
-    inActiveScrollController = ScrollController()..addListener(_inactiveScrollListener);
+    inActiveScrollController = ScrollController()
+      ..addListener(_inactiveScrollListener);
     super.onInit();
   }
 
@@ -40,34 +51,39 @@ class VipOffersController extends GetxController {
     super.onClose();
   }
 
-  _scrollListener() {
-    if (activeScrollController.position.extentAfter <= 0 && isActiveLoading.value == false) {
+  void _scrollListener() {
+    if (activeScrollController.position.extentAfter <= 0 &&
+        isActiveLoading.value == false) {
       addActiveCoupons();
     }
   }
 
-  _inactiveScrollListener(){
-    if(inActiveScrollController.position.extentAfter <= 0 && isInActiveLoading.value == false){
+  void _inactiveScrollListener() {
+    if (inActiveScrollController.position.extentAfter <= 0 &&
+        isInActiveLoading.value == false) {
       addInactiveCoupons();
     }
   }
 
-  void addInactiveCoupons() async{
+  void addInactiveCoupons() async {
     if (isInActiveLoading.value || !isMoreInactiveDataAvailable.value) return;
 
     isInActiveLoading.value = true;
-    try{
-      var response = await APIManager.getCouponList(page: currentInactivePage + 1, limit: inActiveLimit, status: false);
-      List<Coupon> fetchedCoupons = (response.data['data'] as List).map((coupon) => Coupon.fromJson(coupon)).toList();
+    try {
+      var response = await APIManager.getCouponList(
+          page: currentInactivePage + 1, limit: inActiveLimit, status: false);
+      List<Coupon> fetchedCoupons = (response.data['data'] as List)
+          .map((coupon) => Coupon.fromJson(coupon))
+          .toList();
 
-      if(fetchedCoupons.length < inActiveLimit){
+      if (fetchedCoupons.length < inActiveLimit) {
         isMoreInactiveDataAvailable.value = false;
-      } else{
+      } else {
         ++currentInactivePage;
       }
 
       inactiveCouponList.addAll(fetchedCoupons);
-    } catch(e){
+    } catch (e) {
       print("An error occurred while adding inactive coupons!: $e");
     } finally {
       isInActiveLoading.value = false;
@@ -75,22 +91,25 @@ class VipOffersController extends GetxController {
     return;
   }
 
-  void addActiveCoupons() async{
+  void addActiveCoupons() async {
     if (isActiveLoading.value || !isMoreActiveDataAvailable.value) return;
 
     isActiveLoading.value = true;
-    try{
-      var response = await APIManager.getCouponList(page: currentActivePage + 1, limit: activeLimit, status: true);
-      List<Coupon> fetchedCoupons = (response.data['data'] as List).map((coupon) => Coupon.fromJson(coupon)).toList();
+    try {
+      var response = await APIManager.getCouponList(
+          page: currentActivePage + 1, limit: activeLimit, status: true);
+      List<Coupon> fetchedCoupons = (response.data['data'] as List)
+          .map((coupon) => Coupon.fromJson(coupon))
+          .toList();
 
-      if(fetchedCoupons.length < activeLimit){
+      if (fetchedCoupons.length < activeLimit) {
         isMoreActiveDataAvailable.value = false;
-      } else{
+      } else {
         ++currentActivePage;
       }
 
       couponsList.addAll(fetchedCoupons);
-    } catch(e){
+    } catch (e) {
       print("An error occurred while adding active coupons!: $e");
     } finally {
       isActiveLoading.value = false;
@@ -98,7 +117,7 @@ class VipOffersController extends GetxController {
     return;
   }
 
-  Future<void> getCoupons() async{
+  Future<void> getCoupons() async {
     currentActivePage = 1;
     isMoreActiveDataAvailable.value = true;
     isActiveLoading.value = false;
@@ -114,8 +133,8 @@ class VipOffersController extends GetxController {
     isInActiveLoading.value = false;
     var inactiveResponse = await APIManager.getCouponList(status: false);
     List<Coupon> fetchedInactiveCoupon = (inactiveResponse.data['data'] as List)
-    .map((coupon) => Coupon.fromJson(coupon))
-    .toList();
+        .map((coupon) => Coupon.fromJson(coupon))
+        .toList();
 
     inactiveCouponList.value = fetchedInactiveCoupon;
   }
@@ -167,7 +186,8 @@ class VipOffersController extends GetxController {
   }
 
   void gotoCreateVipOffer() {
-    Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER, arguments: [false, couponsList]);
+    Get.toNamed(Routes.CREATE_OR_EDIT_VIP_OFFER,
+        arguments: [false, couponsList]);
   }
 
   void gotoEditVipOffer(Coupon coupon) {

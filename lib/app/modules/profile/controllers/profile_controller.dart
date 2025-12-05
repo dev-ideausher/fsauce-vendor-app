@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:fsauce_vendor_app/app/components/confirmation_dialog.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
@@ -138,9 +140,30 @@ class ProfileController extends GetxController {
         print("Message from del account: ${response['message']}");
         Get.snackbar("Message", response['message']);
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        Get.dialog(ConfrimationDialog(
+          title: "Security Check",
+          subTitle:
+              "This operation is sensitive. Please log out and log in again to delete your account.",
+          yesButtonText: "Logout",
+          noButtonText: "Cancel",
+          onYesTap: () async {
+            Get.back();
+            await Get.find<Auth>().logOutUser();
+            Get.offAllNamed(Routes.LOGIN);
+          },
+          onNoTap: Get.back,
+        ));
+      } else {
+        showMySnackbar(
+            msg: e.message ?? "Error occurred while deleting account!",
+            title: "Error");
+      }
     } catch (e) {
       print("An error occurred while deleting account! $e");
-      Get.snackbar("Error", "Error occurred while deleting account!");
+      showMySnackbar(
+          msg: "Error occurred while deleting account!", title: "Error");
       return;
     }
   }

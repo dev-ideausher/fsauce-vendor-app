@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import '../controllers/scan_redemption_record_controller.dart';
 
 class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
-  const ScanRedemptionRecordView({Key? key}) : super(key: key);
+  const ScanRedemptionRecordView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

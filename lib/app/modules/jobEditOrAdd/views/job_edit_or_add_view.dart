@@ -182,6 +182,7 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
                   ? controller.editJob
                   : controller.addJob,
             ),
+            60.kheightBox,
           ],
         ),
       ),

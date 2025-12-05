@@ -16,7 +16,7 @@ import '../../../components/common_image_view.dart';
 import '../controllers/create_or_edit_vip_offer_controller.dart';
 
 class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
-  const CreateOrEditVipOfferView({Key? key}) : super(key: key);
+  const CreateOrEditVipOfferView({super.key});
 
   @override
   Widget build(BuildContext context) {

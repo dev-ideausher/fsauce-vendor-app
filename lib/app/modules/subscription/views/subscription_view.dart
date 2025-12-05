@@ -65,15 +65,24 @@ class SubscriptionView extends GetView<SubscriptionController> {
               10.kheightBox,
               Obx(() {
                 if (controller.showList.value) {
-                  return Text(
-                    StringConstant.buySubscriptionText,
-                    style: TextStyleUtil.manrope16w600(),
+                  return Column(
+                    children: [
+                      Text(
+                        StringConstant.buySubscriptionText,
+                        style: TextStyleUtil.manrope16w600(),
+                      ),
+                      4.kheightBox,
+                      Text(
+                        StringConstant.plansAvailableText,
+                        style: TextStyleUtil.manrope14w500(color: ColorUtil.kBlack04),
+                      ),
+                    ],
                   );
                 } else {
                   return Container();
                 }
               }),
-              10.kheightBox,
+              12.kheightBox,
               Obx(() {
                 if (!controller.showList.value) {
                   String validTill = Get.find<HomeController>()
@@ -223,7 +232,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                       shrinkWrap: true,
                       itemBuilder: (ctx, index) {
                         return PlanCard(
-                            plan: controller.subscriptionPlans[index]);
+                            plan: controller.subscriptionPlans[index]).paddingOnly(bottom: controller.subscriptionPlans.length==index+1?100.kh :0 );
                       },
                       separatorBuilder: (ctx, index) {
                         return 4.kheightBox;

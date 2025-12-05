@@ -27,15 +27,20 @@ class AppInterceptors extends Interceptor {
     }
 
     isOverlayLoader ? DialogHelper.showLoading() : null;
-    await Helpers.validateToken(
-      onSuccess: () {
-        options.headers = {
-          "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
-          // "type": "app"
-        };
-        super.onRequest(options, handler);
-      },
-    );
+    if(Get.find<GetStorageService>().encjwToken.isEmpty){
+      super.onRequest(options, handler);
+    }else{
+      await Helpers.validateToken(
+        onSuccess: () {
+          options.headers = {
+            "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
+            // "type": "app"
+          };
+          super.onRequest(options, handler);
+        },
+      );
+    }
+
   }
 
   @override

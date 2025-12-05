@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import '../controllers/help_and_support_screen_controller.dart';
 
 class HelpAndSupportScreenView extends GetView<HelpAndSupportScreenController> {
-  const HelpAndSupportScreenView({Key? key}) : super(key: key);
+  const HelpAndSupportScreenView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

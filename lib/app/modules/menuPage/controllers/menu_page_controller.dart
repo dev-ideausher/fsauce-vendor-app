@@ -108,7 +108,7 @@ class MenuPageController extends GetxController {
     if (Get.find<HomeController>().restaurantDetails.value.subscriptionModel !=
         null) {
       if (addCategoryController.text.isEmpty) {
-        Get.snackbar("Error", StringConstant.enterCategoryName);
+        showMySnackbar(msg: StringConstant.enterCategoryName, title: "Error");
         return;
       } else {
         try {
@@ -123,11 +123,12 @@ class MenuPageController extends GetxController {
             DialogHelper.showSuccess(StringConstant.categoryAddedSuccessfully);
             return;
           } else {
-            Get.snackbar("Error", StringConstant.somethingWentWrong);
+            showMySnackbar(
+                msg: StringConstant.somethingWentWrong, title: "Error");
             return;
           }
         } catch (e) {
-          Get.snackbar("Error", StringConstant.categoryNameAdded);
+          showMySnackbar(msg: StringConstant.categoryNameAdded, title: "Error");
           return;
         }
       }
@@ -139,10 +140,12 @@ class MenuPageController extends GetxController {
           noButtonText: StringConstant.close,
           onYesTap: () async {
             // Get.find<GetStorageService>().logout();
-            Get.back();
+            Navigator.of(Get.overlayContext!).pop();
             Get.offNamed(Routes.SUBSCRIPTION);
           },
-          onNoTap: Get.back));
+          onNoTap: () {
+            Get.back();
+          }));
       return;
     }
   }
@@ -155,12 +158,12 @@ class MenuPageController extends GetxController {
         .toString()
         .toLowerCase()
         .compareTo(category2.name.toString().toLowerCase()));
-    categories.forEach((category) {
+    for (var category in categories) {
       category.menu.sort((model1, model2) => model1.name
           .toString()
           .toLowerCase()
           .compareTo(model2.name.toString().toLowerCase()));
-    });
+    }
   }
 
   void showAddItem() {
@@ -189,16 +192,16 @@ class MenuPageController extends GetxController {
 
   Future<bool> addMenuItem() async {
     if (itemNameController.text.trim().isEmpty) {
-      Get.snackbar("Error", StringConstant.itemNameCantBeEmpty);
+      showMySnackbar(msg: StringConstant.itemNameCantBeEmpty, title: "Error");
       return false;
     }
     if (itemImage.value.isEmpty) {
-      Get.snackbar("Error", StringConstant.selectAnImage);
+      showMySnackbar(msg: StringConstant.selectAnImage, title: "Error");
       return false;
     }
     if (categories.any((category) => category.menu
         .any((menuItem) => menuItem.name == itemNameController.text))) {
-      Get.snackbar("Error", StringConstant.aMenuItemWithSameName);
+      showMySnackbar(msg: StringConstant.aMenuItemWithSameName, title: "Error");
       return false;
     }
     try {
@@ -244,7 +247,7 @@ class MenuPageController extends GetxController {
 
   Future<void> editItem({required MenuItemModel menu}) async {
     if (editMenuItemController.text.isEmpty) {
-      Get.snackbar("Error", StringConstant.itemNameCantBeEmpty);
+      showMySnackbar(msg: StringConstant.itemNameCantBeEmpty, title: "Error");
       return;
     }
     if (itemEditImage.value.isNotEmpty) {

@@ -11,11 +11,10 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
-import '../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {

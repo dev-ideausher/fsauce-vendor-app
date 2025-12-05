@@ -9,10 +9,8 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../models/feature_model.dart';
-import '../../home/controllers/home_controller.dart';
 import '../controllers/features_and_timings_controller.dart';
 
 class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {

@@ -78,7 +78,7 @@ class AddCategory extends StatelessWidget {
                     onPressed: Get.find<MenuPageController>().addCategory),
               ],
             ),
-            20.kheightBox,
+            50.kheightBox,
           ],
         ),
       ),

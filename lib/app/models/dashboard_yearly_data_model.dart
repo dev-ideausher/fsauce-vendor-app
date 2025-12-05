@@ -173,7 +173,9 @@ class DashboardYearlyData {
     this.couponCounts,
   });
   DashboardYearlyData.fromJson(Map<String, dynamic> json) {
-    cards = (json['cards'] != null) ? DashboardYearlyDataCards.fromJson(json['cards']) : null;
+    cards = (json['cards'] != null)
+        ? DashboardYearlyDataCards.fromJson(json['cards'])
+        : null;
     if (json['redemptionsCount'] != null) {
       final v = json['redemptionsCount'];
       final arr0 = <DashboardYearlyDataRedemptionsCount>[];
@@ -207,25 +209,25 @@ class DashboardYearlyData {
     if (redemptionsCount != null) {
       final v = redemptionsCount;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['redemptionsCount'] = arr0;
     }
     if (rewardsCount != null) {
       final v = rewardsCount;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['rewardsCount'] = arr0;
     }
     if (couponCounts != null) {
       final v = couponCounts;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['couponCounts'] = arr0;
     }
     return data;

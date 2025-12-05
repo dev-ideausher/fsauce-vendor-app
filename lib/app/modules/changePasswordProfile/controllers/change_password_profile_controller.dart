@@ -44,6 +44,7 @@ class ChangePasswordProfileController extends GetxController {
             "This operation is sensitive and requires recent authentication. Log in again before retrying this request.");
       }
     } catch (e) {
+      DialogHelper.hideDialog();
       print("An error occurred while updating password!: $e");
       Get.snackbar("Error", e.toString());
     }

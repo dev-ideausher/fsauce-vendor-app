@@ -158,5 +158,5 @@ class PushNotificationCard extends StatelessWidget {
     );
   }
 
-  handleClick(int item) {}
+  void handleClick(int item) {}
 }

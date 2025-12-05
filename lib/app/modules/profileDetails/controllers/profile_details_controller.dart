@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
-import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import '';
 
 class ProfileDetailsController extends GetxController {
   //TODO: Implement ProfileDetailsController

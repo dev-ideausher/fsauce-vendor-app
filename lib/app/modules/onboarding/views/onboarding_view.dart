@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
-import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
-import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';

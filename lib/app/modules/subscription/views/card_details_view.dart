@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
@@ -5,7 +6,7 @@ import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart
 
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/controllers/subscription_controller.dart';
-import 'package:fsauce_vendor_app/app/services/colors.dart';
+
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ import 'package:flutterme_credit_card/flutterme_credit_card/widgets/field/hold_f
 import 'package:flutterme_credit_card/flutterme_credit_card/widgets/card/credit_card.dart';
 
 class CardDetailsView extends GetView<SubscriptionController> {
-  CardDetailsView({super.key});
+  const CardDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,29 +72,32 @@ class CardDetailsView extends GetView<SubscriptionController> {
                         controller.cvvCode.value = card?.cvc ?? "";
                         controller.cardDetails.value = card;
                       },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        prefixIcon: Platform.isAndroid
+                            ? const Icon(Icons.credit_card)
+                            : null,
                       ),
                     ),
-                    120.kheightBox,
+                    40.kheightBox,
                   ],
                 ).paddingAll(16),
               ),
+              CustomRedElevatedButton(
+                buttonText: StringConstant.save,
+                height: 56.kh,
+                width: MediaQuery.of(context).size.width * 0.9,
+                onPressed: () {
+                  if (controller.formKey.currentState!.validate()) {
+                    controller.addCard();
+                    // Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.cardSavedSuccessfully));
+                  }
+                },
+              ),
+              30.kheightBox,
             ],
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: CustomRedElevatedButton(
-        buttonText: StringConstant.save,
-        height: 56.kh,
-        width: MediaQuery.of(context).size.width * 0.9,
-        onPressed: () {
-          if (controller.formKey.currentState!.validate()) {
-            controller.addCard();
-            // Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.cardSavedSuccessfully));
-          }
-        },
       ),
     );
   }

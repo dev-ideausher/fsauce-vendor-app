@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/components/deals_of_the_day_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/views/active_offers_view.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/views/inactive_offers_view.dart';

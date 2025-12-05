@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
-import 'package:fsauce_vendor_app/app/modules/allPhotosAndVideos/controllers/all_photos_and_videos_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
-import 'package:fsauce_vendor_app/app/modules/profileDetails/controllers/profile_details_controller.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
@@ -25,7 +23,8 @@ class EditResturantDetailsController extends GetxController {
   RxString selectedCuisineType = "".obs;
   RxList<CuisineModel> initialCuisineModels = <CuisineModel>[].obs;
   RxList<CuisineModel> cuisines = <CuisineModel>[].obs;
-  Rx<CuisineModel> selectedCuisine = CuisineModel(id: "id", name: "name", image: "").obs;
+  Rx<CuisineModel> selectedCuisine =
+      CuisineModel(id: "id", name: "name", image: "").obs;
   // List<DropdownMenuItem<CuisineModel>> cuisineOptions = <DropdownMenuItem<CuisineModel>>[];
   final formKey = GlobalKey<FormState>();
 
@@ -35,7 +34,7 @@ class EditResturantDetailsController extends GetxController {
   Future<void> pickLogo() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
-    await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       selectedLogoImage.value = pickedFile.path;
@@ -45,7 +44,7 @@ class EditResturantDetailsController extends GetxController {
   Future<void> pickBanner() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
-    await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       selectedBannerImage.value = pickedFile.path;
@@ -59,23 +58,24 @@ class EditResturantDetailsController extends GetxController {
     super.onInit();
   }
 
-  Future<void> getCuisines() async{
-    try{
+  Future<void> getCuisines() async {
+    try {
       var response = await APIManager.getCuisines();
-      if(response.data['status']){
+      if (response.data['status']) {
         List<dynamic> data = response.data['data'];
         cuisines.value = [];
         cuisines.value = data.map((e) => CuisineModel.fromJson(e)).toList();
-      } else{
+      } else {
         Get.snackbar("Error", response.data['message']);
       }
-    } catch(error){
+    } catch (error) {
       Get.snackbar("Error", error.toString());
     }
   }
 
-  void getInitialRestaurantDetails(){
-    RestaurantDetails details = Get.find<HomeController>().restaurantDetails.value;
+  void getInitialRestaurantDetails() {
+    RestaurantDetails details =
+        Get.find<HomeController>().restaurantDetails.value;
     restaurantNameController.text = details.restaurantName;
     addressController.text = details.location;
     averagePriceController.text = details.avgPrice.toString();
@@ -85,69 +85,84 @@ class EditResturantDetailsController extends GetxController {
     restaurantBanner = details.restaurantBanner;
   }
 
-  Future<String> uploadRestaurantMedia(String filePath) async{
+  Future<String> uploadRestaurantMedia(String filePath) async {
     String fileUrl = "";
-    try{
+    try {
       var response = await APIManager.uploadFile(filePath: filePath);
-      if(response.data['status']){
+      if (response.data['status']) {
         fileUrl = response.data['data'];
       }
-    } catch(e){
+    } catch (e) {
       Get.snackbar("Error", StringConstant.somethingWentWrong);
     }
     return fileUrl;
   }
 
-  Future<void> updateDetails() async{
-    if(restaurantNameController.text.trim().isEmpty){
+  Future<void> updateDetails() async {
+    if (restaurantNameController.text.trim().isEmpty) {
       Get.snackbar("Error", StringConstant.resNameEmpty);
       return;
     }
-    if(addressController.text.trim().isEmpty){
+    if (addressController.text.trim().isEmpty) {
       Get.snackbar("Error", StringConstant.addressNameEmpty);
       return;
     }
-    if(averagePriceController.text.trim().isEmpty){
+    if (averagePriceController.text.trim().isEmpty) {
       Get.snackbar("Error", StringConstant.avgPriceEmpty);
       return;
     }
-    if(selectedLogoImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantLogo.isEmpty){
+    if (selectedLogoImage.isEmpty &&
+        Get.find<HomeController>()
+            .restaurantDetails
+            .value
+            .restaurantLogo
+            .isEmpty) {
       Get.snackbar("Error", StringConstant.selectedLogoImageEmpty);
       return;
     }
-    if(selectedBannerImage.isEmpty && Get.find<HomeController>().restaurantDetails.value.restaurantBanner.isEmpty){
+    if (selectedBannerImage.isEmpty &&
+        Get.find<HomeController>()
+            .restaurantDetails
+            .value
+            .restaurantBanner
+            .isEmpty) {
       Get.snackbar("Error", StringConstant.selectedBannerImageEmpty);
       return;
-    }
-    else if(restaurantNameController.text.trim().isNotEmpty && addressController.text.isNotEmpty && averagePriceController.text.isNotEmpty){
-      try{
+    } else if (restaurantNameController.text.trim().isNotEmpty &&
+        addressController.text.isNotEmpty &&
+        averagePriceController.text.isNotEmpty) {
+      try {
         String logoUrl = restaurantLogo;
         String bannerUrl = restaurantBanner;
-        if(selectedLogoImage.isNotEmpty){
+        if (selectedLogoImage.isNotEmpty) {
           logoUrl = await uploadRestaurantMedia(selectedLogoImage.value);
-        }
-        else if(selectedBannerImage.isNotEmpty){
+        } else if (selectedBannerImage.isNotEmpty) {
           bannerUrl = await uploadRestaurantMedia(selectedBannerImage.value);
         }
         var response = await APIManager.updateVendor(
             restaurantDetails: RestaurantDetails(
-              restaurantName: restaurantNameController.text,
-              restaurantLogo: logoUrl,
-              restaurantBanner: bannerUrl,
-              location: addressController.text,
-              avgPrice: int.parse(averagePriceController.text),
-              description: descriptionController.text,
-              features: Get.find<HomeController>().restaurantDetails.value.features,
-              timing: Get.find<HomeController>().restaurantDetails.value.timing,
-              media: Get.find<HomeController>().restaurantDetails.value.media,
-              lat: Get.find<HomeController>().restaurantDetails.value.lat,
-              lon: Get.find<HomeController>().restaurantDetails.value.lon,
-              stripeCardId: Get.find<HomeController>().restaurantDetails.value.stripeCardId ?? "",
-              stripeCustomerId: Get.find<HomeController>().restaurantDetails.value.stripeCustomerId ?? "",
-              cuisine: initialCuisineModels,
-            )
-        );
-        if(response.data["status"]){
+          restaurantName: restaurantNameController.text,
+          restaurantLogo: logoUrl,
+          restaurantBanner: bannerUrl,
+          location: addressController.text,
+          avgPrice: int.parse(averagePriceController.text),
+          description: descriptionController.text,
+          features: Get.find<HomeController>().restaurantDetails.value.features,
+          timing: Get.find<HomeController>().restaurantDetails.value.timing,
+          media: Get.find<HomeController>().restaurantDetails.value.media,
+          lat: Get.find<HomeController>().restaurantDetails.value.lat,
+          lon: Get.find<HomeController>().restaurantDetails.value.lon,
+          stripeCardId:
+              Get.find<HomeController>().restaurantDetails.value.stripeCardId ??
+                  "",
+          stripeCustomerId: Get.find<HomeController>()
+                  .restaurantDetails
+                  .value
+                  .stripeCustomerId ??
+              "",
+          cuisine: initialCuisineModels,
+        ));
+        if (response.data["status"]) {
           restaurantNameController.text = "";
           addressController.text = "";
           averagePriceController.text = "";
@@ -158,12 +173,11 @@ class EditResturantDetailsController extends GetxController {
           DialogHelper.showSuccess(StringConstant.detailsUpdatedSuccessfully);
           Get.find<HomeController>().getRestaurantDetails();
           return;
-        }
-        else if(!response.data["status"]){
+        } else if (!response.data["status"]) {
           Get.snackbar("Error", StringConstant.anErrorOccurred);
           return;
         }
-      } catch(e){
+      } catch (e) {
         Get.snackbar("Error", StringConstant.anErrorOccurred);
         return;
       }

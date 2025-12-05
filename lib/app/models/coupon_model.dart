@@ -54,20 +54,19 @@ class Coupon {
     data['isSheduled'] = isSheduled;
     data['sheduleDate'] = sheduleDate;
     data['couponCode'] = couponCode ?? "";
-    if (termsAndConditions != null) {
-      final v = termsAndConditions;
-      final arr0 = [];
-      v.forEach((v) {
-        arr0.add(v);
-      });
-      data['termsAndConditions'] = arr0;
-    };
+    final v = termsAndConditions;
+    final arr0 = [];
+    for (var v in v) {
+      arr0.add(v);
+    }
+    data['termsAndConditions'] = arr0;
+
     data['_id'] = id;
     data['isActive'] = isActive;
     return data;
   }
 
-  factory Coupon.fromJson(Map<String, dynamic> json){
+  factory Coupon.fromJson(Map<String, dynamic> json) {
     final arr0 = <String>[];
     if (json['termsAndConditions'] != null) {
       final v = json['termsAndConditions'];

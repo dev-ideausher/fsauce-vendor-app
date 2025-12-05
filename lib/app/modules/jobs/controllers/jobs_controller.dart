@@ -4,7 +4,6 @@ import 'package:fsauce_vendor_app/app/models/job_model.dart';
 import 'package:fsauce_vendor_app/app/modules/jobEditOrAdd/controllers/job_edit_or_add_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/jobs/views/jobs_deltails_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 
@@ -24,36 +23,32 @@ class JobsController extends GetxController {
   }
 
   Rx<Job> selectedJob = Job(
-      id: "",
-      title: "",
-      description: "",
-      lastDate: DateTime.now(),
-      minSalary: 0,
-      maxSalary: 0,
-      howToApply: "",
-      vendor: "",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      v: 0).obs;
+          id: "",
+          title: "",
+          description: "",
+          lastDate: DateTime.now(),
+          minSalary: 0,
+          maxSalary: 0,
+          howToApply: "",
+          vendor: "",
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          v: 0)
+      .obs;
 
   void showJobsBottomSheet(Job job) {
     Get.bottomSheet(JobsDetailsBottomSheet(job: job));
   }
 
   void gotoAddJobPage({required bool isEdit}) {
-    if(isEdit && selectedJob.value.id.isNotEmpty){
-      Get
-          .find<JobEditOrAddController>().gotoEditJobPage(selectedJob.value);
-    } else{
-      Get
-          .find<JobEditOrAddController>().emptyAddJobVariables();
+    if (isEdit && selectedJob.value.id.isNotEmpty) {
+      Get.find<JobEditOrAddController>().gotoEditJobPage(selectedJob.value);
+    } else {
+      Get.find<JobEditOrAddController>().emptyAddJobVariables();
     }
     toEdit.value = isEdit;
     Get.toNamed(Routes.JOB_EDIT_OR_ADD);
-    Get
-        .find<JobEditOrAddController>()
-        .toEdit
-        .value = isEdit;
+    Get.find<JobEditOrAddController>().toEdit.value = isEdit;
     //arguments: [false]
   }
 
@@ -125,7 +120,7 @@ class JobsController extends GetxController {
               jobs.removeWhere((element) => element.id == id);
             }
           } catch (e) {
-            Get.snackbar("Error","Something went wrong!");
+            Get.snackbar("Error", "Something went wrong!");
           }
         },
         subTitle: StringConstant.deleteJobSub,

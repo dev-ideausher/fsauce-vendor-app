@@ -25,9 +25,10 @@ class AllPhotosAndVideosController extends GetxController {
   List<String> uploadedFilesUrl = [];
   RxList<String> restaurantUploads = <String>[].obs;
 
-  void getRestaurantUploads(){
+  void getRestaurantUploads() {
     Get.find<HomeController>().getRestaurantDetails();
-    restaurantUploads.value = Get.find<HomeController>().restaurantDetails.value.media;
+    restaurantUploads.value =
+        Get.find<HomeController>().restaurantDetails.value.media;
   }
 
   bool isImage(String path) {
@@ -36,21 +37,22 @@ class AllPhotosAndVideosController extends GetxController {
     return mimeType!.startsWith('image/');
   }
 
-  void confirmDeleteImage(int index){
+  void confirmDeleteImage(int index) {
     String id = Get.find<HomeController>().vendor;
     Get.dialog(
       ConfrimationDialog(
         onNoTap: Get.back,
         onYesTap: () async {
           try {
-            var response = await APIManager.deleteMedia(restaurantUploads[index], id);
+            var response =
+                await APIManager.deleteMedia(restaurantUploads[index], id);
             if (response["status"]) {
               getRestaurantUploads();
               restaurantUploads.remove(restaurantUploads[index]);
               DialogHelper.showSuccess("Deleted Successfully!");
             }
           } catch (e) {
-            Get.snackbar("Error","Something went wrong!");
+            Get.snackbar("Error", "Something went wrong!");
           }
         },
         subTitle: StringConstant.deleteMediaSub,
@@ -61,62 +63,60 @@ class AllPhotosAndVideosController extends GetxController {
 
   Future<void> pickMultipleFiles() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultipleMedia();
+    final List<XFile> pickedFiles = await picker.pickMultipleMedia();
 
-    if (pickedFiles != null) {
-      for(XFile file in pickedFiles){
-        selectedFiles.add(file.path);
-      }
+    for (XFile file in pickedFiles) {
+      selectedFiles.add(file.path);
     }
   }
 
-  Future<void> uploadAllImagesAndVideos() async{
-    if(selectedFiles.isNotEmpty){
-      for(int index = 0; index < selectedFiles.length; index++){
-        var response = await APIManager.uploadFile(filePath: selectedFiles[index]);
-        if(!response.data['status']){
+  Future<void> uploadAllImagesAndVideos() async {
+    if (selectedFiles.isNotEmpty) {
+      for (int index = 0; index < selectedFiles.length; index++) {
+        var response =
+            await APIManager.uploadFile(filePath: selectedFiles[index]);
+        if (!response.data['status']) {
           Get.snackbar("Error", StringConstant.imageUploadError);
-        } else if(response.data['status']){
+        } else if (response.data['status']) {
           uploadedFilesUrl.add(response.data['data']);
         }
       }
       saveAllImagesAndVideos();
-    } else if(selectedFiles.isEmpty){
+    } else if (selectedFiles.isEmpty) {
       Get.snackbar("Error", StringConstant.noFilesSelected);
     }
   }
 
-  Future<void> saveAllImagesAndVideos() async{
-    RestaurantDetails details = Get.find<HomeController>().restaurantDetails.value;
-    if(uploadedFilesUrl.isNotEmpty){
+  Future<void> saveAllImagesAndVideos() async {
+    RestaurantDetails details =
+        Get.find<HomeController>().restaurantDetails.value;
+    if (uploadedFilesUrl.isNotEmpty) {
       var response = await APIManager.updateVendor(
           restaurantDetails: RestaurantDetails(
-            restaurantName: details.restaurantName,
-            restaurantLogo: details.restaurantLogo,
-            restaurantBanner: details.restaurantBanner,
-            location: details.location,
-            avgPrice: details.avgPrice,
-            description: details.description,
-            features: details.features,
-            timing: details.timing,
-            lat: details.lat,
-            lon: details.lon,
-            stripeCardId: details.stripeCardId ?? "",
-            stripeCustomerId: details.stripeCustomerId ?? "",
-            media: List.from(uploadedFilesUrl)..addAll(details.media),
-            cuisine: details.cuisine
-          )
-      );
-      if(response.data["status"]){
+              restaurantName: details.restaurantName,
+              restaurantLogo: details.restaurantLogo,
+              restaurantBanner: details.restaurantBanner,
+              location: details.location,
+              avgPrice: details.avgPrice,
+              description: details.description,
+              features: details.features,
+              timing: details.timing,
+              lat: details.lat,
+              lon: details.lon,
+              stripeCardId: details.stripeCardId ?? "",
+              stripeCustomerId: details.stripeCustomerId ?? "",
+              media: List.from(uploadedFilesUrl)..addAll(details.media),
+              cuisine: details.cuisine));
+      if (response.data["status"]) {
         Get.back();
-        Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.imagesAndVideosSavedSuccessfully));
+        Get.bottomSheet(const AddedSuccessfullBottomSheet(
+            subTitle: StringConstant.imagesAndVideosSavedSuccessfully));
         selectedFiles.clear();
         Get.find<HomeController>().getRestaurantDetails();
-      }
-      else if(!response.data["status"]){
+      } else if (!response.data["status"]) {
         Get.snackbar("Error", StringConstant.anErrorOccurred);
       }
-    } else{
+    } else {
       Get.snackbar("Error", StringConstant.uploadAllImagesError);
     }
   }

@@ -60,9 +60,9 @@ class DashboardDataCouponCounts {
     if (graphData != null) {
       final v = graphData;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['graphData'] = arr0;
     }
     return data;
@@ -128,9 +128,9 @@ class DashboardDataRewardsCount {
     if (graphData != null) {
       final v = graphData;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['graphData'] = arr0;
     }
     return data;
@@ -196,9 +196,9 @@ class DashboardDataRedemptionsCount {
     if (graphData != null) {
       final v = graphData;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['graphData'] = arr0;
     }
     return data;
@@ -284,10 +284,18 @@ class DashboardData {
     this.couponCounts,
   });
   DashboardData.fromJson(Map<String, dynamic> json) {
-    cards = (json['cards'] != null) ? DashboardDataCards.fromJson(json['cards']) : null;
-    redemptionsCount = (json['redemptionsCount'] != null) ? DashboardDataRedemptionsCount.fromJson(json['redemptionsCount']) : null;
-    rewardsCount = (json['rewardsCount'] != null) ? DashboardDataRewardsCount.fromJson(json['rewardsCount']) : null;
-    couponCounts = (json['couponCounts'] != null) ? DashboardDataCouponCounts.fromJson(json['couponCounts']) : null;
+    cards = (json['cards'] != null)
+        ? DashboardDataCards.fromJson(json['cards'])
+        : null;
+    redemptionsCount = (json['redemptionsCount'] != null)
+        ? DashboardDataRedemptionsCount.fromJson(json['redemptionsCount'])
+        : null;
+    rewardsCount = (json['rewardsCount'] != null)
+        ? DashboardDataRewardsCount.fromJson(json['rewardsCount'])
+        : null;
+    couponCounts = (json['couponCounts'] != null)
+        ? DashboardDataCouponCounts.fromJson(json['couponCounts'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

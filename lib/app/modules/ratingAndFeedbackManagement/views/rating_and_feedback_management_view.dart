@@ -14,7 +14,7 @@ import '../controllers/rating_and_feedback_management_controller.dart';
 
 class RatingAndFeedbackManagementView
     extends GetView<RatingAndFeedbackManagementController> {
-  const RatingAndFeedbackManagementView({Key? key}) : super(key: key);
+  const RatingAndFeedbackManagementView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class RatingAndFeedbackManagementView
           title: StringConstant.ratingAndFeedbackManagement,
         ),
         body: Obx(() {
-          if(controller.ratings.isNotEmpty){
+          if (controller.ratings.isNotEmpty) {
             return SingleChildScrollView(
               padding: EdgeInsets.all(16.kw),
               child: Column(
@@ -31,8 +31,8 @@ class RatingAndFeedbackManagementView
                   Container(
                     height: 120.kh,
                     width: 100.w,
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 10.kw, vertical: 16.kh),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.kw, vertical: 16.kh),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8.kw),
@@ -153,17 +153,19 @@ class RatingAndFeedbackManagementView
                                 child: Row(
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          controller.ratings[index].user!.name ??
+                                          controller
+                                                  .ratings[index].user!.name ??
                                               "",
                                           style: TextStyleUtil.manrope14w600(),
                                         ),
                                         2.kheightBox,
                                         Text(
-                                          controller.ratings[index].review! ?? "",
+                                          controller.ratings[index].review! ??
+                                              "",
                                           style: TextStyleUtil.manrope14w400(),
                                         ),
                                       ],
@@ -173,19 +175,20 @@ class RatingAndFeedbackManagementView
                                       padding: EdgeInsets.only(top: 4.kh),
                                       child: PopupMenuButton<int>(
                                         color: Colors.white,
-                                        itemBuilder: (context) =>
-                                        [
+                                        itemBuilder: (context) => [
                                           PopupMenuItem<int>(
                                               onTap: () {
-                                                controller.showRatingDeleteDialog(
-                                                    controller.ratings[index]
-                                                        .Id!);
+                                                controller
+                                                    .showRatingDeleteDialog(
+                                                        controller
+                                                            .ratings[index]
+                                                            .Id!);
                                               },
                                               value: 1,
                                               child: Text(
                                                 StringConstant.deleteReview,
-                                                style: TextStyleUtil
-                                                    .manrope14w400(
+                                                style:
+                                                    TextStyleUtil.manrope14w400(
                                                   color: context.primary01,
                                                 ),
                                               )),
@@ -199,21 +202,20 @@ class RatingAndFeedbackManagementView
                             separatorBuilder: (ctx, index) {
                               return 12.kheightBox;
                             },
-                            itemCount: controller.ratings.length
-                        ),
+                            itemCount: controller.ratings.length),
                       ],
                     ),
                   )
                 ],
               ),
             );
-          } else if(controller.ratings.isEmpty){
+          } else if (controller.ratings.isEmpty) {
             return Center(
               child: EmptyWidget(
                 title: StringConstant.noRatingsFound,
               ),
             );
-          } else{
+          } else {
             return const Center(child: CircularProgressIndicator());
           }
         }));

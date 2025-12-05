@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class AddItemDetailsController extends GetxController {
   //TODO: Implement AddItemDetailsController
 
-  validateItemName(String input) {
+  String? validateItemName(String input) {
     if (input.contains('.')) {
       return 'Item name should not contain a period (.)';
     }

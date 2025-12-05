@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import '../../../constants/string_constant.dart';
-import '../../../services/dialog_helper.dart';
 
 class QrScanController extends GetxController {
   //TODO: Implement QrScanController

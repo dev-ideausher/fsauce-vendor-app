@@ -131,10 +131,9 @@ class _QrScanViewState extends State<QrScanView> {
       try {
         Map<String, dynamic> loyaltyCardData = jsonStringToMap(data);
         Map<String, dynamic> cardData = {
-          "user": loyaltyCardData['user'],
-          //6694b2a1f3acdcf9ad0955a2
-          "LoyaltyCard": loyaltyCardData['LoyaltyCard'],
-          //669df96980cfd4f7d036b286
+          "type":"loyaltycard",
+          "code":loyaltyCardData['LoyaltyCard'],
+          "isGift":true
         };
         var response = await APIManager.scanLoyaltyCard(data: cardData);
         if (response.data['status']) {

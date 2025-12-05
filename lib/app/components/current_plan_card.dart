@@ -15,7 +15,12 @@ class CurrentPlanCard extends StatelessWidget {
   num price;
 
   CurrentPlanCard(
-      {required this.title, required this.validTill, required this.price, required this.active, required this.billingFrequency, super.key});
+      {required this.title,
+      required this.validTill,
+      required this.price,
+      required this.active,
+      required this.billingFrequency,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,75 +38,82 @@ class CurrentPlanCard extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(title, style: TextStyleUtil.manrope18w600()),
-              Expanded(child: Container(),),
+              Expanded(
+                child: Container(),
+              ),
               Container(
                   height: 40.kh,
                   width: 81.kw,
-                  padding: EdgeInsets.symmetric(
-                      vertical: 8.kh, horizontal: 16.kw),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
                   decoration: BoxDecoration(
                     color: active ? context.green : context.primary01,
                     borderRadius: BorderRadius.circular(8.kw),
                   ),
-                  child: Center(child: Text(
-                    active ? StringConstant.active : StringConstant.inactive,
-                    style: TextStyleUtil.manrope16w500(color: Colors.white),),)
-              )
+                  child: Center(
+                    child: Text(
+                      active ? StringConstant.active : StringConstant.inactive,
+                      style: TextStyleUtil.manrope16w500(color: Colors.white),
+                    ),
+                  ))
             ],
           ),
           12.kheightBox,
           Row(
             children: <Widget>[
-              Text("\$${price}",
-                style: TextStyleUtil.manrope20w600(color: context.primary01),),
-              Text(" /${billingFrequency}",
+              Text(
+                "\$$price",
+                style: TextStyleUtil.manrope20w600(color: context.primary01),
+              ),
+              Text(" /$billingFrequency",
                   style: TextStyleUtil.manrope20w600(color: context.black03)),
             ],
           ),
           8.kheightBox,
-          Text("Valid till ${validTill}",
+          Text("Valid till $validTill",
               style: TextStyleUtil.manrope16w500(color: context.black03)),
           20.kheightBox,
           Obx(() {
-            if(controller.isCancelled.value){
-              return Row(
-                children: [
-                  Expanded(child: Container()),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                        height: 40.kh, width: 144.kw,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: context.primary01),
-                            borderRadius: BorderRadius.circular(80.kw)
-                        ),
-                        child: Center(child: Text(StringConstant.cancelled,
-                          style: TextStyleUtil.manrope14w500(color: context
-                              .primary01),))
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  InkWell(
+            if (controller.isCancelled.value) {
+              return Row(children: [
+                Expanded(child: Container()),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                      height: 40.kh,
+                      width: 144.kw,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: context.primary01),
+                          borderRadius: BorderRadius.circular(80.kw)),
+                      child: Center(
+                          child: Text(
+                        StringConstant.cancelled,
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
+                      ))),
+                ),
+                Expanded(child: Container()),
+                InkWell(
                   onTap: () {
                     controller.showList.value = true;
                   },
                   child: Container(
-                      height: 40.kh, width: 144.kw,
+                      height: 40.kh,
+                      width: 144.kw,
                       decoration: BoxDecoration(
                           color: context.primary01,
                           border: Border.all(color: context.primary01),
-                          borderRadius: BorderRadius.circular(80.kw)
-                      ),
-                      child: Center(child: Text(StringConstant.upgrade,
-                        style: TextStyleUtil.manrope14w500(color: Colors
-                            .white),))
-                  ),
+                          borderRadius: BorderRadius.circular(80.kw)),
+                      child: Center(
+                          child: Text(
+                        StringConstant.upgrade,
+                        style: TextStyleUtil.manrope14w500(color: Colors.white),
+                      ))),
                 ),
-                  Expanded(child: Container()),
-                ]
-              );
-            } else{
+                Expanded(child: Container()),
+              ]);
+            } else {
               return Row(
                 children: <Widget>[
                   Expanded(child: Container()),
@@ -110,16 +122,18 @@ class CurrentPlanCard extends StatelessWidget {
                       controller.confirmCancelSubscription();
                     },
                     child: Container(
-                        height: 40.kh, width: 144.kw,
+                        height: 40.kh,
+                        width: 144.kw,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: context.primary01),
-                            borderRadius: BorderRadius.circular(80.kw)
-                        ),
-                        child: Center(child: Text(StringConstant.cancel,
-                          style: TextStyleUtil.manrope14w500(color: context
-                              .primary01),))
-                    ),
+                            borderRadius: BorderRadius.circular(80.kw)),
+                        child: Center(
+                            child: Text(
+                          StringConstant.cancel,
+                          style: TextStyleUtil.manrope14w500(
+                              color: context.primary01),
+                        ))),
                   ),
                   Expanded(child: Container()),
                   InkWell(
@@ -127,16 +141,18 @@ class CurrentPlanCard extends StatelessWidget {
                       controller.showList.value = true;
                     },
                     child: Container(
-                        height: 40.kh, width: 144.kw,
+                        height: 40.kh,
+                        width: 144.kw,
                         decoration: BoxDecoration(
                             color: context.primary01,
                             border: Border.all(color: context.primary01),
-                            borderRadius: BorderRadius.circular(80.kw)
-                        ),
-                        child: Center(child: Text(StringConstant.upgrade,
-                          style: TextStyleUtil.manrope14w500(color: Colors
-                              .white),))
-                    ),
+                            borderRadius: BorderRadius.circular(80.kw)),
+                        child: Center(
+                            child: Text(
+                          StringConstant.upgrade,
+                          style:
+                              TextStyleUtil.manrope14w500(color: Colors.white),
+                        ))),
                   ),
                   Expanded(child: Container()),
                 ],

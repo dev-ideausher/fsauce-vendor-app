@@ -86,6 +86,7 @@ class CreatePushNotificationView
                     },
                   ),
                 ),
+                50.kheightBox,
               ],
             ),
           ),

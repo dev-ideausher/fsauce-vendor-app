@@ -11,7 +11,7 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
 class PurchasePlanView extends GetView<SubscriptionController> {
-  PurchasePlanView({super.key});
+  const PurchasePlanView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,10 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                           Expanded(
                             child: TextFormField(
                               controller: controller.promoCodeController,
+                              textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  isDense: true,
                                   border: InputBorder.none,
                                   hintText: StringConstant.addPromoCode,
                                   hintStyle: TextStyleUtil.manrope14w500()),

@@ -10,8 +10,9 @@ import '../../../constants/string_constant.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/login_email_verification_controller.dart';
 
-class LoginEmailVerificationView extends GetView<LoginEmailVerificationController> {
-  const LoginEmailVerificationView({Key? key}) : super(key: key);
+class LoginEmailVerificationView
+    extends GetView<LoginEmailVerificationController> {
+  const LoginEmailVerificationView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

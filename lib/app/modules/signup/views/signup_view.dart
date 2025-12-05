@@ -248,7 +248,7 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.termsCons2,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(isTerm: true);
+                            controller.goToTermsAndConditions(type: StringConstant.termsCons2);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,
@@ -264,7 +264,7 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.privacyPolicy,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(isTerm: false);
+                            controller.goToTermsAndConditions(type: StringConstant.privacyPolicy);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,
@@ -280,7 +280,7 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.contentPolicy,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(isTerm: false);
+                            controller.goToTermsAndConditions(type:  StringConstant.contentPolicy);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,

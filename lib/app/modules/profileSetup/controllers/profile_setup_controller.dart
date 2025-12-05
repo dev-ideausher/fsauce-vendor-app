@@ -216,7 +216,7 @@ class ProfileSetupController extends GetxController {
 
   Future<void> pickMultipleFiles() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedFiles = await picker.pickMultipleMedia();
+    final List<XFile> pickedFiles = await picker.pickMultipleMedia();
 
     if (pickedFiles != null) {
       selectedFiles.clear();
@@ -309,6 +309,16 @@ class ProfileSetupController extends GetxController {
         isCuisinePicked.value = false;
       }
       Get.snackbar("Error", "Please fill all the required fields to proceed");
+    }
+  }
+
+  void validateStepTwoFields() {
+    bool isTimingSelected =
+        timingControllers.values.any((element) => element.isActivated);
+    if (selectedFeatures.isNotEmpty && isTimingSelected) {
+      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
+    } else {
+      Get.snackbar("Error", StringConstant.plsSelectFeaturesAndTimings);
     }
   }
 }

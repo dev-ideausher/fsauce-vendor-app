@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
@@ -15,12 +12,10 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
 
-import '../../../routes/app_pages.dart';
-import '../../../services/dialog_helper.dart';
 import '../controllers/add_item_details_controller.dart';
 
 class AddItemDetailsView extends GetView<AddItemDetailsController> {
-  const AddItemDetailsView({Key? key}) : super(key: key);
+  const AddItemDetailsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +103,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                           child: DropdownButtonFormField<CategoryModel>(
                         style: TextStyleUtil.manrope16w400(),
                         isExpanded: true,
-                        value: Get.find<MenuPageController>()
+                        initialValue: Get.find<MenuPageController>()
                             .addItemSelectedCategory,
                         onChanged: (val) {
                           Get.find<MenuPageController>()

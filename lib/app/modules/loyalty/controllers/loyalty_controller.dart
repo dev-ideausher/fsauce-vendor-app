@@ -1,19 +1,13 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
-import 'package:fsauce_vendor_app/app/models/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/loyalty/views/loyalty_view.dart';
 import 'package:fsauce_vendor_app/app/modules/loyaltyCards/controllers/loyalty_cards_controller.dart';
-import 'package:fsauce_vendor_app/app/modules/loyaltyCards/views/active_loyalty_cards.dart';
-import 'package:fsauce_vendor_app/app/modules/loyaltyCards/views/inactive_loyalty_cards.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import '../../../components/confirmation_dialog.dart';
 
 class LoyaltyController extends GetxController {

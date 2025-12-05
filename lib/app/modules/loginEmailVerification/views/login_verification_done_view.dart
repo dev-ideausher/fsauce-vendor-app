@@ -47,7 +47,7 @@ class LoginEmailVerificationDone extends GetView<LoginEmailVerificationControlle
                   controller.gotoProfileSetupScreen();
                 },
               ),
-              20.kheightBox,
+              70.kheightBox,
             ],
           ),
         ),

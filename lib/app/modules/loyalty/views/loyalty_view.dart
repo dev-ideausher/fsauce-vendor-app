@@ -19,7 +19,7 @@ import '../../home/controllers/home_controller.dart';
 import '../controllers/loyalty_controller.dart';
 
 class LoyaltyView extends GetView<LoyaltyController> {
-  const LoyaltyView({Key? key}) : super(key: key);
+  const LoyaltyView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -346,10 +346,10 @@ class ColorPickerDialog extends StatelessWidget {
   final ValueChanged<Color> onColorChanged;
 
   const ColorPickerDialog({
-    Key? key,
+    super.key,
     required this.initialColor,
     required this.onColorChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

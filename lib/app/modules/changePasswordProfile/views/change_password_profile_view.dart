@@ -13,7 +13,7 @@ import '../controllers/change_password_profile_controller.dart';
 
 class ChangePasswordProfileView
     extends GetView<ChangePasswordProfileController> {
-  const ChangePasswordProfileView({Key? key}) : super(key: key);
+  const ChangePasswordProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {

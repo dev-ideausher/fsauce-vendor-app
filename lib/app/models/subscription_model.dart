@@ -13,7 +13,8 @@ class SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior {
   SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior({
     this.missingPaymentMethod,
   });
-  SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior.fromJson(
+      Map<String, dynamic> json) {
     missingPaymentMethod = json['missing_payment_method']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -37,8 +38,12 @@ class SubscriptionStripeSubscriptionObjTrialSettings {
   SubscriptionStripeSubscriptionObjTrialSettings({
     this.endBehavior,
   });
-  SubscriptionStripeSubscriptionObjTrialSettings.fromJson(Map<String, dynamic> json) {
-    endBehavior = (json['end_behavior'] != null) ? SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior.fromJson(json['end_behavior']) : null;
+  SubscriptionStripeSubscriptionObjTrialSettings.fromJson(
+      Map<String, dynamic> json) {
+    endBehavior = (json['end_behavior'] != null)
+        ? SubscriptionStripeSubscriptionObjTrialSettingsEndBehavior.fromJson(
+            json['end_behavior'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -179,7 +184,8 @@ class SubscriptionStripeSubscriptionObjPaymentSettings {
     this.paymentMethodTypes,
     this.saveDefaultPaymentMethod,
   });
-  SubscriptionStripeSubscriptionObjPaymentSettings.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjPaymentSettings.fromJson(
+      Map<String, dynamic> json) {
     paymentMethodOptions = json['payment_method_options']?.toString();
     paymentMethodTypes = json['payment_method_types']?.toString();
     saveDefaultPaymentMethod = json['save_default_payment_method']?.toString();
@@ -220,7 +226,8 @@ class SubscriptionStripeSubscriptionObjItemsDataPriceRecurring {
     this.trialPeriodDays,
     this.usageType,
   });
-  SubscriptionStripeSubscriptionObjItemsDataPriceRecurring.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjItemsDataPriceRecurring.fromJson(
+      Map<String, dynamic> json) {
     aggregateUsage = json['aggregate_usage']?.toString();
     interval = json['interval']?.toString();
     intervalCount = json['interval_count']?.toInt();
@@ -310,7 +317,8 @@ class SubscriptionStripeSubscriptionObjItemsDataPrice {
     this.unitAmount,
     this.unitAmountDecimal,
   });
-  SubscriptionStripeSubscriptionObjItemsDataPrice.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjItemsDataPrice.fromJson(
+      Map<String, dynamic> json) {
     id = json['id']?.toString();
     object = json['object']?.toString();
     active = json['active'];
@@ -322,7 +330,10 @@ class SubscriptionStripeSubscriptionObjItemsDataPrice {
     lookupKey = json['lookup_key']?.toString();
     nickname = json['nickname']?.toString();
     product = json['product']?.toString();
-    recurring = (json['recurring'] != null) ? SubscriptionStripeSubscriptionObjItemsDataPriceRecurring.fromJson(json['recurring']) : null;
+    recurring = (json['recurring'] != null)
+        ? SubscriptionStripeSubscriptionObjItemsDataPriceRecurring.fromJson(
+            json['recurring'])
+        : null;
     taxBehavior = json['tax_behavior']?.toString();
     tiersMode = json['tiers_mode']?.toString();
     transformQuantity = json['transform_quantity']?.toString();
@@ -422,7 +433,8 @@ class SubscriptionStripeSubscriptionObjItemsDataPlan {
     this.trialPeriodDays,
     this.usageType,
   });
-  SubscriptionStripeSubscriptionObjItemsDataPlan.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjItemsDataPlan.fromJson(
+      Map<String, dynamic> json) {
     id = json['id']?.toString();
     object = json['object']?.toString();
     active = json['active'];
@@ -557,16 +569,22 @@ class SubscriptionStripeSubscriptionObjItemsData {
     this.subscription,
     this.taxRates,
   });
-  SubscriptionStripeSubscriptionObjItemsData.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjItemsData.fromJson(
+      Map<String, dynamic> json) {
     id = json['id']?.toString();
     object = json['object']?.toString();
     billingThresholds = json['billing_thresholds']?.toString();
     created = json['created']?.toInt();
-    plan = (json['plan'] != null) ? SubscriptionStripeSubscriptionObjItemsDataPlan.fromJson(json['plan']) : null;
-    price = (json['price'] != null) ? SubscriptionStripeSubscriptionObjItemsDataPrice.fromJson(json['price']) : null;
+    plan = (json['plan'] != null)
+        ? SubscriptionStripeSubscriptionObjItemsDataPlan.fromJson(json['plan'])
+        : null;
+    price = (json['price'] != null)
+        ? SubscriptionStripeSubscriptionObjItemsDataPrice.fromJson(
+            json['price'])
+        : null;
     quantity = json['quantity']?.toInt();
     subscription = json['subscription']?.toString();
-    }
+  }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
@@ -575,10 +593,10 @@ class SubscriptionStripeSubscriptionObjItemsData {
     data['created'] = created;
 
     if (plan != null) {
-    data['plan'] = plan!.toJson();
+      data['plan'] = plan!.toJson();
     }
     if (price != null) {
-    data['price'] = price!.toJson();
+      data['price'] = price!.toJson();
     }
     data['quantity'] = quantity;
     data['subscription'] = subscription;
@@ -681,7 +699,7 @@ class SubscriptionStripeSubscriptionObjItems {
       v.forEach((v) {
         arr0.add(SubscriptionStripeSubscriptionObjItemsData.fromJson(v));
       });
-      this.data = arr0;
+      data = arr0;
     }
     hasMore = json['has_more'];
     totalCount = json['total_count']?.toInt();
@@ -693,9 +711,9 @@ class SubscriptionStripeSubscriptionObjItems {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['data'] = arr0;
     }
     data['has_more'] = hasMore;
@@ -717,7 +735,8 @@ class SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer {
   SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer({
     this.type,
   });
-  SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer.fromJson(
+      Map<String, dynamic> json) {
     type = json['type']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -744,9 +763,13 @@ class SubscriptionStripeSubscriptionObjInvoiceSettings {
     this.accountTaxIds,
     this.issuer,
   });
-  SubscriptionStripeSubscriptionObjInvoiceSettings.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjInvoiceSettings.fromJson(
+      Map<String, dynamic> json) {
     accountTaxIds = json['account_tax_ids']?.toString();
-    issuer = (json['issuer'] != null) ? SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer.fromJson(json['issuer']) : null;
+    issuer = (json['issuer'] != null)
+        ? SubscriptionStripeSubscriptionObjInvoiceSettingsIssuer.fromJson(
+            json['issuer'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -776,7 +799,8 @@ class SubscriptionStripeSubscriptionObjCancellationDetails {
     this.feedback,
     this.reason,
   });
-  SubscriptionStripeSubscriptionObjCancellationDetails.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjCancellationDetails.fromJson(
+      Map<String, dynamic> json) {
     comment = json['comment']?.toString();
     feedback = json['feedback']?.toString();
     reason = json['reason']?.toString();
@@ -805,7 +829,8 @@ class SubscriptionStripeSubscriptionObjAutomaticTax {
     this.enabled,
     this.liability,
   });
-  SubscriptionStripeSubscriptionObjAutomaticTax.fromJson(Map<String, dynamic> json) {
+  SubscriptionStripeSubscriptionObjAutomaticTax.fromJson(
+      Map<String, dynamic> json) {
     enabled = json['enabled'];
     liability = json['liability']?.toString();
   }
@@ -1085,14 +1110,20 @@ class SubscriptionStripeSubscriptionObj {
     object = json['object']?.toString();
     application = json['application']?.toString();
     applicationFeePercent = json['application_fee_percent']?.toString();
-    automaticTax = (json['automatic_tax'] != null) ? SubscriptionStripeSubscriptionObjAutomaticTax.fromJson(json['automatic_tax']) : null;
+    automaticTax = (json['automatic_tax'] != null)
+        ? SubscriptionStripeSubscriptionObjAutomaticTax.fromJson(
+            json['automatic_tax'])
+        : null;
     billingCycleAnchor = json['billing_cycle_anchor']?.toInt();
     billingCycleAnchorConfig = json['billing_cycle_anchor_config']?.toString();
     billingThresholds = json['billing_thresholds']?.toString();
     cancelAt = json['cancel_at']?.toString();
     cancelAtPeriodEnd = json['cancel_at_period_end'];
     canceledAt = json['canceled_at']?.toString();
-    cancellationDetails = (json['cancellation_details'] != null) ? SubscriptionStripeSubscriptionObjCancellationDetails.fromJson(json['cancellation_details']) : null;
+    cancellationDetails = (json['cancellation_details'] != null)
+        ? SubscriptionStripeSubscriptionObjCancellationDetails.fromJson(
+            json['cancellation_details'])
+        : null;
     collectionMethod = json['collection_method']?.toString();
     created = json['created']?.toInt();
     currency = json['currency']?.toString();
@@ -1105,18 +1136,30 @@ class SubscriptionStripeSubscriptionObj {
     description = json['description']?.toString();
     discount = json['discount']?.toString();
     endedAt = json['ended_at']?.toString();
-    invoiceSettings = (json['invoice_settings'] != null) ? SubscriptionStripeSubscriptionObjInvoiceSettings.fromJson(json['invoice_settings']) : null;
-    items = (json['items'] != null) ? SubscriptionStripeSubscriptionObjItems.fromJson(json['items']) : null;
+    invoiceSettings = (json['invoice_settings'] != null)
+        ? SubscriptionStripeSubscriptionObjInvoiceSettings.fromJson(
+            json['invoice_settings'])
+        : null;
+    items = (json['items'] != null)
+        ? SubscriptionStripeSubscriptionObjItems.fromJson(json['items'])
+        : null;
     latestInvoice = json['latest_invoice']?.toString();
     livemode = json['livemode'];
-    nextPendingInvoiceItemInvoice = json['next_pending_invoice_item_invoice']?.toString();
+    nextPendingInvoiceItemInvoice =
+        json['next_pending_invoice_item_invoice']?.toString();
     onBehalfOf = json['on_behalf_of']?.toString();
     pauseCollection = json['pause_collection']?.toString();
-    paymentSettings = (json['payment_settings'] != null) ? SubscriptionStripeSubscriptionObjPaymentSettings.fromJson(json['payment_settings']) : null;
-    pendingInvoiceItemInterval = json['pending_invoice_item_interval']?.toString();
+    paymentSettings = (json['payment_settings'] != null)
+        ? SubscriptionStripeSubscriptionObjPaymentSettings.fromJson(
+            json['payment_settings'])
+        : null;
+    pendingInvoiceItemInterval =
+        json['pending_invoice_item_interval']?.toString();
     pendingSetupIntent = json['pending_setup_intent']?.toString();
     pendingUpdate = json['pending_update']?.toString();
-    plan = (json['plan'] != null) ? SubscriptionStripeSubscriptionObjPlan.fromJson(json['plan']) : null;
+    plan = (json['plan'] != null)
+        ? SubscriptionStripeSubscriptionObjPlan.fromJson(json['plan'])
+        : null;
     quantity = json['quantity']?.toInt();
     schedule = json['schedule']?.toString();
     startDate = json['start_date']?.toInt();
@@ -1124,7 +1167,10 @@ class SubscriptionStripeSubscriptionObj {
     testClock = json['test_clock']?.toString();
     transferData = json['transfer_data']?.toString();
     trialEnd = json['trial_end']?.toString();
-    trialSettings = (json['trial_settings'] != null) ? SubscriptionStripeSubscriptionObjTrialSettings.fromJson(json['trial_settings']) : null;
+    trialSettings = (json['trial_settings'] != null)
+        ? SubscriptionStripeSubscriptionObjTrialSettings.fromJson(
+            json['trial_settings'])
+        : null;
     trialStart = json['trial_start']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -1158,10 +1204,10 @@ class SubscriptionStripeSubscriptionObj {
     data['discount'] = discount;
     data['ended_at'] = endedAt;
     if (invoiceSettings != null) {
-    data['invoice_settings'] = invoiceSettings!.toJson();
+      data['invoice_settings'] = invoiceSettings!.toJson();
     }
     if (items != null) {
-    data['items'] = items!.toJson();
+      data['items'] = items!.toJson();
     }
     data['latest_invoice'] = latestInvoice;
     data['livemode'] = livemode;
@@ -1169,13 +1215,13 @@ class SubscriptionStripeSubscriptionObj {
     data['on_behalf_of'] = onBehalfOf;
     data['pause_collection'] = pauseCollection;
     if (paymentSettings != null) {
-    data['payment_settings'] = paymentSettings!.toJson();
+      data['payment_settings'] = paymentSettings!.toJson();
     }
     data['pending_invoice_item_interval'] = pendingInvoiceItemInterval;
     data['pending_setup_intent'] = pendingSetupIntent;
     data['pending_update'] = pendingUpdate;
     if (plan != null) {
-    data['plan'] = plan!.toJson();
+      data['plan'] = plan!.toJson();
     }
     data['quantity'] = quantity;
     data['schedule'] = schedule;
@@ -1185,7 +1231,7 @@ class SubscriptionStripeSubscriptionObj {
     data['transfer_data'] = transferData;
     data['trial_end'] = trialEnd;
     if (trialSettings != null) {
-    data['trial_settings'] = trialSettings!.toJson();
+      data['trial_settings'] = trialSettings!.toJson();
     }
     data['trial_start'] = trialStart;
     return data;
@@ -1404,7 +1450,10 @@ class Subscription {
     plan = json['plan']?.toString();
     startDate = json['startDate']?.toString();
     endDate = json['endDate']?.toString();
-    stripeSubscriptionObj = (json['stripeSubscriptionObj'] != null) ? SubscriptionStripeSubscriptionObj.fromJson(json['stripeSubscriptionObj']) : null;
+    stripeSubscriptionObj = (json['stripeSubscriptionObj'] != null)
+        ? SubscriptionStripeSubscriptionObj.fromJson(
+            json['stripeSubscriptionObj'])
+        : null;
     isActive = json['isActive'];
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();

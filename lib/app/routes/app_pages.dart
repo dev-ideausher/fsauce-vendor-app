@@ -5,7 +5,6 @@ import '../modules/addItemDetails/views/add_item_details_view.dart';
 import '../modules/allPhotosAndVideos/bindings/all_photos_and_videos_binding.dart';
 import '../modules/allPhotosAndVideos/views/all_photos_and_videos_view.dart';
 import '../modules/changePassword/bindings/change_password_binding.dart';
-import '../modules/changePassword/views/change_password_view.dart';
 import '../modules/changePassword/views/verify_account_view.dart';
 import '../modules/changePasswordProfile/bindings/change_password_profile_binding.dart';
 import '../modules/changePasswordProfile/views/change_password_profile_view.dart';
@@ -50,7 +49,6 @@ import '../modules/profile/views/profile_view.dart';
 import '../modules/profileDetails/bindings/profile_details_binding.dart';
 import '../modules/profileDetails/views/profile_details_view.dart';
 import '../modules/profileSetup/bindings/profile_setup_binding.dart';
-import '../modules/profileSetup/views/get_location_view.dart';
 import '../modules/profileSetup/views/profile_setup_view.dart';
 import '../modules/pushNotification/bindings/push_notification_binding.dart';
 import '../modules/pushNotification/views/push_notification_view.dart';
@@ -100,7 +98,6 @@ class AppPages {
       page: () => RedeemCouponCode(),
       binding: QrScanBinding(),
     ),
-
     GetPage(
       name: _Paths.ONBOARDING,
       page: () => const OnboardingView(),

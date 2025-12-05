@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
-import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
@@ -20,7 +18,7 @@ import '../../../models/cuisine_model.dart';
 import '../controllers/edit_resturant_details_controller.dart';
 
 class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
-  const EditResturantDetailsView({Key? key}) : super(key: key);
+  const EditResturantDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,19 +94,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   }),
                   6.kheightBox,
                   Obx(() {
-                    if (Get
-                        .find<HomeController>()
-                        .restaurantDetails
-                        .value
-                        .restaurantLogo
-                        .isNotEmpty &&
+                    if (Get.find<HomeController>()
+                            .restaurantDetails
+                            .value
+                            .restaurantLogo
+                            .isNotEmpty &&
                         controller.selectedLogoImage.isEmpty) {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
                           CommonImageView(
-                            url: Get
-                                .find<HomeController>()
+                            url: Get.find<HomeController>()
                                 .restaurantDetails
                                 .value
                                 .restaurantLogo,
@@ -123,8 +119,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     }
                   }),
                   Obx(() {
-                    if (Get
-                        .find<HomeController>()
+                    if (Get.find<HomeController>()
                         .restaurantDetails
                         .value
                         .restaurantLogo
@@ -212,19 +207,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   }),
                   6.kheightBox,
                   Obx(() {
-                    if (Get
-                        .find<HomeController>()
-                        .restaurantDetails
-                        .value
-                        .restaurantBanner
-                        .isNotEmpty &&
+                    if (Get.find<HomeController>()
+                            .restaurantDetails
+                            .value
+                            .restaurantBanner
+                            .isNotEmpty &&
                         controller.selectedBannerImage.isEmpty) {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
                           CommonImageView(
-                            url: Get
-                                .find<HomeController>()
+                            url: Get.find<HomeController>()
                                 .restaurantDetails
                                 .value
                                 .restaurantBanner,
@@ -239,8 +232,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     }
                   }),
                   Obx(() {
-                    if (Get
-                        .find<HomeController>()
+                    if (Get.find<HomeController>()
                         .restaurantDetails
                         .value
                         .restaurantBanner
@@ -367,13 +359,13 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       children: [
                         Expanded(child: Obx(() {
                           return DropdownButtonFormField<CuisineModel>(
-                            validator: (CuisineModel? model){
-                              if(model == null){
+                            validator: (CuisineModel? model) {
+                              if (model == null) {
                                 return "Not selected cuisine!";
                               }
                               return null;
                             },
-                            value: controller.initialCuisineModels.first,
+                            initialValue: controller.initialCuisineModels.first,
                             dropdownColor: Colors.white,
                             style: TextStyleUtil.manrope16w400(),
                             onChanged: (val) {
@@ -385,13 +377,12 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                             items: controller.cuisines
                                 .map<DropdownMenuItem<CuisineModel>>(
                                     (CuisineModel value) {
-                                  return DropdownMenuItem<CuisineModel>(
-                                    value: value,
-                                    child: Text(value.name!),
-                                  );
-                                }).toList(),
-                            icon: const Icon(
-                                Icons.keyboard_arrow_down_rounded),
+                              return DropdownMenuItem<CuisineModel>(
+                                value: value,
+                                child: Text(value.name!),
+                              );
+                            }).toList(),
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(0),
                               hintText: StringConstant.selectCuisine,
@@ -402,8 +393,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                               ),
                             ),
                           );
-                        })
-                        ),
+                        })),
                       ],
                     ),
                   ),

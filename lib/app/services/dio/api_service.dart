@@ -263,6 +263,10 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
         .get(Endpoints.getPrivacyPolicy);
   }
+  static Future<Response> getContentPolicy() async {
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+        .get(Endpoints.getContentPolicy);
+  }
 
   static Future<Response> getTermsAndConditions() async {
     return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
@@ -292,7 +296,7 @@ class APIManager {
 
   static Future<Response> redeemCouponCode({required String code}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.redeemCouponCode, data: {"code": code});
+        .post(Endpoints.redeemCouponCode, data: {"couponCode": code});
   }
 
   static Future<Response> getSubscriptionPlans() async {

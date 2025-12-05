@@ -6,15 +6,11 @@ import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.d
 import 'package:fsauce_vendor_app/app/modules/jobs/controllers/jobs_controller.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
-import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
-
 import '../../../components/confirmation_dialog.dart';
-import '../../../services/auth.dart';
 
 class JobEditOrAddController extends GetxController {
   @override
@@ -157,7 +153,7 @@ class JobEditOrAddController extends GetxController {
           onPrimary: Colors.white,
           secondary: context.primary01,
         ),
-        dialogBackgroundColor: Colors.white,
+        dialogTheme: DialogThemeData(backgroundColor: Colors.white),
       ),
       child: child!,
     );

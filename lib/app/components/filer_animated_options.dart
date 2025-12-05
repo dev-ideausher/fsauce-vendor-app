@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -16,7 +15,7 @@ class FilterAnimatedOption extends StatefulWidget {
 }
 
 class _FilterAnimatedOptionState extends State<FilterAnimatedOption> {
-  ExpansionTileController exController = ExpansionTileController();
+  ExpansibleController exController = ExpansibleController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _FilterAnimatedOptionState extends State<FilterAnimatedOption> {
           trailing: Transform.scale(
             scale: 0.8,
             child: Switch(
-              activeColor: context.primary01,
+              activeThumbColor: context.primary01,
               inactiveThumbColor: context.white,
               inactiveTrackColor: context.primary07,
               trackOutlineWidth: WidgetStatePropertyAll(0.kh),

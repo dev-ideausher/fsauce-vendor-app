@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -12,7 +14,7 @@ import '../../../services/text_style_util.dart';
 import '../controllers/qr_scan_controller.dart';
 
 class RedeemCouponCode extends GetView<QrScanController> {
-  RedeemCouponCode({super.key});
+  const RedeemCouponCode({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class RedeemCouponCode extends GetView<QrScanController> {
               FsvTextfield(
                 hintText: StringConstant.enterCouponCode,
                 controller: controller.couponCodeController,
+                maxLength: 20,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onchanged: (String? val) {
                   if (val == null || val.isEmpty) {
@@ -74,7 +77,7 @@ class RedeemCouponCode extends GetView<QrScanController> {
                         controller.redeemCode();
                       }
                     });
-              }).paddingOnly(bottom: 40.kh),
+              }).paddingOnly(bottom: Platform.isAndroid? 70.kh:40.kh),
             ],
           ),
         ),

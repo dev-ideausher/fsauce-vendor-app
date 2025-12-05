@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/models/push_notification_model.dart';
 import 'package:fsauce_vendor_app/app/modules/pushNotification/controllers/push_notification_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
@@ -54,7 +53,7 @@ class CreatePushNotificationController extends GetxController {
           onPrimary: Colors.white,
           secondary: context.primary01,
         ),
-        dialogBackgroundColor: Colors.white,
+        dialogTheme: DialogThemeData(backgroundColor: Colors.white),
       ),
       child: child!,
     );
@@ -74,11 +73,12 @@ class CreatePushNotificationController extends GetxController {
         return;
       } else {
         try {
-
-          var response =
-              await APIManager.addPushNotification(data: {"title":titleController.text.trim(),"sheduledDate":scheduledDateController.text.isEmpty
-                  ? null
-                  : selectedDate.value.toString()});
+          var response = await APIManager.addPushNotification(data: {
+            "title": titleController.text.trim(),
+            "sheduledDate": scheduledDateController.text.isEmpty
+                ? null
+                : selectedDate.value.toString()
+          });
           if (response.data['status']) {
             Get.back();
             DialogHelper.showSuccess(
@@ -109,7 +109,7 @@ class CreatePushNotificationController extends GetxController {
     }
   }
 
-  titleValidator(String? val) {
+  String? titleValidator(String? val) {
     if (val == null || val.isEmpty) {
       return StringConstant.notificationTitleEmpty;
     } else if (val.length > 25) {

@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 
 import '../controllers/qr_scan_controller.dart';
 
-class ScannerView extends GetView<QrScanController>{
-  ScannerView({super.key});
+class ScannerView extends GetView<QrScanController> {
+  const ScannerView({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(),
     );

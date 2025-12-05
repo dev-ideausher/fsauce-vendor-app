@@ -118,7 +118,7 @@ class SignupController extends GetxController {
   }
 
   void gotoVerificationScreen() {
-    Get.offAllNamed(Routes.VERIFICATION);
+    Get.toNamed(Routes.VERIFICATION,arguments: emailController.text.trim());
   }
 
   bool _isEmailValid(String email) {
@@ -131,9 +131,9 @@ class SignupController extends GetxController {
     return password.length >= 6;
   }
 
-  void goToTermsAndConditions({required bool isTerm}) {
+  void goToTermsAndConditions({required String type}) {
     Get.toNamed(Routes.TERM_AND_PRIVACY, arguments: {
-      'isTerm': isTerm,
+      'type': type,
     });
   }
 

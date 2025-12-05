@@ -14,9 +14,7 @@ class TermAndPrivacyView extends GetView<TermAndPrivacyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: controller.isTerm
-            ? StringConstant.termsAndConditions
-            : StringConstant.privacyPolicy,
+        title: controller.title,
       ),
       body: Obx(() {
         if (controller.isTermsLoading.value) {

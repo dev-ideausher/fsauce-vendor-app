@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_button_with_border.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/category_model.dart';
 import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_controller.dart';
@@ -9,7 +8,6 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class AddNewItem extends StatelessWidget {
   const AddNewItem({super.key});
@@ -71,7 +69,7 @@ class AddNewItem extends StatelessWidget {
                 Expanded(
                   child: DropdownButtonFormField<CategoryModel>(
                     style: TextStyleUtil.manrope16w400(),
-                    value:
+                    initialValue:
                         Get.find<MenuPageController>().addItemSelectedCategory,
                     dropdownColor: const Color(0xffFAFAFA),
                     onChanged: (val) {

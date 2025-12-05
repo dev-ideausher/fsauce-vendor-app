@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -12,10 +9,8 @@ import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import '../models/login_model.dart';
 import '../routes/app_pages.dart';
 import 'storage.dart';
-import 'dart:developer';
+import 'package:fsauce_vendor_app/app/components/confirmation_dialog.dart';
 import 'dialog_helper.dart';
-
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth extends GetxService {
   final auth = FirebaseAuthenticationService();
@@ -23,7 +18,7 @@ class Auth extends GetxService {
   AuthCredential? _pendingCredential;
   final _firebaseAuth = FirebaseAuth.instance;
 
-  google() async {
+  Future<void> google() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/google_sign_in
     // final _googleSignIn = GoogleSignIn();
     // final GoogleSignInAccount? googleSignInAccount =
@@ -62,7 +57,7 @@ class Auth extends GetxService {
     });
   }
 
-  apple() async {
+  Future<void> apple() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/sign_in_with_apple
     final result = await auth
         .signInWithApple(
@@ -76,7 +71,8 @@ class Auth extends GetxService {
     print('Apple : ${await result.user?.getIdToken()}');
   }
 
-  loginEmailPass({required String email, required String pass}) async {
+  Future<void> loginEmailPass(
+      {required String email, required String pass}) async {
     await auth.loginWithEmail(email: email, password: pass).then((value) async {
       try {
         if (value.hasError) {
@@ -104,7 +100,7 @@ class Auth extends GetxService {
         showMySnackbar(
             title: e.code.toLowerCase(),
             msg: getErrorMessageFromFirebaseException(e));
-      } on Exception catch (e) {
+      } on Exception {
         showMySnackbar(
             msg:
                 'We could not log into your account at this time. Please try again.');
@@ -125,14 +121,30 @@ class Auth extends GetxService {
   //   // print('EmailPass : ${await result.user?.getIdToken()}');
   // }
 
-  updatePassword({required String newPassword}) async {
+  Future<bool> updatePassword({required String newPassword}) async {
     bool status = false;
     final result = await auth.updatePassword(newPassword).then((value) async {
       await handleGetContact();
       status = true;
     }).catchError((e) {
       if (e is FirebaseAuthException) {
-        showMySnackbar(msg: "An error occurred");
+        if (e.code == 'requires-recent-login') {
+          Get.dialog(ConfrimationDialog(
+            title: "Security Check",
+            subTitle:
+                "This operation is sensitive. Please log out and log in again to update your password.",
+            yesButtonText: "Logout",
+            noButtonText: "Cancel",
+            onYesTap: () async {
+              Get.back();
+              await logOutUser();
+              Get.offAllNamed(Routes.LOGIN);
+            },
+            onNoTap: Get.back,
+          ));
+        } else {
+          showMySnackbar(msg: e.message ?? "An error occurred");
+        }
       }
     });
     return status;
@@ -178,7 +190,8 @@ class Auth extends GetxService {
   //     showMySnackbar(msg: 'We could not log into your account at this time. Please try again.');
   //   }
   // }
-  createEmailPass({required String email, required String pass}) async {
+  Future<void> createEmailPass(
+      {required String email, required String pass}) async {
     await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: pass)
         .then((value) async {
@@ -201,37 +214,35 @@ class Auth extends GetxService {
 
 //phone number with country code
 
-  mobileOtp({required String phoneno}) async {
+  Future<void> mobileOtp({required String phoneno}) async {
     await auth.requestVerificationCode(
       phoneNumber: phoneno,
       onCodeSent: (verificationId) => print(verificationId),
     );
   }
 
-  sendVerificationMail() async {
+  Future<void> sendVerificationMail() async {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
   Future<bool> sendResetPasswordMail({required String email}) async {
     final result = await auth.sendResetPasswordLink(email);
-    if (result is bool) {
-      if (result) {
-        return true;
-      } else {
-        return false;
-      }
+    if (result) {
+      return true;
+    } else {
+      return false;
     }
     return false;
   }
 
-  verifyMobileOtp({required String otp}) async {
+  Future<void> verifyMobileOtp({required String otp}) async {
     final result = await auth.authenticateWithOtp(otp).then((value) async {
       await handleGetContact();
     });
     print('Mobile Otp : ${await result.user?.getIdToken()}');
   }
 
-  facebook() async {
+  Future<void> facebook() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/flutter_facebook_auth
     await signInWithFacebook().then((value) async {
       await handleGetContact();

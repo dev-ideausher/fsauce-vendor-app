@@ -76,9 +76,9 @@ class PlanModel {
     if (features != null) {
       final v = features;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['features'] = arr0;
     }
     data['stripeProdutId'] = stripeProdutId;

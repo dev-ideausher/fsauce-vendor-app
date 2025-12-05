@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
-import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/gradients.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../generated/assets.dart';
 
 class LoyaltyCard extends StatelessWidget {
-  const LoyaltyCard({super.key,
-    required this.brandName,
-    required this.offer,
-    required this.brandColor,
-    required this.onAddPressed,
-    required this.width,
-    required this.noOfStamps,
-    required this.brandLogo});
+  const LoyaltyCard(
+      {super.key,
+      required this.brandName,
+      required this.offer,
+      required this.brandColor,
+      required this.onAddPressed,
+      required this.width,
+      required this.noOfStamps,
+      required this.brandLogo});
 
   final String brandName;
   final String offer;
@@ -98,7 +96,7 @@ class LoyaltyCard extends StatelessWidget {
                       child: ListView.separated(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (ctx, index){
+                          itemBuilder: (ctx, index) {
                             return Container(
                               height: 48,
                               width: 48,
@@ -114,7 +112,7 @@ class LoyaltyCard extends StatelessWidget {
                               ),
                             );
                           },
-                          separatorBuilder: (ctx, index){
+                          separatorBuilder: (ctx, index) {
                             return 4.kwidthBox;
                           },
                           itemCount: noOfStamps),

@@ -1,4 +1,3 @@
-import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
@@ -49,7 +48,7 @@ class VerificationDoneScreen extends GetView<VerificationController> {
                   Get.offAllNamed(Routes.PROFILE_SETUP);
                 },
               ),
-              20.kheightBox,
+              70.kheightBox,
             ],
           ),
         ),

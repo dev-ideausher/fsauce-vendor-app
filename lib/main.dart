@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fsauce_vendor_app/app/modules/profileSetup/bindings/profile_setup_binding.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/binding/splash_binding.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/firebase_options.dart';
-import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,7 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey =
       "pk_test_51IDxNdKlUbZkAAt635jlWKPvpeBvKQmkiqQr91KFHKzlEp5DzO8T9DEAOTpdfCUPihlTBZ7kB2gb4yFAYwQOevLk00ekRk7tuH";
-  print('publishable key -----------------> ${Stripe.publishableKey}');
+
   Stripe.merchantIdentifier = "foodsauciety@2024";
   // ✅ Let stacked_firebase_auth handle initialization internally
   try {
