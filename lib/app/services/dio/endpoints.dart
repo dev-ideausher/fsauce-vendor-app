@@ -75,7 +75,7 @@ class Endpoints {
   static const String editCoupon = "vendor/coupon/editCoupon";
   static const String deleteCoupon = "/vendor/coupon/deleteCoupon?id=";
   static const String redeemCouponCode =
-      "v1/vendor/coupon/redeemCoupon";
+      "vendor/coupon/redeemCoupon";
 
   // receiveTimeout
   static const int receiveTimeout = 15000;

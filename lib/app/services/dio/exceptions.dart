@@ -43,9 +43,17 @@ class DioExceptions implements Exception {
       case 401:
         return 'Unauthorized';
       case 403:
-        return 'Forbidden';
+        try {
+          return error['message'];
+        } catch (e) {
+          return 'Internal server error';
+        }
       case 404:
-        return "Not Found";
+        try {
+          return error['message'];
+        } catch (e) {
+          return 'Internal server error';
+        }
       case 500:
         try {
           return error['message'];

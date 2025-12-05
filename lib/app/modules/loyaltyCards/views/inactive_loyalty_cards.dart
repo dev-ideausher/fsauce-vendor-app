@@ -37,7 +37,7 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                         onAddPressed: () {
                           //ToDo: When the loyalty card is pressed.
                         },
-                        noOfStamps: controller.activeLoyaltyCards[index].noOfStamps,
+                        noOfStamps: controller.inActiveLoyaltyCards[index].noOfStamps??0,
                         width: 100.w,
                         brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
                     );
