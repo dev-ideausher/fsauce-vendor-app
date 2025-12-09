@@ -8,6 +8,11 @@
         android:label="fsauce_vendor_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Map -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBzroKGz8AMp5KkPNFj_OBhw-Cbo5wObDE" />
+        <!-- Map -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

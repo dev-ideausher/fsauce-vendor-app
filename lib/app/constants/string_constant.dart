@@ -600,4 +600,6 @@ class StringConstant {
   static String sureWantToLogout = "Are you sure you want to logout?";
 
   static var signUp = "Signup";
+
+  static String dropAPinToLinkYourAddress=  "Drop a pin to link your address" ;
 }

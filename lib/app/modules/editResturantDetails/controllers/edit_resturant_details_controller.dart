@@ -1,15 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:map_picker/map_picker.dart';
 
 import '../../../models/cuisine_model.dart';
 
 class EditResturantDetailsController extends GetxController {
+  final RxDouble resturLat = 0.0.obs;
+  final RxDouble resturLong = 0.0.obs;
+  GoogleMapController? mapController;
+  final mapCompleter = Completer<GoogleMapController>();
+  MapPickerController mapPickerController = MapPickerController();
+  CameraPosition cameraPosition =
+  const CameraPosition(target: LatLng(25.9397, 81.70757), zoom: 14.4746);
   //TODO: Implement EditResturantDetailsController
 
   TextEditingController restaurantNameController = TextEditingController();
@@ -184,6 +196,52 @@ class EditResturantDetailsController extends GetxController {
     }
   }
 
+
+  Future<void> updateDragLocation({String address = ""}) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        cameraPosition.target.latitude, cameraPosition.target.longitude);
+    resturLat.value = cameraPosition.target.latitude;
+    resturLong.value = cameraPosition.target.longitude;
+
+    // Build a fuller address from available placemark components when no explicit address is supplied
+    if (address.isEmpty) {
+      try {
+        final p = placemarks.first;
+        final List<String> parts = [
+          (p.name ?? "").trim(),
+          (p.street ?? "").trim(),
+          (p.subLocality ?? "").trim(),
+          (p.locality ?? "").trim(),
+          (p.administrativeArea ?? "").trim(),
+          (p.postalCode ?? "").trim(),
+          (p.country ?? "").trim(),
+        ].where((element) => element.isNotEmpty).toList();
+        address = parts.join(', ');
+      } catch (_) {
+        // Fallback to previous minimal format if placemark parts are not available
+        address =
+        '${placemarks.first.subLocality}, ${placemarks.first.administrativeArea}';
+      }
+    }
+
+    addressController.text = updateString(address);
+  }
+  String updateString(String input) {
+    if (input.startsWith(',')) {
+      return input.replaceFirst(',', '');
+    }
+    return input;
+  }
+  void moveToNewLatLng(double lat, double lng, {String address = ""}) {
+    final newLatLng = LatLng(lat, lng);
+    cameraPosition =
+        CameraPosition(target: newLatLng, zoom: cameraPosition.zoom);
+
+    mapController?.animateCamera(CameraUpdate.newLatLng(newLatLng));
+
+    // Optionally, update your stored drag location
+    updateDragLocation(address: address);
+  }
   @override
   void onClose() {
     super.onClose();

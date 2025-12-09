@@ -9,11 +9,11 @@ class DioClient {
 
   bool isOverlayLoader;
   bool showSnakbar;
-
+  final String? baseUrl;
   DioClient(this._dio,
-      {this.isOverlayLoader = false, this.showSnakbar = false}) {
+      {this.isOverlayLoader = false, this.showSnakbar = false, this.baseUrl}) {
     _dio
-      ..options.baseUrl = Endpoints.baseUrl
+      ..options.baseUrl = baseUrl ?? Endpoints.baseUrl
       ..options.connectTimeout =
           const Duration(milliseconds: Endpoints.connectionTimeout)
       ..options.receiveTimeout =

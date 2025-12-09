@@ -263,6 +263,7 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
         .get(Endpoints.getPrivacyPolicy);
   }
+
   static Future<Response> getContentPolicy() async {
     return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
         .get(Endpoints.getContentPolicy);
@@ -341,5 +342,39 @@ class APIManager {
   static Future<Map<String, dynamic>> deleteAccount() async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .delete(Endpoints.deleteVendor);
+  }
+
+  static Future<Response> getLocation(String placeApiKey) async =>
+      await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(placeApiKey);
+  static Future<Response> getLocationLatLong(String placeApiKey) async =>
+      await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(placeApiKey);
+
+  static Future<Response> googlePlacesAutocomplete(
+      String query, String apiKey, String sessionToken) async {
+    return await DioClient(Dio(), baseUrl: Endpoints.placesNewApiUrl).post(
+      "places:autocomplete",
+      data: {
+        "input": query,
+        "sessionToken": sessionToken,
+      },
+      options: Options(
+        headers: {
+          "X-Goog-Api-Key": apiKey,
+        },
+      ),
+    );
+  }
+
+  static Future<Response> googlePlaceDetails(
+      String placeId, String apiKey) async {
+    return await DioClient(Dio(), baseUrl: Endpoints.placesNewApiUrl).get(
+      "places/$placeId",
+      options: Options(
+        headers: {
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask": "location",
+        },
+      ),
+    );
   }
 }

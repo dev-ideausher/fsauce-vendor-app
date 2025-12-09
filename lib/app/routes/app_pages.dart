@@ -26,6 +26,8 @@ import '../modules/jobEditOrAdd/bindings/job_edit_or_add_binding.dart';
 import '../modules/jobEditOrAdd/views/job_edit_or_add_view.dart';
 import '../modules/jobs/bindings/jobs_binding.dart';
 import '../modules/jobs/views/jobs_view.dart';
+import '../modules/location_search/bindings/location_search_binding.dart';
+import '../modules/location_search/views/location_search_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/loginEmailVerification/bindings/login_email_verification_binding.dart';
@@ -299,6 +301,11 @@ class AppPages {
       name: _Paths.TERM_AND_PRIVACY,
       page: () => const TermAndPrivacyView(),
       binding: TermAndPrivacyBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOCATION_SEARCH,
+      page: () => const LocationSearchView(),
+      binding: LocationSearchBinding(),
     ),
   ];
 }

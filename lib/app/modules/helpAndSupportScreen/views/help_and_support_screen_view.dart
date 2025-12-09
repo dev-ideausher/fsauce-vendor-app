@@ -28,7 +28,7 @@ class HelpAndSupportScreenView extends GetView<HelpAndSupportScreenController> {
                 decoration: BoxDecoration(
                     border: Border.all(color: context.black07),
                     borderRadius: BorderRadius.circular(8.kw)),
-                child: const CustomTextField(
+                child:  CustomTextField(
                     prefixIcon: Icons.search_rounded,
                     fillColor: Colors.white,
                     hintText: StringConstant.howCanWeHelpYou),

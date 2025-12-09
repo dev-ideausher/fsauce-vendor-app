@@ -12,9 +12,12 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_picker/map_picker.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
 import '../../../models/cuisine_model.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/edit_resturant_details_controller.dart';
 
 class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
@@ -287,17 +290,71 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     ],
                   ),
                   10.kheightBox,
-                  CustomTextField(
-                      validator: (String? val) {
-                        if (val == null || val.isEmpty) {
-                          return StringConstant.restaurantAddressCannotBeEmpty;
-                        }
-                        return null;
-                      },
-                      controller: controller.addressController,
-                      fillColor: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.black07),
-                      hintText: StringConstant.enterAddress),
+                  InkWell(
+                    onTap: () => Get.toNamed(Routes.LOCATION_SEARCH,
+                        arguments: "latLong")!
+                        .then((value) {
+                      if (value != null) {
+                        List<String> addressWithLatLong = value;
+                        final lat=double.tryParse(addressWithLatLong.first)??0.0;
+                        final long=double.tryParse(addressWithLatLong[1])??0.0;
+                        final address=addressWithLatLong[2]??"";
+
+                        controller.moveToNewLatLng(lat,long,address: address);
+
+                        //getEventList("city=" + currentAddress.value);
+                      }
+                    }),
+                    child: CustomTextField(
+                        enabled: false,
+                        validator: (String? val) {
+                          if (val == null || val.isEmpty) {
+                            return StringConstant.restaurantAddressCannotBeEmpty;
+                          }
+                          return null;
+                        },
+                        controller: controller.addressController,
+                        fillColor: context.loginSignupTextfieldColor,
+                        border: Border.all(color: context.black07),
+                        hintText: StringConstant.enterAddress),
+                  ),
+                  10.kheightBox,
+                  Text(StringConstant.dropAPinToLinkYourAddress,
+
+                      style: TextStyleUtil.manrope14w500()),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.kh),
+                    child: Container(
+                      color: Colors.white,
+                      height: 180.kh,
+                      width: 100.w,
+                      child: MapPicker(
+                        iconWidget: const Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 30,
+                        ),
+                        mapPickerController: controller.mapPickerController,
+                        child: GoogleMap(
+                          zoomControlsEnabled: false,
+                          initialCameraPosition: controller.cameraPosition,
+                          onMapCreated: (map) =>  controller.mapController=map ,
+                          onCameraIdle: () async {
+                            controller
+                                .mapPickerController.mapFinishedMoving!();
+
+                            controller.updateDragLocation();
+                          },
+                          onCameraMove: (cameraPosition1) {
+                            this.controller.cameraPosition =
+                                cameraPosition1;
+                          },
+                          mapType: MapType.normal,
+                          myLocationButtonEnabled: false,
+                        ),
+                      ),
+                    ),
+                  ),
                   20.kheightBox,
                   Row(
                     children: [

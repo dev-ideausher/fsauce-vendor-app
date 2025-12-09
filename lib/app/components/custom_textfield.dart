@@ -4,7 +4,7 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+   CustomTextField({
     super.key,
     this.prefixIcon,
     this.suffixIcon,
@@ -19,7 +19,10 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.maxLength,
     this.autovalidateMode,
+    this.onChanged,
+    this.enabled = true,
   });
+  bool enabled;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final Color fillColor;
@@ -33,7 +36,7 @@ class CustomTextField extends StatelessWidget {
   final bool readOnly;
   final int? maxLength;
   final AutovalidateMode? autovalidateMode;
-
+  final ValueChanged<String>? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,11 +61,13 @@ class CustomTextField extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextFormField(
+              enabled: enabled,
               maxLength: maxLength,
               buildCounter: (context, {required currentLength, required isFocused, required maxLength}) => SizedBox(),
               readOnly: readOnly,
               validator: validator,
               controller: controller,
+              onChanged:onChanged ,
               autovalidateMode: autovalidateMode,
               keyboardType: keyboardType,
               decoration: InputDecoration(

@@ -46,6 +46,7 @@ abstract class Routes {
   static const LOGIN_EMAIL_VERIFICATION = _Paths.LOGIN_EMAIL_VERIFICATION;
   static const CURRENT_SUBSCRIPTION_PLAN = _Paths.CURRENT_SUBSCRIPTION_PLAN;
   static const TERM_AND_PRIVACY = _Paths.TERM_AND_PRIVACY;
+  static const LOCATION_SEARCH = _Paths.LOCATION_SEARCH;
 }
 
 abstract class _Paths {
@@ -93,4 +94,5 @@ abstract class _Paths {
   static const LOGIN_EMAIL_VERIFICATION = '/login-email-verification';
   static const CURRENT_SUBSCRIPTION_PLAN = '/current-subscription-plan';
   static const TERM_AND_PRIVACY = '/term-and-privacy';
+  static const LOCATION_SEARCH = '/location-search';
 }
