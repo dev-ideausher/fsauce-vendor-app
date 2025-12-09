@@ -141,71 +141,7 @@ class PaymentMethodsView extends GetView<SubscriptionController> {
                   ),
                 ),
                 8.kheightBox,
-                /*  Visibility(
-                  visible: Platform.isIOS,
-                  child: Container(
-                    height: 60.kh,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.kh),
-                        color: Colors.white),
-                    child: Center(
-                      child: ListTile(
-                        leading: Container(
-                            height: 44.kh,
-                            width: 48.kh,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.kh),
-                              color: context.black07,
-                            ),
-                            child: Center(
-                                child: CommonImageView(
-                                    svgPath: Assets.svgsApplePayLogo))),
-                        title: Text(StringConstant.applePay,
-                            style: TextStyleUtil.manrope14w500()),
-                        onTap: () {
-                          //TODO: Implement apply pay.
-                        },
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 16.kh,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                8.kheightBox,
-                Container(
-                  height: 60.kh,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.kh),
-                      color: Colors.white),
-                  child: Center(
-                    child: ListTile(
-                      leading: Container(
-                          height: 44.kh,
-                          width: 48.kh,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.kh),
-                            color: context.black07,
-                          ),
-                          child: Center(
-                              child: CommonImageView(
-                            svgPath: Assets.svgsGooglePayLogo,
-                          ))),
-                      title: Text(StringConstant.googlePay,
-                          style: TextStyleUtil.manrope14w500()),
-                      onTap: () {
-                        //ToDo: Implement google pay.
-                      },
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16.kh,
-                      ),
-                    ),
-                  ),
-                ),*/
+
               ],
             )
           ],

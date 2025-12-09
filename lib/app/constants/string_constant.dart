@@ -601,5 +601,9 @@ class StringConstant {
 
   static var signUp = "Signup";
 
-  static String dropAPinToLinkYourAddress=  "Drop a pin to link your address" ;
+  static String dropAPinToLinkYourAddress = "Drop a pin to link your address";
+  static const String acceptTerms = "Please accept Terms and Conditions";
+  static const String camera = "Camera";
+  static const String gallery = "Gallery";
+  static const String add = "Add";
 }

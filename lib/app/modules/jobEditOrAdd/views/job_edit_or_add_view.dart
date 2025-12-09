@@ -83,6 +83,11 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                       ],
                       isSuffixNeeded: false,
+                      onChanged: (val) {
+                        if (controller.maxSalaryController.text.isEmpty) {
+                          controller.maxSalaryController.text = val ?? "";
+                        }
+                      },
                     )),
                 Container(
                   height: 2.kh,
@@ -100,6 +105,11 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
                             r'[0-9.]')), // Allow digits and decimal point
                       ],
                       isSuffixNeeded: false,
+                      onChanged: (val) {
+                        if (controller.minSalaryController.text.isEmpty) {
+                          controller.minSalaryController.text = val ?? "";
+                        }
+                      },
                     )),
               ],
             ),

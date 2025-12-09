@@ -45,7 +45,7 @@ class RedeemCouponCode extends GetView<QrScanController> {
                 controller: controller.couponCodeController,
                 maxLength: 20,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                onchanged: (String? val) {
+                onChanged: (String? val) {
                   if (val == null || val.isEmpty) {
                     controller.canRedeem.value = false;
                   } else if (val.isNotEmpty) {
@@ -77,7 +77,7 @@ class RedeemCouponCode extends GetView<QrScanController> {
                         controller.redeemCode();
                       }
                     });
-              }).paddingOnly(bottom: Platform.isAndroid? 70.kh:40.kh),
+              }).paddingOnly(bottom: Platform.isAndroid ? 70.kh : 40.kh),
             ],
           ),
         ),

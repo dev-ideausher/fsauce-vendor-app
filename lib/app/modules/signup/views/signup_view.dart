@@ -45,7 +45,7 @@ class SignupView extends GetView<SignupController> {
                   FilteringTextInputFormatter.deny(RegExp(r'\s'))
                 ],
                 controller: controller.emailController,
-                onchanged: (val) {
+                onChanged: (val) {
                   if (val != null) {
                     controller.isSignupEnabled.value = true;
                   } else {
@@ -64,7 +64,7 @@ class SignupView extends GetView<SignupController> {
               Obx(
                 () => FsvTextfield(
                   hintText: StringConstant.enterPassword,
-                  onchanged: (val) {
+                  onChanged: (val) {
                     if (val != null) {
                       controller.isSignupEnabled.value = true;
                     } else {
@@ -248,7 +248,8 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.termsCons2,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(type: StringConstant.termsCons2);
+                            controller.goToTermsAndConditions(
+                                type: StringConstant.termsCons2);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,
@@ -264,7 +265,8 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.privacyPolicy,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(type: StringConstant.privacyPolicy);
+                            controller.goToTermsAndConditions(
+                                type: StringConstant.privacyPolicy);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,
@@ -280,7 +282,8 @@ class SignupView extends GetView<SignupController> {
                         text: StringConstant.contentPolicy,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            controller.goToTermsAndConditions(type:  StringConstant.contentPolicy);
+                            controller.goToTermsAndConditions(
+                                type: StringConstant.contentPolicy);
                           },
                         style: TextStyleUtil.manrope12w400(
                           color: context.primary01,

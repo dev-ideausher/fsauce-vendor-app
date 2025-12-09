@@ -47,7 +47,7 @@ class CreatePushNotificationView
                   controller: controller.titleController,
                   validator: (val) => controller.titleValidator(val),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  onchanged: (val) => controller.titleValidator(val),
+                  onChanged: (val) => controller.titleValidator(val),
                 ),
                 20.kheightBox,
                 Row(

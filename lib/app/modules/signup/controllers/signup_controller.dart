@@ -92,6 +92,11 @@ class SignupController extends GetxController {
   }
 
   void signupWithGoogle() async {
+    if (!termsAndConditionsChecked.value) {
+      showMySnackbar(
+          msg: StringConstant.acceptTerms, title: StringConstant.error);
+      return;
+    }
     try {
       await auth.google();
     } catch (e) {
@@ -100,6 +105,11 @@ class SignupController extends GetxController {
   }
 
   void signupWithFacebook() async {
+    if (!termsAndConditionsChecked.value) {
+      showMySnackbar(
+          msg: StringConstant.acceptTerms, title: StringConstant.error);
+      return;
+    }
     try {
       await auth.facebook();
       gotoVerificationScreen();
@@ -109,6 +119,11 @@ class SignupController extends GetxController {
   }
 
   void signupWithApple() async {
+    if (!termsAndConditionsChecked.value) {
+      showMySnackbar(
+          msg: StringConstant.acceptTerms, title: StringConstant.error);
+      return;
+    }
     try {
       await auth.apple();
       gotoVerificationScreen();
@@ -118,7 +133,7 @@ class SignupController extends GetxController {
   }
 
   void gotoVerificationScreen() {
-    Get.toNamed(Routes.VERIFICATION,arguments: emailController.text.trim());
+    Get.toNamed(Routes.VERIFICATION, arguments: emailController.text.trim());
   }
 
   bool _isEmailValid(String email) {
@@ -188,6 +203,4 @@ class SignupController extends GetxController {
     }
     return null; // Return null if the value is valid
   }
-
-
 }

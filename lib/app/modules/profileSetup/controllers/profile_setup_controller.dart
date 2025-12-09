@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fsauce_vendor_app/app/components/filer_animated_options.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
@@ -16,10 +18,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import '../../../models/feature_model.dart';
 import 'package:mime/mime.dart';
+import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
+
+import '../../../services/responsive_size.dart';
 
 class ProfileSetupController extends GetxController {
   final stepCount = 0.obs;
   RxList<CuisineModel> selectedCuisines = <CuisineModel>[].obs;
+  RxList<MultiSelectItem<CuisineModel>> multiSelectCuisines =
+      <MultiSelectItem<CuisineModel>>[].obs;
   RxList<FeatureModel> features = <FeatureModel>[].obs;
   RxList<MultiSelectItem<FeatureModel>> multiSelectFeatures =
       <MultiSelectItem<FeatureModel>>[].obs;
@@ -86,6 +93,9 @@ class ProfileSetupController extends GetxController {
         cuisineModels.value = [];
         cuisineModels.value =
             data.map((e) => CuisineModel.fromJson(e)).toList();
+        multiSelectCuisines.value = cuisineModels
+            .map((e) => MultiSelectItem(e, e.name ?? "Unnamed Cuisine"))
+            .toList();
       } else {
         Get.snackbar("Error", response.data['message']);
       }
@@ -97,12 +107,16 @@ class ProfileSetupController extends GetxController {
   void gotoEnableLocationScreen() async {
     DialogHelper.showLoading();
 
-    List<Future<void>> uploadFutures = selectedFiles.map((element) async {
-      var response = await APIManager.uploadFile(filePath: element);
-      selectedFilesUrl.add(response.data["data"]);
-    }).toList();
-
-    await Future.wait(uploadFutures);
+    for (var element in selectedFiles) {
+      try {
+        var response = await APIManager.uploadFile(filePath: element);
+        if (response.statusCode == 200 && response.data != null) {
+          selectedFilesUrl.add(response.data["data"]);
+        }
+      } catch (e) {
+        debugPrint("Error uploading file: $e");
+      }
+    }
 
     bool isDataUpdated = await updateVendor();
 
@@ -177,9 +191,54 @@ class ProfileSetupController extends GetxController {
   void increment() => stepCount.value++;
 
   Future<void> pickImage(RxString imagePath, bool restBannerImage) async {
+    Get.bottomSheet(
+      Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(
+                StringConstant.camera,
+                style: TextStyleUtil.manrope16w500(),
+              ),
+              onTap: () {
+                Get.back();
+                _pickImageFromSource(
+                    imagePath, restBannerImage, ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(
+                StringConstant.gallery,
+                style: TextStyleUtil.manrope16w500(),
+              ),
+              onTap: () {
+                Get.back();
+                _pickImageFromSource(
+                    imagePath, restBannerImage, ImageSource.gallery);
+              },
+            ),
+            SizedBox(height: 100.kh),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickImageFromSource(
+      RxString imagePath, bool restBannerImage, ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: source, imageQuality: 50);
 
     if (pickedFile != null) {
       imagePath.value = pickedFile.path;
@@ -218,9 +277,33 @@ class ProfileSetupController extends GetxController {
     final ImagePicker picker = ImagePicker();
     final List<XFile> pickedFiles = await picker.pickMultipleMedia();
 
-    if (pickedFiles != null) {
+    if (pickedFiles != null && pickedFiles.isNotEmpty) {
       selectedFiles.clear();
-      selectedFiles.addAll(pickedFiles.map((file) => file.path));
+      DialogHelper.showLoading();
+      for (var file in pickedFiles) {
+        String compressedPath = await compressFile(file.path);
+        selectedFiles.add(compressedPath);
+      }
+      DialogHelper.hideDialog();
+    }
+  }
+
+  Future<String> compressFile(String path) async {
+    if (!isImage(path)) {
+      return path;
+    }
+
+    try {
+      final String targetPath =
+          '${Directory.systemTemp.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      var result = await FlutterImageCompress.compressAndGetFile(
+        path,
+        targetPath,
+        quality: 60,
+      );
+      return result?.path ?? path;
+    } catch (e) {
+      return path;
     }
   }
 
@@ -260,15 +343,8 @@ class ProfileSetupController extends GetxController {
   String? restaurantNameValidator(String? value) {
     // Check if the value is empty
     if (value == null || value.isEmpty) {
-      return 'Please enter your name';
+      return StringConstant.restaurantNameCannotBeEmpty;
     }
-
-    // Check if the value contains only letters (and optionally spaces)
-    final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
-    if (!nameExp.hasMatch(value)) {
-      return 'Please enter a valid name';
-    }
-
     return null; // Return null if the value is valid
   }
 
@@ -315,10 +391,12 @@ class ProfileSetupController extends GetxController {
   void validateStepTwoFields() {
     bool isTimingSelected =
         timingControllers.values.any((element) => element.isActivated);
-    if (selectedFeatures.isNotEmpty && isTimingSelected) {
-      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
-    } else {
+    if (selectedFeatures.isEmpty) {
+      Get.snackbar("Error", StringConstant.emptyFeatures);
+    } else if (!isTimingSelected) {
       Get.snackbar("Error", StringConstant.plsSelectFeaturesAndTimings);
+    } else {
+      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
     }
   }
 }

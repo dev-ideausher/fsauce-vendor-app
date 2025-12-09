@@ -48,7 +48,7 @@ class LoginView extends GetView<LoginController> {
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r'\s'))
                   ],
-                  onchanged: (val) {
+                  onChanged: (val) {
                     if (val != null) {
                       controller.isLoginEnabled.value = true;
                     } else {
@@ -67,7 +67,7 @@ class LoginView extends GetView<LoginController> {
                 Obx(
                   () => FsvTextfield(
                     hintText: StringConstant.enterPassword,
-                    onchanged: (val) {
+                    onChanged: (val) {
                       if (val != null) {
                         controller.isLoginEnabled.value = true;
                       } else {

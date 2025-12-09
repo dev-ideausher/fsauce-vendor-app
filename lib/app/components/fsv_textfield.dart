@@ -15,12 +15,14 @@ class FsvTextfield extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? obscureText, readOnly;
   final bool isCounterTextNeeded;
-  final Function(String?)? onchanged, onSaved;
+  final Function(String?)? onChanged, onSaved;
   final int? maxLines, maxLength;
   final bool? enabled, autofocus;
   final Widget? prefix, suffix;
   final Function()? onTap, onPressedSuffix;
   final AutovalidateMode? autovalidateMode;
+  final TextAlign? textAlign;
+  final TextAlignVertical? textAlignVertical;
   final List<TextInputFormatter>? inputFormatters;
 
   const FsvTextfield({
@@ -30,7 +32,7 @@ class FsvTextfield extends StatelessWidget {
     this.maxLines,
     required this.hintText,
     this.obscureText,
-    this.onchanged,
+    this.onChanged,
     this.enabled,
     this.suffix,
     this.prefix,
@@ -48,12 +50,17 @@ class FsvTextfield extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
     this.maxLength,
-    this.isCounterTextNeeded = false, this.isSuffixNeeded,
+    this.textAlign,
+    this.textAlignVertical,
+    this.isCounterTextNeeded = false,
+    this.isSuffixNeeded,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: textAlign ?? TextAlign.start,
+      textAlignVertical: textAlignVertical,
       enabled: enabled,
       style: TextStyleUtil.manrope14w400(color: context.black01),
       maxLines: maxLines ?? 1,
@@ -61,7 +68,7 @@ class FsvTextfield extends StatelessWidget {
       onTap: onTap,
       inputFormatters: inputFormatters,
       cursorColor: context.black01,
-      onChanged: onchanged,
+      onChanged: onChanged,
       validator: validator,
       autovalidateMode: autovalidateMode,
       controller: controller,
@@ -73,15 +80,17 @@ class FsvTextfield extends StatelessWidget {
       keyboardType: keyboardType ?? TextInputType.name,
       decoration: InputDecoration(
         counterText: isCounterTextNeeded ? null : "",
-        suffixIcon: isSuffixNeeded ?? true ? Padding(
-          padding: isSuffixPaddingNeeded ?? true
-              ? EdgeInsets.only(right: 16.kw, left: 8.kw)
-              : const EdgeInsets.all(0),
-          child: IconButton(
-            icon: suffix ?? const SizedBox(),
-            onPressed: onPressedSuffix,
-          ),
-        ) : const SizedBox(),
+        suffixIcon: isSuffixNeeded ?? true
+            ? Padding(
+                padding: isSuffixPaddingNeeded ?? true
+                    ? EdgeInsets.only(right: 16.kw, left: 8.kw)
+                    : const EdgeInsets.all(0),
+                child: IconButton(
+                  icon: suffix ?? const SizedBox(),
+                  onPressed: onPressedSuffix,
+                ),
+              )
+            : const SizedBox(),
         prefixIcon: Padding(
           padding: EdgeInsets.only(right: 8.kw, top: 1.kh),
           child: prefix,

@@ -219,9 +219,8 @@ class SubscriptionController extends GetxController {
           "token": encryptToken,
         });
         if (response.data['status']) {
+          await getCardList();
           Get.back();
-
-          getCardList();
         } else {
           print("-------> ${response.data}");
           DialogHelper.showError(response.data['message'] ?? "");
