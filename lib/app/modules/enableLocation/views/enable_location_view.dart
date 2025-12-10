@@ -35,11 +35,13 @@ class EnableLocationView extends GetView<EnableLocationController> {
               style: TextStyleUtil.manrope16w400(color: context.black03),
             ),
             const Spacer(),
-            CustomRedElevatedButton(
-                buttonText: StringConstant.allowAccess,
-                height: 56.kh,
-                width: 100.w,
-                onPressed: controller.requestLocationPermission),
+            SafeArea(
+              child: CustomRedElevatedButton(
+                  buttonText: StringConstant.allowAccess,
+                  height: 56.kh,
+                  width: double.infinity,
+                  onPressed: controller.requestLocationPermission),
+            ),
             20.kheightBox,
           ],
         ),

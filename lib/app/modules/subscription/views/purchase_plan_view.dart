@@ -51,14 +51,18 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                               color: context.black03),
                         );
                       }),
-                      trailing: TextButton(
-                          onPressed: controller.goToPaymentMethodView,
-                          child: Text(
-                            StringConstant.change,
-                            style: TextStyleUtil.manrope14w500(
-                                color: context.primary01,
-                                textDecoration: TextDecoration.underline),
-                          )),
+                      trailing: Obx(() {
+                        return TextButton(
+                            onPressed: controller.goToPaymentMethodView,
+                            child: Text(
+                              controller.selectedCard.value.id == null
+                                  ? StringConstant.add
+                                  : StringConstant.change,
+                              style: TextStyleUtil.manrope14w500(
+                                  color: context.primary01,
+                                  textDecoration: TextDecoration.underline),
+                            ));
+                      }),
                     ),
                   ),
                 ),
@@ -131,7 +135,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                           ),
                           Obx(() {
                             return Text(
-                              controller.selectedPlan.value.price.toString() ??
+                              '\$'+controller.selectedPlan.value.price.toString() ??
                                   "\$500",
                               style: TextStyleUtil.manrope14w500(),
                             );
@@ -168,7 +172,7 @@ class PurchasePlanView extends GetView<SubscriptionController> {
                             style: TextStyleUtil.manrope16w500(),
                           ),
                           Text(
-                            controller.selectedPlan.value.price.toString() ??
+                            '\$${controller.selectedPlan.value.price}' ??
                                 "\$450",
                             style: TextStyleUtil.manrope16w600(
                                 color: context.primary01),

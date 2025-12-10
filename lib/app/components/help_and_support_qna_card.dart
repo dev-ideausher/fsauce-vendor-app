@@ -4,7 +4,10 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 class HelpAndSupportQNACaed extends StatelessWidget {
-  const HelpAndSupportQNACaed({super.key});
+  final String question;
+  final String answer;
+  const HelpAndSupportQNACaed(
+      {super.key, required this.question, required this.answer});
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +18,16 @@ class HelpAndSupportQNACaed extends StatelessWidget {
           collapsedBackgroundColor: Colors.white,
           collapsedIconColor: context.black01,
           iconColor: context.black01,
+          expandedAlignment: Alignment.centerLeft,
           childrenPadding: EdgeInsets.only(
-              left: 8.kw, right: 8.kw, bottom: 10.kw), // Adjust padding here
+              left: 16.kw, right: 8.kw, bottom: 10.kw), // Adjust padding here
           title: Text(
-            "How do I redeem a deal from the restaurant coupon app?",
+            question,
             style: TextStyleUtil.manrope14w500(),
           ),
           children: [
             Text(
-              "These terms and conditions outline the rules and regulations for the use of the The Food Sauciety mobile application.",
+              answer,
               style: TextStyleUtil.manrope14w400(color: context.black03),
             )
           ],

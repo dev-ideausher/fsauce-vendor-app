@@ -92,7 +92,7 @@ class StepTwo extends GetView<ProfileSetupController> {
                   ? StringConstant.next
                   : StringConstant.continuee,
               height: 56.kh,
-              width: 100.w,
+              width: double.infinity,
               onPressed: () {
                 controller.validateStepTwoFields();
               });

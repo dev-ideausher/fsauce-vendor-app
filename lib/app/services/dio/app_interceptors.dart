@@ -21,26 +21,28 @@ class AppInterceptors extends Interceptor {
   FutureOr<dynamic> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (options.path.contains("getPrivacyPolicy") ||
-        options.path.contains("getTermsAndConditions")) {
+        options.path.contains("getTermsAndConditions") ||
+        options.uri.toString().contains("googleapis.com") ||
+        options.uri.toString().contains("maps.googleapis.com")) {
       super.onRequest(options, handler);
       return;
     }
 
     isOverlayLoader ? DialogHelper.showLoading() : null;
-    if(Get.find<GetStorageService>().encjwToken.isEmpty){
+    if (Get.find<GetStorageService>().encjwToken.isEmpty) {
       super.onRequest(options, handler);
-    }else{
+    } else {
       await Helpers.validateToken(
         onSuccess: () {
-          options.headers = {
-            "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
+          options.headers.addAll({
+            "Authorization":
+                "Bearer ${Get.find<GetStorageService>().encjwToken}",
             // "type": "app"
-          };
+          });
           super.onRequest(options, handler);
         },
       );
     }
-
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class DealsOfTheDayCardDate extends StatelessWidget {
   const DealsOfTheDayCardDate(
@@ -82,7 +83,8 @@ class DealsOfTheDayCardDate extends StatelessWidget {
                             style: TextStyleUtil.manrope14w400(),
                           ),
                           Text(
-                            date.isNotEmpty ? date.substring(0, 10) : date,
+                            DateFormat("dd MMM, hh:mm a")
+                                .format(DateTime.parse(date).toLocal()),
                             style: TextStyleUtil.manrope14w400(),
                           ),
                         ],

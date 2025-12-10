@@ -66,7 +66,10 @@ class FsvTextfield extends StatelessWidget {
       maxLines: maxLines ?? 1,
       maxLength: maxLength,
       onTap: onTap,
-      inputFormatters: inputFormatters,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+        ...?inputFormatters,
+      ],
       cursorColor: context.black01,
       onChanged: onChanged,
       validator: validator,

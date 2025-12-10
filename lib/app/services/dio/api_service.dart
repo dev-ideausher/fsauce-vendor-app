@@ -269,6 +269,16 @@ class APIManager {
         .get(Endpoints.getContentPolicy);
   }
 
+  static Future<Response> getFaqList(
+      {int page = 1, int limit = 10, String search = ""}) async {
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+        .get(Endpoints.getFaqList, queryParameters: {
+      "page": page,
+      "limit": limit,
+      "search": search,
+    });
+  }
+
   static Future<Response> getTermsAndConditions() async {
     return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
         .get(Endpoints.getTermsAndConditions);
@@ -301,8 +311,13 @@ class APIManager {
   }
 
   static Future<Response> getSubscriptionPlans() async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true)
         .get(Endpoints.getSubscriptionPlans);
+  }
+
+  static Future<Response> getVendorSubscriptionList() async {
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true)
+        .get(Endpoints.getVendorSubscriptionList);
   }
 
   static Future<Response> deleteCard(String id) async {

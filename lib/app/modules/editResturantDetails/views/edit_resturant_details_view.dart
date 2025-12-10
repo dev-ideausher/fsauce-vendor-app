@@ -86,7 +86,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   Obx(() {
                     if (controller.selectedLogoImage.isNotEmpty) {
                       return Image.file(
-                        width: 100.w,
+                        width: double.infinity,
                         height: 100.kh,
                         File(controller.selectedLogoImage.value),
                         fit: BoxFit.contain,
@@ -132,7 +132,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                           controller.pickLogo();
                         },
                         child: Container(
-                          width: 100.w,
+                          width: double.infinity,
                           height: 100.kh,
                           decoration: BoxDecoration(
                             color: context.loginSignupTextfieldColor,
@@ -200,7 +200,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     if (controller.selectedBannerImage.isNotEmpty) {
                       return Image.file(
                         height: 160.kh,
-                        width: 100.w,
+                        width: double.infinity,
                         File(controller.selectedBannerImage.value),
                         fit: BoxFit.contain,
                       );
@@ -246,7 +246,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         },
                         child: Container(
                           height: 160.kh,
-                          width: 100.w,
+                          width: double.infinity,
                           decoration: BoxDecoration(
                               border: Border.all(color: context.black07),
                               borderRadius: BorderRadius.circular(8.kw),
@@ -292,15 +292,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   10.kheightBox,
                   InkWell(
                     onTap: () => Get.toNamed(Routes.LOCATION_SEARCH,
-                        arguments: "latLong")!
+                            arguments: "latLong")!
                         .then((value) {
                       if (value != null) {
                         List<String> addressWithLatLong = value;
-                        final lat=double.tryParse(addressWithLatLong.first)??0.0;
-                        final long=double.tryParse(addressWithLatLong[1])??0.0;
-                        final address=addressWithLatLong[2]??"";
+                        final lat =
+                            double.tryParse(addressWithLatLong.first) ?? 0.0;
+                        final long =
+                            double.tryParse(addressWithLatLong[1]) ?? 0.0;
+                        final address = addressWithLatLong[2] ?? "";
 
-                        controller.moveToNewLatLng(lat,long,address: address);
+                        controller.moveToNewLatLng(lat, long, address: address);
 
                         //getEventList("city=" + currentAddress.value);
                       }
@@ -309,7 +311,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         enabled: false,
                         validator: (String? val) {
                           if (val == null || val.isEmpty) {
-                            return StringConstant.restaurantAddressCannotBeEmpty;
+                            return StringConstant
+                                .restaurantAddressCannotBeEmpty;
                           }
                           return null;
                         },
@@ -320,7 +323,6 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   ),
                   10.kheightBox,
                   Text(StringConstant.dropAPinToLinkYourAddress,
-
                       style: TextStyleUtil.manrope14w500()),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12.kh),
@@ -338,16 +340,14 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         child: GoogleMap(
                           zoomControlsEnabled: false,
                           initialCameraPosition: controller.cameraPosition,
-                          onMapCreated: (map) =>  controller.mapController=map ,
+                          onMapCreated: (map) => controller.mapController = map,
                           onCameraIdle: () async {
-                            controller
-                                .mapPickerController.mapFinishedMoving!();
+                            controller.mapPickerController.mapFinishedMoving!();
 
                             controller.updateDragLocation();
                           },
                           onCameraMove: (cameraPosition1) {
-                            this.controller.cameraPosition =
-                                cameraPosition1;
+                            this.controller.cameraPosition = cameraPosition1;
                           },
                           mapType: MapType.normal,
                           myLocationButtonEnabled: false,
@@ -455,15 +455,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     ),
                   ),
                   40.kheightBox,
-                  CustomRedElevatedButton(
-                      buttonText: StringConstant.save,
-                      height: 56.kh,
-                      width: 100.w,
-                      onPressed: () {
-                        if (controller.formKey.currentState!.validate()) {
-                          controller.updateDetails();
-                        }
-                      }),
+                  SafeArea(
+                    child: CustomRedElevatedButton(
+                        buttonText: StringConstant.save,
+                        height: 56.kh,
+                        width: double.infinity,
+                        onPressed: () {
+                          if (controller.formKey.currentState!.validate()) {
+                            controller.updateDetails();
+                          }
+                        }),
+                  ),
                   40.kheightBox,
                 ],
               ),

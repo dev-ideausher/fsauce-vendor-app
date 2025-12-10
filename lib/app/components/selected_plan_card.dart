@@ -47,7 +47,7 @@ class SelectedPlanCard extends StatelessWidget {
                       style: TextStyleUtil.manrope18w600(color: context.primary01),
                     ),
                     Text(
-                      " / ${controller.selectedPlan.value.billedFrequency}" ?? "/${StringConstant.year.toLowerCase()}",
+                      " / ${controller.selectedPlan.value.planType}" ?? "/${StringConstant.year.toLowerCase()}",
                       style: TextStyleUtil.manrope18w600(color: context.black04),
                     )
                   ],),

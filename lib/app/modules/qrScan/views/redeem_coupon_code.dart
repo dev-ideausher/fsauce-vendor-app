@@ -60,24 +60,26 @@ class RedeemCouponCode extends GetView<QrScanController> {
                 },
               ),
               const Expanded(child: SizedBox()),
-              Obx(() {
-                return CustomRedElevatedButton(
-                    buttonColor:
-                        controller.canRedeem.value ? null : context.primary06,
-                    textStyle: controller.canRedeem.value
-                        ? null
-                        : TextStyleUtil.manrope16w500(color: context.black03),
-                    buttonText: StringConstant.redeem,
-                    height: 56.kh,
-                    width: 100.w,
-                    onPressed: () {
-                      if (controller.formKey.currentState!.validate() &&
-                          controller.canRedeem.value) {
-                        //ToDo: Implement code redemption.
-                        controller.redeemCode();
-                      }
-                    });
-              }).paddingOnly(bottom: Platform.isAndroid ? 70.kh : 40.kh),
+              SafeArea(
+                child: Obx(() {
+                  return CustomRedElevatedButton(
+                      buttonColor:
+                          controller.canRedeem.value ? null : context.primary06,
+                      textStyle: controller.canRedeem.value
+                          ? null
+                          : TextStyleUtil.manrope16w500(color: context.black03),
+                      buttonText: StringConstant.redeem,
+                      height: 56.kh,
+                      width: double.infinity,
+                      onPressed: () {
+                        if (controller.formKey.currentState!.validate() &&
+                            controller.canRedeem.value) {
+                          //ToDo: Implement code redemption.
+                          controller.redeemCode();
+                        }
+                      });
+                }),
+              ),
             ],
           ),
         ),

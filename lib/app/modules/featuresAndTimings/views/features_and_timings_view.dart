@@ -150,14 +150,16 @@ class FeaturesAndTimingsView extends GetView<FeaturesAndTimingsController> {
                     controller: controller.timingControllers[e]!,
                   )),
               8.kheightBox,
-              CustomRedElevatedButton(
-                  buttonText: StringConstant.save,
-                  height: 56.kh,
-                  width: 100.w,
-                  onPressed: () {
-                    //ToDo: Implement save filters option.
-                    controller.updateFeaturesAndTimings();
-                  }),
+              SafeArea(
+                child: CustomRedElevatedButton(
+                    buttonText: StringConstant.save,
+                    height: 56.kh,
+                    width: double.infinity,
+                    onPressed: () {
+                      //ToDo: Implement save filters option.
+                      controller.updateFeaturesAndTimings();
+                    }),
+              ),
             ],
           ),
         ),

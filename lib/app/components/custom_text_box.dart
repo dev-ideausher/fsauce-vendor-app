@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -52,6 +53,9 @@ class CustomTextBox extends StatelessWidget {
               validator: validator,
               controller: controller,
               maxLines: null,
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+              ],
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyleUtil.manrope14w400(color: context.black04),

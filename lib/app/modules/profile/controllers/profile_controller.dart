@@ -15,6 +15,21 @@ import '../../../services/text_style_util.dart';
 
 class ProfileController extends GetxController {
   final auth = Get.find<Auth>();
+  RxBool showChangePassword = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginProvider();
+  }
+
+  void checkLoginProvider() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      showChangePassword.value = user.providerData
+          .any((userInfo) => userInfo.providerId == 'password');
+    }
+  }
 
   void gotoProfileDetailsScreen() {
     Get.toNamed(Routes.PROFILE_DETAILS);

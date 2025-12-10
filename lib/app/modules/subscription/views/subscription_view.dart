@@ -41,16 +41,16 @@ class SubscriptionView extends GetView<SubscriptionController> {
         floatingActionButton: Obx(() {
           if (controller.showList.value) {
             return CustomRedElevatedButton(
-              buttonText: controller.selectedPlan.value.Id != null
+              buttonText: controller.selectedPlan.value.title != null
                   ? StringConstant.purchasePlan
                   : "Select a plan",
-              buttonColor: controller.selectedPlan.value.Id != null
+              buttonColor:  controller.selectedPlan.value.title != null
                   ? null
                   : context.black05,
               height: 56.kh,
               width: MediaQuery.of(context).size.width * 0.9,
               onPressed: () {
-                if (controller.selectedPlan.value.Id != null) {
+                if ( controller.selectedPlan.value.title  != null) {
                   controller.goToPurchasePlanView();
                 }
               },
@@ -120,7 +120,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                        controller.currentPlan.value.title ??
+                                        controller.subscriptionPlans.value.planName ??
                                             "",
                                         style: TextStyleUtil.manrope18w600()),
                                     Expanded(
@@ -132,11 +132,11 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         padding: EdgeInsets.symmetric(
                                             vertical: 8.kh, horizontal: 16.kw),
                                         decoration: BoxDecoration(
-                                          color: controller.currentPlan.value
+                                          color: controller.subscriptionPlans.value
                                                       .isActive ==
                                                   null
                                               ? context.green
-                                              : controller.currentPlan.value
+                                              : controller.subscriptionPlans.value
                                                       .isActive!
                                                   ? context.green
                                                   : context.primary01,
@@ -145,11 +145,11 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            controller.currentPlan.value
+                                            controller.subscriptionPlans.value
                                                         .isActive ==
                                                     null
                                                 ? StringConstant.active
-                                                : controller.currentPlan.value
+                                                : controller.subscriptionPlans.value
                                                         .isActive!
                                                     ? StringConstant.active
                                                     : StringConstant.inactive,
@@ -163,12 +163,12 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      "\$${controller.currentPlan.value.price ?? 0.0}",
+                                      "\$${controller.subscriptionPlans.value.price ?? 0.0}",
                                       style: TextStyleUtil.manrope20w600(
                                           color: context.primary01),
                                     ),
                                     Text(
-                                        " /${controller.currentPlan.value.billedFrequency ?? ""}",
+                                        " /${controller.subscriptionPlans.value.subscriptionType ?? ""}",
                                         style: TextStyleUtil.manrope20w600(
                                             color: context.black03)),
                                   ],
@@ -232,13 +232,14 @@ class SubscriptionView extends GetView<SubscriptionController> {
                       shrinkWrap: true,
                       itemBuilder: (ctx, index) {
                         return PlanCard(
-                            plan: controller.subscriptionPlans[index]).paddingOnly(bottom: controller.subscriptionPlans.length==index+1?100.kh :0 );
+                            plan: controller.allPlans[index]).paddingOnly(bottom: controller.allPlans.length==index+1?100.kh :0 );
                       },
                       separatorBuilder: (ctx, index) {
                         return 4.kheightBox;
                       },
-                      itemCount: controller.subscriptionPlans.length);
-                } else if (controller.subscriptionPlans.isEmpty) {
+                      itemCount: controller.allPlans.length);
+                  return SizedBox();
+                } else if (controller.allPlans.isEmpty) {
                   return Center(child: EmptyWidget());
                 } else {
                   return Container();

@@ -113,19 +113,21 @@ class ChangePasswordProfileView
                 ),
               ),
               const Spacer(),
-              CustomRedElevatedButton(
-                  buttonText: StringConstant.save,
-                  height: 56.kh,
-                  width: 100.w,
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      if (controller.newPasswordController.text ==
-                          controller.confirmPasswordController.text) {
-                        controller.updatePassword(
-                            controller.newPasswordController.text);
+              SafeArea(
+                child: CustomRedElevatedButton(
+                    buttonText: StringConstant.save,
+                    height: 56.kh,
+                    width: double.infinity,
+                    onPressed: () {
+                      if (controller.formKey.currentState!.validate()) {
+                        if (controller.newPasswordController.text ==
+                            controller.confirmPasswordController.text) {
+                          controller.updatePassword(
+                              controller.newPasswordController.text);
+                        }
                       }
-                    }
-                  }),
+                    }),
+              ),
             ],
           ),
         ),

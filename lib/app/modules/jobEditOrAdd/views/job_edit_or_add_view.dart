@@ -184,13 +184,15 @@ class JobEditOrAddView extends GetView<JobEditOrAddController> {
               maxLines: 5,
             ),
             30.kheightBox,
-            CustomRedElevatedButton(
-              buttonText: StringConstant.save,
-              height: 56.kh,
-              width: 100.w,
-              onPressed: controller.toEdit.value
-                  ? controller.editJob
-                  : controller.addJob,
+            SafeArea(
+              child: CustomRedElevatedButton(
+                buttonText: StringConstant.save,
+                height: 56.kh,
+                width: double.infinity,
+                onPressed: controller.toEdit.value
+                    ? controller.editJob
+                    : controller.addJob,
+              ),
             ),
             60.kheightBox,
           ],

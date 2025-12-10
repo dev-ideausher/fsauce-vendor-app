@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
@@ -261,6 +262,10 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 hintText: StringConstant.enterDescription,
                 controller: controller.descriptionController,
                 maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+                ],
               ),
               20.kheightBox,
               Row(
@@ -281,6 +286,10 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 hintText: StringConstant.enterTermsAndConditions,
                 controller: controller.termsAndConditionsController,
                 maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+                ],
               ),
               20.kheightBox,
               Row(
@@ -328,17 +337,19 @@ class CreateOrEditVipOfferView extends GetView<CreateOrEditVipOfferController> {
                 ],
               ),
               30.kheightBox,
-              CustomRedElevatedButton(
-                buttonText: Get.arguments[0]
-                    ? StringConstant.save
-                    : StringConstant.create,
-                height: 56.kh,
-                width: 100.w,
-                onPressed: () {
-                  Get.arguments[0]
-                      ? controller.editCoupon(false)
-                      : controller.addCoupon();
-                },
+              SafeArea(
+                child: CustomRedElevatedButton(
+                  buttonText: Get.arguments[0]
+                      ? StringConstant.save
+                      : StringConstant.create,
+                  height: 56.kh,
+                  width: double.infinity,
+                  onPressed: () {
+                    Get.arguments[0]
+                        ? controller.editCoupon(false)
+                        : controller.addCoupon();
+                  },
+                ),
               ),
               30.kheightBox,
             ],

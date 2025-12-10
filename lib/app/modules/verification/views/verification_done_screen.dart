@@ -40,13 +40,15 @@ class VerificationDoneScreen extends GetView<VerificationController> {
                 style: TextStyleUtil.manrope16w400(color: context.black03),
               ),
               Spacer(),
-              CustomRedElevatedButton(
-                buttonText: StringConstant.continuee,
-                height: 56.kh,
-                width: double.infinity,
-                onPressed: () {
-                  Get.offAllNamed(Routes.PROFILE_SETUP);
-                },
+              SafeArea(
+                child: CustomRedElevatedButton(
+                  buttonText: StringConstant.continuee,
+                  height: 56.kh,
+                  width: double.infinity,
+                  onPressed: () {
+                    Get.offAllNamed(Routes.PROFILE_SETUP);
+                  },
+                ),
               ),
               70.kheightBox,
             ],

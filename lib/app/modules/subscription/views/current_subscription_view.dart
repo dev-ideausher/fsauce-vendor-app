@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/current_plan_card.dart';
+import 'package:fsauce_vendor_app/app/models/subscription_model.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 
 import 'package:get/get.dart';
@@ -14,8 +15,8 @@ class CurrentSubscriptionView extends GetView<SubscriptionController> {
 
   @override
   Widget build(BuildContext context) {
-    PlanModel model = controller.subscriptionPlans
-        .firstWhere((PlanModel model) => model.Id == controller.planId.value);
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -44,11 +45,11 @@ class CurrentSubscriptionView extends GetView<SubscriptionController> {
                   style: TextStyleUtil.manrope16w600()),
               12.kheightBox,
               CurrentPlanCard(
-                title: model.title ?? "",
-                validTill: "18 March 2026",
-                active: model.isActive!,
-                billingFrequency: model.billedFrequency!,
-                price: model.price!,
+                title: controller.subscriptionPlans.value.planName ?? "",
+                validTill: controller.formatDateString(controller.subscriptionPlans.value.endDate ??""),
+                active: controller.subscriptionPlans.value.isActive??false,
+                billingFrequency: controller.subscriptionPlans.value.subscriptionType??""!,
+                price: controller.subscriptionPlans.value.price??0,
               )
             ],
           ),

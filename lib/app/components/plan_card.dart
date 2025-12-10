@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/all_plan_model.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -9,12 +10,13 @@ import 'package:get/get.dart';
 import '../models/plan_model.dart';
 
 class PlanCard extends StatelessWidget {
-  PlanModel plan;
+  AllPlanModelData plan;
 
   PlanCard({required this.plan, super.key});
 
   @override
   Widget build(BuildContext context) {
+
     List<String?> features = plan.features ?? [];
     final controller = Get.find<SubscriptionController>();
     return Container(
@@ -31,11 +33,11 @@ class PlanCard extends StatelessWidget {
           Row(
             children: <Widget>[
               Obx(() {
-                return Radio<PlanModel>(
+                return Radio<AllPlanModelData>(
                     activeColor: context.primary01,
                     value: plan,
                     groupValue: controller.selectedPlan.value,
-                    onChanged: (PlanModel? model) {
+                    onChanged: (AllPlanModelData? model) {
                       if (model != null) {
                         controller.selectedPlan.value = model;
                       }

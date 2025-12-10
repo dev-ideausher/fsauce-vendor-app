@@ -14,11 +14,14 @@ import 'package:intl/intl.dart';
 
 import '../../../components/added_successfull_bottomsheet.dart';
 import '../../../components/confirmation_dialog.dart';
+import '../../../models/all_plan_model.dart';
 import '../../../models/card_data_model.dart';
 import '../../../services/enigma.dart';
 import '../../../services/snackbar.dart';
 
 class SubscriptionController extends GetxController {
+  RxList<AllPlanModelData> allPlans = <AllPlanModelData>[].obs;
+
   TextEditingController promoCodeController = TextEditingController();
 
   late TextEditingController eCardHolderName = TextEditingController();
@@ -31,19 +34,15 @@ class SubscriptionController extends GetxController {
   TextEditingController nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  RxList<PlanModel> subscriptionPlans = <PlanModel>[].obs;
-  Rx<PlanModel> selectedPlan = PlanModel().obs;
+  Rx<PlanModelData> subscriptionPlans = PlanModelData().obs;
+  Rx<AllPlanModelData> selectedPlan = AllPlanModelData().obs;
 
   RxList<CardModel> cardsList = <CardModel>[].obs;
   Rx<CardModel> selectedCard = CardModel().obs;
 
   RxBool showList = true.obs;
 
-  Rx<PlanModel> currentPlan = PlanModel().obs;
   RxBool isCancelled = false.obs;
-
-  RxString planId = "".obs;
-  RxString subscriptionId = "".obs;
 
   @override
   void onInit() {
@@ -66,78 +65,19 @@ class SubscriptionController extends GetxController {
 
   Future<void> getPlans() async {
     try {
-      var response = await APIManager.getSubscriptionPlans();
-      if (response.statusCode == 200) {
-        subscriptionPlans.value = [];
+      var response = await APIManager.getVendorSubscriptionList();
+      if (response.data['status']) {
         Get.find<HomeController>().getRestaurantDetails();
-        for (Map<String, dynamic> planData in response.data["data"]) {
-          subscriptionPlans.add(PlanModel.fromJson(planData));
-        }
-        String? currentPlanId = Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .subscriptionModel ==
-                null
-            ? ""
-            : Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .subscriptionModel!
-                    .plan ??
-                "";
-        planId.value = currentPlanId ?? "";
-        print("This is the plan id: $planId");
+        showList.value = false;
+        subscriptionPlans.value = PlanModel.fromJson(response.data).data ?? PlanModelData();
 
-        String? currentSubscriptionId = Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .subscriptionModel ==
-                null
-            ? ""
-            : Get.find<HomeController>()
-                        .restaurantDetails
-                        .value
-                        .subscriptionModel!
-                        .stripeSubscriptionObj ==
-                    null
-                ? ""
-                : Get.find<HomeController>()
-                        .restaurantDetails
-                        .value
-                        .subscriptionModel!
-                        .stripeSubscriptionObj!
-                        .id ??
-                    "";
-        subscriptionId.value = currentSubscriptionId ?? "";
-        print("This is the subscription id: $subscriptionId");
-
-        bool? isCancelledSub = Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .subscriptionModel ==
-                null
-            ? false
-            : Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .subscriptionModel!
-                    .isCancelled ??
-                false;
-        isCancelled.value = isCancelledSub;
-        print("Was the sub cancelled: ${isCancelled.value}");
-
-        showList.value = subscriptionId.isEmpty;
-        if (subscriptionId.isNotEmpty) {
-          currentPlan.value = subscriptionPlans
-              .firstWhere((PlanModel model) => model.Id == planId.value);
-        }
+        isCancelled.value = subscriptionPlans.value.isCancelled ?? false;
       } else {
-        DialogHelper.showError(response.data["message"] ?? "");
+        showList.value = true;
+        getAllPlans();
       }
     } catch (e) {
       print("An error occurred while getting subscription plans: $e");
-      DialogHelper.showError(
-          "An error occurred while getting subscription plans");
     }
   }
 
@@ -148,24 +88,14 @@ class SubscriptionController extends GetxController {
     nameController.dispose();
   }
 
-  static Future<String?> generateStripeToken(
-      {required String card,
-      required String name,
-      required String expiryDate,
-      required String cvv}) async {
+  static Future<String?> generateStripeToken({required String card, required String name, required String expiryDate, required String cvv}) async {
     var prAge = expiryDate.split("/");
     var month = prAge[0].trim();
     var year = prAge[1].trim();
-    CardTokenParams cardParams =
-        CardTokenParams(type: TokenType.Card, name: name, currency: "MAD");
-    await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
-        number: card,
-        cvc: cvv,
-        expirationMonth: int.tryParse(month),
-        expirationYear: int.tryParse("20$year")));
+    CardTokenParams cardParams = CardTokenParams(type: TokenType.Card, name: name, currency: "MAD");
+    await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(number: card, cvc: cvv, expirationMonth: int.tryParse(month), expirationYear: int.tryParse("20$year")));
     try {
-      TokenData token = await Stripe.instance
-          .createToken(CreateTokenParams.card(params: cardParams));
+      TokenData token = await Stripe.instance.createToken(CreateTokenParams.card(params: cardParams));
       return token.id;
     } on StripeException catch (e) {
       // showMySnackbar(title: e.error.message ?? "", msg: '');
@@ -203,16 +133,9 @@ class SubscriptionController extends GetxController {
     }
 
     final token = tokenData.id;
-    /* final String token = await generateStripeToken(
-            card: cardNumberController.text,
-            name: nameController.text,
-            expiryDate: expiresController.text,
-            cvv: cvvController.text) ??
-        "";*/
     if (token.isNotEmpty) {
       print("Token is not empty: $token");
-      final String encryptToken =
-          encryptAESCryptoJS(jsonEncode({"token": token, "default": "true"}));
+      final String encryptToken = encryptAESCryptoJS(jsonEncode({"token": token, "default": "true"}));
       try {
         print("Below is the encrypt token: $encryptToken");
         final response = await APIManager.addCard(data: {
@@ -243,18 +166,15 @@ class SubscriptionController extends GetxController {
         }
         if (cardsList.isNotEmpty) {
           if (selectedCard.value.id != null) {
-            CardModel? previouslySelected = cardsList
-                .firstWhereOrNull((c) => c.id == selectedCard.value.id);
+            CardModel? previouslySelected = cardsList.firstWhereOrNull((c) => c.id == selectedCard.value.id);
             if (previouslySelected != null) {
               selectedCard.value = previouslySelected;
             } else {
-              CardModel? defaultCard =
-                  cardsList.firstWhereOrNull((c) => c.isDefautl == true);
+              CardModel? defaultCard = cardsList.firstWhereOrNull((c) => c.isDefautl == true);
               selectedCard.value = defaultCard ?? cardsList.first;
             }
           } else {
-            CardModel? defaultCard =
-                cardsList.firstWhereOrNull((c) => c.isDefautl == true);
+            CardModel? defaultCard = cardsList.firstWhereOrNull((c) => c.isDefautl == true);
             selectedCard.value = defaultCard ?? cardsList.first;
           }
         } else {
@@ -317,11 +237,7 @@ class SubscriptionController extends GetxController {
       selectedCard.value = cardsList.first;
     }
 
-    print(
-        "Attempting to add subscription. Plan: ${selectedPlan.value.Id}, Card: ${selectedCard.value.id}");
-
-    if (selectedPlan.value.Id == null ||
-        selectedPlan.value.billedFrequency == null) {
+    if (selectedPlan.value.Id == null || selectedPlan.value.billedFrequency == null) {
       DialogHelper.showError("No plan selected!");
       return;
     } else if (selectedCard.value.id == null) {
@@ -341,10 +257,12 @@ class SubscriptionController extends GetxController {
       try {
         final response = await APIManager.addVendorSubscription(data: data);
         if (response.data['status']) {
-          Get.bottomSheet(const AddedSuccessfullBottomSheet(
-              subTitle: StringConstant.membershipPurchaseSuccess));
+          selectedPlan= AllPlanModelData().obs;
+          Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.membershipPurchaseSuccess));
           Get.find<HomeController>().getRestaurantDetails();
-          getPlans();
+          await getPlans();
+          Get.back();
+          Get.back();
           isCancelled.value = false;
           return;
         } else {
@@ -364,30 +282,23 @@ class SubscriptionController extends GetxController {
         title: "Cancel Subscription?",
         subTitle: "The current subscription will be cancelled.",
         onYesTap: () async {
-          print("Entered dialog for cancel subscription");
-          if (subscriptionId.value.isNotEmpty) {
-            await cancelSubscription();
-          } else if (subscriptionId.value.isEmpty) {
-            Get.snackbar(StringConstant.error, "No current subscription plan");
-          }
+          await cancelSubscription();
         },
         onNoTap: Get.back));
   }
 
   Future<void> cancelSubscription() async {
-    String subId = subscriptionId.value ?? "";
-    print("Here is the subId: $subId");
-    final Map<String, dynamic> data = {"subscriptionId": subId};
+    final Map<String, dynamic> data = {"subscriptionId": subscriptionPlans.value.subscriptionId};
     try {
       final response = await APIManager.cancelSubscription(data: data);
       if (response.data['code'] == 201 || response.data['code'] == 200) {
-        Get.snackbar(
-            StringConstant.success, "Subscription cancelled successfully!");
+        Get.snackbar(StringConstant.success, "Subscription cancelled successfully!");
         isCancelled.value = true;
         return;
       } else if (response.data['code'] != 201 || response.data['code'] != 200) {
         Get.snackbar("Message", response.data['message']);
         isCancelled.value = true;
+        await getPlans();
         return;
       }
     } catch (e) {
@@ -406,5 +317,15 @@ class SubscriptionController extends GetxController {
 
   void goToCardDetailsView() {
     Get.toNamed(Routes.CARDDETAILS);
+  }
+
+  Future<void> getAllPlans() async {
+    try {
+      final res = await APIManager.getSubscriptionPlans();
+      AllPlanModel allPlanModel = AllPlanModel.fromJson(res.data);
+      allPlans.value = allPlanModel.data!;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

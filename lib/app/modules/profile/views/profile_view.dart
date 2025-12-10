@@ -106,12 +106,18 @@ class ProfileView extends GetView<ProfileController> {
                 text: StringConstant.restaurantDetails,
               ),
               10.kheightBox,
-              ProfileOption(
-                svgPath: ImageConstant.lockIcon,
-                onTap: controller.gotoChangePasswordScreen,
-                text: StringConstant.changePassword,
-              ),
-              10.kheightBox,
+              Obx(() => controller.showChangePassword.value
+                  ? Column(
+                      children: [
+                        ProfileOption(
+                          svgPath: ImageConstant.lockIcon,
+                          onTap: controller.gotoChangePasswordScreen,
+                          text: StringConstant.changePassword,
+                        ),
+                        10.kheightBox,
+                      ],
+                    )
+                  : const SizedBox()),
               ProfileOption(
                 svgPath: ImageConstant.scanRedump,
                 onTap: controller.gotoScanRedemptionRecord,

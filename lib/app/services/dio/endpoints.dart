@@ -10,9 +10,11 @@ class Endpoints {
   static const String fileUpload = "user/uploadFile";
 
   //subscription endpoints
-  static const String getSubscriptionPlans = "vendor/getSubscriptionPlans";
+  static const String getVendorSubscriptionList =
+      "vendor/getVendorSubscriptionList";
   static const String addCard = "vendor/addCard";
   static const String vendorSubscription = "vendor/vendorSubscription";
+  static const String getSubscriptionPlans = "vendor/getSubscriptionPlans";
   static const String delCard = "vendor/deleteCard?CardId=";
   static const String getCardList = "vendor/getCardList";
   static const String cancelSubscription = "vendor/cancelSubscription";
@@ -42,6 +44,7 @@ class Endpoints {
   static const String getPrivacyPolicy = "vendor/getPrivacyPolicy";
   static const String getContentPolicy = "vendor/getContentPolicy";
   static const String getTermsAndConditions = "vendor/getTermsAndConditions";
+  static const String getFaqList = "vendor/getFaqList";
 
   //Dashboard end points
   static const String dashboardData = "vendor/DashboardData";

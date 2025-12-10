@@ -391,6 +391,20 @@ class ProfileSetupController extends GetxController {
   void validateStepTwoFields() {
     bool isTimingSelected =
         timingControllers.values.any((element) => element.isActivated);
+
+    for (var element in timingControllers.entries) {
+      if (element.value.isActivated) {
+        if ((element.value.closingTime.hour +
+                element.value.closingTime.minute / 60.0) <
+            (element.value.openingTime.hour +
+                element.value.openingTime.minute / 60.0)) {
+          Get.snackbar("Error",
+              "${element.key} closing time cannot be less then opening time");
+          return;
+        }
+      }
+    }
+
     if (selectedFeatures.isEmpty) {
       Get.snackbar("Error", StringConstant.emptyFeatures);
     } else if (!isTimingSelected) {

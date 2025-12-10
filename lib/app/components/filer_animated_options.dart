@@ -4,6 +4,8 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:intl/intl.dart';
 
+import 'package:get/get.dart';
+
 class FilterAnimatedOption extends StatefulWidget {
   const FilterAnimatedOption(
       {super.key, required this.title, required this.controller});
@@ -67,75 +69,95 @@ class _FilterAnimatedOptionState extends State<FilterAnimatedOption> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                      context: context,
-                      initialTime: widget.controller.openingTime,
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        widget.controller.openingTime = picked;
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 40.w,
-                    padding: EdgeInsets.only(left: 10.kw),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                        border: Border.all(color: context.borderColor1)),
-                    child: Row(
-                      children: [
-                        Text(
-                          DateFormat('hh:mm a').format(DateTime(
-                              0,
-                              0,
-                              0,
-                              widget.controller.openingTime.hour,
-                              widget.controller.openingTime.minute)),
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        )
-                      ],
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: widget.controller.openingTime,
+                      );
+                      if (picked != null) {
+                        double start = picked.hour + picked.minute / 60.0;
+                        double end = widget.controller.closingTime.hour +
+                            widget.controller.closingTime.minute / 60.0;
+                        if (start > end) {
+                          Get.snackbar("Error",
+                              "Opening time cannot be greater than closing time");
+                        } else {
+                          setState(() {
+                            widget.controller.openingTime = picked;
+                          });
+                        }
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      padding: EdgeInsets.only(left: 10.kw),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                          border: Border.all(color: context.borderColor1)),
+                      child: Row(
+                        children: [
+                          Text(
+                            DateFormat('hh:mm a').format(DateTime(
+                                0,
+                                0,
+                                0,
+                                widget.controller.openingTime.hour,
+                                widget.controller.openingTime.minute)),
+                            style: TextStyleUtil.manrope14w400(
+                                color: context.black03),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                      context: context,
-                      initialTime: widget.controller.closingTime,
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        widget.controller.closingTime = picked;
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 40.w,
-                    padding: EdgeInsets.only(left: 10.kw),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                        border: Border.all(color: context.borderColor1)),
-                    child: Row(
-                      children: [
-                        Text(
-                          DateFormat('hh:mm a').format(DateTime(
-                              0,
-                              0,
-                              0,
-                              widget.controller.closingTime.hour,
-                              widget.controller.closingTime.minute)),
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        )
-                      ],
+                10.kwidthBox,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: widget.controller.closingTime,
+                      );
+                      if (picked != null) {
+                        double start = widget.controller.openingTime.hour +
+                            widget.controller.openingTime.minute / 60.0;
+                        double end = picked.hour + picked.minute / 60.0;
+
+                        if (end < start) {
+                          Get.snackbar("Error",
+                              "Closing time cannot be less than opening time");
+                        } else {
+                          setState(() {
+                            widget.controller.closingTime = picked;
+                          });
+                        }
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      padding: EdgeInsets.only(left: 10.kw),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                          border: Border.all(color: context.borderColor1)),
+                      child: Row(
+                        children: [
+                          Text(
+                            DateFormat('hh:mm a').format(DateTime(
+                                0,
+                                0,
+                                0,
+                                widget.controller.closingTime.hour,
+                                widget.controller.closingTime.minute)),
+                            style: TextStyleUtil.manrope14w400(
+                                color: context.black03),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )

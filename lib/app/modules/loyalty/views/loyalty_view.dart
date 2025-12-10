@@ -216,7 +216,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     10.kheightBox,
                     Container(
                       height: 53.kh,
-                      width: 100.w,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         color: context.loginSignupTextfieldColor,
                         border: Border.all(color: context.borderColor2),
@@ -265,7 +265,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     10.kheightBox,
                     Container(
                       height: 53.kh,
-                      width: 100.w,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         color: context.loginSignupTextfieldColor,
                         border: Border.all(color: context.borderColor2),
@@ -298,42 +298,50 @@ class LoyaltyView extends GetView<LoyaltyController> {
                       ),
                     ),
                     30.kheightBox,
-                    CustomRedElevatedButton(
-                        buttonText: StringConstant.save,
-                        width: 100.w,
-                        height: 56.kh,
-                        onPressed: () {
-                          if (Get.find<HomeController>()
-                                  .restaurantDetails
-                                  .value
-                                  .subscriptionModel !=
-                              null) {
-                            if (controller.formKey.currentState!.validate()) {
-                              controller.createLoyaltyCard();
-                            }
-                          } else {
-                            Get.dialog(ConfrimationDialog(
-                                title: StringConstant.subscriptionRequired,
-                                subTitle:
-                                    StringConstant.subscriptionRequiredText,
-                                yesButtonText:
-                                    StringConstant.checkoutSubscriptions,
-                                noButtonText: StringConstant.close,
-                                onYesTap: () async {
-                                  // Get.find<GetStorageService>().logout();
-                                  Get.back();
-                                  Get.offNamed(Routes.SUBSCRIPTION);
-                                },
-                                onNoTap: Get.back));
-                          }
-                        }),
-                    10.kheightBox,
-                    CustomRedElevatedButtonWithBorder(
-                        buttonText: StringConstant.previewCard,
-                        width: 100.w,
-                        height: 56.kh,
-                        onPressed: controller.gotoPreviewScreen),
-                    10.kheightBox
+                    SafeArea(
+                      child: Column(
+                        children: [
+                          CustomRedElevatedButton(
+                              buttonText: StringConstant.save,
+                              width: double.infinity,
+                              height: 56.kh,
+                              onPressed: () {
+                                if (Get.find<HomeController>()
+                                        .restaurantDetails
+                                        .value
+                                        .subscriptionModel !=
+                                    null) {
+                                  if (controller.formKey.currentState!
+                                      .validate()) {
+                                    controller.createLoyaltyCard();
+                                  }
+                                } else {
+                                  Get.dialog(ConfrimationDialog(
+                                      title:
+                                          StringConstant.subscriptionRequired,
+                                      subTitle: StringConstant
+                                          .subscriptionRequiredText,
+                                      yesButtonText:
+                                          StringConstant.checkoutSubscriptions,
+                                      noButtonText: StringConstant.close,
+                                      onYesTap: () async {
+                                        // Get.find<GetStorageService>().logout();
+                                        Get.back();
+                                        Get.offNamed(Routes.SUBSCRIPTION);
+                                      },
+                                      onNoTap: Get.back));
+                                }
+                              }),
+                          10.kheightBox,
+                          CustomRedElevatedButtonWithBorder(
+                              buttonText: StringConstant.previewCard,
+                              width: double.infinity,
+                              height: 56.kh,
+                              onPressed: controller.gotoPreviewScreen),
+                          10.kheightBox
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               )),
