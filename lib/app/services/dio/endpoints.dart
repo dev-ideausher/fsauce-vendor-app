@@ -59,6 +59,10 @@ class Endpoints {
   static const String getOneLoyaltyCard =
       'vendor/loyaltycard/getOneLoyaltycard?id=';
   static const String scanLoyaltyCard = 'vendor/loyaltycard/scanLoyaltyCard';
+  static const String getLoyaltyStampDatewise =
+      'vendor/loyaltycard/getLoyaltyStampDatewise';
+  static const String getLoyaltyScanStats =
+      'vendor/loyaltycard/getLoyaltyScanStats';
 
   static const String addCategory = "vendor/menu/addCategory";
   static const String getCategory = "vendor/menu/getCategory";

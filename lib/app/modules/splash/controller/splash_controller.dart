@@ -10,7 +10,7 @@ class SplashController extends GetxController {
   void onInit() {
     Future.delayed(const Duration(milliseconds: 3000), () {
       Get.offAllNamed(Get.find<GetStorageService>().isLoggedIn
-          ? Routes.NAV_BAR
+          ? Routes.PROFILE_SETUP
           : Routes.ONBOARDING);
     });
     super.onInit();

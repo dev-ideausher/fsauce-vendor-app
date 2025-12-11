@@ -22,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     this.autovalidateMode,
     this.onChanged,
     this.enabled = true,
+    this.onTap,
   });
   bool enabled;
   final IconData? prefixIcon;
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final AutovalidateMode? autovalidateMode;
   final ValueChanged<String>? onChanged;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,6 +64,7 @@ class CustomTextField extends StatelessWidget {
           10.kwidthBox,
           Expanded(
             child: TextFormField(
+              onTap: onTap,
               enabled: enabled,
               maxLength: maxLength,
               buildCounter: (context,

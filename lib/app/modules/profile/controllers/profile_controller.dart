@@ -23,11 +23,15 @@ class ProfileController extends GetxController {
     checkLoginProvider();
   }
 
-  void checkLoginProvider() {
+  void checkLoginProvider() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      showChangePassword.value = user.providerData
-          .any((userInfo) => userInfo.providerId == 'password');
+      await user.reload(); // Ensure user data is up to date
+      final refreshedUser = FirebaseAuth.instance.currentUser;
+      if (refreshedUser != null) {
+        showChangePassword.value = refreshedUser.providerData
+            .any((userInfo) => userInfo.providerId == 'password');
+      }
     }
   }
 

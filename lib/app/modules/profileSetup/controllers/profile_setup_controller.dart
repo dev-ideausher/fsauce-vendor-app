@@ -12,6 +12,9 @@ import 'package:fsauce_vendor_app/app/modules/profileSetup/views/step_two.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_picker/map_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,6 +44,54 @@ class ProfileSetupController extends GetxController {
   RxBool isRestLogoPicked = true.obs;
   RxBool isRestBannerPicked = true.obs;
   RxBool isCuisinePicked = true.obs;
+
+  final RxDouble resturLat = 0.0.obs;
+  final RxDouble resturLong = 0.0.obs;
+  GoogleMapController? mapController;
+  MapPickerController mapPickerController = MapPickerController();
+  CameraPosition cameraPosition =
+      const CameraPosition(target: LatLng(25.9397, 81.70757), zoom: 14.4746);
+
+  Future<void> updateDragLocation({String address = ""}) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          cameraPosition.target.latitude, cameraPosition.target.longitude);
+      resturLat.value = cameraPosition.target.latitude;
+      resturLong.value = cameraPosition.target.longitude;
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+
+        if (address.isEmpty) {
+          List<String> parts = [
+            place.street ?? "",
+            place.subLocality ?? "",
+            place.locality ?? ""
+          ].where((e) => e.isNotEmpty).toList();
+          streetNameController.text = parts.join(", ");
+        } else {
+          streetNameController.text = address;
+        }
+
+        // Auto fill city and postcode
+        cityNameController.text =
+            place.locality ?? place.subAdministrativeArea ?? "";
+        postCodeController.text = place.postalCode ?? "";
+      }
+    } catch (e) {
+      debugPrint("Error updating drag location: $e");
+    }
+  }
+
+  void moveToNewLatLng(double lat, double lng, {String address = ""}) {
+    final newLatLng = LatLng(lat, lng);
+    cameraPosition =
+        CameraPosition(target: newLatLng, zoom: cameraPosition.zoom);
+
+    mapController?.animateCamera(CameraUpdate.newLatLng(newLatLng));
+
+    updateDragLocation(address: address);
+  }
 
   @override
   void onInit() {

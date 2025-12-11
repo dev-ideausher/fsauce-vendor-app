@@ -12,6 +12,9 @@ import 'package:get/get.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
 import '../../../components/custom_red_elevated_button.dart';
+import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_picker/map_picker.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 
 class StepOne extends GetView<ProfileSetupController> {
@@ -279,17 +282,65 @@ class StepOne extends GetView<ProfileSetupController> {
             ],
           ),
           6.kheightBox,
-          FsvTextfield(
-            hintText: StringConstant.enterAddress,
-            controller: controller.streetNameController,
-            textCapitalization: TextCapitalization.sentences,
-            validator: (String? val) {
-              if (val == null || val.isEmpty) {
-                return StringConstant.restaurantAddressCannotBeEmpty;
+          InkWell(
+            onTap: () =>
+                Get.toNamed(Routes.LOCATION_SEARCH, arguments: "latLong")
+                    ?.then((value) {
+              if (value != null) {
+                List<String> addressWithLatLong = value;
+                final lat = double.tryParse(addressWithLatLong.first) ?? 0.0;
+                final long = double.tryParse(addressWithLatLong[1]) ?? 0.0;
+                final address = addressWithLatLong[2] ?? "";
+                controller.moveToNewLatLng(lat, long, address: address);
               }
-              return null;
-            },
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            }),
+            child: FsvTextfield(
+              enabled: false,
+              hintText: StringConstant.enterAddress,
+              controller: controller.streetNameController,
+              textCapitalization: TextCapitalization.sentences,
+              validator: (String? val) {
+                if (val == null || val.isEmpty) {
+                  return StringConstant.restaurantAddressCannotBeEmpty;
+                }
+                return null;
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ),
+          ),
+          10.kheightBox,
+          Text(StringConstant.dropAPinToLinkYourAddress,
+              style: TextStyleUtil.manrope14w500()),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.kh),
+            child: Container(
+              color: Colors.white,
+              height: 180.kh,
+              width: 100.w,
+              child: MapPicker(
+                iconWidget: const Icon(
+                  Icons.location_pin,
+                  color: Colors.red,
+                  size: 30,
+                ),
+                mapPickerController: controller.mapPickerController,
+                child: GoogleMap(
+                  zoomControlsEnabled: false,
+                  initialCameraPosition: controller.cameraPosition,
+                  onMapCreated: (map) => controller.mapController = map,
+                  onCameraIdle: () async {
+                    controller.mapPickerController.mapFinishedMoving!();
+
+                    controller.updateDragLocation();
+                  },
+                  onCameraMove: (cameraPosition1) {
+                    controller.cameraPosition = cameraPosition1;
+                  },
+                  mapType: MapType.normal,
+                  myLocationButtonEnabled: false,
+                ),
+              ),
+            ),
           ),
           10.kheightBox,
           Row(
@@ -318,38 +369,7 @@ class StepOne extends GetView<ProfileSetupController> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           10.kheightBox,
-          Row(
-            children: [
-              Text(
-                StringConstant.postCode,
-                style: TextStyleUtil.manrope14w500(),
-              ),
-              Text(
-                "*",
-                style: TextStyleUtil.manrope14w500(color: context.primary01),
-              )
-            ],
-          ),
-          6.kheightBox,
-          FsvTextfield(
-            controller: controller.postCodeController,
-            hintText: StringConstant.enterLocation,
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9 ]'))
-            ],
-            maxLength: 6,
-            validator: (String? val) {
-              if (val == null || val.isEmpty) {
-                return "Post code cannot be empty!";
-              }
-              if (val.length < 6) {
-                return "Please enter a valid post code";
-              }
-              return null;
-            },
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-          ),
+
           40.kheightBox,
           CustomRedElevatedButton(
               buttonText: controller.stepCount.value < 2

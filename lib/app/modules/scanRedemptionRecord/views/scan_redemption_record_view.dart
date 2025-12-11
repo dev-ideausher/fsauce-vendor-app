@@ -14,51 +14,87 @@ import '../controllers/scan_redemption_record_controller.dart';
 
 class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
   const ScanRedemptionRecordView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
-          title: StringConstant.scanRedemptionRecord,
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(16.kw),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                  prefixIcon: Icons.search_rounded,
-                  suffixIcon: Icons.calendar_month,
-                  fillColor: Colors.white,
-                  suffixOnPressed: () {},
-                  hintText: StringConstant.searchBydate),
-              20.kheightBox,
-              Text(
-                StringConstant.viewScanningHistory,
-                style: TextStyleUtil.manrope14w500(),
-              ),
-              10.kheightBox,
-              ...[1, 2, 3, 5].map((e) => Padding(
-                    padding: EdgeInsets.only(bottom: 10.kh),
-                    child: InkWell(
-                      onTap: controller.gotoScanHistory,
+      appBar: const CustomAppBar(
+        title: StringConstant.scanRedemptionRecord,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.kw),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomTextField(
+                controller: controller.dateController,
+                readOnly: true,
+                onTap: () {
+                  controller.pickDate(context);
+                },
+                prefixIcon: Icons.search_rounded,
+                suffixIcon: Icons.calendar_month,
+                fillColor: Colors.white,
+                suffixOnPressed: () {
+                  controller.pickDate(context);
+                },
+                hintText: StringConstant.searchBydate),
+            20.kheightBox,
+            Text(
+              StringConstant.viewScanningHistory,
+              style: TextStyleUtil.manrope14w500(),
+            ),
+            10.kheightBox,
+            Expanded(
+              child: Obx(() {
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (controller.scanHistory.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No records found",
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                  );
+                }
+                return ListView.separated(
+                  itemCount: controller.scanHistory.length,
+                  separatorBuilder: (context, index) => 10.kheightBox,
+                  itemBuilder: (context, index) {
+                    var item = controller.scanHistory[index];
+
+                    return InkWell(
+                      onTap: () => controller.gotoScanHistory(date: item.date??""),
                       child: Container(
-                        height: 56.kh,
+                        // height: 80.kh, // Increased height for stats
                         width: 100.w,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8.kw),
-                            border: Border(
-                                bottom:
-                                    BorderSide(color: context.borderColor1))),
-                        padding: EdgeInsets.symmetric(horizontal: 16.kw),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8.kw), border: Border(bottom: BorderSide(color: context.borderColor1))),
+                        padding: EdgeInsets.symmetric(horizontal: 16.kw, vertical: 12.kh),
                         child: Row(
                           children: [
                             CommonImageView(
                               svgPath: ImageConstant.scanRedump,
                             ),
                             10.kwidthBox,
-                            const Text("10-03-2024"),
-                            const Spacer(),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.date ?? "",
+                                    style: TextStyleUtil.manrope14w600(),
+                                  ),
+                                  4.kheightBox,
+                                  Text(
+                                    "Scans: ${item.totalScans ?? 0} | Reward: ${item.rewardRedeems ?? 0} | Stamp: ${item.stampRedeems ?? 0}",
+                                    style: TextStyleUtil.manrope12w400(color: context.black03),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Icon(
                               Icons.keyboard_arrow_right_rounded,
                               color: context.primary01,
@@ -66,10 +102,14 @@ class ScanRedemptionRecordView extends GetView<ScanRedemptionRecordController> {
                           ],
                         ),
                       ),
-                    ),
-                  ))
-            ],
-          ),
-        ));
+                    );
+                  },
+                );
+              }),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

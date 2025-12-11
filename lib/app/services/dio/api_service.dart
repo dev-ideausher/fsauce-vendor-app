@@ -300,6 +300,18 @@ class APIManager {
         .post(Endpoints.scanLoyaltyCard, data: data);
   }
 
+  static Future<Response> getLoyaltyStampDatewise({String? date}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(
+        Endpoints.getLoyaltyStampDatewise,
+        queryParameters: date != null ? {"date": date} : null);
+  }
+
+  static Future<Response> getLoyaltyScanStats({String? date}) async {
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(
+        Endpoints.getLoyaltyScanStats,
+        queryParameters: date != null ? {"date": date} : null);
+  }
+
   static Future<Response> getDashboardData({required String dataFor}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .get(Endpoints.dashboardData, queryParameters: {"dataFor": dataFor});
