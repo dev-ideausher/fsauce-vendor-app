@@ -29,8 +29,12 @@ class ProfileController extends GetxController {
       await user.reload(); // Ensure user data is up to date
       final refreshedUser = FirebaseAuth.instance.currentUser;
       if (refreshedUser != null) {
-        showChangePassword.value = refreshedUser.providerData
+        bool isGoogleLinked = refreshedUser.providerData
+            .any((userInfo) => userInfo.providerId == 'google.com');
+        bool hasPassword = refreshedUser.providerData
             .any((userInfo) => userInfo.providerId == 'password');
+
+        showChangePassword.value = hasPassword && !isGoogleLinked;
       }
     }
   }
