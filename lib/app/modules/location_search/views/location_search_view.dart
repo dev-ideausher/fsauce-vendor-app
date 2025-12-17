@@ -33,6 +33,8 @@ class LocationSearchView extends GetView<LocationSearchController> {
                     onChanged: (value) {
                       controller.getApiGoogle(value.toString());
                     },
+                    maxLines: 1,
+
                     hintText: StringConstant.search,
                     fillColor: context.loginSignupTextfieldColor,
                   ),

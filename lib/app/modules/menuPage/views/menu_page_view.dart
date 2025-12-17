@@ -19,7 +19,7 @@ class MenuPageView extends GetView<MenuPageController> {
           title: StringConstant.menu,
           leading: SizedBox(),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
             backgroundColor: context.primary01,
             foregroundColor: context.white,

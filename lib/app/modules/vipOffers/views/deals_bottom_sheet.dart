@@ -133,43 +133,59 @@ class DealsBottomSheet extends GetView<VipOffersController> {
               style: TextStyleUtil.manrope16w500(),
             ),
             4.kheightBox,
-            Wrap(
-              children: [
-                Text(
-                  coupon.description,
-                  style: TextStyleUtil.manrope14w400(color: context.black02),
-                ),
-              ],
-            ),
+            // Split description by line breaks and show as bullet points
+            ...coupon.description.split('\n').where((line) => line.trim().isNotEmpty).map((line) => Padding(
+                  padding: EdgeInsets.only(bottom: 8.kh),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 6.kh, right: 8.kw),
+                        child: Container(
+                          height: 6.kh,
+                          width: 6.kw,
+                          decoration: BoxDecoration(
+                            color: context.black02,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          line.trim(),
+                          style: TextStyleUtil.manrope14w400(color: context.black02),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
             20.kheightBox,
             Text(
               StringConstant.termsAndConditions,
               style: TextStyleUtil.manrope16w500(),
             ),
             4.kheightBox,
-            ...coupon.termsAndConditions.map((e) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.kh),
-                  child: Wrap(
+            ...coupon.termsAndConditions.where((e) => e.trim().isNotEmpty).map((e) => Padding(
+                  padding: EdgeInsets.only(bottom: 8.kh),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Container(
-                      //   height: 16.kh,
-                      //   width: 16.kw,
-                      //   decoration: BoxDecoration(
-                      //       color: context.primary03,
-                      //       borderRadius: BorderRadius.circular(8.kw)),
-                      //   child: Center(
-                      //     child: Icon(
-                      //       Icons.check,
-                      //       color: context.primary07,
-                      //       size: 13.ksp,
-                      //     ),
-                      //   ),
-                      // ),
-                      // 10.kwidthBox,
-                      Text(
-                        e,
-                        style:
-                            TextStyleUtil.manrope14w400(color: context.black02),
+                      Padding(
+                        padding: EdgeInsets.only(top: 6.kh, right: 8.kw),
+                        child: Container(
+                          height: 6.kh,
+                          width: 6.kw,
+                          decoration: BoxDecoration(
+                            color: context.black02,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          e.trim(),
+                          style: TextStyleUtil.manrope14w400(color: context.black02),
+                        ),
                       ),
                     ],
                   ),

@@ -43,6 +43,15 @@ class LoginEmailVerificationController extends GetxController {
       _timer?.cancel();
       DialogHelper.showLoading();
 
+      // Ensure token is fetched and saved before calling onboardVendor
+      try {
+        await auth.handleGetContact();
+      } catch (e) {
+        DialogHelper.hideDialog();
+        Get.snackbar("Error", "Failed to get authentication token");
+        return;
+      }
+
       var response = await APIManager.onboardVendor();
       DialogHelper.hideDialog();
       if (response.data['status']) {
@@ -68,8 +77,11 @@ class LoginEmailVerificationController extends GetxController {
     }
   }
 
-  void gotoProfileSetupScreen() async{
+  Future<void> gotoProfileSetupScreen() async{
     try {
+      // Ensure token is fetched and saved before calling onboardVendor
+      await auth.handleGetContact();
+      
       final response = await APIManager.onboardVendor();
       final LoginModel loginModel = LoginModel.fromJson(response.data);
       if (loginModel.status ?? false) {

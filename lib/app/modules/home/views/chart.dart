@@ -24,7 +24,10 @@ class FlBarChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // Extract labels and values
     final xLabels = graphData.map((e) => e.x).toList();
-    final maxY = (graphData.map((e) => e.y).reduce((a, b) => a > b ? a : b) / 20).ceil() * 20;
+    // Handle empty data gracefully
+    final maxY = graphData.isEmpty 
+        ? 100.0 
+        : (graphData.map((e) => e.y).reduce((a, b) => a > b ? a : b) / 20).ceil() * 20;
 
     return Container(
       decoration: BoxDecoration(

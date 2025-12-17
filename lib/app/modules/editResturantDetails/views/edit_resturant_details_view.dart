@@ -330,11 +330,12 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   10.kheightBox,
                   Text(StringConstant.dropAPinToLinkYourAddress,
                       style: TextStyleUtil.manrope14w500()),
+                  8.kheightBox,
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12.kh),
                     child: Container(
                       color: Colors.white,
-                      height: 180.kh,
+                      height: 220.kh,
                       width: 100.w,
                       child: MapPicker(
                         iconWidget: const Icon(

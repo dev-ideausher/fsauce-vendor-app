@@ -53,7 +53,7 @@ class Auth extends GetxService {
     }
     await auth.signInWithGoogle().then((value) async {
       await handleGetContact();
-      gotoHomeScreen();
+      await gotoHomeScreen();
     });
   }
 
@@ -86,8 +86,8 @@ class Auth extends GetxService {
           }
         } else {
           if (value.user!.emailVerified) {
-            handleGetContact();
-            gotoHomeScreen();
+            await handleGetContact();
+            await gotoHomeScreen();
           } else {
             // User created but email not verified
             showMySnackbar(
@@ -282,7 +282,7 @@ class Auth extends GetxService {
     // debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
   }
 
-  void gotoHomeScreen() async {
+  Future<void> gotoHomeScreen() async {
     try {
       final response = await APIManager.onboardVendor();
       final LoginModel loginModel = LoginModel.fromJson(response.data);

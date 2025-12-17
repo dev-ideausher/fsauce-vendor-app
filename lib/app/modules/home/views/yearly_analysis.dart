@@ -160,60 +160,33 @@ class YearlyAnalysis extends GetView<HomeController> {
 
         20.kheightBox,
         Obx(() {
-          if (controller.yearlyCouponChartData.isNotEmpty) {
-            return FlBarChartWidget(
-              barColor: ColorUtil.kErrorColor,
-              title: StringConstant.couponAnalysis,
-              graphData: controller.yearlyCouponChartData,
-            );
-          } else {
-            return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(child: EmptyWidget())));
-          }
+          return FlBarChartWidget(
+            barColor: ColorUtil.kErrorColor,
+            title: StringConstant.couponAnalysis,
+            graphData: controller.yearlyCouponChartData.isNotEmpty
+                ? controller.yearlyCouponChartData
+                : [],
+          );
         }),
         20.kheightBox,
         Obx(() {
-          if (controller.yearlyStampsChartData.isNotEmpty) {
-            return FlBarChartWidget(
-              barColor: ColorUtil.kErrorColor,
-              title: StringConstant.couponAnalysis,
-              graphData: controller.yearlyStampsChartData,
-            );
-          } else {
-            return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(child: EmptyWidget())));
-          }
+          return FlBarChartWidget(
+            barColor: ColorUtil.kErrorColor,
+            title: "Stamps Analysis",
+            graphData: controller.yearlyStampsChartData.isNotEmpty
+                ? controller.yearlyStampsChartData
+                : [],
+          );
         }),
         20.kheightBox,
         Obx(() {
-          if (controller.yearlyRewardsChartData.isNotEmpty) {
-            return FlBarChartWidget(
-              barColor: ColorUtil.kErrorColor,
-              title: StringConstant.couponAnalysis,
-              graphData: controller.yearlyRewardsChartData,
-            );
-          } else {
-            return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(child: EmptyWidget())));
-          }
+          return FlBarChartWidget(
+            barColor: ColorUtil.kErrorColor,
+            title: "Rewards Analysis",
+            graphData: controller.yearlyRewardsChartData.isNotEmpty
+                ? controller.yearlyRewardsChartData
+                : [],
+          );
         }),
         270.kheightBox,
       ],
