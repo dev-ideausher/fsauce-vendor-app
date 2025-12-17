@@ -26,6 +26,7 @@ class EditResturantDetailsController extends GetxController {
 
   TextEditingController restaurantNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  RxString addressText = ''.obs; // Observable address for reactive UI
   TextEditingController averagePriceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController cuisineController = TextEditingController();
@@ -85,16 +86,55 @@ class EditResturantDetailsController extends GetxController {
     }
   }
 
-  void getInitialRestaurantDetails() {
-    RestaurantDetails details =
-        Get.find<HomeController>().restaurantDetails.value;
-    restaurantNameController.text = details.restaurantName;
-    addressController.text = details.location;
-    averagePriceController.text = details.avgPrice.toString();
-    descriptionController.text = details.description;
-    initialCuisineModels.value = [details.cuisine.first];
-    restaurantLogo = details.restaurantLogo;
-    restaurantBanner = details.restaurantBanner;
+  Future<void> getInitialRestaurantDetails() async {
+    try {
+      // Fetch latest data from API
+      var response = await APIManager.getVendor();
+      
+      if (response.statusCode == 200 && response.data['status']) {
+        RestaurantDetails details = RestaurantDetails.fromJson(response.data['data']);
+        
+        // Update text controllers with latest data
+        restaurantNameController.text = details.restaurantName;
+        addressController.text = details.location;
+        addressText.value = details.location; // Update observable
+        averagePriceController.text = details.avgPrice.toString();
+        descriptionController.text = details.description;
+        initialCuisineModels.value = details.cuisine.isNotEmpty ? [details.cuisine.first] : [];
+        restaurantLogo = details.restaurantLogo;
+        restaurantBanner = details.restaurantBanner;
+        
+        // Initialize map position with saved lat/lon
+        if (details.lat.isNotEmpty && details.lon.isNotEmpty) {
+          try {
+            final lat = double.parse(details.lat);
+            final lon = double.parse(details.lon);
+            resturLat.value = lat;
+            resturLong.value = lon;
+            
+            // Update camera position to show the saved location
+            cameraPosition = CameraPosition(
+              target: LatLng(lat, lon),
+              zoom: 14.4746,
+            );
+            
+            // Move map to the saved location after a short delay
+            Future.delayed(const Duration(milliseconds: 500), () {
+              mapController?.animateCamera(
+                CameraUpdate.newLatLng(LatLng(lat, lon)),
+              );
+            });
+          } catch (e) {
+            debugPrint("Error parsing lat/lon: $e");
+          }
+        }
+      } else {
+        Get.snackbar("Error", "Failed to load restaurant details");
+      }
+    } catch (e) {
+      debugPrint("Error fetching restaurant details: $e");
+      Get.snackbar("Error", "Failed to load restaurant details");
+    }
   }
 
   Future<String> uploadRestaurantMedia(String filePath) async {
@@ -162,8 +202,8 @@ class EditResturantDetailsController extends GetxController {
           features: Get.find<HomeController>().restaurantDetails.value.features,
           timing: Get.find<HomeController>().restaurantDetails.value.timing,
           media: Get.find<HomeController>().restaurantDetails.value.media,
-          lat: Get.find<HomeController>().restaurantDetails.value.lat,
-          lon: Get.find<HomeController>().restaurantDetails.value.lon,
+          lat: resturLat.value.toString(),
+          lon: resturLong.value.toString(),
           stripeCardId:
               Get.find<HomeController>().restaurantDetails.value.stripeCardId ??
                   "",
@@ -198,33 +238,55 @@ class EditResturantDetailsController extends GetxController {
 
 
   Future<void> updateDragLocation({String address = ""}) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        cameraPosition.target.latitude, cameraPosition.target.longitude);
-    resturLat.value = cameraPosition.target.latitude;
-    resturLong.value = cameraPosition.target.longitude;
+    debugPrint("📍 updateDragLocation called with address: '$address'");
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          cameraPosition.target.latitude, cameraPosition.target.longitude);
+      resturLat.value = cameraPosition.target.latitude;
+      resturLong.value = cameraPosition.target.longitude;
+      debugPrint("📍 Lat/Lon updated: ${resturLat.value}, ${resturLong.value}");
 
-    // Build a fuller address from available placemark components when no explicit address is supplied
-    if (address.isEmpty) {
-      try {
-        final p = placemarks.first;
-        final List<String> parts = [
-          (p.name ?? "").trim(),
-          (p.street ?? "").trim(),
-          (p.subLocality ?? "").trim(),
-          (p.locality ?? "").trim(),
-          (p.administrativeArea ?? "").trim(),
-          (p.postalCode ?? "").trim(),
-          (p.country ?? "").trim(),
-        ].where((element) => element.isNotEmpty).toList();
-        address = parts.join(', ');
-      } catch (_) {
-        // Fallback to previous minimal format if placemark parts are not available
-        address =
-        '${placemarks.first.subLocality}, ${placemarks.first.administrativeArea}';
+      // Build a fuller address from available placemark components when no explicit address is supplied
+      if (address.isEmpty) {
+        try {
+          final p = placemarks.first;
+          final List<String> parts = [
+            (p.name ?? "").trim(),
+            (p.street ?? "").trim(),
+            (p.subLocality ?? "").trim(),
+            (p.locality ?? "").trim(),
+            (p.administrativeArea ?? "").trim(),
+            (p.postalCode ?? "").trim(),
+            (p.country ?? "").trim(),
+          ].where((element) => element.isNotEmpty).toList();
+          address = parts.join(', ');
+          debugPrint("📍 Built address from placemark: '$address'");
+        } catch (e) {
+          // Fallback to previous minimal format if placemark parts are not available
+          debugPrint("Error building address from placemark: $e");
+          if (placemarks.isNotEmpty) {
+            address = '${placemarks.first.subLocality ?? ''}, ${placemarks.first.locality ?? ''}, ${placemarks.first.administrativeArea ?? ''}';
+            debugPrint("📍 Fallback address: '$address'");
+          }
+        }
       }
-    }
 
-    addressController.text = updateString(address);
+      // Always update the address controller and observable
+      final cleanedAddress = updateString(address);
+      if (cleanedAddress.isNotEmpty) {
+        debugPrint("📍 Setting addressController.text to: '$cleanedAddress'");
+        debugPrint("📍 Setting addressText.value to: '$cleanedAddress'");
+        addressController.text = cleanedAddress;
+        addressText.value = cleanedAddress; // Update observable to trigger UI
+        debugPrint("✅ Address updated successfully!");
+        debugPrint("📍 Current addressController.text: '${addressController.text}'");
+        debugPrint("📍 Current addressText.value: '${addressText.value}'");
+      } else {
+        debugPrint("⚠️ Cleaned address is empty!");
+      }
+    } catch (e) {
+      debugPrint("❌ Error in updateDragLocation: $e");
+    }
   }
   String updateString(String input) {
     if (input.startsWith(',')) {
@@ -239,7 +301,7 @@ class EditResturantDetailsController extends GetxController {
 
     mapController?.animateCamera(CameraUpdate.newLatLng(newLatLng));
 
-    // Optionally, update your stored drag location
+    // Update drag location and address
     updateDragLocation(address: address);
   }
   @override

@@ -14,8 +14,6 @@ import '../modules/createPushNotification/bindings/create_push_notification_bind
 import '../modules/createPushNotification/views/create_push_notification_view.dart';
 import '../modules/editResturantDetails/bindings/edit_resturant_details_binding.dart';
 import '../modules/editResturantDetails/views/edit_resturant_details_view.dart';
-import '../modules/enableLocation/bindings/enable_location_binding.dart';
-import '../modules/enableLocation/views/enable_location_view.dart';
 import '../modules/featuresAndTimings/bindings/features_and_timings_binding.dart';
 import '../modules/featuresAndTimings/views/features_and_timings_view.dart';
 import '../modules/helpAndSupportScreen/bindings/help_and_support_screen_binding.dart';
@@ -132,11 +130,6 @@ class AppPages {
       name: _Paths.PROFILE_SETUP,
       page: () => const ProfileSetupView(),
       binding: ProfileSetupBinding(),
-    ),
-    GetPage(
-      name: _Paths.ENABLE_LOCATION,
-      page: () => const EnableLocationView(),
-      binding: EnableLocationBinding(),
     ),
     GetPage(
       name: _Paths.NAV_BAR,

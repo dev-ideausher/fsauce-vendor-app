@@ -44,17 +44,26 @@ class MenuPageController extends GetxController {
   CategoryModel? addItemSelectedCategory;
 
   void shoeAddCategoryOrItem() {
-    Get.bottomSheet(AddCategoryOrMenu());
+    Get.bottomSheet(
+      AddCategoryOrMenu(),
+      isScrollControlled: true,
+    );
   }
 
   void onAddCategoryClick() {
     Get.back();
-    Get.bottomSheet(const AddCategory());
+    Get.bottomSheet(
+      const AddCategory(),
+      isScrollControlled: true,
+    );
   }
 
   void onEditCategoryClick({required CategoryModel category}) {
     editCategoryController.text = category.name;
-    Get.bottomSheet(EditCategory(category: category));
+    Get.bottomSheet(
+      EditCategory(category: category),
+      isScrollControlled: true,
+    );
   }
 
   void editCategory({required CategoryModel category}) async {
@@ -171,7 +180,10 @@ class MenuPageController extends GetxController {
     itemImage.value = "";
     itemNameController.text = "";
     addItemSelectedCategory = categories.value[0];
-    Get.bottomSheet(const AddNewItem());
+    Get.bottomSheet(
+      const AddNewItem(),
+      isScrollControlled: true,
+    );
   }
 
   void changeSelectedCategory({required CategoryModel category}) {
@@ -214,9 +226,10 @@ class MenuPageController extends GetxController {
         imgUrl: imgUrl,
       );
       if (response.statusCode == 200) {
-        Get.back();
-        DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
+        // Refresh categories list
         await getCategory();
+        // Show success message
+        DialogHelper.showSuccess(StringConstant.itemAddedSuccessfully);
         return true;
       }
     } catch (e) {

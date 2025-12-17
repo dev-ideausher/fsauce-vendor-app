@@ -66,6 +66,7 @@ class FsvTextfield extends StatelessWidget {
       maxLines: maxLines ?? 1,
       maxLength: maxLength,
       onTap: onTap,
+      textInputAction: (maxLines ?? 1) > 1 ? TextInputAction.newline : TextInputAction.done,
       inputFormatters: [
         FilteringTextInputFormatter.deny(RegExp(r'^\s')),
         ...?inputFormatters,

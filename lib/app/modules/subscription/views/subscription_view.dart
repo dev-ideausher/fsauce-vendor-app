@@ -60,6 +60,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
           }
         }),
         body: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               10.kheightBox,
@@ -226,7 +227,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                   );
                 } else if (controller.showList.value) {
                   return ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(
                           vertical: 8.kh, horizontal: 16.kw),
                       shrinkWrap: true,
@@ -244,7 +245,9 @@ class SubscriptionView extends GetView<SubscriptionController> {
                 } else {
                   return Container();
                 }
-              })
+              }),
+              // Add bottom padding to ensure content is visible above floating button
+              SizedBox(height: 80.kh),
             ],
           ),
         ));

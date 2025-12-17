@@ -24,18 +24,25 @@ class ProfileController extends GetxController {
   }
 
   void checkLoginProvider() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await user.reload(); // Ensure user data is up to date
-      final refreshedUser = FirebaseAuth.instance.currentUser;
-      if (refreshedUser != null) {
-        bool isGoogleLinked = refreshedUser.providerData
-            .any((userInfo) => userInfo.providerId == 'google.com');
-        bool hasPassword = refreshedUser.providerData
-            .any((userInfo) => userInfo.providerId == 'password');
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.reload(); // Ensure user data is up to date
+        final refreshedUser = FirebaseAuth.instance.currentUser;
+        if (refreshedUser != null) {
+          bool isGoogleLinked = refreshedUser.providerData
+              .any((userInfo) => userInfo.providerId == 'google.com');
+          bool hasPassword = refreshedUser.providerData
+              .any((userInfo) => userInfo.providerId == 'password');
 
-        showChangePassword.value = hasPassword && !isGoogleLinked;
+          showChangePassword.value = hasPassword && !isGoogleLinked;
+        }
       }
+    } catch (e) {
+      // Handle network errors or other Firebase exceptions silently
+      debugPrint("Error checking login provider: $e");
+      // Default to showing change password option if we can't verify
+      showChangePassword.value = true;
     }
   }
 

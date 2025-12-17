@@ -378,30 +378,25 @@ class APIManager {
 
   static Future<Response> googlePlacesAutocomplete(
       String query, String apiKey, String sessionToken) async {
-    return await DioClient(Dio(), baseUrl: Endpoints.placesNewApiUrl).post(
-      "places:autocomplete",
-      data: {
+    return await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(
+      "autocomplete/json",
+      queryParameters: {
         "input": query,
-        "sessionToken": sessionToken,
+        "key": apiKey,
+        "sessiontoken": sessionToken,
       },
-      options: Options(
-        headers: {
-          "X-Goog-Api-Key": apiKey,
-        },
-      ),
     );
   }
 
   static Future<Response> googlePlaceDetails(
       String placeId, String apiKey) async {
-    return await DioClient(Dio(), baseUrl: Endpoints.placesNewApiUrl).get(
-      "places/$placeId",
-      options: Options(
-        headers: {
-          "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask": "location",
-        },
-      ),
+    return await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(
+      "details/json",
+      queryParameters: {
+        "place_id": placeId,
+        "key": apiKey,
+        "fields": "geometry",
+      },
     );
   }
 }

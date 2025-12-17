@@ -231,49 +231,62 @@ class SubscriptionController extends GetxController {
   }
 
   Future<void> addVendorSubscription() async {
-    // Safety fallback: If no card is selected but we have cards, select the first one.
+    // Auto-select first card if none selected but cards are available
     if (selectedCard.value.id == null && cardsList.isNotEmpty) {
-      print("Auto-selecting first card as fallback.");
+      debugPrint("Auto-selecting first card as fallback.");
       selectedCard.value = cardsList.first;
     }
 
+    // Validate plan selection
     if (selectedPlan.value.Id == null || selectedPlan.value.billedFrequency == null) {
       DialogHelper.showError("No plan selected!");
       return;
-    } else if (selectedCard.value.id == null) {
-      if (cardsList.isEmpty) {
-        showMySnackbar(msg: "Please add a payment method first.");
-      } else {
-        showMySnackbar(msg: "No card selected!");
-      }
+    }
 
+    // Validate card selection
+    if (selectedCard.value.id == null) {
+      final message = cardsList.isEmpty 
+          ? "Please add a payment method first." 
+          : "No card selected!";
+      showMySnackbar(msg: message);
       return;
-    } else {
-      Map<String, dynamic> data = {
-        "planId": selectedPlan.value.Id,
-        "cardId": selectedCard.value.id,
-        "billedFrequency": selectedPlan.value.billedFrequency,
-      };
-      try {
-        final response = await APIManager.addVendorSubscription(data: data);
-        if (response.data['status']) {
-          selectedPlan= AllPlanModelData().obs;
-          Get.bottomSheet(const AddedSuccessfullBottomSheet(subTitle: StringConstant.membershipPurchaseSuccess));
-          Get.find<HomeController>().getRestaurantDetails();
-          await getPlans();
-          Get.back();
-          Get.back();
-          isCancelled.value = false;
-          return;
-        } else {
-          DialogHelper.showError(response.data['message']);
-          return;
-        }
-      } catch (e) {
-        print("An error occurred while adding vendor subscription $e");
-        DialogHelper.showError(e.toString());
-        return;
+    }
+
+    // Prepare subscription data
+    final Map<String, dynamic> data = {
+      "planId": selectedPlan.value.Id,
+      "cardId": selectedCard.value.id,
+      "billedFrequency": selectedPlan.value.billedFrequency,
+    };
+
+    try {
+      final response = await APIManager.addVendorSubscription(data: data);
+      
+      if (response.data['status']) {
+        // Reset selected plan
+        selectedPlan = AllPlanModelData().obs;
+        isCancelled.value = false;
+        
+        // Show success message
+        Get.bottomSheet(
+          const AddedSuccessfullBottomSheet(
+            subTitle: StringConstant.membershipPurchaseSuccess
+          ),
+        );
+        
+        // Refresh data
+        Get.find<HomeController>().getRestaurantDetails();
+        await getPlans();
+        
+        // Go back to previous screen
+        Get.back();
+        Get.back();
+      } else {
+        DialogHelper.showError(response.data['message']);
       }
+    } catch (e) {
+      debugPrint("Error adding vendor subscription: $e");
+      DialogHelper.showError("Failed to process subscription. Please try again.");
     }
   }
 

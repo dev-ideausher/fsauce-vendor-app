@@ -14,72 +14,78 @@ class AddCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.w,
-      padding: EdgeInsets.all(16.kw),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.kw),
-              topRight: Radius.circular(24.kw))),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 5.kh,
-              width: 64.kw,
-              decoration: BoxDecoration(
-                  color: context.black01,
-                  borderRadius: BorderRadius.circular(3)),
-            ),
-            20.kheightBox,
-            Text(
-              StringConstant.addNewCategory,
-              style: TextStyleUtil.manrope18w600(color: context.black01),
-            ),
-            20.kheightBox,
-            Row(
-              children: [
-                4.kwidthBox,
-                Text(
-                  StringConstant.categoryName,
-                  style: TextStyleUtil.manrope14w500(),
-                ),
-                Text(
-                  "*",
-                  style: TextStyleUtil.manrope14w500(color: context.primary01),
-                )
-              ],
-            ),
-            10.kheightBox,
-            CustomTextField(
-                controller:
-                    Get.find<MenuPageController>().addCategoryController,
-                fillColor: context.black07,
-                maxLength: 20,
-                hintText: StringConstant.enterHere),
-            10.kheightBox,
-            20.kheightBox,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomRedElevatedButtonWithBorder(
-                  width: 43.w,
-                  height: 56.kh,
-                  buttonText: StringConstant.cancel,
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                CustomRedElevatedButton(
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Container(
+        width: 100.w,
+        padding: EdgeInsets.all(16.kw),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(24.kw),
+                topRight: Radius.circular(24.kw))),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 5.kh,
+                width: 64.kw,
+                decoration: BoxDecoration(
+                    color: context.black01,
+                    borderRadius: BorderRadius.circular(3)),
+              ),
+              20.kheightBox,
+              Text(
+                StringConstant.addNewCategory,
+                style: TextStyleUtil.manrope18w600(color: context.black01),
+              ),
+              20.kheightBox,
+              Row(
+                children: [
+                  4.kwidthBox,
+                  Text(
+                    StringConstant.categoryName,
+                    style: TextStyleUtil.manrope14w500(),
+                  ),
+                  Text(
+                    "*",
+                    style: TextStyleUtil.manrope14w500(color: context.primary01),
+                  )
+                ],
+              ),
+              10.kheightBox,
+              CustomTextField(
+                  controller:
+                      Get.find<MenuPageController>().addCategoryController,
+                  fillColor: context.black07,
+                  maxLength: 20,
+                  hintText: StringConstant.enterHere),
+              10.kheightBox,
+              20.kheightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomRedElevatedButtonWithBorder(
                     width: 43.w,
                     height: 56.kh,
-                    buttonText: StringConstant.next,
-                    onPressed: Get.find<MenuPageController>().addCategory),
-              ],
-            ),
-            50.kheightBox,
-          ],
+                    buttonText: StringConstant.cancel,
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                  CustomRedElevatedButton(
+                      width: 43.w,
+                      height: 56.kh,
+                      buttonText: StringConstant.next,
+                      onPressed: Get.find<MenuPageController>().addCategory),
+                ],
+              ),
+              20.kheightBox,
+            ],
+          ),
         ),
       ),
     );

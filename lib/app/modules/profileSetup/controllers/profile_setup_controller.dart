@@ -24,6 +24,7 @@ import 'package:mime/mime.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
 import '../../../services/responsive_size.dart';
+import '../../../services/storage.dart';
 
 class ProfileSetupController extends GetxController {
   final stepCount = 0.obs;
@@ -155,7 +156,7 @@ class ProfileSetupController extends GetxController {
     }
   }
 
-  void gotoEnableLocationScreen() async {
+  void saveAndContinue() async {
     DialogHelper.showLoading();
 
     for (var element in selectedFiles) {
@@ -175,7 +176,8 @@ class ProfileSetupController extends GetxController {
 
     if (isDataUpdated) {
       print(selectedFilesUrl);
-      Get.offAllNamed(Routes.ENABLE_LOCATION);
+      Get.find<GetStorageService>().isLoggedIn = true;
+      Get.offAllNamed(Routes.NAV_BAR);
     } else {
       Get.snackbar(StringConstant.error, StringConstant.somethingWentWrong);
     }
@@ -216,8 +218,8 @@ class ProfileSetupController extends GetxController {
       avgPrice: int.parse(averagePriceController.text.trim()),
       description: descriptionController.text.trim(),
       features: selectedFeatures,
-      lat: "",
-      lon: "",
+      lat: resturLat.value.toString(),
+      lon: resturLong.value.toString(),
       timing: timings,
       media: selectedFilesUrl,
       cuisine: selectedCuisines,
@@ -424,7 +426,7 @@ class ProfileSetupController extends GetxController {
         isRestLogoPicked.value &&
         isRestBannerPicked.value &&
         isCuisinePicked.value) {
-      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
+      stepCount.value < 2 ? gotoNextStep() : saveAndContinue();
     } else {
       if (!isRestLogoPicked.value) {
         isRestLogoPicked.value = false;
@@ -461,7 +463,7 @@ class ProfileSetupController extends GetxController {
     } else if (!isTimingSelected) {
       Get.snackbar("Error", StringConstant.plsSelectFeaturesAndTimings);
     } else {
-      stepCount.value < 2 ? gotoNextStep() : gotoEnableLocationScreen();
+      stepCount.value < 2 ? gotoNextStep() : saveAndContinue();
     }
   }
 }

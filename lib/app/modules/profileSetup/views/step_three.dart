@@ -149,7 +149,7 @@ class StepThree extends GetView<ProfileSetupController> {
               if (controller.selectedFiles.isNotEmpty) {
                 controller.stepCount.value < 2
                     ? controller.gotoNextStep
-                    : controller.gotoEnableLocationScreen();
+                    : controller.saveAndContinue();
               } else {
                 Get.snackbar("Error", StringConstant.noFilesSelected);
               }

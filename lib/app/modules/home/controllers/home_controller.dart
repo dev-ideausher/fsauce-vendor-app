@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fsauce_vendor_app/app/models/cuisine_model.dart';
 import 'package:fsauce_vendor_app/app/models/dashboard_weekly_data_model.dart';
@@ -180,10 +181,14 @@ class HomeController extends GetxController {
   String vendor = '';
 
   void getRestaurantDetails() async {
-    var response = await APIManager.getVendor();
-    vendor = response.data["data"]["_id"];
-    print("vendor id: $vendor");
-    restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+    try {
+      var response = await APIManager.getVendor();
+      vendor = response.data["data"]["_id"];
+      print("vendor id: $vendor");
+      restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void showLocationBottomSheet() {

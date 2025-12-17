@@ -152,6 +152,8 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                     controller:
                         Get.find<MenuPageController>().itemNameController,
                     fillColor: context.black07,
+                    maxLength: 500,
+                    maxLines: 5,
                     validator: (value) =>
                         controller.validateItemName(value ?? ""),
                     autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -42,29 +42,26 @@ class LocationSearchController extends GetxController {
           final response = await APIManager.googlePlacesAutocomplete(
               input, apiKey, sessionToken);
 
-          if (response.data['suggestions'] != null) {
-            List<dynamic> suggestions = response.data['suggestions'];
-            addressName.value = suggestions.map((s) {
-              var p = s['placePrediction'];
-              // Map new API response to old model to maintain compatibility
+          if (response.data['predictions'] != null) {
+            List<dynamic> predictions = response.data['predictions'];
+            addressName.value = predictions.map((p) {
               return AutocompleteModelPredictions(
-                description: p['text']['text'],
-                placeId: p['placeId'],
+                description: p['description'],
+                placeId: p['place_id'],
                 structuredFormatting:
                     AutocompleteModelPredictionsStructuredFormatting(
-                  mainText: p['structuredFormat']['mainText']['text'],
-                  secondaryText: p['structuredFormat']['secondaryText']['text'],
+                  mainText: p['structured_formatting']['main_text'],
+                  secondaryText: p['structured_formatting']['secondary_text'],
                 ),
-                terms: [
-                  AutocompleteModelPredictionsTerms(
-                      value: p['structuredFormat']['mainText']['text'],
-                      offset: 0)
-                ],
+                terms: (p['terms'] as List<dynamic>)
+                    .map((t) => AutocompleteModelPredictionsTerms(
+                        value: t['value'], offset: t['offset']))
+                    .toList(),
               );
             }).toList();
             print(addressName.value);
           } else {
-            // Handle empty suggestions if necessary
+            // Handle empty predictions if necessary
           }
         } catch (e) {
           print(e);
@@ -109,10 +106,11 @@ class LocationSearchController extends GetxController {
           : dotenv.env['MAP_ID_IOS'] ?? "";
 
       final response = await APIManager.googlePlaceDetails(placeId, apiKey);
-      if (response.data['location'] != null) {
-        final location = response.data['location'];
-        lat = location["latitude"];
-        long = location["longitude"];
+      if (response.data['result'] != null && 
+          response.data['result']['geometry'] != null) {
+        final location = response.data['result']['geometry']['location'];
+        lat = location["lat"];
+        long = location["lng"];
       }
     } catch (e) {
       print(e);

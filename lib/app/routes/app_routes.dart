@@ -10,7 +10,6 @@ abstract class Routes {
   static const VERIFICATION = _Paths.VERIFICATION;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
   static const PROFILE_SETUP = _Paths.PROFILE_SETUP;
-  static const ENABLE_LOCATION = _Paths.ENABLE_LOCATION;
   static const NAV_BAR = _Paths.NAV_BAR;
   static const MENU_PAGE = _Paths.MENU_PAGE;
   static const ADD_ITEM_DETAILS = _Paths.ADD_ITEM_DETAILS;
@@ -58,7 +57,6 @@ abstract class _Paths {
   static const VERIFICATION = '/verification';
   static const CHANGE_PASSWORD = '/change-password';
   static const PROFILE_SETUP = '/profile-setup';
-  static const ENABLE_LOCATION = '/enable-location';
   static const NAV_BAR = '/nav-bar';
   static const MENU_PAGE = '/menu-page';
   static const ADD_ITEM_DETAILS = '/add-item-details';

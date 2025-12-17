@@ -307,7 +307,12 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         //getEventList("city=" + currentAddress.value);
                       }
                     }),
-                    child: CustomTextField(
+                    child: Obx(() {
+                      // Update controller text from observable
+                      if (controller.addressText.value != controller.addressController.text) {
+                        controller.addressController.text = controller.addressText.value;
+                      }
+                      return CustomTextField(
                         enabled: false,
                         validator: (String? val) {
                           if (val == null || val.isEmpty) {
@@ -319,7 +324,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         controller: controller.addressController,
                         fillColor: context.loginSignupTextfieldColor,
                         border: Border.all(color: context.black07),
-                        hintText: StringConstant.enterAddress),
+                        hintText: StringConstant.enterAddress);
+                    }),
                   ),
                   10.kheightBox,
                   Text(StringConstant.dropAPinToLinkYourAddress,
@@ -342,11 +348,14 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                           initialCameraPosition: controller.cameraPosition,
                           onMapCreated: (map) => controller.mapController = map,
                           onCameraIdle: () async {
+                            debugPrint("🗺️ Camera idle - starting address update");
                             controller.mapPickerController.mapFinishedMoving!();
 
-                            controller.updateDragLocation();
+                            await controller.updateDragLocation();
+                            debugPrint("🗺️ Address update completed");
                           },
                           onCameraMove: (cameraPosition1) {
+                            debugPrint("🗺️ Camera moving to: ${cameraPosition1.target.latitude}, ${cameraPosition1.target.longitude}");
                             this.controller.cameraPosition = cameraPosition1;
                           },
                           mapType: MapType.normal,
@@ -422,7 +431,9 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                               }
                               return null;
                             },
-                            initialValue: controller.initialCuisineModels.first,
+                            value: controller.initialCuisineModels.isNotEmpty 
+                                ? controller.initialCuisineModels.first 
+                                : null,
                             dropdownColor: Colors.white,
                             style: TextStyleUtil.manrope16w400(),
                             onChanged: (val) {
