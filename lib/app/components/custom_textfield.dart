@@ -69,7 +69,7 @@ class CustomTextField extends StatelessWidget {
               onTap: onTap,
               enabled: enabled,
               maxLength: maxLength,
-              maxLines: ,
+              maxLines: maxLines,
               buildCounter: (context,
                       {required currentLength,
                       required isFocused,
