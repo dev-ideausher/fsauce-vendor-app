@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
@@ -325,6 +327,11 @@ class StepOne extends GetView<ProfileSetupController> {
                 ),
                 mapPickerController: controller.mapPickerController,
                 child: GoogleMap(
+                  gestureRecognizers: {
+                    Factory<OneSequenceGestureRecognizer>(
+                      () => EagerGestureRecognizer(),
+                    ),
+                  },
                   zoomControlsEnabled: false,
                   initialCameraPosition: controller.cameraPosition,
                   onMapCreated: (map) => controller.mapController = map,

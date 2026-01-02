@@ -198,8 +198,7 @@ class Auth extends GetxService {
       await handleGetContact();
     }).catchError((e) {
       if (e is FirebaseAuthException) {
-        showMySnackbar(
-            msg: e.message ?? "Something went wrong", title: "Error");
+        DialogHelper.showError(e.message ?? "Something went wrong");
       }
       print("This is from auth, createEmailPass");
       print(e);

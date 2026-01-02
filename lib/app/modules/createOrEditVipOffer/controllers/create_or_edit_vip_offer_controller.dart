@@ -44,11 +44,34 @@ class CreateOrEditVipOfferController extends GetxController {
     StringConstant.takeAwayCoupon,
   ];
 
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   getSelectedCouponDetails();
+  //   couponsList = Get.arguments[1];
+  //   Get.find<HomeController>().getRestaurantDetails();
+  // }
   @override
   void onInit() {
     super.onInit();
-    getSelectedCouponDetails();
-    couponsList = Get.arguments[1];
+
+    final args = Get.arguments;
+
+    // args[0] → isEdit
+    if (args != null && args is List && args.isNotEmpty) {
+      if (args[0] == true) {
+        getSelectedCouponDetails();
+      }
+    }
+
+    // args[1] → couponsList (only if provided)
+    if (args != null &&
+        args is List &&
+        args.length > 1 &&
+        args[1] is List<Coupon>) {
+      couponsList.value = args[1];
+    }
+
     Get.find<HomeController>().getRestaurantDetails();
   }
 
@@ -81,8 +104,14 @@ class CreateOrEditVipOfferController extends GetxController {
       descriptionController.text = coupon.description;
       validTillDateController.text = coupon.validTill.substring(0, 10);
       termsAndConditionsController.text = coupon.termsAndConditions.join(" ");
-      selectedTypeOfOffer.value = typeOfOffers.indexOf(coupon.typeOfOffer);
-      selectedValidForOption.value = validForOptions.indexOf(coupon.validFor);
+      // selectedTypeOfOffer.value = typeOfOffers.indexOf(coupon.typeOfOffer);
+      // selectedValidForOption.value = validForOptions.indexOf(coupon.validFor);
+      final typeIndex = typeOfOffers.indexOf(coupon.typeOfOffer);
+      selectedTypeOfOffer.value = typeIndex == -1 ? 0 : typeIndex;
+
+      final validForIndex = validForOptions.indexOf(coupon.validFor);
+      selectedValidForOption.value = validForIndex == -1 ? 0 : validForIndex;
+
       couponImageLink.value = coupon.image;
       if (coupon.isSheduled! && coupon.sheduleDate!.isNotEmpty) {
         scheduleDateController.value =

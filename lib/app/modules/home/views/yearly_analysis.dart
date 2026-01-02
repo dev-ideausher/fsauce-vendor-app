@@ -110,54 +110,51 @@ class YearlyAnalysis extends GetView<HomeController> {
           ),
         ),
         8.kheightBox,
-
-            Align(
-              alignment: AlignmentGeometry.centerLeft ,
-              child: Container(
-                height: 113.kh,
-                width: 44.w,
-                margin:EdgeInsetsDirectional.only(start: 16.kw) ,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 2,
-                          color: context.borderColor1.withOpacity(0.4))
-                    ]),
-                child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(() {
-                      if (controller.yearlyData.value.cards != null &&
-                          controller.yearlyData.value.cards!.totalCoupons !=
-                              null) {
-                        return Text(
-                          controller.yearlyData.value.cards!.totalCoupons
-                              .toString(),
-                          style: TextStyleUtil.manrope24w700(
-                              color: context.primary01),
-                        );
-                      } else {
-                        return Text(
-                          "0",
-                          style: TextStyleUtil.manrope24w700(
-                              color: context.primary01),
-                        );
-                      }
-                    }),
-                    5.kheightBox,
-                    Text(
-                      StringConstant.totalCouponRedemption,
-                      textAlign: TextAlign.center,
-                      style: TextStyleUtil.manrope14w500(),
-                    )
-                  ],
-                )),
-              ),
-            ),
-
+        Align(
+          alignment: AlignmentGeometry.centerLeft,
+          child: Container(
+            height: 113.kh,
+            width: 44.w,
+            margin: EdgeInsetsDirectional.only(start: 16.kw),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 2,
+                      color: context.borderColor1.withOpacity(0.4))
+                ]),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Obx(() {
+                  if (controller.yearlyData.value.cards != null &&
+                      controller.yearlyData.value.cards!.totalCoupons != null) {
+                    return Text(
+                      controller.yearlyData.value.cards!.totalCoupons
+                          .toString(),
+                      style:
+                          TextStyleUtil.manrope24w700(color: context.primary01),
+                    );
+                  } else {
+                    return Text(
+                      "0",
+                      style:
+                          TextStyleUtil.manrope24w700(color: context.primary01),
+                    );
+                  }
+                }),
+                5.kheightBox,
+                Text(
+                  StringConstant.totalCouponRedemption,
+                  textAlign: TextAlign.center,
+                  style: TextStyleUtil.manrope14w500(),
+                )
+              ],
+            )),
+          ),
+        ),
         20.kheightBox,
         Obx(() {
           return FlBarChartWidget(
@@ -172,7 +169,7 @@ class YearlyAnalysis extends GetView<HomeController> {
         Obx(() {
           return FlBarChartWidget(
             barColor: ColorUtil.kErrorColor,
-            title: "Stamps Analysis",
+            title: StringConstant.stampscollected,
             graphData: controller.yearlyStampsChartData.isNotEmpty
                 ? controller.yearlyStampsChartData
                 : [],
@@ -182,7 +179,7 @@ class YearlyAnalysis extends GetView<HomeController> {
         Obx(() {
           return FlBarChartWidget(
             barColor: ColorUtil.kErrorColor,
-            title: "Rewards Analysis",
+            title: StringConstant.rewardsRedeemed,
             graphData: controller.yearlyRewardsChartData.isNotEmpty
                 ? controller.yearlyRewardsChartData
                 : [],

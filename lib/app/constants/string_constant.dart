@@ -408,8 +408,8 @@ class StringConstant {
   static const String subscriptions = "Subscriptions";
   static const String buySubscriptionText =
       "Buy subscription plan to avail exclusive features.";
-  static const String plansAvailableText =
-      "Silver, Gold and Platinum Plans Available";
+  static const String plansAvailableText = "Platinum Plan Available";
+  // "Silver, Gold and Platinum Plans Available";
   static const String silverPlan = "Silver Plan";
   static const String goldPlan = "Gold Plan";
   static const String platinumPlan = "Platinum Plan";
@@ -606,4 +606,5 @@ class StringConstant {
   static const String camera = "Camera";
   static const String gallery = "Gallery";
   static const String add = "Add";
+  static const String couponExpired = "This coupon is expired";
 }

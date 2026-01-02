@@ -26,21 +26,32 @@ class WeeklyAnalysis extends GetView<HomeController> {
                 height: 113.kh,
                 width: 44.w,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(blurRadius: 2, color: context.borderColor1.withOpacity(0.4))]),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: context.borderColor1.withOpacity(0.4))
+                    ]),
                 child: Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Obx(() {
-                      if (controller.weeklyData.value.cards != null && controller.weeklyData.value.cards!.totalStamps != null) {
+                      if (controller.weeklyData.value.cards != null &&
+                          controller.weeklyData.value.cards!.totalStamps !=
+                              null) {
                         return Text(
-                          controller.weeklyData.value.cards!.totalStamps.toString(),
-                          style: TextStyleUtil.manrope24w700(color: context.primary01),
+                          controller.weeklyData.value.cards!.totalStamps
+                              .toString(),
+                          style: TextStyleUtil.manrope24w700(
+                              color: context.primary01),
                         );
                       } else {
                         return Text(
                           "0",
-                          style: TextStyleUtil.manrope24w700(color: context.primary01),
+                          style: TextStyleUtil.manrope24w700(
+                              color: context.primary01),
                         );
                       }
                     }),
@@ -57,21 +68,32 @@ class WeeklyAnalysis extends GetView<HomeController> {
                 height: 113.kh,
                 width: 44.w,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(blurRadius: 2, color: context.borderColor1.withOpacity(0.4))]),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: context.borderColor1.withOpacity(0.4))
+                    ]),
                 child: Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Obx(() {
-                      if (controller.weeklyData.value.cards != null && controller.weeklyData.value.cards!.totalRewards != null) {
+                      if (controller.weeklyData.value.cards != null &&
+                          controller.weeklyData.value.cards!.totalRewards !=
+                              null) {
                         return Text(
-                          controller.weeklyData.value.cards!.totalRewards.toString(),
-                          style: TextStyleUtil.manrope24w700(color: context.primary01),
+                          controller.weeklyData.value.cards!.totalRewards
+                              .toString(),
+                          style: TextStyleUtil.manrope24w700(
+                              color: context.primary01),
                         );
                       } else {
                         return Text(
                           "0",
-                          style: TextStyleUtil.manrope24w700(color: context.primary01),
+                          style: TextStyleUtil.manrope24w700(
+                              color: context.primary01),
                         );
                       }
                     }),
@@ -89,27 +111,37 @@ class WeeklyAnalysis extends GetView<HomeController> {
         ),
         8.kheightBox,
         Align(
-          alignment: AlignmentGeometry.centerLeft ,
+          alignment: AlignmentGeometry.centerLeft,
           child: Container(
             height: 113.kh,
             width: 44.w,
-            margin:EdgeInsetsDirectional.only(start: 16.kw) ,
-            decoration:
-                BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(blurRadius: 2, color: context.borderColor1.withOpacity(0.4))]),
+            margin: EdgeInsetsDirectional.only(start: 16.kw),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 2,
+                      color: context.borderColor1.withOpacity(0.4))
+                ]),
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Obx(() {
-                  if (controller.weeklyData.value.cards != null && controller.weeklyData.value.cards!.totalCoupons != null) {
+                  if (controller.weeklyData.value.cards != null &&
+                      controller.weeklyData.value.cards!.totalCoupons != null) {
                     return Text(
-                      controller.weeklyData.value.cards!.totalCoupons.toString(),
-                      style: TextStyleUtil.manrope24w700(color: context.primary01),
+                      controller.weeklyData.value.cards!.totalCoupons
+                          .toString(),
+                      style:
+                          TextStyleUtil.manrope24w700(color: context.primary01),
                     );
                   } else {
                     return Text(
                       "0",
-                      style: TextStyleUtil.manrope24w700(color: context.primary01),
+                      style:
+                          TextStyleUtil.manrope24w700(color: context.primary01),
                     );
                   }
                 }),
@@ -137,7 +169,7 @@ class WeeklyAnalysis extends GetView<HomeController> {
         Obx(() {
           return FlBarChartWidget(
             barColor: ColorUtil.kErrorColor,
-            title: "Stamps Analysis",
+            title: StringConstant.stampscollected,
             graphData: controller.weeklyStampsChartData.isNotEmpty
                 ? controller.weeklyStampsChartData
                 : [],
@@ -147,7 +179,7 @@ class WeeklyAnalysis extends GetView<HomeController> {
         Obx(() {
           return FlBarChartWidget(
             barColor: ColorUtil.kErrorColor,
-            title: "Rewards Analysis",
+            title: StringConstant.rewardsRedeemed,
             graphData: controller.weeklyRewardsChartData.isNotEmpty
                 ? controller.weeklyRewardsChartData
                 : [],

@@ -45,60 +45,73 @@ class HomeView extends GetView<HomeController> {
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          StringConstant.welcome,
-                                          style: TextStyleUtil.manrope24w600(
-                                              color: Colors.white),
-                                        ),
-                                        4.kwidthBox,
-                                        Obx(() {
-                                          return Text(
-                                            controller.restaurantDetails.value
-                                                .restaurantName,
+                                /// LEFT SIDE (CONSTRAINED)
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            StringConstant.welcome,
                                             style: TextStyleUtil.manrope24w600(
                                                 color: Colors.white),
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        CommonImageView(
-                                          svgPath: ImageConstant.locationIcon,
-                                        ),
-                                        4.kwidthBox,
-                                        Obx(() {
-                                          return SizedBox(
-                                            width: 240.kw,
-                                            child: Text(
-                                              controller.restaurantDetails.value
-                                                  .location,
-                                              style:
-                                                  TextStyleUtil.manrope14w400(
-                                                color: Colors.white,
-                                                textDecoration:
-                                                    TextDecoration.underline,
-                                                decorationColor: Colors.white,
-                                              ),
-                                            ),
-                                          );
-                                        }),
-                                      ],
-                                    ).paddingOnly(bottom: 12.kh),
-                                  ],
+                                          ),
+                                          4.kwidthBox,
+
+                                          /// Restaurant Name
+                                          Flexible(
+                                            child: Obx(() {
+                                              return Text(
+                                                controller.restaurantDetails
+                                                    .value.restaurantName,
+                                                style:
+                                                    TextStyleUtil.manrope24w600(
+                                                        color: Colors.white),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              );
+                                            }),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          CommonImageView(
+                                              svgPath:
+                                                  ImageConstant.locationIcon),
+                                          4.kwidthBox,
+                                          Expanded(
+                                            child: Obx(() {
+                                              return Text(
+                                                controller.restaurantDetails
+                                                    .value.location,
+                                                style:
+                                                    TextStyleUtil.manrope14w400(
+                                                  color: Colors.white,
+                                                  textDecoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor: Colors.white,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              );
+                                            }),
+                                          ),
+                                        ],
+                                      ).paddingOnly(bottom: 12.kh),
+                                    ],
+                                  ),
                                 ),
+
+                                /// RIGHT ICON
                                 IconButton(
                                   onPressed: Get.find<HomeController>()
                                       .gotoNotifications,
-                                  padding: const EdgeInsets.all(0),
+                                  padding: EdgeInsets.zero,
                                   icon: CommonImageView(
                                     svgPath: ImageConstant.notificationIcon,
                                   ),

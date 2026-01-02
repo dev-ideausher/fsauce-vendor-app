@@ -8,9 +8,7 @@ import 'package:get/get.dart';
 
 class AddCategoryOrMenu extends StatelessWidget {
   AddCategoryOrMenu({super.key});
-
   final controller = Get.find<MenuPageController>();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,74 +19,80 @@ class AddCategoryOrMenu extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.kw),
               topRight: Radius.circular(24.kw))),
-      child: Column(
-        children: [
-          Container(
-            height: 5.kh,
-            width: 64.kw,
-            decoration: BoxDecoration(
-                color: context.black01, borderRadius: BorderRadius.circular(3)),
-          ),
-          20.kheightBox,
-          Text(
-            StringConstant.addCategoryOrItem,
-            style: TextStyleUtil.manrope18w600(color: context.black01),
-          ),
-          20.kheightBox,
-          Obx(() {
-            if(controller.categories.isNotEmpty){
-              return InkWell(
-                onTap: controller.showAddItem,
-                child: Container(
-                  height: 53.kh,
-                  width: 100.w,
-                  padding: EdgeInsets.symmetric(horizontal: 10.kw),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border:
-                      Border(bottom: BorderSide(color: context.borderColor1))),
-                  child: Row(
-                    children: [
-                      Text(
-                        StringConstant.addItem,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.keyboard_arrow_right_outlined)
-                    ],
-                  ),
-                ),
-              );
-            } else{
-              return Text(StringConstant.startCreatingCategories, style: TextStyleUtil.manrope14w500());
-            }
-          }),
-          16.kheightBox,
-          InkWell(
-            onTap: controller.onAddCategoryClick,
-            child: Container(
-              height: 53.kh,
-              width: 100.w,
-              padding: EdgeInsets.symmetric(horizontal: 10.kw),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 5.kh,
+              width: 64.kw,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border:
-                      Border(bottom: BorderSide(color: context.borderColor1))),
-              child: Row(
-                children: [
-                  Text(
-                    StringConstant.addCategory,
-                    style: TextStyleUtil.manrope14w500(),
+                  color: context.black01,
+                  borderRadius: BorderRadius.circular(3)),
+            ),
+            20.kheightBox,
+            Text(
+              StringConstant.addCategoryOrItem,
+              style: TextStyleUtil.manrope18w600(color: context.black01),
+            ),
+            20.kheightBox,
+            Obx(() {
+              if (controller.categories.isNotEmpty) {
+                return InkWell(
+                  onTap: controller.showAddItem,
+                  child: Container(
+                    height: 53.kh,
+                    width: 100.w,
+                    padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border(
+                            bottom: BorderSide(color: context.borderColor1))),
+                    child: Row(
+                      children: [
+                        Text(
+                          StringConstant.addItem,
+                          style: TextStyleUtil.manrope14w500(),
+                        ),
+                        const Spacer(),
+                        const Icon(Icons.keyboard_arrow_right_outlined)
+                      ],
+                    ),
                   ),
-                  const Spacer(),
-                  const Icon(Icons.keyboard_arrow_right_outlined)
-                ],
+                );
+              } else {
+                return Text(StringConstant.startCreatingCategories,
+                    style: TextStyleUtil.manrope14w500());
+              }
+            }),
+            16.kheightBox,
+            InkWell(
+              onTap: controller.onAddCategoryClick,
+              child: Container(
+                height: 53.kh,
+                width: 100.w,
+                padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border(
+                        bottom: BorderSide(color: context.borderColor1))),
+                child: Row(
+                  children: [
+                    Text(
+                      StringConstant.addCategory,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.keyboard_arrow_right_outlined)
+                  ],
+                ),
               ),
             ),
-          )
-        ],
+            20.kheightBox
+          ],
+        ),
       ),
     );
   }

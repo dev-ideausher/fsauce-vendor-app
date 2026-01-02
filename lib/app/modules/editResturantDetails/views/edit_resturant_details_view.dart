@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
@@ -309,22 +311,24 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                     }),
                     child: Obx(() {
                       // Update controller text from observable
-                      if (controller.addressText.value != controller.addressController.text) {
-                        controller.addressController.text = controller.addressText.value;
+                      if (controller.addressText.value !=
+                          controller.addressController.text) {
+                        controller.addressController.text =
+                            controller.addressText.value;
                       }
                       return CustomTextField(
-                        enabled: false,
-                        validator: (String? val) {
-                          if (val == null || val.isEmpty) {
-                            return StringConstant
-                                .restaurantAddressCannotBeEmpty;
-                          }
-                          return null;
-                        },
-                        controller: controller.addressController,
-                        fillColor: context.loginSignupTextfieldColor,
-                        border: Border.all(color: context.black07),
-                        hintText: StringConstant.enterAddress);
+                          enabled: false,
+                          validator: (String? val) {
+                            if (val == null || val.isEmpty) {
+                              return StringConstant
+                                  .restaurantAddressCannotBeEmpty;
+                            }
+                            return null;
+                          },
+                          controller: controller.addressController,
+                          fillColor: context.loginSignupTextfieldColor,
+                          border: Border.all(color: context.black07),
+                          hintText: StringConstant.enterAddress);
                     }),
                   ),
                   10.kheightBox,
@@ -345,18 +349,25 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                         mapPickerController: controller.mapPickerController,
                         child: GoogleMap(
+                          gestureRecognizers: {
+                            Factory<OneSequenceGestureRecognizer>(
+                              () => EagerGestureRecognizer(),
+                            ),
+                          },
                           zoomControlsEnabled: false,
                           initialCameraPosition: controller.cameraPosition,
                           onMapCreated: (map) => controller.mapController = map,
                           onCameraIdle: () async {
-                            debugPrint("🗺️ Camera idle - starting address update");
+                            debugPrint(
+                                "🗺️ Camera idle - starting address update");
                             controller.mapPickerController.mapFinishedMoving!();
 
                             await controller.updateDragLocation();
                             debugPrint("🗺️ Address update completed");
                           },
                           onCameraMove: (cameraPosition1) {
-                            debugPrint("🗺️ Camera moving to: ${cameraPosition1.target.latitude}, ${cameraPosition1.target.longitude}");
+                            debugPrint(
+                                "🗺️ Camera moving to: ${cameraPosition1.target.latitude}, ${cameraPosition1.target.longitude}");
                             this.controller.cameraPosition = cameraPosition1;
                           },
                           mapType: MapType.normal,
@@ -432,8 +443,8 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                               }
                               return null;
                             },
-                            value: controller.initialCuisineModels.isNotEmpty 
-                                ? controller.initialCuisineModels.first 
+                            value: controller.initialCuisineModels.isNotEmpty
+                                ? controller.initialCuisineModels.first
                                 : null,
                             dropdownColor: Colors.white,
                             style: TextStyleUtil.manrope16w400(),
@@ -448,7 +459,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                                     (CuisineModel value) {
                               return DropdownMenuItem<CuisineModel>(
                                 value: value,
-                                child: Text(value.name!),
+                                child: Text(value.name ?? "Unknown"),
                               );
                             }).toList(),
                             icon: const Icon(Icons.keyboard_arrow_down_rounded),

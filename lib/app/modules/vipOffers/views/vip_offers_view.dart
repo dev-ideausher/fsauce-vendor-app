@@ -5,14 +5,11 @@ import 'package:fsauce_vendor_app/app/modules/vipOffers/views/inactive_offers_vi
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/vip_offers_controller.dart';
 
 class VipOffersView extends GetView<VipOffersController> {
   const VipOffersView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

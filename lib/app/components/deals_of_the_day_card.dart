@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
+import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
@@ -181,8 +182,17 @@ class DealsOfTheDayCard extends StatelessWidget {
                             )),
                         PopupMenuItem<int>(
                             onTap: () {
-                              Get.find<VipOffersController>()
-                                  .showActiveDialog(coupon);
+                              final DateTime now = DateTime.now().toUtc();
+                              final DateTime validTill =
+                                  DateTime.parse(coupon.validTill).toUtc();
+
+                              if (now.isAfter(validTill)) {
+                                DialogHelper.showError(
+                                    StringConstant.couponExpired);
+                              } else {
+                                Get.find<VipOffersController>()
+                                    .showActiveDialog(coupon);
+                              }
                             },
                             value: 1,
                             child: Text(

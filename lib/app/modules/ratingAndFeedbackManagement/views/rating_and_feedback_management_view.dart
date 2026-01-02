@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
+import 'package:fsauce_vendor_app/app/components/empty_rating_screen.dart';
 import 'package:fsauce_vendor_app/app/components/rating_indicator.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/ratingAndFeedbackManagement/views/review_filter_bottom_sheet.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/rating_and_feedback_management_controller.dart';
 
 class RatingAndFeedbackManagementView
@@ -19,7 +17,7 @@ class RatingAndFeedbackManagementView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: StringConstant.ratingAndFeedbackManagement,
         ),
         body: Obx(() {
@@ -211,9 +209,7 @@ class RatingAndFeedbackManagementView
             );
           } else if (controller.ratings.isEmpty) {
             return Center(
-              child: EmptyWidget(
-                title: StringConstant.noRatingsFound,
-              ),
+              child: EmptyRatingScreen(),
             );
           } else {
             return const Center(child: CircularProgressIndicator());

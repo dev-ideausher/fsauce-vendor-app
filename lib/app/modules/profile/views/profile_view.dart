@@ -69,17 +69,32 @@ class ProfileView extends GetView<ProfileController> {
                       children: [
                         5.kwidthBox,
                         Obx(() {
-                          return Text(
-                            Get.find<HomeController>()
-                                .restaurantDetails
-                                .value
-                                .cuisine
-                                .first
-                                .name!,
-                            style: TextStyleUtil.manrope14w400(
-                                color: context.black03),
+                          final cuisines = Get.find<HomeController>()
+                              .restaurantDetails
+                              .value
+                              .cuisine;
+
+                          return SizedBox(
+                            width: context.width / 1.2,
+                            height: 20, // adjust based on text size
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: cuisines.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Text(
+                                    '•${cuisines[index].name}' ?? '',
+                                    style: TextStyleUtil.manrope14w400(
+                                      color: context.black03,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           );
                         }),
+
                         // 5.kwidthBox,
                         // Container(
                         //   height: 5.kh,

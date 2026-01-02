@@ -301,15 +301,15 @@ class APIManager {
   }
 
   static Future<Response> getLoyaltyStampDatewise({String? date}) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(
-        Endpoints.getLoyaltyStampDatewise,
-        queryParameters: date != null ? {"date": date} : null);
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+        .get(Endpoints.getLoyaltyStampDatewise,
+            queryParameters: date != null ? {"date": date} : null);
   }
 
   static Future<Response> getLoyaltyScanStats({String? date}) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(
-        Endpoints.getLoyaltyScanStats,
-        queryParameters: date != null ? {"date": date} : null);
+    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+        .get(Endpoints.getLoyaltyScanStats,
+            queryParameters: date != null ? {"date": date} : null);
   }
 
   static Future<Response> getDashboardData({required String dataFor}) async {
@@ -317,9 +317,11 @@ class APIManager {
         .get(Endpoints.dashboardData, queryParameters: {"dataFor": dataFor});
   }
 
-  static Future<Response> redeemCouponCode({required String code}) async {
+  static Future<Response> redeemCouponCode(
+      {required String code, required String userId}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-        .post(Endpoints.redeemCouponCode, data: {"couponCode": code});
+        .post(Endpoints.redeemCouponCode,
+            data: {"couponCode": code, "userId": userId});
   }
 
   static Future<Response> getSubscriptionPlans() async {

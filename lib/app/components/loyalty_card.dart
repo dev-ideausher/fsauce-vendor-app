@@ -54,11 +54,14 @@ class LoyaltyCard extends StatelessWidget {
                 ),
               ),
               16.kwidthBox,
-              Text(
-                brandName,
-                style: TextStyleUtil.manrope20w700(color: Colors.white),
+              Expanded(
+                child: Text(
+                  brandName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyleUtil.manrope20w700(color: Colors.white),
+                ),
               ),
-              Spacer(),
               Container(
                 height: 37.kh,
                 width: 90.kw,

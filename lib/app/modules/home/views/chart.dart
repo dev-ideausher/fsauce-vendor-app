@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -25,9 +24,11 @@ class FlBarChartWidget extends StatelessWidget {
     // Extract labels and values
     final xLabels = graphData.map((e) => e.x).toList();
     // Handle empty data gracefully
-    final maxY = graphData.isEmpty 
-        ? 100.0 
-        : (graphData.map((e) => e.y).reduce((a, b) => a > b ? a : b) / 20).ceil() * 20;
+    final maxY = graphData.isEmpty
+        ? 100.0
+        : (graphData.map((e) => e.y).reduce((a, b) => a > b ? a : b) / 20)
+                .ceil() *
+            20;
 
     return Container(
       decoration: BoxDecoration(
@@ -54,24 +55,27 @@ class FlBarChartWidget extends StatelessWidget {
                 maxY: maxY.toDouble(),
                 minY: 0,
                 gridData: FlGridData(
-                  drawHorizontalLine: true,
-                  horizontalInterval: 20,
-                  getDrawingHorizontalLine: (value) => FlLine(
-                    color: Colors.grey.withOpacity(0.3),
-                    strokeWidth: 0.5,
+                  drawVerticalLine: true,
+                  verticalInterval: 20,
+                  getDrawingVerticalLine: (value) => FlLine(
+                    color: Colors.grey.withValues(alpha: 0.3),
+                    strokeWidth: 0.3,
                   ),
                 ),
                 titlesData: FlTitlesData(
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false)),
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
                       interval: 20,
                       reservedSize: 30,
                       getTitlesWidget: (value, meta) => Text(
-                        value.toInt().toString(),
-                        style: const TextStyle(fontSize: 12, color: Colors.black),
+                        '${value.toInt().toString()}K',
+                        style: const TextStyle(
+                            fontSize: 12, color: Colors.black54),
                       ),
                     ),
                   ),
@@ -80,10 +84,15 @@ class FlBarChartWidget extends StatelessWidget {
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
                         final index = value.toInt();
-                        if (index < 0 || index >= xLabels.length) return const SizedBox.shrink();
+                        if (index < 0 || index >= xLabels.length) {
+                          return const SizedBox.shrink();
+                        }
                         return Text(
-                          xLabels[index],
-                          style: const TextStyle(fontSize: 12, color: Colors.black),
+                          xLabels[index].split(' ').first,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black54,
+                          ),
                         );
                       },
                     ),

@@ -39,7 +39,7 @@ class MenuPageView extends GetView<MenuPageController> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    ...controller.categories.value.map(
+                    ...controller.categories.map(
                       (e) => RestaurantMenu(
                         category: e,
                       ),
