@@ -5,7 +5,6 @@ import 'package:fsauce_vendor_app/app/modules/menuPage/controllers/menu_page_con
 import 'package:fsauce_vendor_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/vipOffers/controllers/vip_offers_controller.dart';
 import 'package:get/get.dart';
-
 import '../controllers/nav_bar_controller.dart';
 
 class NavBarBinding extends Bindings {
@@ -15,6 +14,7 @@ class NavBarBinding extends Bindings {
       () => NavBarController(),
     );
 
+    Get.put(HomeController());
     Get.lazyPut<MenuPageController>(
       () => MenuPageController(),
     );
@@ -31,10 +31,6 @@ class NavBarBinding extends Bindings {
     );
     Get.lazyPut<LoyaltyCardsController>(
       () => LoyaltyCardsController(),
-    );
-
-    Get.lazyPut<HomeController>(
-      () => HomeController(),
     );
   }
 }

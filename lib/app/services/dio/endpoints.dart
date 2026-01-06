@@ -4,7 +4,9 @@ class Endpoints {
   // base url
   static const String baseUrl = "http://54.235.14.116:8000/v1/";
   static String mapApiUrl = "https://maps.googleapis.com/maps/api/place/";
+  static const String googlePlaceDetails = "details/json";
   static String placesNewApiUrl = "https://places.googleapis.com/v1/";
+  static String autoComplete = "autocomplete/json";
   //endpoints
   static const String onboardVendor = "vendor/onboarding";
   static const String fileUpload = "user/uploadFile";
@@ -84,6 +86,8 @@ class Endpoints {
   static const String deleteCoupon = "/vendor/coupon/deleteCoupon?id=";
   static const String redeemCouponCode = "vendor/coupon/redeemCoupon";
 
+  //get all users endpoint
+  static const String getPremiumUsers = 'vendor/getPremiumUsers';
   // receiveTimeout
   static const int receiveTimeout = 15000;
 

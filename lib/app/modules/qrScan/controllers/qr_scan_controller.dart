@@ -1,103 +1,131 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/added_successfull_bottomsheet.dart';
-import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+import 'package:fsauce_vendor_app/app/models/premium_user_model.dart';
 import 'package:fsauce_vendor_app/app/routes/app_pages.dart';
+import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import '../../../constants/string_constant.dart';
 
 class QrScanController extends GetxController {
-  //TODO: Implement QrScanController
-
-  Barcode? result;
-  QRViewController? qrViewController;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final formKey = GlobalKey<FormState>();
 
   TextEditingController couponCodeController = TextEditingController();
-  RxBool canRedeem = false.obs;
 
-  final formKey = GlobalKey<FormState>();
+  final premiumUsers = <Result>[].obs;
+  final selectedPremiumUser = Rx<Result?>(null);
+
+  final canRedeem = false.obs;
+  final showUserError = false.obs;
+
+  final isLoading = false.obs;
+  final isMoreLoading = false.obs;
+
+  final ScrollController scrollController = ScrollController();
+
+  int page = 1;
+  int totalPages = 1;
+  final int limit = 10;
+  String searchQuery = "";
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchUsers(isInitial: true);
+    scrollController.addListener(_onScroll);
+  }
+
+  void updateRedeemState() {
+    canRedeem.value = selectedPremiumUser.value != null &&
+        couponCodeController.text.isNotEmpty;
+  }
+
+  void onSearch(String value) {
+    searchQuery = value;
+    fetchUsers(isInitial: true);
+  }
+
+  void _onScroll() {
+    if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 100 &&
+        !isMoreLoading.value &&
+        page < totalPages) {
+      loadMore();
+    }
+  }
+
+  Future<void> fetchUsers({bool isInitial = false}) async {
+    try {
+      if (isInitial) {
+        page = 1;
+        premiumUsers.clear();
+        isLoading.value = true;
+      } else {
+        isMoreLoading.value = true;
+      }
+
+      final response = await APIManager.getPremiumUsers(
+        page: page.toString(),
+        limit: limit.toString(),
+        search: searchQuery,
+      );
+
+      if (response.data['status'] == true) {
+        final model = PremiumUserModel.fromJson(response.data['data']);
+        totalPages = model.totalPages ?? 1;
+        premiumUsers.addAll(model.results ?? []);
+      }
+    } finally {
+      isLoading.value = false;
+      isMoreLoading.value = false;
+    }
+  }
+
+  void loadMore() {
+    page++;
+    fetchUsers();
+  }
+
+  Future<void> redeemCode({required String userId}) async {
+    if (!formKey.currentState!.validate()) return;
+
+    try {
+      final response = await APIManager.redeemCouponCode(
+        code: couponCodeController.text,
+        userId: userId,
+      );
+
+      if (response.data['status']) {
+        Get.bottomSheet(
+          const AddedSuccessfullBottomSheet(
+            subTitle: StringConstant.redeemedSuccessfully,
+          ),
+        );
+
+        Future.delayed(const Duration(seconds: 1), () {
+          couponCodeController.clear();
+          selectedPremiumUser.value = null;
+          canRedeem.value = false;
+          Get.offAllNamed(Routes.NAV_BAR);
+        });
+      } else {
+        DialogHelper.showError(
+            response.data['message'] ?? StringConstant.somethingWentWrong);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        DialogHelper.showError(
+            e.response?.data['message'] ?? StringConstant.somethingWentWrong);
+      }
+    }
+  }
 
   @override
   void onClose() {
-    super.onClose();
     couponCodeController.dispose();
-  }
-
-  void onQRViewCreated(QRViewController controller) {
-    controller.scannedDataStream.listen((scanData) {
-      result = scanData;
-    });
-  }
-
-  Future<void> scanQR() async {
-    if (result != null) {
-      try {
-        String qrData = result!.code!;
-      } catch (e) {
-        print("Error while scanning QR: $e");
-        Get.snackbar("Error", StringConstant.somethingWentWrong);
-      }
-    }
-  }
-
-  // Future<void> redeemCode() async {
-  //   if (couponCodeController.text.isNotEmpty) {
-  //     try {
-  //       String id = Get.find<HomeController>().vendor;
-  //       var response = await APIManager.redeemCouponCode(
-  //           code: couponCodeController.text, userId: id);
-  //       if (response.data['status']) {
-  //         Get.bottomSheet(const AddedSuccessfullBottomSheet(
-  //             subTitle: StringConstant.redeemedSuccessfully));
-  //       } else if (!response.data['status']) {
-  //         Get.snackbar("Error", response.data['message']);
-  //       }
-  //     } catch (e) {
-  //       print("Error while scanning QR: $e");
-  //     }
-  //   }
-  // }
-  Future<void> redeemCode() async {
-    if (couponCodeController.text.isNotEmpty) {
-      try {
-        String id = Get.find<HomeController>().vendor;
-
-        var response = await APIManager.redeemCouponCode(
-          code: couponCodeController.text,
-          userId: id,
-        );
-
-        if (response.data['status']) {
-          // Show success bottom sheet
-          Get.bottomSheet(
-            const AddedSuccessfullBottomSheet(
-              subTitle: StringConstant.redeemedSuccessfully,
-            ),
-          );
-
-          // Wait for a short duration so user can see success
-          Future.delayed(const Duration(seconds: 1), () {
-            // 1️⃣ Clear input
-            couponCodeController.clear();
-
-            // 2️⃣ Close bottom sheet
-            if (Get.isBottomSheetOpen ?? false) {
-              Get.back();
-            }
-
-            // 3️⃣ Navigate to Home & remove all previous screens
-            Get.offAllNamed(Routes.NAV_BAR);
-          });
-        } else {
-          Get.snackbar("Error", response.data['message']);
-        }
-      } catch (e) {
-        print("Error while redeeming code: $e");
-        Get.snackbar("Error", StringConstant.somethingWentWrong);
-      }
-    }
+    scrollController.dispose();
+    super.onClose();
   }
 }

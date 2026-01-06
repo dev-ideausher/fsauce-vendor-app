@@ -22,7 +22,7 @@ dependencies:
   flutter_hsvcolor_picker: ^1.5.1
   flutter_image_compress: ^2.4.0
   flutter_rating_bar: ^4.0.1
-  flutter_stripe: ^12.1.1
+  flutter_stripe: ^10.2.0
   flutter_svg: ^2.2.3
   geolocator: ^14.0.2
   get: ^4.7.3

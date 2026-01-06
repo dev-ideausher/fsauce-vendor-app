@@ -86,18 +86,22 @@ class HomeView extends GetView<HomeController> {
                                           4.kwidthBox,
                                           Expanded(
                                             child: Obx(() {
-                                              return Text(
-                                                controller.restaurantDetails
-                                                    .value.location,
-                                                style:
-                                                    TextStyleUtil.manrope14w400(
-                                                  color: Colors.white,
-                                                  textDecoration:
-                                                      TextDecoration.underline,
-                                                  decorationColor: Colors.white,
+                                              return SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Text(
+                                                  controller.restaurantDetails
+                                                      .value.location,
+                                                  style: TextStyleUtil
+                                                      .manrope14w400(
+                                                    color: Colors.white,
+                                                    textDecoration:
+                                                        TextDecoration
+                                                            .underline,
+                                                    decorationColor:
+                                                        Colors.white,
+                                                  ),
                                                 ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
                                               );
                                             }),
                                           ),

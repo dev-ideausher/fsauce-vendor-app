@@ -524,8 +524,10 @@ class StringConstant {
   static const String redeemCouponCode = "Redeem Coupon Code";
   static const String enterCodeBelow =
       "Enter your coupon code below to redeem the discount.";
+  static const String selectuser = 'Select user';
   static const String couponCode = "Coupon code";
   static const String enterCouponCode = "Enter coupon code";
+  static const String searchUser = 'Search user';
   static const String redeem = "Redeem";
   static const String redeemedSuccessfully = "Redeemed Successfully!";
   static const String plsSelectFeaturesAndTimings =

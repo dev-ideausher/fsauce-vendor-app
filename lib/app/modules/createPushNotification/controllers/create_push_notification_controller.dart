@@ -1,15 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/modules/pushNotification/controllers/push_notification_controller.dart';
+import 'package:fsauce_vendor_app/app/modules/notifications/controllers/notifications_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
-
 import '../../../components/confirmation_dialog.dart';
 import '../../../constants/string_constant.dart';
-
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
-
 import '../../../routes/app_pages.dart';
 
 class CreatePushNotificationController extends GetxController {
@@ -80,18 +78,20 @@ class CreatePushNotificationController extends GetxController {
                 : selectedDate.value.toString()
           });
           if (response.data['status']) {
-            Get.back();
             DialogHelper.showSuccess(
                 StringConstant.notificationSentSuccessfully);
-            Get.find<PushNotificationController>().getNotifications();
-
+            final controller = Get.put(NotificationsController());
+            controller.getNotifications();
             return;
           } else {
             DialogHelper.showError(response.data['message']);
             return;
           }
         } catch (e) {
-          DialogHelper.showError(e.toString());
+          if (e is DioException) {
+            DialogHelper.showError(e.response?.data['message'] ??
+                StringConstant.somethingWentWrong);
+          }
           return;
         }
       }

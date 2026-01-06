@@ -4,9 +4,7 @@ import 'package:fsauce_vendor_app/app/components/restaurant_menu.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
-
 import 'package:get/get.dart';
-
 import '../../../components/empty_widget.dart';
 import '../controllers/menu_page_controller.dart';
 

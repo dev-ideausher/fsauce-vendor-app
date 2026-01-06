@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:fsauce_vendor_app/app/components/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/models/coupon_model.dart';
 import 'package:fsauce_vendor_app/app/models/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/models/restaurants_details_model.dart';
@@ -232,7 +231,6 @@ class APIManager {
         .get(Endpoints.getNotification, queryParameters: {
       "page": page,
       "limit": limit,
-      "limit": limit,
     });
   }
 
@@ -241,7 +239,6 @@ class APIManager {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
         .get(Endpoints.getVendorNotifications, queryParameters: {
       "page": page,
-      "limit": limit,
       "limit": limit,
     });
   }
@@ -381,7 +378,7 @@ class APIManager {
   static Future<Response> googlePlacesAutocomplete(
       String query, String apiKey, String sessionToken) async {
     return await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(
-      "autocomplete/json",
+      Endpoints.autoComplete,
       queryParameters: {
         "input": query,
         "key": apiKey,
@@ -393,11 +390,25 @@ class APIManager {
   static Future<Response> googlePlaceDetails(
       String placeId, String apiKey) async {
     return await DioClient(Dio(), baseUrl: Endpoints.mapApiUrl).get(
-      "details/json",
+      Endpoints.googlePlaceDetails,
       queryParameters: {
         "place_id": placeId,
         "key": apiKey,
         "fields": "geometry",
+      },
+    );
+  }
+
+  static Future<Response> getPremiumUsers(
+      {required String page,
+      required String limit,
+      required String search}) async {
+    return await DioClient(Dio(), baseUrl: Endpoints.baseUrl).get(
+      Endpoints.getPremiumUsers,
+      queryParameters: {
+        "page": page,
+        "limit": limit,
+        "search": search,
       },
     );
   }
