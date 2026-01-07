@@ -185,7 +185,8 @@ class HomeController extends GetxController {
       var response = await APIManager.getVendor();
       vendor = response.data["data"]["_id"];
       print("vendor id: $vendor");
-      restaurantDetails.value = RestaurantDetails.fromJson(response.data["data"]);
+      restaurantDetails.value =
+          RestaurantDetails.fromJson(response.data["data"]);
     } catch (e) {
       debugPrint(e.toString());
     }

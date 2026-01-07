@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../controllers/create_push_notification_controller.dart';
 
 class CreatePushNotificationBinding extends Bindings {
@@ -8,5 +7,7 @@ class CreatePushNotificationBinding extends Bindings {
     Get.lazyPut<CreatePushNotificationController>(
       () => CreatePushNotificationController(),
     );
+    // REMOVE this:
+    // Get.put(NotificationsController()); // ❌ Don't put it here
   }
 }

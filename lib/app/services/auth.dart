@@ -51,10 +51,18 @@ class Auth extends GetxService {
     if (auth.hasUser) {
       await FirebaseAuthenticationService().logout();
     }
-    await auth.signInWithGoogle().then((value) async {
-      await handleGetContact();
-      await gotoHomeScreen();
-    });
+    // await auth.signInWithGoogle().then((value) async {
+    //   await handleGetContact();
+    //   await gotoHomeScreen();
+    // });
+    final result = await auth.signInWithGoogle();
+    if (result.user == null) {
+      showMySnackbar(msg: "Google login canceled or failed", title: "Error");
+      return;
+    }
+
+    await handleGetContact();
+    await gotoHomeScreen();
   }
 
   Future<void> apple() async {
@@ -271,14 +279,27 @@ class Auth extends GetxService {
     }
   }
 
-  Future<void> handleGetContact() async {
-    final mytoken = await _firebaseAuth.currentUser!.getIdToken(true);
-    final fireUid = _firebaseAuth.currentUser!.uid;
+  // Future<void> handleGetContact() async {
+  //   final mytoken = await _firebaseAuth.currentUser!.getIdToken(true);
+  //   final fireUid = _firebaseAuth.currentUser!.uid;
 
-    Get.find<GetStorageService>().encjwToken = mytoken!;
+  //   Get.find<GetStorageService>().encjwToken = mytoken!;
+  //   Get.find<GetStorageService>().setFirebaseUid = fireUid;
+  //   // log(Get.find<GetStorageService>().encjwToken);
+  //   // debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
+  // }
+  Future<void> handleGetContact() async {
+    final currentUser = _firebaseAuth.currentUser;
+    if (currentUser == null) {
+      showMySnackbar(msg: "User not logged in", title: "Authentication Error");
+      return;
+    }
+
+    final mytoken = await currentUser.getIdToken(true);
+    final fireUid = currentUser.uid;
+
+    Get.find<GetStorageService>().encjwToken = mytoken ?? 'No Token';
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
-    // log(Get.find<GetStorageService>().encjwToken);
-    // debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
   }
 
   Future<void> gotoHomeScreen() async {

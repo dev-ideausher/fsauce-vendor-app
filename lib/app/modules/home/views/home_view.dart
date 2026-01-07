@@ -67,7 +67,8 @@ class HomeView extends GetView<HomeController> {
                                             child: Obx(() {
                                               return Text(
                                                 controller.restaurantDetails
-                                                    .value.restaurantName,
+                                                        .value.restaurantName ??
+                                                    "",
                                                 style:
                                                     TextStyleUtil.manrope24w600(
                                                         color: Colors.white),
@@ -91,7 +92,8 @@ class HomeView extends GetView<HomeController> {
                                                     Axis.horizontal,
                                                 child: Text(
                                                   controller.restaurantDetails
-                                                      .value.location,
+                                                          .value.location ??
+                                                      "",
                                                   style: TextStyleUtil
                                                       .manrope14w400(
                                                     color: Colors.white,

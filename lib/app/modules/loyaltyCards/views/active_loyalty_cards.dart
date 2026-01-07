@@ -31,9 +31,10 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                   return Obx(() {
                     return LoyaltyCard(
                         brandName: Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .restaurantName,
+                                .restaurantDetails
+                                .value
+                                .restaurantName ??
+                            "",
                         offer: controller.activeLoyaltyCards[index].title,
                         brandColor: Color(int.parse(controller
                             .activeLoyaltyCards[index].cardBackgroundColor)),
@@ -44,9 +45,10 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                             controller.activeLoyaltyCards[index].noOfStamps,
                         width: 100.w,
                         brandLogo: Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .restaurantLogo);
+                                .restaurantDetails
+                                .value
+                                .restaurantLogo ??
+                            "");
                   });
                 },
                 separatorBuilder: (ctx, index) {

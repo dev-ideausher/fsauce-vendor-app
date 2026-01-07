@@ -227,7 +227,7 @@ class APIManager {
 
   static Future<Response> getNotifications(
       {int page = 1, int limit = 10}) async {
-    return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+    return await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
         .get(Endpoints.getNotification, queryParameters: {
       "page": page,
       "limit": limit,

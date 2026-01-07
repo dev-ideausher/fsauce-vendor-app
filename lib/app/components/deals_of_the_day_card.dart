@@ -117,91 +117,188 @@ class DealsOfTheDayCard extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(
-            right: 0,
-            top: 0,
-            child: isActive
-                ? Padding(
-                    padding: EdgeInsets.only(bottom: 10.kh),
-                    child: PopupMenuButton<int>(
-                      color: Colors.white,
-                      iconColor: context.white,
-                      onSelected: (item) => handleClick(item),
-                      itemBuilder: (context) => [
-                        PopupMenuItem<int>(
-                            onTap: () {
-                              Get.find<VipOffersController>()
-                                  .gotoEditVipOffer(coupon);
-                            },
-                            value: 1,
-                            child: Text(
-                              StringConstant.edit,
-                              style: TextStyleUtil.manrope14w400(),
-                            )),
-                        PopupMenuItem<int>(
-                            onTap: () {
-                              Get.find<VipOffersController>()
-                                  .showInactiveDialog(coupon);
-                            },
-                            value: 1,
-                            child: Text(
-                              StringConstant.inactiveOffer,
-                              style: TextStyleUtil.manrope14w400(),
-                            )),
-                        PopupMenuItem<int>(
-                            onTap: () {
-                              Get.find<VipOffersController>()
-                                  .showDeleteDialog(coupon);
-                            },
-                            value: 1,
-                            child: Text(
-                              StringConstant.deleteOffer,
-                              style: TextStyleUtil.manrope14w400(
-                                color: context.primary01,
-                              ),
-                            )),
-                      ],
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(bottom: 10.kh),
-                    child: PopupMenuButton<int>(
-                      color: Colors.white,
-                      iconColor: context.white,
-                      onSelected: (item) => handleClick(item),
-                      itemBuilder: (context) => [
-                        PopupMenuItem<int>(
-                            onTap: () {
-                              Get.find<VipOffersController>()
-                                  .gotoEditVipOffer(coupon);
-                            },
-                            value: 1,
-                            child: Text(
-                              StringConstant.edit,
-                              style: TextStyleUtil.manrope14w400(),
-                            )),
-                        PopupMenuItem<int>(
-                            onTap: () {
-                              final DateTime now = DateTime.now().toUtc();
-                              final DateTime validTill =
-                                  DateTime.parse(coupon.validTill).toUtc();
+        // Positioned(
+        //     right: 0,
+        //     top: 0,
+        //     child: isActive
+        //         ? Padding(
+        //             padding: EdgeInsets.only(bottom: 10.kh),
+        //             child: PopupMenuButton<int>(
+        //               color: Colors.white,
+        //               iconColor: context.white,
+        //               onSelected: (item) => handleClick(item),
+        //               itemBuilder: (context) => [
+        //                 PopupMenuItem<int>(
+        //                     onTap: () {
+        //                       Get.find<VipOffersController>()
+        //                           .gotoEditVipOffer(coupon);
+        //                     },
+        //                     value: 1,
+        //                     child: Text(
+        //                       StringConstant.edit,
+        //                       style: TextStyleUtil.manrope14w400(),
+        //                     )),
+        //                 PopupMenuItem<int>(
+        //                     onTap: () {
+        //                       Get.find<VipOffersController>()
+        //                           .showInactiveDialog(coupon);
+        //                     },
+        //                     value: 1,
+        //                     child: Text(
+        //                       StringConstant.inactiveOffer,
+        //                       style: TextStyleUtil.manrope14w400(),
+        //                     )),
+        //                 PopupMenuItem<int>(
+        //                     onTap: () {
+        //                       Get.find<VipOffersController>()
+        //                           .showDeleteDialog(coupon);
+        //                     },
+        //                     value: 1,
+        //                     child: Text(
+        //                       StringConstant.deleteOffer,
+        //                       style: TextStyleUtil.manrope14w400(
+        //                         color: context.primary01,
+        //                       ),
+        //                     )),
+        //               ],
+        //             ),
+        //           )
+        //         : Padding(
+        //             padding: EdgeInsets.only(bottom: 10.kh),
+        //             child: PopupMenuButton<int>(
+        //               color: Colors.white,
+        //               iconColor: context.white,
+        //               onSelected: (item) => handleClick(item),
+        //               itemBuilder: (context) => [
+        //                 PopupMenuItem<int>(
+        //                     onTap: () {
+        //                       Get.find<VipOffersController>()
+        //                           .gotoEditVipOffer(coupon);
+        //                     },
+        //                     value: 1,
+        //                     child: Text(
+        //                       StringConstant.edit,
+        //                       style: TextStyleUtil.manrope14w400(),
+        //                     )),
+        //                 PopupMenuItem<int>(
+        //                     onTap: () {
+        //                       final DateTime now = DateTime.now().toUtc();
+        //                       final DateTime validTill =
+        //                           DateTime.parse(coupon.validTill).toUtc();
 
-                              if (now.isAfter(validTill)) {
-                                DialogHelper.showError(
-                                    StringConstant.couponExpired);
-                              } else {
-                                Get.find<VipOffersController>()
-                                    .showActiveDialog(coupon);
-                              }
-                            },
-                            value: 1,
-                            child: Text(
-                              StringConstant.activeOffer,
-                              style: TextStyleUtil.manrope14w400(),
-                            )),
-                      ],
+        //                       if (now.isAfter(validTill)) {
+        //                         DialogHelper.showError(
+        //                             StringConstant.couponExpired);
+        //                       } else {
+        //                         Get.find<VipOffersController>()
+        //                             .showActiveDialog(coupon);
+        //                       }
+        //                     },
+        //                     value: 1,
+        //                     child: Text(
+        //                       StringConstant.activeOffer,
+        //                       style: TextStyleUtil.manrope14w400(),
+        //                     )),
+        //               ],
+        //             ),
+        //           )),
+        Positioned(
+          right: 0,
+          top: 0,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 10.kh),
+            child: PopupMenuButton<int>(
+              color: Colors.white,
+              iconColor: context.white,
+              onSelected: (item) => handleClick(item),
+              itemBuilder: (context) {
+                final DateTime now = DateTime.now().toUtc();
+                final DateTime validTill =
+                    DateTime.tryParse(coupon.validTill ?? '')?.toUtc() ??
+                        DateTime.now()
+                            .subtract(Duration(days: 1)); // fallback expired
+
+                bool isExpired = now.isAfter(validTill);
+
+                List<PopupMenuEntry<int>> menuItems = [];
+
+                if (!isExpired) {
+                  // Coupon is valid → can edit or activate
+                  menuItems.add(
+                    PopupMenuItem<int>(
+                      onTap: () {
+                        Get.find<VipOffersController>()
+                            .gotoEditVipOffer(coupon);
+                      },
+                      value: 1,
+                      child: Text(
+                        StringConstant.edit,
+                        style: TextStyleUtil.manrope14w400(),
+                      ),
                     ),
-                  )),
+                  );
+                  menuItems.add(
+                    PopupMenuItem<int>(
+                      onTap: () {
+                        Get.find<VipOffersController>()
+                            .showActiveDialog(coupon);
+                      },
+                      value: 2,
+                      child: Text(
+                        StringConstant.activeOffer,
+                        style: TextStyleUtil.manrope14w400(),
+                      ),
+                    ),
+                  );
+                } else {
+                  // Coupon expired → greyed out edit/activate
+                  menuItems.add(
+                    PopupMenuItem<int>(
+                      onTap: () {
+                        DialogHelper.showError(StringConstant.couponExpired);
+                      },
+                      value: 3,
+                      child: Text(
+                        StringConstant.edit,
+                        style: TextStyleUtil.manrope14w400(color: Colors.grey),
+                      ),
+                    ),
+                  );
+                  menuItems.add(
+                    PopupMenuItem<int>(
+                      onTap: () {
+                        DialogHelper.showError(StringConstant.couponExpired);
+                      },
+                      value: 4,
+                      child: Text(
+                        StringConstant.activeOffer,
+                        style: TextStyleUtil.manrope14w400(color: Colors.grey),
+                      ),
+                    ),
+                  );
+                }
+
+                // Delete is always allowed
+                menuItems.add(
+                  PopupMenuItem<int>(
+                    onTap: () {
+                      Get.find<VipOffersController>().showDeleteDialog(coupon);
+                    },
+                    value: 5,
+                    child: Text(
+                      StringConstant.deleteOffer,
+                      style: TextStyleUtil.manrope14w400(
+                        color: context.primary01,
+                      ),
+                    ),
+                  ),
+                );
+
+                return menuItems;
+              },
+            ),
+          ),
+        )
       ]),
     );
   }

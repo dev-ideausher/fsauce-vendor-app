@@ -35,6 +35,7 @@ class DealsOfTheDayCardDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String date = coupon.sheduleDate ?? "";
+
     return Container(
       height: isNormalOffer ? 188.kh : 216.kh,
       width: width,

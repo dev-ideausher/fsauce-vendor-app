@@ -8,9 +8,7 @@ import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.d
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/profile_details_controller.dart';
 
 class ProfileDetailsView extends GetView<ProfileDetailsController> {
@@ -48,38 +46,48 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                           width: 88.kh,
                           fit: BoxFit.cover,
                           url: //"https://w7.pngwing.com/pngs/870/682/png-transparent-domino-s-pizza-logo-domino-s-pizza-pizza-delivery-logo-pizza-domino-s-pizza-pizza-pizza-pizza-delivery.png"
-                          Get
-                              .find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .restaurantLogo);
+                              Get.find<HomeController>()
+                                  .restaurantDetails
+                                  .value
+                                  .restaurantLogo);
                     }),
                   ),
                   Obx(() {
                     return Text(
-                      Get
-                          .find<HomeController>()
-                          .restaurantDetails
-                          .value
-                          .restaurantName,
+                      Get.find<HomeController>()
+                              .restaurantDetails
+                              .value
+                              .restaurantName ??
+                          "Not Mentioned",
                       style: TextStyleUtil.manrope16w600(),
                     );
                   }),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Obx(() {
-                        return Text(
-                          Get
-                              .find<HomeController>()
-                              .restaurantDetails
-                              .value.cuisine.first.name!,
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        );
-                      }),
-                    ],
-                  ),
+                  Obx(() {
+                    final cuisines = Get.find<HomeController>()
+                        .restaurantDetails
+                        .value
+                        .cuisine;
+
+                    return SizedBox(
+                      width: context.width / 1.2,
+                      height: 20, // adjust based on text size
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: cuisines.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              '•${cuisines[index].name}' ?? '',
+                              style: TextStyleUtil.manrope14w400(
+                                color: context.black03,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }),
                   2.kheightBox,
                 ],
               ),

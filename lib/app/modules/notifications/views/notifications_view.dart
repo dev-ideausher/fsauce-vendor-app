@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/components/notification_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/models/notification_model.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
@@ -38,8 +39,12 @@ class NotificationsView extends GetView<NotificationsController> {
                     }
                     final notification = controller.notifications[index];
                     return NotificationCard(
-                      subTitle: notification.body ?? "",
-                      timeAgo: notification.timeAgo,
+                      subTitle: notification.isSheduled == true
+                          ? "Scheduled on ${notification.sheduledDate?.toLocal().toString().split(' ')[0]}"
+                          : "",
+                      timeAgo: notification.createdAt != null
+                          ? timeAgo(notification.createdAt!)
+                          : "",
                       title: notification.title ?? "",
                     );
                   }),

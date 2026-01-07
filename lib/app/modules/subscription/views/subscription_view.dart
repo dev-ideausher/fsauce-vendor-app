@@ -44,13 +44,13 @@ class SubscriptionView extends GetView<SubscriptionController> {
               buttonText: controller.selectedPlan.value.title != null
                   ? StringConstant.purchasePlan
                   : "Select a plan",
-              buttonColor:  controller.selectedPlan.value.title != null
+              buttonColor: controller.selectedPlan.value.title != null
                   ? null
                   : context.black05,
               height: 56.kh,
               width: MediaQuery.of(context).size.width * 0.9,
               onPressed: () {
-                if ( controller.selectedPlan.value.title  != null) {
+                if (controller.selectedPlan.value.title != null) {
                   controller.goToPurchasePlanView();
                 }
               },
@@ -75,7 +75,8 @@ class SubscriptionView extends GetView<SubscriptionController> {
                       4.kheightBox,
                       Text(
                         StringConstant.plansAvailableText,
-                        style: TextStyleUtil.manrope14w500(color: ColorUtil.kBlack04),
+                        style: TextStyleUtil.manrope14w500(
+                            color: ColorUtil.kBlack04),
                       ),
                     ],
                   );
@@ -86,18 +87,13 @@ class SubscriptionView extends GetView<SubscriptionController> {
               12.kheightBox,
               Obx(() {
                 if (!controller.showList.value) {
-                  String validTill = Get.find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .subscriptionModel ==
-                          null
-                      ? ""
-                      : Get.find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .subscriptionModel!
-                              .endDate ??
-                          "";
+                  final home = Get.find<HomeController>();
+                  final subscription =
+                      home.restaurantDetails.value.subscriptionModel;
+
+                  final String validTill =
+                      subscription?.endDate?.toString() ?? "";
+
                   return Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.kw, vertical: 16.kh),
@@ -121,7 +117,8 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                        controller.subscriptionPlans.value.planName ??
+                                        controller.subscriptionPlans.value
+                                                .planName ??
                                             "",
                                         style: TextStyleUtil.manrope18w600()),
                                     Expanded(
@@ -133,12 +130,12 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         padding: EdgeInsets.symmetric(
                                             vertical: 8.kh, horizontal: 16.kw),
                                         decoration: BoxDecoration(
-                                          color: controller.subscriptionPlans.value
-                                                      .isActive ==
+                                          color: controller.subscriptionPlans
+                                                      .value.isActive ==
                                                   null
                                               ? context.green
-                                              : controller.subscriptionPlans.value
-                                                      .isActive!
+                                              : controller.subscriptionPlans
+                                                      .value.isActive!
                                                   ? context.green
                                                   : context.primary01,
                                           borderRadius:
@@ -150,8 +147,8 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                                         .isActive ==
                                                     null
                                                 ? StringConstant.active
-                                                : controller.subscriptionPlans.value
-                                                        .isActive!
+                                                : controller.subscriptionPlans
+                                                        .value.isActive!
                                                     ? StringConstant.active
                                                     : StringConstant.inactive,
                                             style: TextStyleUtil.manrope16w500(
@@ -232,8 +229,11 @@ class SubscriptionView extends GetView<SubscriptionController> {
                           vertical: 8.kh, horizontal: 16.kw),
                       shrinkWrap: true,
                       itemBuilder: (ctx, index) {
-                        return PlanCard(
-                            plan: controller.allPlans[index]).paddingOnly(bottom: controller.allPlans.length==index+1?100.kh :0 );
+                        return PlanCard(plan: controller.allPlans[index])
+                            .paddingOnly(
+                                bottom: controller.allPlans.length == index + 1
+                                    ? 100.kh
+                                    : 0);
                       },
                       separatorBuilder: (ctx, index) {
                         return 4.kheightBox;

@@ -30,9 +30,10 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                 Obx(() {
                   return LoyaltyCard(
                       brandName: Get.find<HomeController>()
-                          .restaurantDetails
-                          .value
-                          .restaurantName,
+                              .restaurantDetails
+                              .value
+                              .restaurantName ??
+                          "",
                       offer: Get.find<LoyaltyController>()
                           .cardTitleController
                           .text,
@@ -45,9 +46,10 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                           Get.find<LoyaltyController>().noOfStamps.value,
                       width: 100.w,
                       brandLogo: Get.find<HomeController>()
-                          .restaurantDetails
-                          .value
-                          .restaurantLogo
+                              .restaurantDetails
+                              .value
+                              .restaurantLogo ??
+                          ""
                       // "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png"
                       );
                 }),

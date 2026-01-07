@@ -559,6 +559,7 @@ class StringConstant {
       "Schedule date cannot be empty!";
   static const String notificationTitleEmpty =
       "Notification title cannot be empty!";
+  static const String scheduleDateRequired = "Schedule date cannot be empty!";
   static const String passwordChangedSuccessfully =
       "Password changed successfully!";
   static const String emptyFeatures = "Features cannot be empty!";

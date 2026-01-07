@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
-import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
-import 'package:fsauce_vendor_app/app/components/custom_textfield.dart';
 import 'package:fsauce_vendor_app/app/components/fsv_textfield.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/custom_button.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/create_push_notification_controller.dart';
 
 class CreatePushNotificationView
     extends GetView<CreatePushNotificationController> {
-  const CreatePushNotificationView({Key? key}) : super(key: key);
+  const CreatePushNotificationView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

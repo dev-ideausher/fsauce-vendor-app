@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/controller/splash_controller.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +13,7 @@ class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.white,
       body: Obx(() {
         backgroundColor:
         controller.isLogin.value ? Colors.white : Colors.white;

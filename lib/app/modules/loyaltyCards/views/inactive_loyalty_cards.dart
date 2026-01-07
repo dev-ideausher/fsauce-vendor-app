@@ -29,18 +29,26 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                 itemBuilder: (ctx, index) {
                   return Obx(() {
                     return LoyaltyCard(
-                        brandName: Get.find<HomeController>().restaurantDetails.value.restaurantName,
+                        brandName: Get.find<HomeController>()
+                                .restaurantDetails
+                                .value
+                                .restaurantName ??
+                            "",
                         offer: controller.inActiveLoyaltyCards[index].title,
-                        brandColor: Color(int.parse(
-                            controller.inActiveLoyaltyCards[index]
-                                .cardBackgroundColor)),
+                        brandColor: Color(int.parse(controller
+                            .inActiveLoyaltyCards[index].cardBackgroundColor)),
                         onAddPressed: () {
                           //ToDo: When the loyalty card is pressed.
                         },
-                        noOfStamps: controller.inActiveLoyaltyCards[index].noOfStamps??0,
+                        noOfStamps:
+                            controller.inActiveLoyaltyCards[index].noOfStamps ??
+                                0,
                         width: 100.w,
-                        brandLogo: Get.find<HomeController>().restaurantDetails.value.restaurantLogo
-                    );
+                        brandLogo: Get.find<HomeController>()
+                                .restaurantDetails
+                                .value
+                                .restaurantLogo ??
+                            "");
                   });
                 },
                 separatorBuilder: (ctx, index) {
@@ -49,10 +57,14 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                 itemCount: controller.inActiveLoyaltyCards.length),
           );
         } else if (controller.inActiveLoyaltyCards.isEmpty) {
-          return EmptyWidget(title: StringConstant.noLoyaltyCardFound, subTitle: StringConstant.getStartedWithLoyaltyCards);
+          return EmptyWidget(
+              title: StringConstant.noLoyaltyCardFound,
+              subTitle: StringConstant.getStartedWithLoyaltyCards);
         } else {
           return const Center(
-              child: CircularProgressIndicator(color: Colors.red,));
+              child: CircularProgressIndicator(
+            color: Colors.red,
+          ));
         }
       }),
       floatingActionButton: Container(),
