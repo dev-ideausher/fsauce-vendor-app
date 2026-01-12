@@ -37,31 +37,63 @@ class VerificationController extends GetxController {
     });
   }
 
+  // Future<void> _checkEmailVerified() async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   await user?.reload(); // Refresh user data
+  //   if (user != null && user.emailVerified) {
+  //     _timer?.cancel();
+  //     DialogHelper.showLoading();
+
+  //     // Ensure token is fetched and saved before calling onboardVendor
+  //     try {
+  //       await auth.handleGetContact();
+  //     } catch (e) {
+  //       DialogHelper.hideDialog();
+  //       Get.snackbar("Error", "Failed to get authentication token");
+  //       return;
+  //     }
+
+  //     var response = await APIManager.onboardVendor();
+  //     DialogHelper.hideDialog();
+  //     if (response.data['status']) {
+  //       print(response.data.toString());
+  //       print("vendor onboarded");
+  //       gotoVerificationDoneScreen();
+  //     } else {
+  //       Get.snackbar("Error", response.data['message']);
+  //     }
+  //   }
+  // }
   Future<void> _checkEmailVerified() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    await user?.reload(); // Refresh user data
-    if (user != null && user.emailVerified) {
-      _timer?.cancel();
-      DialogHelper.showLoading();
-      
-      // Ensure token is fetched and saved before calling onboardVendor
-      try {
-        await auth.handleGetContact();
-      } catch (e) {
-        DialogHelper.hideDialog();
-        Get.snackbar("Error", "Failed to get authentication token");
-        return;
-      }
-      
-      var response = await APIManager.onboardVendor();
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) return;
+
+    await user.reload();
+    final refreshedUser = FirebaseAuth.instance.currentUser;
+
+    final isVerified = refreshedUser?.emailVerified ?? false;
+
+    if (!isVerified) return;
+
+    _timer?.cancel();
+    DialogHelper.showLoading();
+
+    try {
+      await auth.handleGetContact();
+    } catch (e) {
       DialogHelper.hideDialog();
-      if (response.data['status']) {
-        print(response.data.toString());
-        print("vendor onboarded");
-        gotoVerificationDoneScreen();
-      } else {
-        Get.snackbar("Error", response.data['message']);
-      }
+      Get.snackbar("Error", "Failed to get authentication token");
+      return;
+    }
+
+    final response = await APIManager.onboardVendor();
+    DialogHelper.hideDialog();
+
+    if (response.data['status'] == true) {
+      gotoVerificationDoneScreen();
+    } else {
+      Get.snackbar("Error", response.data['message']);
     }
   }
 

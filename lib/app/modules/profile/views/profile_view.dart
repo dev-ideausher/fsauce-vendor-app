@@ -8,14 +8,11 @@ import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.d
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +32,7 @@ class ProfileView extends GetView<ProfileController> {
                   boxShadow: [
                     BoxShadow(color: context.borderColor1, blurRadius: 16.kh)
                   ],
-                  color: Colors.white,
+                  color: context.white,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -64,52 +61,67 @@ class ProfileView extends GetView<ProfileController> {
                         style: TextStyleUtil.manrope16w600(),
                       );
                     }),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        5.kwidthBox,
-                        Obx(() {
-                          final cuisines = Get.find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .cuisine;
-
-                          return SizedBox(
-                            width: context.width / 1.2,
-                            height: 20, // adjust based on text size
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: cuisines.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: Text(
-                                    '•${cuisines[index].name}' ?? '',
-                                    style: TextStyleUtil.manrope14w400(
-                                      color: context.black03,
-                                    ),
+                    5.kwidthBox,
+                    Obx(() {
+                      final cuisines = Get.find<HomeController>()
+                          .restaurantDetails
+                          .value
+                          .cuisine;
+                      return cuisines.isEmpty
+                          ? SizedBox.shrink()
+                          : cuisines.length == 1
+                              ? Text(
+                                  '•${cuisines[0].name}' ?? '',
+                                  style: TextStyleUtil.manrope14w400(
+                                    color: context.black03,
                                   ),
-                                );
-                              },
-                            ),
-                          );
-                        }),
-
-                        // 5.kwidthBox,
-                        // Container(
-                        //   height: 5.kh,
-                        //   width: 5.kh,
-                        //   decoration: BoxDecoration(
-                        //       shape: BoxShape.circle, color: context.black01),
-                        // ),
-                        // 5.kwidthBox,
-                        // Text(
-                        //   "Fast Food",
-                        //   style: TextStyleUtil.manrope14w400(
-                        //       color: context.black03),
-                        // )
-                      ],
-                    ),
+                                )
+                              : cuisines.length == 2
+                                  ? Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.kh),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '•${cuisines[0].name}' ?? '',
+                                            style: TextStyleUtil.manrope14w400(
+                                              color: context.black03,
+                                            ),
+                                          ),
+                                          16.kwidthBox,
+                                          Text(
+                                            '•${cuisines[1].name}' ?? '',
+                                            style: TextStyleUtil.manrope14w400(
+                                              color: context.black03,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      width: context.width / 1.2,
+                                      height: 20, // adjust based on text size
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: cuisines.length,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: Text(
+                                              '•${cuisines[index].name}' ?? '',
+                                              style:
+                                                  TextStyleUtil.manrope14w400(
+                                                color: context.black03,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                    }),
                     2.kheightBox,
                   ],
                 ),
@@ -154,7 +166,7 @@ class ProfileView extends GetView<ProfileController> {
                   width: 100.w,
                   padding: EdgeInsets.symmetric(horizontal: 20.kw),
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border(
                           bottom: BorderSide(color: context.borderColor2))),
@@ -195,7 +207,6 @@ class ProfileView extends GetView<ProfileController> {
               10.kheightBox,
               InkWell(
                 onTap: () {
-                  //ToDo: Delete Account
                   controller.showDeleteAccountDialog();
                 },
                 child: Container(
@@ -203,7 +214,7 @@ class ProfileView extends GetView<ProfileController> {
                   width: 100.w,
                   padding: EdgeInsets.symmetric(horizontal: 20.kw),
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border(
                           bottom: BorderSide(color: context.borderColor2))),

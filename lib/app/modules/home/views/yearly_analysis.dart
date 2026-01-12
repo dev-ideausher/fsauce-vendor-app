@@ -4,7 +4,6 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 
-import '../../../components/empty_widget.dart';
 import '../../../constants/string_constant.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/home_controller.dart';

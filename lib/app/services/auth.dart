@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
+import 'package:fsauce_vendor_app/app/modules/pushNotification/views/notification_service.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/snackbar.dart';
 import 'package:get/get.dart';
@@ -239,7 +241,6 @@ class Auth extends GetxService {
     } else {
       return false;
     }
-    return false;
   }
 
   Future<void> verifyMobileOtp({required String otp}) async {
@@ -307,6 +308,9 @@ class Auth extends GetxService {
       final response = await APIManager.onboardVendor();
       final LoginModel loginModel = LoginModel.fromJson(response.data);
       if (loginModel.status ?? false) {
+        await NotificationService.to
+            .subscribeToCurrentUserTopic(loginModel.user?.Id ?? '');
+
         if ((loginModel.user?.restaurantName ?? "").isEmpty) {
           Get.offAllNamed(Routes.PROFILE_SETUP);
         } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
@@ -324,6 +328,9 @@ class Auth extends GetxService {
         } else if ((loginModel.user?.media ?? []).isEmpty) {
           Get.offAllNamed(Routes.PROFILE_SETUP);
         } else {
+          await NotificationService.to
+              .subscribeToCurrentUserTopic(loginModel.user?.Id ?? '');
+
           Get.find<GetStorageService>().isLoggedIn = true;
           Get.offAllNamed(Routes.NAV_BAR);
         }
@@ -343,6 +350,9 @@ class Auth extends GetxService {
     auth.logout();
     // navigate to login page
     // await Get.offAllNamed(Routes.LOGIN);
+    await NotificationService.to
+        .unsubscribeFromCurrentUserTopic(Get.find<HomeController>().vendor);
+
     await DialogHelper.hideDialog();
   }
 }

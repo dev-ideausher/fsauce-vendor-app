@@ -68,54 +68,118 @@ class CreatePushNotificationController extends GetxController {
     }
   }
 
+  // Future<void> addNotification() async {
+  //   final restaurantDetails =
+  //       Get.find<HomeController>().restaurantDetails.value;
+
+  //   if (restaurantDetails.subscriptionModel == null) {
+  //     Get.dialog(ConfrimationDialog(
+  //       title: StringConstant.subscriptionRequired,
+  //       subTitle: StringConstant.subscriptionRequiredText,
+  //       yesButtonText: StringConstant.checkoutSubscriptions,
+  //       noButtonText: StringConstant.close,
+  //       onYesTap: () => Get.offNamed(Routes.SUBSCRIPTION),
+  //       onNoTap: Get.back,
+  //     ));
+  //     return;
+  //   }
+
+  //   if (!formKey.currentState!.validate()) return;
+
+  //   try {
+  //     var response = await APIManager.addPushNotification(data: {
+  //       "title": titleController.text.trim(),
+  //       "isSheduled":
+  //           "sheduledDate": selectedDate.value.toIso8601String(),
+  //     });
+
+  //     if (response.data['status'] == true) {
+  //       DialogHelper.showSuccess(StringConstant.notificationSentSuccessfully);
+
+  //       // Reload the correct controller instance
+  //       if (Get.isRegistered<NotificationsController>()) {
+  //         final notificationsController = Get.find<NotificationsController>();
+  //         notificationsController.page = 1;
+  //         notificationsController.hasMore = true;
+  //         await notificationsController.getNotifications(); // wait for reload
+  //         notificationsController.notifications
+  //             .refresh(); // optional force refresh
+  //       }
+
+  //       Get.back(); // go back after reload
+
+  //       Get.back(); // go back after reload
+  //     } else {
+  //       DialogHelper.showError(
+  //           response.data['message'] ?? StringConstant.somethingWentWrong);
+  //     }
+  //   } catch (e) {
+  //     if (e is DioException) {
+  //       DialogHelper.showError(
+  //           e.response?.data['message'] ?? StringConstant.somethingWentWrong);
+  //     }
+  //   }
+  // }
   Future<void> addNotification() async {
     final restaurantDetails =
         Get.find<HomeController>().restaurantDetails.value;
 
     if (restaurantDetails.subscriptionModel == null) {
-      Get.dialog(ConfrimationDialog(
-        title: StringConstant.subscriptionRequired,
-        subTitle: StringConstant.subscriptionRequiredText,
-        yesButtonText: StringConstant.checkoutSubscriptions,
-        noButtonText: StringConstant.close,
-        onYesTap: () => Get.offNamed(Routes.SUBSCRIPTION),
-        onNoTap: Get.back,
-      ));
+      Get.dialog(
+        ConfrimationDialog(
+          title: StringConstant.subscriptionRequired,
+          subTitle: StringConstant.subscriptionRequiredText,
+          yesButtonText: StringConstant.checkoutSubscriptions,
+          noButtonText: StringConstant.close,
+          onYesTap: () => Get.offNamed(Routes.SUBSCRIPTION),
+          onNoTap: Get.back,
+        ),
+      );
       return;
     }
 
     if (!formKey.currentState!.validate()) return;
 
     try {
-      var response = await APIManager.addPushNotification(data: {
-        "title": titleController.text.trim(),
-        "sheduledDate": selectedDate.value.toIso8601String(),
-      });
+      /// Normalize dates (ignore time)
+      final DateTime today = DateTime.now();
+      final DateTime selected = selectedDate.value;
+
+      final bool isScheduled = !(today.year == selected.year &&
+          today.month == selected.month &&
+          today.day == selected.day);
+      var response = await APIManager.addPushNotification(
+        data: {
+          "title": titleController.text.trim(),
+          "isSheduled": isScheduled,
+          "sheduledDate": selected.toIso8601String(),
+        },
+      );
 
       if (response.data['status'] == true) {
-        DialogHelper.showSuccess(StringConstant.notificationSentSuccessfully);
+        DialogHelper.showSuccess(
+          StringConstant.notificationSentSuccessfully,
+        );
 
-        // Reload the correct controller instance
         if (Get.isRegistered<NotificationsController>()) {
           final notificationsController = Get.find<NotificationsController>();
           notificationsController.page = 1;
           notificationsController.hasMore = true;
-          await notificationsController.getNotifications(); // wait for reload
-          notificationsController.notifications
-              .refresh(); // optional force refresh
+          await notificationsController.getNotifications();
+          notificationsController.notifications.refresh();
         }
-
-        Get.back(); // go back after reload
-
-        Get.back(); // go back after reload
+        Get.back();
+        Get.back();
       } else {
         DialogHelper.showError(
-            response.data['message'] ?? StringConstant.somethingWentWrong);
+          response.data['message'] ?? StringConstant.somethingWentWrong,
+        );
       }
     } catch (e) {
       if (e is DioException) {
         DialogHelper.showError(
-            e.response?.data['message'] ?? StringConstant.somethingWentWrong);
+          e.response?.data['message'] ?? StringConstant.somethingWentWrong,
+        );
       }
     }
   }

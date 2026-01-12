@@ -9,9 +9,7 @@ import 'package:fsauce_vendor_app/app/modules/home/views/yearly_analysis.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -252,6 +250,10 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: () async {
+      //   final noti = Get.find<NotificationService>();
+      //   noti.initToken();
+      // }),
     );
   }
 }

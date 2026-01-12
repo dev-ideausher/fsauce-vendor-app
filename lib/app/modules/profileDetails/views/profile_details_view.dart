@@ -39,7 +39,7 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                 children: [
                   2.kheightBox,
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(44),
+                    borderRadius: BorderRadius.circular(100),
                     child: Obx(() {
                       return CommonImageView(
                           height: 88.kh,
@@ -67,26 +67,59 @@ class ProfileDetailsView extends GetView<ProfileDetailsController> {
                         .restaurantDetails
                         .value
                         .cuisine;
-
-                    return SizedBox(
-                      width: context.width / 1.2,
-                      height: 20, // adjust based on text size
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: cuisines.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Text(
-                              '•${cuisines[index].name}' ?? '',
-                              style: TextStyleUtil.manrope14w400(
-                                color: context.black03,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                    return cuisines.isEmpty
+                        ? SizedBox.shrink()
+                        : cuisines.length == 1
+                            ? Text(
+                                '•${cuisines[0].name}' ?? '',
+                                style: TextStyleUtil.manrope14w400(
+                                  color: context.black03,
+                                ),
+                              )
+                            : cuisines.length == 2
+                                ? Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.kh),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '•${cuisines[0].name}' ?? '',
+                                          style: TextStyleUtil.manrope14w400(
+                                            color: context.black03,
+                                          ),
+                                        ),
+                                        16.kwidthBox,
+                                        Text(
+                                          '•${cuisines[1].name}' ?? '',
+                                          style: TextStyleUtil.manrope14w400(
+                                            color: context.black03,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox(
+                                    width: context.width / 1.2,
+                                    height: 20, // adjust based on text size
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: cuisines.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8),
+                                          child: Text(
+                                            '•${cuisines[index].name}' ?? '',
+                                            style: TextStyleUtil.manrope14w400(
+                                              color: context.black03,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
                   }),
                   2.kheightBox,
                 ],

@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fsauce_vendor_app/app/modules/pushNotification/views/notification_service.dart';
 import 'package:fsauce_vendor_app/app/modules/splash/binding/splash_binding.dart';
 import 'package:fsauce_vendor_app/app/services/auth.dart';
 import 'package:fsauce_vendor_app/firebase_options.dart';
@@ -15,7 +16,6 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   Stripe.publishableKey =
       "pk_test_51IDxNdKlUbZkAAt635jlWKPvpeBvKQmkiqQr91KFHKzlEp5DzO8T9DEAOTpdfCUPihlTBZ7kB2gb4yFAYwQOevLk00ekRk7tuH";
-
   Stripe.merchantIdentifier = "foodsauciety@2024";
   // ✅ Let stacked_firebase_auth handle initialization internally
   try {
@@ -25,7 +25,8 @@ Future<void> main() async {
   } catch (e) {
     print("Firebase already initialized or handled by another service: $e");
   }
-
+  Get.put(NotificationService());
+  await NotificationService.to.init();
   await initGetServices();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],

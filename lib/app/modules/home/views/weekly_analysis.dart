@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/modules/home/views/chart.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -10,7 +9,7 @@ import '../../../services/text_style_util.dart';
 import '../controllers/home_controller.dart';
 
 class WeeklyAnalysis extends GetView<HomeController> {
-  WeeklyAnalysis({super.key});
+  const WeeklyAnalysis({super.key});
 
   @override
   Widget build(BuildContext context) {

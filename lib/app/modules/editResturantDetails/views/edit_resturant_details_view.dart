@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +11,10 @@ import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.d
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
-
 import '../../../models/cuisine_model.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/edit_resturant_details_controller.dart';
@@ -342,38 +339,64 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       height: 220.kh,
                       width: 100.w,
                       child: MapPicker(
-                        iconWidget: const Icon(
-                          Icons.location_pin,
-                          color: Colors.red,
-                          size: 30,
-                        ),
-                        mapPickerController: controller.mapPickerController,
-                        child: GoogleMap(
-                          gestureRecognizers: {
-                            Factory<OneSequenceGestureRecognizer>(
-                              () => EagerGestureRecognizer(),
-                            ),
-                          },
-                          zoomControlsEnabled: false,
-                          initialCameraPosition: controller.cameraPosition,
-                          onMapCreated: (map) => controller.mapController = map,
-                          onCameraIdle: () async {
-                            debugPrint(
-                                "🗺️ Camera idle - starting address update");
-                            controller.mapPickerController.mapFinishedMoving!();
+                          iconWidget: const Icon(
+                            Icons.location_pin,
+                            color: Colors.red,
+                            size: 30,
+                          ),
+                          mapPickerController: controller.mapPickerController,
+                          // child: GoogleMap(
+                          //   gestureRecognizers: {
+                          //     Factory<OneSequenceGestureRecognizer>(
+                          //       () => EagerGestureRecognizer(),
+                          //     ),
+                          //   },
+                          //   zoomControlsEnabled: false,
+                          //   initialCameraPosition: controller.cameraPosition,
+                          //   onMapCreated: (map) => controller.mapController = map,
+                          //   onCameraIdle: () async {
+                          //     debugPrint(
+                          //         "🗺️ Camera idle - starting address update");
+                          //     controller.mapPickerController.mapFinishedMoving!();
 
-                            await controller.updateDragLocation();
-                            debugPrint("🗺️ Address update completed");
-                          },
-                          onCameraMove: (cameraPosition1) {
-                            debugPrint(
-                                "🗺️ Camera moving to: ${cameraPosition1.target.latitude}, ${cameraPosition1.target.longitude}");
-                            this.controller.cameraPosition = cameraPosition1;
-                          },
-                          mapType: MapType.normal,
-                          myLocationButtonEnabled: false,
-                        ),
-                      ),
+                          //     await controller.updateDragLocation();
+                          //     debugPrint("🗺️ Address update completed");
+                          //   },
+                          //   onCameraMove: (cameraPosition1) {
+                          //     debugPrint(
+                          //         "🗺️ Camera moving to: ${cameraPosition1.target.latitude}, ${cameraPosition1.target.longitude}");
+                          //     this.controller.cameraPosition = cameraPosition1;
+                          //   },
+                          //   mapType: MapType.normal,
+                          //   myLocationButtonEnabled: false,
+                          // ),
+                          child: GoogleMap(
+                            zoomControlsEnabled: false,
+                            initialCameraPosition: controller.cameraPosition,
+                            onMapCreated: (map) {
+                              controller.mapController = map;
+
+                              if (controller.resturLat.value != 0.0) {
+                                map.animateCamera(
+                                  CameraUpdate.newLatLngZoom(
+                                    LatLng(
+                                      controller.resturLat.value,
+                                      controller.resturLong.value,
+                                    ),
+                                    14.5,
+                                  ),
+                                );
+                              }
+                            },
+                            onCameraMove: (pos) {
+                              controller.cameraPosition = pos;
+                            },
+                            onCameraIdle: () async {
+                              controller
+                                  .mapPickerController.mapFinishedMoving!();
+                              await controller.updateDragLocation();
+                            },
+                          )),
                     ),
                   ),
                   20.kheightBox,
