@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
@@ -97,10 +95,10 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   6.kheightBox,
                   Obx(() {
                     if (Get.find<HomeController>()
-                                .restaurantDetails
-                                .value
-                                .restaurantLogo !=
-                            null &&
+                            .restaurantDetails
+                            .value
+                            .restaurantLogo
+                            .isNotEmpty &&
                         controller.selectedLogoImage.isEmpty) {
                       return Column(
                         children: <Widget>[
@@ -122,10 +120,10 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   }),
                   Obx(() {
                     if (Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .restaurantLogo ==
-                        null) {
+                        .restaurantDetails
+                        .value
+                        .restaurantLogo
+                        .isEmpty) {
                       return InkWell(
                         onTap: () {
                           controller.pickLogo();
@@ -210,10 +208,10 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   6.kheightBox,
                   Obx(() {
                     if (Get.find<HomeController>()
-                                .restaurantDetails
-                                .value
-                                .restaurantBanner !=
-                            null &&
+                            .restaurantDetails
+                            .value
+                            .restaurantBanner
+                            .isNotEmpty &&
                         controller.selectedBannerImage.isEmpty) {
                       return Column(
                         children: <Widget>[
@@ -235,10 +233,10 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   }),
                   Obx(() {
                     if (Get.find<HomeController>()
-                            .restaurantDetails
-                            .value
-                            .restaurantBanner ==
-                        null) {
+                        .restaurantDetails
+                        .value
+                        .restaurantBanner
+                        .isEmpty) {
                       return InkWell(
                         onTap: () {
                           controller.pickBanner();

@@ -1,4 +1,6 @@
 PODS:
+  - app_badge_plus (1.2.6):
+    - Flutter
   - AppAuth (1.7.6):
     - AppAuth/Core (= 1.7.6)
     - AppAuth/ExternalUserAgent (= 1.7.6)
@@ -228,6 +230,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - app_badge_plus (from `.symlinks/plugins/app_badge_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -292,6 +295,8 @@ SPEC REPOS:
     - StripeUICore
 
 EXTERNAL SOURCES:
+  app_badge_plus:
+    :path: ".symlinks/plugins/app_badge_plus/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -338,6 +343,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
 SPEC CHECKSUMS:
+  app_badge_plus: 32b6022e2a8585454d6c2a99aa65f8f31f06752a
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   FBAEMKit: 9900b2edd99a2d21629a6277e6166f14c6215799
   FBSDKCoreKit: 0791f8f68a8630931a4c12aa23a56cc021551596
