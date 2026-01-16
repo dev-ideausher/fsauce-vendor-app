@@ -19,7 +19,6 @@ import '../controllers/edit_resturant_details_controller.dart';
 
 class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
   const EditResturantDetailsView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -14,7 +14,6 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
-
   @override
   Widget build(BuildContext context) {
     controller.getRestaurantDetails();
