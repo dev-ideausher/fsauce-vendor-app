@@ -41,6 +41,8 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                         onAddPressed: () {
                           //ToDo: When the loyalty card is pressed.
                         },
+                        textColor: ColorUtil.hexToColor(
+                            controller.activeLoyaltyCards[index].cardTextColor),
                         noOfStamps:
                             controller.activeLoyaltyCards[index].noOfStamps,
                         width: 100.w,

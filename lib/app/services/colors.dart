@@ -67,4 +67,58 @@ extension ColorUtil on BuildContext {
   static const Color kErrorColor = Color(0xffde2121);
   static const Color kBlack04 = Color(0xff828281);
   static const Color kWhiteColor = Color(0xffffffff);
+
+  static Color hexToColor(String colorString) {
+    try {
+      if (colorString.isEmpty) return Colors.white;
+
+      colorString = colorString.trim();
+
+// CASE 1: Raw integer string
+      if (RegExp(r'^\d+$').hasMatch(colorString)) {
+        return Color(int.parse(colorString));
+      }
+
+// CASE 2: Flutter-style Color(alpha: ..., red: ..., green: ..., blue: ...)
+      if (colorString.startsWith("Color(")) {
+        final regex = RegExp(
+          r'alpha:\s*([\d.]+).*?red:\s*([\d.]+).*?green:\s*([\d.]+).*?blue:\s*([\d.]+)',
+          dotAll: true,
+        );
+
+        final match = regex.firstMatch(colorString);
+        if (match != null) {
+          final a = (double.parse(match.group(1)!) * 255).round();
+          final r = (double.parse(match.group(2)!) * 255).round();
+          final g = (double.parse(match.group(3)!) * 255).round();
+          final b = (double.parse(match.group(4)!) * 255).round();
+
+          return Color.fromARGB(a, r, g, b);
+        }
+      }
+
+// CASE 3: Hex formats (#RRGGBB, 0xRRGGBB, RRGGBB)
+      String hex = colorString.replaceAll(RegExp(r'[^0-9a-fA-F]'), '');
+      if (hex.length == 6) hex = 'FF$hex'; // Add alpha if missing
+      if (hex.length == 8) return Color(int.parse(hex, radix: 16));
+
+// CASE 4: Named Colors (optional)
+      final namedColors = <String, Color>{
+        'red': Colors.red,
+        'green': Colors.green,
+        'blue': Colors.blue,
+        'black': Colors.black,
+        'white': Colors.white,
+        'grey': Colors.grey,
+        // add more if needed
+      };
+      if (namedColors.containsKey(colorString.toLowerCase())) {
+        return namedColors[colorString.toLowerCase()]!;
+      }
+
+      return Colors.white;
+    } catch (e) {
+      return Colors.white;
+    }
+  }
 }

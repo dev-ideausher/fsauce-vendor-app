@@ -19,10 +19,7 @@ class LoyaltyReviewCard extends StatelessWidget {
       width: 100.w,
       padding: EdgeInsets.all(16.kw),
       decoration: BoxDecoration(
-          color: Get
-              .find<LoyaltyController>()
-              .backgroundColor
-              .value,
+          color: Get.find<LoyaltyController>().backgroundColor.value,
           borderRadius: BorderRadius.circular(12.kw)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,8 +33,7 @@ class LoyaltyReviewCard extends StatelessWidget {
             child: Center(
               child: Obx(() {
                 return CommonImageView(
-                  url: Get
-                      .find<HomeController>()
+                  url: Get.find<HomeController>()
                       .restaurantDetails
                       .value
                       .restaurantLogo,
@@ -50,7 +46,11 @@ class LoyaltyReviewCard extends StatelessWidget {
           Obx(() {
             return Text(
               Get.find<HomeController>().restaurantDetails.value.restaurantName,
-              style: TextStyleUtil.manrope24w700(color: Colors.white),
+              style: TextStyleUtil.manrope24w700(
+                  color: ColorUtil.hexToColor(Get.find<LoyaltyController>()
+                      .textColor
+                      .value
+                      .toString())),
             );
           }),
           40.kheightBox,
@@ -65,9 +65,9 @@ class LoyaltyReviewCard extends StatelessWidget {
               SizedBox(
                 height: 50,
                 child: ListView.separated(
-                  shrinkWrap: true,
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, index){
+                    itemBuilder: (ctx, index) {
                       return Container(
                         height: 48,
                         width: 48,
@@ -83,7 +83,7 @@ class LoyaltyReviewCard extends StatelessWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (ctx, index){
+                    separatorBuilder: (ctx, index) {
                       return 10.kwidthBox;
                     },
                     itemCount: Get.find<LoyaltyController>().noOfStamps.value),
@@ -113,7 +113,9 @@ class LoyaltyReviewCard extends StatelessWidget {
           10.kheightBox,
           Text(
             Get.find<LoyaltyController>().cardTitleController.text,
-            style: TextStyleUtil.manrope16w500(color: Colors.white),
+            style: TextStyleUtil.manrope16w500(
+                color: ColorUtil.hexToColor(
+                    Get.find<LoyaltyController>().textColor.value.toString())),
           ),
           20.kheightBox,
           Container(

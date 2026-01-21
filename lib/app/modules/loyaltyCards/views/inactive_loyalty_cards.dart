@@ -4,6 +4,7 @@ import 'package:fsauce_vendor_app/app/components/loyalty_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/modules/loyaltyCards/controllers/loyalty_cards_controller.dart';
+import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:get/get.dart';
 
@@ -40,6 +41,8 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                         onAddPressed: () {
                           //ToDo: When the loyalty card is pressed.
                         },
+                        textColor: ColorUtil.hexToColor(controller
+                            .inActiveLoyaltyCards[index].cardTextColor),
                         noOfStamps:
                             controller.inActiveLoyaltyCards[index].noOfStamps ??
                                 0,

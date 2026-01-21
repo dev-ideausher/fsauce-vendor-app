@@ -42,6 +42,11 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                       onAddPressed: () {
                         //ToDo: on Add Pressed.
                       },
+                      textColor: ColorUtil.hexToColor(
+                          Get.find<LoyaltyController>()
+                              .textColor
+                              .value
+                              .toString()),
                       noOfStamps:
                           Get.find<LoyaltyController>().noOfStamps.value,
                       width: 100.w,

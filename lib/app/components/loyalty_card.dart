@@ -4,7 +4,6 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/gradients.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import '../../generated/assets.dart';
 
 class LoyaltyCard extends StatelessWidget {
@@ -16,12 +15,13 @@ class LoyaltyCard extends StatelessWidget {
       required this.onAddPressed,
       required this.width,
       required this.noOfStamps,
-      required this.brandLogo});
+      required this.brandLogo,
+      required this.textColor});
 
   final String brandName;
   final String offer;
   final String brandLogo;
-  final Color brandColor;
+  final Color brandColor, textColor;
   final double width;
   final Function onAddPressed;
   final int noOfStamps;
@@ -59,14 +59,14 @@ class LoyaltyCard extends StatelessWidget {
                   brandName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyleUtil.manrope20w700(color: Colors.white),
+                  style: TextStyleUtil.manrope20w700(color: textColor),
                 ),
               ),
               Container(
                 height: 37.kh,
                 width: 90.kw,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
+                decoration: BoxDecoration(
+                    color: context.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(4),
                         bottomLeft: Radius.circular(4))),
@@ -140,7 +140,7 @@ class LoyaltyCard extends StatelessWidget {
                 24.kheightBox,
                 Text(
                   offer,
-                  style: TextStyleUtil.manrope16w500(color: Colors.white),
+                  style: TextStyleUtil.manrope16w500(color: textColor),
                 )
               ],
             ),

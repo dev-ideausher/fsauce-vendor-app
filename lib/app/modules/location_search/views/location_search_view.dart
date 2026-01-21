@@ -34,7 +34,7 @@ class LocationSearchView extends GetView<LocationSearchController> {
                       controller.getApiGoogle(value.toString());
                     },
                     maxLines: 1,
-
+                    border: Border.all(color: context.black07),
                     hintText: StringConstant.search,
                     fillColor: context.loginSignupTextfieldColor,
                   ),
@@ -53,9 +53,11 @@ class LocationSearchView extends GetView<LocationSearchController> {
                         padding: EdgeInsets.symmetric(vertical: 10.kh),
                         itemBuilder: (context, index) => ListTile(
                           onTap: () {
-                            controller.getCityName(controller.addressName[index]);
+                            controller
+                                .getCityName(controller.addressName[index]);
                           },
-                          title: Text(controller.addressName[index].description.toString()),
+                          title: Text(controller.addressName[index].description
+                              .toString()),
                         ),
                         itemCount: controller.addressName.length,
                       ),

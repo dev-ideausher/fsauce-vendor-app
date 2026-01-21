@@ -106,8 +106,17 @@ class LoyaltyView extends GetView<LoyaltyController> {
                                 controller.noOfStamps.value = int.parse(val);
                               }
                             },
-                            items: <String>["1", "2", "3", "4", "5", "6"]
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: <String>[
+                              "1",
+                              "2",
+                              "3",
+                              "4",
+                              "5",
+                              "6",
+                              "7",
+                              "8",
+                              "9",
+                            ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),

@@ -4,6 +4,109 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 
+// class CustomTextField extends StatelessWidget {
+//   CustomTextField({
+//     super.key,
+//     this.prefixIcon,
+//     this.suffixIcon,
+//     required this.fillColor,
+//     required this.hintText,
+//     this.iconColor,
+//     this.controller,
+//     this.border,
+//     this.suffixOnPressed,
+//     this.keyboardType,
+//     this.validator,
+//     this.readOnly = false,
+//     this.maxLength,
+//     this.autovalidateMode,
+//     this.onChanged,
+//     this.enabled = true,
+//     this.onTap,
+//     this.maxLines,
+//   });
+//   bool enabled;
+//   final IconData? prefixIcon;
+//   final IconData? suffixIcon;
+//   final Color fillColor;
+//   final Function? suffixOnPressed;
+//   final Color? iconColor;
+//   final String hintText;
+//   final BoxBorder? border;
+//   final TextEditingController? controller;
+//   final TextInputType? keyboardType;
+//   final String? Function(String?)? validator;
+//   final bool readOnly;
+//   final int? maxLength;
+//   final AutovalidateMode? autovalidateMode;
+//   final ValueChanged<String>? onChanged;
+//   final VoidCallback? onTap;
+//   int? maxLines = 1;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 53.kh,
+//       width: 100.w,
+//       decoration: BoxDecoration(
+//         color: fillColor,
+//         border: border,
+//         borderRadius: BorderRadius.circular(8.0.kw),
+//       ),
+//       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//       child: Row(
+//         children: [
+//           if (prefixIcon != null)
+//             Padding(
+//               padding: EdgeInsets.only(top: 5.kh),
+//               child: Icon(
+//                 prefixIcon,
+//                 size: 20.kw,
+//               ),
+//             ),
+//           10.kwidthBox,
+//           Expanded(
+//             child: TextFormField(
+//               onTap: onTap,
+//               enabled: enabled,
+//               maxLength: maxLength,
+//               maxLines: maxLines,
+//               buildCounter: (context,
+//                       {required currentLength,
+//                       required isFocused,
+//                       required maxLength}) =>
+//                   SizedBox(),
+//               readOnly: readOnly,
+//               validator: validator,
+//               controller: controller,
+//               onChanged: onChanged,
+//               autovalidateMode: autovalidateMode,
+//               keyboardType: keyboardType,
+//               inputFormatters: [
+//                 FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+//               ],
+//               decoration: InputDecoration(
+//                 hintText: hintText,
+//                 hintStyle: TextStyleUtil.manrope14w400(color: context.black04),
+//                 border: InputBorder.none,
+//               ),
+//             ),
+//           ),
+//           if (suffixIcon != null)
+//             InkWell(
+//               onTap: () {
+//                 suffixOnPressed!();
+//               },
+//               child: Icon(
+//                 suffixIcon,
+//                 size: 20.kw,
+//                 color: iconColor,
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 class CustomTextField extends StatelessWidget {
   CustomTextField({
     super.key,
@@ -25,6 +128,7 @@ class CustomTextField extends StatelessWidget {
     this.onTap,
     this.maxLines,
   });
+
   bool enabled;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -42,68 +146,83 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final VoidCallback? onTap;
   int? maxLines = 1;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 53.kh,
-      width: 100.w,
-      decoration: BoxDecoration(
-        color: fillColor,
-        border: border,
-        borderRadius: BorderRadius.circular(8.0.kw),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        children: [
-          if (prefixIcon != null)
-            Padding(
-              padding: EdgeInsets.only(top: 5.kh),
-              child: Icon(
-                prefixIcon,
-                size: 20.kw,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          onTap: onTap,
+          enabled: enabled,
+          maxLength: maxLength,
+          maxLines: maxLines,
+          buildCounter: (_,
+                  {required currentLength,
+                  required isFocused,
+                  required maxLength}) =>
+              SizedBox(),
+          readOnly: readOnly,
+          validator: validator,
+          controller: controller,
+          onChanged: onChanged,
+          autovalidateMode: autovalidateMode,
+          keyboardType: keyboardType,
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'^\s')),
+          ],
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyleUtil.manrope14w400(color: context.black04),
+            filled: true,
+            fillColor: fillColor,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0.kw),
+              borderSide: border != null
+                  ? BorderSide(color: context.black07)
+                  : BorderSide.none,
             ),
-          10.kwidthBox,
-          Expanded(
-            child: TextFormField(
-              onTap: onTap,
-              enabled: enabled,
-              maxLength: maxLength,
-              maxLines: maxLines,
-              buildCounter: (context,
-                      {required currentLength,
-                      required isFocused,
-                      required maxLength}) =>
-                  SizedBox(),
-              readOnly: readOnly,
-              validator: validator,
-              controller: controller,
-              onChanged: onChanged,
-              autovalidateMode: autovalidateMode,
-              keyboardType: keyboardType,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'^\s')),
-              ],
-              decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: TextStyleUtil.manrope14w400(color: context.black04),
-                border: InputBorder.none,
-              ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0.kw),
+              borderSide: border != null
+                  ? BorderSide(color: context.black07)
+                  : BorderSide.none,
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0.kw),
+              borderSide: border != null
+                  ? BorderSide(color: context.black07)
+                  : BorderSide.none,
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0.kw),
+              borderSide: border != null
+                  ? BorderSide(color: context.black07)
+                  : BorderSide.none,
+            ),
+            prefixIcon: prefixIcon != null
+                ? Icon(
+                    prefixIcon,
+                    size: 20.kw,
+                  )
+                : null,
+            suffixIcon: suffixIcon != null
+                ? InkWell(
+                    onTap: () {
+                      suffixOnPressed?.call();
+                    },
+                    child: Icon(
+                      suffixIcon,
+                      size: 20.kw,
+                      color: iconColor,
+                    ),
+                  )
+                : null,
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 16.kh, vertical: 14.kh),
           ),
-          if (suffixIcon != null)
-            InkWell(
-              onTap: () {
-                suffixOnPressed!();
-              },
-              child: Icon(
-                suffixIcon,
-                size: 20.kw,
-                color: iconColor,
-              ),
-            ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
