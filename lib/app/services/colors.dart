@@ -63,7 +63,10 @@ extension ColorUtil on BuildContext {
       dynamicColour(light: HexColor("#E6E6E6"), dark: HexColor("#E6E6E6"));
   Color get white =>
       dynamicColour(light: HexColor("#FFFFFF"), dark: HexColor("#FFFFFF"));
-
+  Color get stampBg =>
+      dynamicColour(light: HexColor("#d9d9d9"), dark: HexColor("#d9d9d9"));
+  Color get stampTick =>
+      dynamicColour(light: HexColor("#b9b9b9"), dark: HexColor("#b9b9b9"));
   static const Color kErrorColor = Color(0xffde2121);
   static const Color kBlack04 = Color(0xff828281);
   static const Color kWhiteColor = Color(0xffffffff);

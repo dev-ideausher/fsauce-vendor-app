@@ -87,6 +87,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                     10.kheightBox,
                     Container(
                       decoration: BoxDecoration(
+                          color: context.loginSignupTextfieldColor,
                           border: Border.all(color: context.borderColor2),
                           borderRadius: BorderRadius.circular(8.kw)),
                       padding: EdgeInsets.symmetric(horizontal: 10.kw),
@@ -100,7 +101,8 @@ class LoyaltyView extends GetView<LoyaltyController> {
                               }
                               return null;
                             },
-                            style: TextStyleUtil.manrope16w400(),
+                            style: TextStyleUtil.manrope14w400(
+                                color: context.black04),
                             onChanged: (val) {
                               if (val != null) {
                                 controller.noOfStamps.value = int.parse(val);
@@ -115,16 +117,18 @@ class LoyaltyView extends GetView<LoyaltyController> {
                               "6",
                               "7",
                               "8",
-                              "9",
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
+                                child: Text(
+                                  value,
+                                  style: TextStyleUtil.manrope14w400(),
+                                ),
                               );
                             }).toList(),
                             icon: const Icon(Icons.keyboard_arrow_down_rounded),
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(0),
+                              contentPadding: const EdgeInsets.only(left: 5),
                               hintText: StringConstant.selectNumberOfStamps,
                               hintStyle: TextStyleUtil.manrope14w400(
                                   color: context.black04),

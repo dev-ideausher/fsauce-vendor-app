@@ -45,7 +45,6 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                             controller.activeLoyaltyCards[index].cardTextColor),
                         noOfStamps:
                             controller.activeLoyaltyCards[index].noOfStamps,
-                        width: 100.w,
                         brandLogo: Get.find<HomeController>()
                                 .restaurantDetails
                                 .value

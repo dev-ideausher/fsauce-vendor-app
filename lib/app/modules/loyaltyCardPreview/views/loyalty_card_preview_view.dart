@@ -49,7 +49,6 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                               .toString()),
                       noOfStamps:
                           Get.find<LoyaltyController>().noOfStamps.value,
-                      width: 100.w,
                       brandLogo: Get.find<HomeController>()
                               .restaurantDetails
                               .value

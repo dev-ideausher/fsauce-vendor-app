@@ -51,27 +51,26 @@ class HomeController extends GetxController {
       weeklyData.value = DashboardWeeklyData();
       if (response.data['status']) {
         weeklyData.value = DashboardWeeklyData.fromJson(response.data['data']);
-        weeklyCouponChartData.value =
-            List.generate(weeklyData.value.cards!.totalCoupons!, (int index) {
-          return ChartData(
-              weeklyData.value.couponCounts![index]!.date!,
-              double.parse(
-                  weeklyData.value.couponCounts![index]!.total!.toString()));
-        });
-        weeklyStampsChartData.value =
-            List.generate(weeklyData.value.cards!.totalStamps!, (int index) {
-          return ChartData(
-              weeklyData.value.redemptionsCount![index]!.date!,
-              double.parse(weeklyData.value.redemptionsCount![index]!.total!
-                  .toString()));
-        });
-        weeklyRewardsChartData.value =
-            List.generate(weeklyData.value.cards!.totalRewards!, (int index) {
-          return ChartData(
-              weeklyData.value.rewardsCount![index]!.date!,
-              double.parse(
-                  weeklyData.value.rewardsCount![index]!.total!.toString()));
-        });
+        weeklyCouponChartData.value = weeklyData.value.couponCounts!
+            .map((e) => ChartData(
+                  e!.date!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
+
+        weeklyStampsChartData.value = weeklyData.value.redemptionsCount!
+            .map((e) => ChartData(
+                  e!.date!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
+
+        weeklyRewardsChartData.value = weeklyData.value.rewardsCount!
+            .map((e) => ChartData(
+                  e!.date!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
       } else {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
@@ -88,29 +87,28 @@ class HomeController extends GetxController {
       if (response.data['status']) {
         monthlyData.value = DashboardData.fromJson(response.data['data']);
         monthlyCouponChartData.value =
-            List.generate(monthlyData.value.cards!.totalCoupons!, (int index) {
-          return ChartData(
-              monthlyData.value.couponCounts!.graphData![index]!.week!,
-              double.parse(monthlyData
-                  .value.couponCounts!.graphData![index]!.count!
-                  .toString()));
-        });
+            monthlyData.value.couponCounts!.graphData!
+                .map((e) => ChartData(
+                      e!.week!,
+                      e.count!.toDouble(),
+                    ))
+                .toList();
+
         monthlyStampsChartData.value =
-            List.generate(monthlyData.value.cards!.totalStamps!, (int index) {
-          return ChartData(
-              monthlyData.value.redemptionsCount!.graphData![index]!.week!,
-              double.parse(monthlyData
-                  .value.redemptionsCount!.graphData![index]!.count!
-                  .toString()));
-        });
+            monthlyData.value.redemptionsCount!.graphData!
+                .map((e) => ChartData(
+                      e!.week!,
+                      e.count!.toDouble(),
+                    ))
+                .toList();
+
         monthlyRewardsChartData.value =
-            List.generate(monthlyData.value.cards!.totalRewards!, (int index) {
-          return ChartData(
-              monthlyData.value.rewardsCount!.graphData![index]!.week!,
-              double.parse(monthlyData
-                  .value.rewardsCount!.graphData![index]!.count!
-                  .toString()));
-        });
+            monthlyData.value.rewardsCount!.graphData!
+                .map((e) => ChartData(
+                      e!.week!,
+                      e.count!.toDouble(),
+                    ))
+                .toList();
       } else {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }
@@ -126,27 +124,26 @@ class HomeController extends GetxController {
           await APIManager.getDashboardData(dataFor: StringConstant.lastYear);
       if (response.data['status']) {
         yearlyData.value = DashboardYearlyData.fromJson(response.data['data']);
-        yearlyCouponChartData.value =
-            List.generate(yearlyData.value.cards!.totalCoupons!, (int index) {
-          return ChartData(
-              yearlyData.value.couponCounts![index]!.month!,
-              double.parse(
-                  yearlyData.value.couponCounts![index]!.order!.toString()));
-        });
-        yearlyStampsChartData.value =
-            List.generate(yearlyData.value.cards!.totalStamps!, (int index) {
-          return ChartData(
-              yearlyData.value.redemptionsCount![index]!.month!,
-              double.parse(yearlyData.value.redemptionsCount![index]!.order!
-                  .toString()));
-        });
-        yearlyStampsChartData.value =
-            List.generate(yearlyData.value.cards!.totalRewards!, (int index) {
-          return ChartData(
-              yearlyData.value.rewardsCount![index]!.month!,
-              double.parse(
-                  yearlyData.value.rewardsCount![index]!.order!.toString()));
-        });
+        yearlyCouponChartData.value = yearlyData.value.couponCounts!
+            .map((e) => ChartData(
+                  e!.month!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
+
+        yearlyStampsChartData.value = yearlyData.value.redemptionsCount!
+            .map((e) => ChartData(
+                  e!.month!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
+
+        yearlyRewardsChartData.value = yearlyData.value.rewardsCount!
+            .map((e) => ChartData(
+                  e!.month!,
+                  e.total!.toDouble(),
+                ))
+            .toList();
       } else {
         Get.snackbar("Error", StringConstant.failedToGetDashboardData);
       }

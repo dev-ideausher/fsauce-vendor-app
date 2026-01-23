@@ -46,7 +46,6 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                         noOfStamps:
                             controller.inActiveLoyaltyCards[index].noOfStamps ??
                                 0,
-                        width: 100.w,
                         brandLogo: Get.find<HomeController>()
                                 .restaurantDetails
                                 .value
