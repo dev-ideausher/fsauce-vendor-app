@@ -53,12 +53,10 @@ class VipOffersView extends GetView<VipOffersController> {
           body: SizedBox(
             height: 100.h,
             width: 100.w,
-            child: Padding(
-                padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 6.kh),
-                child: const TabBarView(children: [
-                  ActiveOffersView(),
-                  InactiveOffersView(),
-                ])),
+            child: const TabBarView(children: [
+              ActiveOffersView(),
+              InactiveOffersView(),
+            ]),
           )),
     );
   }

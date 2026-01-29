@@ -13,48 +13,51 @@ class InactiveOffersView extends GetView<VipOffersController> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: Container(),
-        body: Obx(() {
-          if (controller.inactiveCouponList.isNotEmpty) {
-            return NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo.metrics.pixels ==
-                    scrollInfo.metrics.maxScrollExtent) {
-                  // controller.getActiveCoupons();
-                  controller.addInactiveCoupons();
-                }
-                return false;
-              },
-              child: ListView.separated(
-                shrinkWrap: true,
-                controller: controller.inActiveScrollController,
-                itemBuilder: (ctx, index) {
-                  return DealsOfTheDayCard(
-                      width: 100.w,
-                      isActive: false,
-                      isNormalOffer:
-                          controller.inactiveCouponList[index].typeOfOffer ==
-                              'Normal offer',
-                      coupon: controller.inactiveCouponList[index],
-                      onClick: () {
-                        controller.selectedCoupon.value =
-                            controller.inactiveCouponList[index];
-                        controller.showDealsBottomSheet();
-                      });
+        body: Padding(
+          padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 6.kh),
+          child: Obx(() {
+            if (controller.inactiveCouponList.isNotEmpty) {
+              return NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
+                    // controller.getActiveCoupons();
+                    controller.addInactiveCoupons();
+                  }
+                  return false;
                 },
-                separatorBuilder: (ctx, index) {
-                  return 12.kheightBox;
-                },
-                itemCount: controller.inactiveCouponList.length,
-              ),
-            );
-          } else if (controller.inactiveCouponList.isEmpty) {
-            return EmptyWidget(
-                title: StringConstant.noOffersFound,
-                subTitle: StringConstant.createAttractiveOffers);
-            // return const Center(child: Text(StringConstant.noCoupons));
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        }));
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  controller: controller.inActiveScrollController,
+                  itemBuilder: (ctx, index) {
+                    return DealsOfTheDayCard(
+                        width: 100.w,
+                        isActive: false,
+                        isNormalOffer:
+                            controller.inactiveCouponList[index].typeOfOffer ==
+                                'Normal offer',
+                        coupon: controller.inactiveCouponList[index],
+                        onClick: () {
+                          controller.selectedCoupon.value =
+                              controller.inactiveCouponList[index];
+                          controller.showDealsBottomSheet();
+                        });
+                  },
+                  separatorBuilder: (ctx, index) {
+                    return 12.kheightBox;
+                  },
+                  itemCount: controller.inactiveCouponList.length,
+                ),
+              );
+            } else if (controller.inactiveCouponList.isEmpty) {
+              return EmptyWidget(
+                  title: StringConstant.noOffersFound,
+                  subTitle: StringConstant.createAttractiveOffers);
+              // return const Center(child: Text(StringConstant.noCoupons));
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          }),
+        ));
   }
 }

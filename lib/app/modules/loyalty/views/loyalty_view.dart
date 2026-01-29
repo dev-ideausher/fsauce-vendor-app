@@ -10,9 +10,7 @@ import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../../../components/confirmation_dialog.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_controller.dart';

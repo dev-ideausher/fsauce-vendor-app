@@ -35,11 +35,9 @@ class LoyaltyCardsView extends GetView<LoyaltyCardsController> {
           leading: const SizedBox(),
           centerTitle: true,
         ),
-        body: Padding(
-            padding: EdgeInsets.all(16.kw),
-            child: TabBarView(
-              children: controller.tabs,
-            )),
+        body: TabBarView(
+          children: controller.tabs,
+        ),
         // floatingActionButton: Container(
         //   height: 41.kh,
         //   width: 41.kw,

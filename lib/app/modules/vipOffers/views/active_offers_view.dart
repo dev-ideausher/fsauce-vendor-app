@@ -15,65 +15,68 @@ class ActiveOffersView extends GetView<VipOffersController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() {
-        if (controller.couponsList.isNotEmpty) {
-          return NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification scrollInfo) {
-              if (scrollInfo.metrics.pixels ==
-                  scrollInfo.metrics.maxScrollExtent) {
-                // controller.getActiveCoupons();
-                controller.addActiveCoupons();
-              }
-              return false;
-            },
-            child: ListView.builder(
-              shrinkWrap: true,
-              controller: controller.activeScrollController,
-              itemBuilder: (ctx, index) {
-                String date = controller.couponsList[index].sheduleDate ?? "";
-                if (date.isEmpty) {
-                  return DealsOfTheDayCard(
-                      width: 100.w,
-                      isNormalOffer:
-                          controller.couponsList[index].typeOfOffer ==
-                              'Normal offer',
-                      isActive: true,
-                      coupon: controller.couponsList[index],
-                      onClick: () {
-                        controller.selectedCoupon.value =
-                            controller.couponsList[index];
-                        controller.showDealsBottomSheet();
-                      }).paddingOnly(bottom: 12.kh);
-                } else {
-                  return DealsOfTheDayCardDate(
-                      width: 100.w,
-                      isNormalOffer:
-                          controller.couponsList[index].typeOfOffer ==
-                              'Normal offer',
-                      isActive: true,
-                      coupon: controller.couponsList[index],
-                      onClick: () {
-                        controller.selectedCoupon.value =
-                            controller.couponsList[index];
-                        controller.showDealsBottomSheet();
-                      }).paddingOnly(bottom: 12.kh);
+      body: Padding(
+        padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 6.kh),
+        child: Obx(() {
+          if (controller.couponsList.isNotEmpty) {
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent) {
+                  // controller.getActiveCoupons();
+                  controller.addActiveCoupons();
                 }
+                return false;
               },
-              itemCount: controller.couponsList.length,
-            ),
-          );
-        } else if (controller.couponsList.isEmpty) {
-          return EmptyWidget(
-              title: StringConstant.noOffersFound,
-              subTitle: StringConstant.createAttractiveOffers);
-          // return const Center(child: Text(StringConstant.noCoupons));
-        } else {
-          return Center(
-              child: CircularProgressIndicator(
-            color: context.primary01,
-          ));
-        }
-      }),
+              child: ListView.builder(
+                shrinkWrap: true,
+                controller: controller.activeScrollController,
+                itemBuilder: (ctx, index) {
+                  String date = controller.couponsList[index].sheduleDate ?? "";
+                  if (date.isEmpty) {
+                    return DealsOfTheDayCard(
+                        width: 100.w,
+                        isNormalOffer:
+                            controller.couponsList[index].typeOfOffer ==
+                                'Normal offer',
+                        isActive: true,
+                        coupon: controller.couponsList[index],
+                        onClick: () {
+                          controller.selectedCoupon.value =
+                              controller.couponsList[index];
+                          controller.showDealsBottomSheet();
+                        }).paddingOnly(bottom: 12.kh);
+                  } else {
+                    return DealsOfTheDayCardDate(
+                        width: 100.w,
+                        isNormalOffer:
+                            controller.couponsList[index].typeOfOffer ==
+                                'Normal offer',
+                        isActive: true,
+                        coupon: controller.couponsList[index],
+                        onClick: () {
+                          controller.selectedCoupon.value =
+                              controller.couponsList[index];
+                          controller.showDealsBottomSheet();
+                        }).paddingOnly(bottom: 12.kh);
+                  }
+                },
+                itemCount: controller.couponsList.length,
+              ),
+            );
+          } else if (controller.couponsList.isEmpty) {
+            return EmptyWidget(
+                title: StringConstant.noOffersFound,
+                subTitle: StringConstant.createAttractiveOffers);
+            // return const Center(child: Text(StringConstant.noCoupons));
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+              color: context.primary01,
+            ));
+          }
+        }),
+      ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: context.primary01,
