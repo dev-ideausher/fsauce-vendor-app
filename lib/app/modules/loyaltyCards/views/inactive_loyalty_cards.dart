@@ -38,9 +38,8 @@ class InactiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                                   .restaurantName ??
                               "",
                           offer: controller.inActiveLoyaltyCards[index].title,
-                          brandColor: Color(int.parse(controller
-                              .inActiveLoyaltyCards[index]
-                              .cardBackgroundColor)),
+                          brandColor: ColorUtil.hexToColor(controller
+                              .inActiveLoyaltyCards[index].cardBackgroundColor),
                           onAddPressed: () {
                             //ToDo: When the loyalty card is pressed.
                           },

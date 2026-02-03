@@ -8,9 +8,7 @@ import 'package:fsauce_vendor_app/app/modules/loyalty/controllers/loyalty_contro
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/loyalty_card_preview_controller.dart';
 
 class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
@@ -37,8 +35,11 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
                       offer: Get.find<LoyaltyController>()
                           .cardTitleController
                           .text,
-                      brandColor:
-                          Get.find<LoyaltyController>().backgroundColor.value,
+                      brandColor: ColorUtil.hexToColor(
+                          Get.find<LoyaltyController>()
+                              .backgroundColor
+                              .value
+                              .toString()),
                       onAddPressed: () {
                         //ToDo: on Add Pressed.
                       },

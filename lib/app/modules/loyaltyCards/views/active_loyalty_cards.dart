@@ -38,8 +38,8 @@ class ActiveLoyaltyCards extends GetView<LoyaltyCardsController> {
                                   .restaurantName ??
                               "",
                           offer: controller.activeLoyaltyCards[index].title,
-                          brandColor: Color(int.parse(controller
-                              .activeLoyaltyCards[index].cardBackgroundColor)),
+                          brandColor: ColorUtil.hexToColor(controller
+                              .activeLoyaltyCards[index].cardBackgroundColor),
                           onAddPressed: () {
                             //ToDo: When the loyalty card is pressed.
                           },

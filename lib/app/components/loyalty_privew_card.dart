@@ -8,18 +8,17 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../../generated/assets.dart';
 
 class LoyaltyReviewCard extends StatelessWidget {
   const LoyaltyReviewCard({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.kw),
       decoration: BoxDecoration(
-          color: Get.find<LoyaltyController>().backgroundColor.value,
+          color: ColorUtil.hexToColor(
+              Get.find<LoyaltyController>().backgroundColor.value.toString()),
           borderRadius: BorderRadius.circular(8.kh)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,12 +79,10 @@ class LoyaltyReviewCard extends StatelessWidget {
               mainAxisSpacing: 16.kh,
               crossAxisSpacing: 16.kw,
             ),
-            itemCount: Get.find<LoyaltyController>().noOfStamps.value +
-                1, // stamps + gift
+            itemCount: Get.find<LoyaltyController>().noOfStamps.value + 1,
             itemBuilder: (context, index) {
               final bool isGift =
                   index == Get.find<LoyaltyController>().noOfStamps.value;
-
               return isGift ? _giftBox(context) : _stampBox(context);
             },
           ),
