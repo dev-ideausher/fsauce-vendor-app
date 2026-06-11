@@ -37,6 +37,7 @@ Future<void> main() async {
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
+      title: 'Food Society Vendor',
       // theme: AppTheme.light,
       theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xffFAFAFA),

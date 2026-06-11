@@ -1,6 +1,6 @@
 {
-    "name": "fsauce_vendor_app",
-    "short_name": "fsauce_vendor_app",
+    "name": "Food Society Vendor",
+    "short_name": "Food Society",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

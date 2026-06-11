@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Food Sauciety Vendor App</string>
+    <string name="facebook_app_id">1630400974743963</string>
+    <string name="fb_login_protocol_scheme">fb1630400974743963</string>
+    <string name="facebook_client_token">36513c8b96b88beac4908be65ba6aa03</string>
+</resources>
