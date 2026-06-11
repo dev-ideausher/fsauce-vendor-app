@@ -70,6 +70,32 @@ class CreatePushNotificationView
                   },
                 ),
                 20.kheightBox,
+                Row(
+                  children: [
+                    Text(
+                      StringConstant.scheduleTime,
+                      style: TextStyleUtil.manrope14w500(),
+                    ),
+                    Text(
+                      "*",
+                      style:
+                          TextStyleUtil.manrope14w500(color: context.primary01),
+                    )
+                  ],
+                ),
+                10.kheightBox,
+                FsvTextfield(
+                  hintText: StringConstant.selectScheduleTime,
+                  readOnly: true,
+                  controller: controller.scheduledTimeController,
+                  validator: (val) => controller.scheduledTimeValidator(val),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  suffix: const Icon(Icons.schedule),
+                  onPressedSuffix: () {
+                    controller.pickTime(context);
+                  },
+                ),
+                20.kheightBox,
                 const Spacer(),
                 Obx(
                   () => FsvButton(

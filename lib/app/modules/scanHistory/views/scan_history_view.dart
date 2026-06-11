@@ -86,7 +86,7 @@ class ScanHistoryView extends GetView<ScanHistoryController> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Loyalty ${e.typeOfRedeem?.capitalizeFirst??""}",
+                                                "Loyalty ${controller.formatTypeOfRedeemLabel(e.typeOfRedeem)}",
                                                 style: TextStyleUtil.manrope14w400(),
                                               ),
                                               Divider(

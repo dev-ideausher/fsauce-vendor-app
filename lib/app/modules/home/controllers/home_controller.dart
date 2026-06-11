@@ -177,7 +177,7 @@ class HomeController extends GetxController {
 
   String vendor = '';
 
-  void getRestaurantDetails() async {
+  Future<void> getRestaurantDetails() async {
     try {
       var response = await APIManager.getVendor();
       vendor = response.data["data"]["_id"];

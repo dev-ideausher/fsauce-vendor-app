@@ -17,8 +17,13 @@ class AllPhotosAndVideosController extends GetxController {
 
   @override
   void onInit() {
-    getRestaurantUploads();
     super.onInit();
+    final home = Get.find<HomeController>();
+    restaurantUploads.assignAll(home.restaurantDetails.value.media);
+    ever(home.restaurantDetails, (RestaurantDetails details) {
+      restaurantUploads.assignAll(details.media);
+    });
+    home.getRestaurantDetails();
   }
 
   RxList<String> selectedFiles = <String>[].obs;
@@ -26,9 +31,9 @@ class AllPhotosAndVideosController extends GetxController {
   RxList<String> restaurantUploads = <String>[].obs;
 
   void getRestaurantUploads() {
-    Get.find<HomeController>().getRestaurantDetails();
-    restaurantUploads.value =
-        Get.find<HomeController>().restaurantDetails.value.media;
+    final home = Get.find<HomeController>();
+    restaurantUploads.assignAll(home.restaurantDetails.value.media);
+    home.getRestaurantDetails();
   }
 
   bool isImage(String path) {

@@ -34,9 +34,10 @@ class DealsOfTheDayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String date = coupon.sheduleDate ?? "";
     return Container(
-      height: isNormalOffer ? 148.kh : 178.kh,
+      constraints: BoxConstraints(
+        minHeight: isNormalOffer ? 148.kh : 178.kh,
+      ),
       width: width,
       // padding: EdgeInsets.only(top: 10.kh),
       decoration: BoxDecoration(
@@ -61,59 +62,69 @@ class DealsOfTheDayCard extends StatelessWidget {
               ),
             )),
         Column(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            10.kheightBox,
+            8.kheightBox,
             isNormalOffer
                 ? Container()
                 : CommonImageView(
                     svgPath: ImageConstant.dealOfDay,
                   ),
-            20.kheightBox,
+            16.kheightBox,
             Padding(
-              padding: EdgeInsets.only(left: 14.kw, right: 2.kw),
+              padding: EdgeInsets.only(left: 14.kw, right: 90.kw),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CommonImageView(
                     svgPath: ImageConstant.percentOff,
                   ),
-                  20.kwidthBox,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        coupon.title,
-                        style: TextStyleUtil.manrope16w600(),
-                      ),
-                      SizedBox(
-                        width: 40.w,
-                        child: Text(
+                  12.kwidthBox,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          coupon.title,
+                          style: TextStyleUtil.manrope16w600(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        2.kheightBox,
+                        Text(
                           coupon.description,
                           maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleUtil.manrope14w400(color: context.black03),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      onClick();
-                    },
-                    child: Text(
-                      StringConstant.viewDetails,
-                      style: TextStyleUtil.manrope14w400(
-                          color: context.black02,
-                          textDecoration: TextDecoration.underline),
-                    )),
-              ],
+            Padding(
+              padding: EdgeInsets.only(left: 4.kw, bottom: 2.kh),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 8.kw, vertical: 0),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: () {
+                  onClick();
+                },
+                child: Text(
+                  StringConstant.viewDetails,
+                  style: TextStyleUtil.manrope14w400(
+                    color: context.black02,
+                    textDecoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

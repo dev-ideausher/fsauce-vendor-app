@@ -26,139 +26,148 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
           padding: EdgeInsets.all(16.kw),
           child: Form(
             key: Get.find<MenuPageController>().formKey,
-            child: ListView(
+            child: Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      StringConstant.itemPhoto,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                          TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
-                6.kheightBox,
-                Obx(
-                  () => InkWell(
-                    onTap: Get.find<MenuPageController>().pickImage,
-                    child: Container(
-                      height: 160.kh,
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: context.black07),
-                          borderRadius: BorderRadius.circular(8.kw),
-                          color: context.loginSignupTextfieldColor),
-                      child: Center(
-                        child: Get.find<MenuPageController>()
-                                .itemImage
-                                .value
-                                .isNotEmpty
-                            ? CommonImageView(
-                                file: Get.find<MenuPageController>()
-                                    .selectedItemImage
-                                    .value!,
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.file_upload_outlined),
-                                  2.kwidthBox,
-                                  Text(
-                                    StringConstant.uploadPhoto,
-                                    style: TextStyleUtil.manrope14w400(
-                                        color: context.black03),
-                                  )
-                                ],
-                              ),
-                      ),
-                    ),
-                  ),
-                ),
-                20.kheightBox,
-                Row(
-                  children: [
-                    4.kwidthBox,
-                    Text(
-                      StringConstant.category,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                  ],
-                ),
-                10.kheightBox,
-                Container(
-                  height: 56.kh,
-                  width: 100.w,
-                  padding: EdgeInsets.symmetric(horizontal: 10.kw),
-                  decoration: BoxDecoration(
-                      color: context.loginSignupTextfieldColor,
-                      border: Border.all(color: context.borderColor1),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Row(
+                Expanded(
+                  child: ListView(
                     children: [
-                      Expanded(
-                          child: DropdownButtonFormField<CategoryModel>(
-                        style: TextStyleUtil.manrope16w400(),
-                        isExpanded: true,
-                        initialValue: Get.find<MenuPageController>()
-                            .addItemSelectedCategory,
-                        onChanged: (val) {
-                          Get.find<MenuPageController>()
-                              .changeSelectedCategory(category: val!);
-                        },
-                        items: Get.find<MenuPageController>()
-                            .categories
-                            .map<DropdownMenuItem<CategoryModel>>(
-                                (CategoryModel value) {
-                          return DropdownMenuItem<CategoryModel>(
-                            value: value,
-                            child: Text(value.name),
-                          );
-                        }).toList(),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(0),
-                          hintText: StringConstant.selectGender,
-                          hintStyle: TextStyleUtil.manrope14w400(
-                              color: context.black04),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
+                      Row(
+                        children: [
+                          Text(
+                            StringConstant.itemPhoto,
+                            style: TextStyleUtil.manrope14w500(),
+                          ),
+                          Text(
+                            "*",
+                            style: TextStyleUtil.manrope14w500(
+                                color: context.primary01),
+                          )
+                        ],
+                      ),
+                      6.kheightBox,
+                      Obx(
+                        () => InkWell(
+                          onTap: Get.find<MenuPageController>().pickImage,
+                          child: Container(
+                            height: 160.kh,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: context.black07),
+                                borderRadius: BorderRadius.circular(8.kw),
+                                color: context.loginSignupTextfieldColor),
+                            child: Center(
+                              child: Get.find<MenuPageController>()
+                                      .itemImage
+                                      .value
+                                      .isNotEmpty
+                                  ? CommonImageView(
+                                      file: Get.find<MenuPageController>()
+                                          .selectedItemImage
+                                          .value!,
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.file_upload_outlined),
+                                        2.kwidthBox,
+                                        Text(
+                                          StringConstant.uploadPhoto,
+                                          style: TextStyleUtil.manrope14w400(
+                                              color: context.black03),
+                                        )
+                                      ],
+                                    ),
+                            ),
                           ),
                         ),
-                      )),
+                      ),
+                      20.kheightBox,
+                      Row(
+                        children: [
+                          4.kwidthBox,
+                          Text(
+                            StringConstant.category,
+                            style: TextStyleUtil.manrope14w500(),
+                          ),
+                        ],
+                      ),
+                      10.kheightBox,
+                      Container(
+                        height: 56.kh,
+                        width: 100.w,
+                        padding: EdgeInsets.symmetric(horizontal: 10.kw),
+                        decoration: BoxDecoration(
+                            color: context.loginSignupTextfieldColor,
+                            border: Border.all(color: context.borderColor1),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: DropdownButtonFormField<CategoryModel>(
+                              style: TextStyleUtil.manrope16w400(),
+                              isExpanded: true,
+                              initialValue: Get.find<MenuPageController>()
+                                  .addItemSelectedCategory,
+                              onChanged: (val) {
+                                Get.find<MenuPageController>()
+                                    .changeSelectedCategory(category: val!);
+                              },
+                              items: Get.find<MenuPageController>()
+                                  .categories
+                                  .map<DropdownMenuItem<CategoryModel>>(
+                                      (CategoryModel value) {
+                                return DropdownMenuItem<CategoryModel>(
+                                  value: value,
+                                  child: Text(value.name),
+                                );
+                              }).toList(),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(0),
+                                hintText: StringConstant.selectGender,
+                                hintStyle: TextStyleUtil.manrope14w400(
+                                    color: context.black04),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                      20.kheightBox,
+                      Row(
+                        children: [
+                          4.kwidthBox,
+                          Text(
+                            StringConstant.itemName,
+                            style: TextStyleUtil.manrope14w500(),
+                          ),
+                          Text(
+                            "*",
+                            style: TextStyleUtil.manrope14w500(
+                                color: context.primary01),
+                          )
+                        ],
+                      ),
+                      10.kheightBox,
+                      CustomTextField(
+                          controller:
+                              Get.find<MenuPageController>().itemNameController,
+                          fillColor: context.black07,
+                          maxLength: 500,
+                          maxLines: 5,
+                          validator: (value) =>
+                              controller.validateItemName(value ?? ""),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          hintText: StringConstant.enterHere),
+                      20.kheightBox,
                     ],
                   ),
                 ),
-                20.kheightBox,
-                Row(
-                  children: [
-                    4.kwidthBox,
-                    Text(
-                      StringConstant.itemName,
-                      style: TextStyleUtil.manrope14w500(),
-                    ),
-                    Text(
-                      "*",
-                      style:
-                          TextStyleUtil.manrope14w500(color: context.primary01),
-                    )
-                  ],
-                ),
                 10.kheightBox,
-                CustomTextField(
-                    controller:
-                        Get.find<MenuPageController>().itemNameController,
-                    fillColor: context.black07,
-                    maxLength: 500,
-                    maxLines: 5,
-                    validator: (value) =>
-                        controller.validateItemName(value ?? ""),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    hintText: StringConstant.enterHere),
-                220.kheightBox,
                 CustomRedElevatedButton(
                     width: 100.w,
                     height: 56.kh,
@@ -175,7 +184,7 @@ class AddItemDetailsView extends GetView<AddItemDetailsController> {
                         }
                       }
                     }),
-                80.kheightBox,
+                10.kheightBox,
               ],
             ),
           ),

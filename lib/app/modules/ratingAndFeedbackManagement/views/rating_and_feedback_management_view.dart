@@ -8,6 +8,7 @@ import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../controllers/rating_and_feedback_management_controller.dart';
 
 class RatingAndFeedbackManagementView
@@ -22,6 +23,7 @@ class RatingAndFeedbackManagementView
         ),
         body: Obx(() {
           if (controller.ratings.isNotEmpty) {
+            final starShares = controller.starDistributionShares();
             return SingleChildScrollView(
               padding: EdgeInsets.all(16.kw),
               child: Column(
@@ -43,12 +45,15 @@ class RatingAndFeedbackManagementView
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "4.0",
+                              controller.averageRating.value
+                                  .toStringAsFixed(1),
                               style: TextStyleUtil.manrope24w500(),
                             ),
-                            const RatingIndicator(rating: 4),
+                            RatingIndicator(
+                              rating: controller.averageRatingStarRow(),
+                            ),
                             Text(
-                              "( 4,100 )",
+                              '( ${NumberFormat('#,###').format(controller.totalRatingCount.value)} )',
                               style: TextStyleUtil.manrope14w400(),
                             )
                           ],
@@ -59,40 +64,15 @@ class RatingAndFeedbackManagementView
                           child: Column(
                             children: [
                               20.kheightBox,
-                              LinearProgressIndicator(
-                                color: context.golden,
-                                borderRadius: BorderRadius.circular(4.kh),
-                                minHeight: 4.kh,
-                                value: 0.9,
-                              ),
-                              10.kheightBox,
-                              LinearProgressIndicator(
-                                color: context.golden,
-                                borderRadius: BorderRadius.circular(4.kh),
-                                minHeight: 4.kh,
-                                value: 0.7,
-                              ),
-                              10.kheightBox,
-                              LinearProgressIndicator(
-                                color: context.golden,
-                                borderRadius: BorderRadius.circular(4.kh),
-                                minHeight: 4.kh,
-                                value: 0.4,
-                              ),
-                              10.kheightBox,
-                              LinearProgressIndicator(
-                                color: context.golden,
-                                borderRadius: BorderRadius.circular(4.kh),
-                                minHeight: 4.kh,
-                                value: 0.3,
-                              ),
-                              10.kheightBox,
-                              LinearProgressIndicator(
-                                color: context.golden,
-                                borderRadius: BorderRadius.circular(4.kh),
-                                minHeight: 4.kh,
-                                value: 0.1,
-                              ),
+                              for (int i = 0; i < 5; i++) ...[
+                                LinearProgressIndicator(
+                                  color: context.golden,
+                                  borderRadius: BorderRadius.circular(4.kh),
+                                  minHeight: 4.kh,
+                                  value: starShares[i].clamp(0.0, 1.0),
+                                ),
+                                if (i != 4) 10.kheightBox,
+                              ],
                             ],
                           ),
                         )
@@ -146,6 +126,8 @@ class RatingAndFeedbackManagementView
                         ListView.separated(
                             shrinkWrap: true,
                             itemBuilder: (ctx, index) {
+                              final review =
+                                  controller.displayedRatings[index];
                               return Padding(
                                 padding: EdgeInsets.only(bottom: 20.kh),
                                 child: Row(
@@ -155,15 +137,12 @@ class RatingAndFeedbackManagementView
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          controller
-                                                  .ratings[index].user!.name ??
-                                              "",
+                                          review.user?.name ?? "",
                                           style: TextStyleUtil.manrope14w600(),
                                         ),
                                         2.kheightBox,
                                         Text(
-                                          controller.ratings[index].review! ??
-                                              "",
+                                          review.review ?? "",
                                           style: TextStyleUtil.manrope14w400(),
                                         ),
                                       ],
@@ -178,9 +157,7 @@ class RatingAndFeedbackManagementView
                                               onTap: () {
                                                 controller
                                                     .showRatingDeleteDialog(
-                                                        controller
-                                                            .ratings[index]
-                                                            .Id!);
+                                                        review.Id!);
                                               },
                                               value: 1,
                                               child: Text(
@@ -200,20 +177,17 @@ class RatingAndFeedbackManagementView
                             separatorBuilder: (ctx, index) {
                               return 12.kheightBox;
                             },
-                            itemCount: controller.ratings.length),
+                            itemCount: controller.displayedRatings.length),
                       ],
                     ),
                   )
                 ],
               ),
             );
-          } else if (controller.ratings.isEmpty) {
-            return Center(
-              child: EmptyRatingScreen(),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
           }
+          return const Center(
+            child: EmptyRatingScreen(),
+          );
         }));
   }
 }

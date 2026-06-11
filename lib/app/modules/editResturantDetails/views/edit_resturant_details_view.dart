@@ -12,6 +12,9 @@ import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 import '../../../models/cuisine_model.dart';
 import '../../../routes/app_pages.dart';
@@ -81,14 +84,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   6.kheightBox,
                   Obx(() {
                     if (controller.selectedLogoImage.isNotEmpty) {
-                      return Image.file(
-                        width: double.infinity,
-                        height: 100.kh,
-                        File(controller.selectedLogoImage.value),
-                        fit: BoxFit.contain,
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(12.kw),
+                        child: Image.file(
+                          width: double.infinity,
+                          height: 100.kh,
+                          File(controller.selectedLogoImage.value),
+                          fit: BoxFit.cover,
+                        ),
                       );
                     } else {
-                      return Container();
+                      return const SizedBox.shrink();
                     }
                   }),
                   6.kheightBox,
@@ -102,19 +108,23 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
-                          CommonImageView(
-                            url: Get.find<HomeController>()
-                                .restaurantDetails
-                                .value
-                                .restaurantLogo,
-                            height: 150.kh,
-                            width: 150.kh,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12.kw),
+                            child: CommonImageView(
+                              url: Get.find<HomeController>()
+                                  .restaurantDetails
+                                  .value
+                                  .restaurantLogo,
+                              height: 150.kh,
+                              width: 150.kh,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           6.kheightBox,
                         ],
                       );
                     } else {
-                      return Container();
+                      return const SizedBox.shrink();
                     }
                   }),
                   Obx(() {
@@ -124,6 +134,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         .restaurantLogo
                         .isEmpty) {
                       return InkWell(
+                        borderRadius: BorderRadius.circular(12.kw),
                         onTap: () {
                           controller.pickLogo();
                         },
@@ -132,7 +143,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                           height: 100.kh,
                           decoration: BoxDecoration(
                             color: context.loginSignupTextfieldColor,
-                            borderRadius: BorderRadius.circular(8.kw),
+                            borderRadius: BorderRadius.circular(12.kw),
                             border: RDottedLineBorder.all(
                               color: context.black07,
                               width: 2,
@@ -170,11 +181,23 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                       );
                     } else {
-                      return IconButton(
-                          onPressed: () {
-                            controller.pickLogo();
-                          },
-                          icon: const Icon(Icons.edit));
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          onPressed: controller.pickLogo,
+                          style: TextButton.styleFrom(
+                            foregroundColor: context.primary01,
+                            padding: EdgeInsets.symmetric(vertical: 4.kh),
+                          ),
+                          icon: const Icon(Icons.edit_outlined, size: 20),
+                          label: Text(
+                            StringConstant.edit,
+                            style: TextStyleUtil.manrope14w600(
+                              color: context.primary01,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   }),
                   10.kheightBox,
@@ -194,14 +217,17 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                   6.kheightBox,
                   Obx(() {
                     if (controller.selectedBannerImage.isNotEmpty) {
-                      return Image.file(
-                        height: 160.kh,
-                        width: double.infinity,
-                        File(controller.selectedBannerImage.value),
-                        fit: BoxFit.contain,
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(12.kw),
+                        child: Image.file(
+                          height: 160.kh,
+                          width: double.infinity,
+                          File(controller.selectedBannerImage.value),
+                          fit: BoxFit.cover,
+                        ),
                       );
                     } else {
-                      return Container();
+                      return const SizedBox.shrink();
                     }
                   }),
                   6.kheightBox,
@@ -215,19 +241,23 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       return Column(
                         children: <Widget>[
                           6.kheightBox,
-                          CommonImageView(
-                            url: Get.find<HomeController>()
-                                .restaurantDetails
-                                .value
-                                .restaurantBanner,
-                            height: 150.kh,
-                            width: 150.kh,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12.kw),
+                            child: CommonImageView(
+                              url: Get.find<HomeController>()
+                                  .restaurantDetails
+                                  .value
+                                  .restaurantBanner,
+                              height: 160.kh,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           6.kheightBox,
                         ],
                       );
                     } else {
-                      return Container();
+                      return const SizedBox.shrink();
                     }
                   }),
                   Obx(() {
@@ -237,6 +267,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         .restaurantBanner
                         .isEmpty) {
                       return InkWell(
+                        borderRadius: BorderRadius.circular(12.kw),
                         onTap: () {
                           controller.pickBanner();
                         },
@@ -244,19 +275,21 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                           height: 160.kh,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              border: Border.all(color: context.black07),
-                              borderRadius: BorderRadius.circular(8.kw),
-                              color: context.loginSignupTextfieldColor),
+                            border: Border.all(color: context.black07),
+                            borderRadius: BorderRadius.circular(12.kw),
+                            color: context.loginSignupTextfieldColor,
+                          ),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.file_upload_outlined),
-                                2.kwidthBox,
+                                const Icon(Icons.panorama_outlined, size: 22),
+                                6.kwidthBox,
                                 Text(
                                   StringConstant.uploadPhoto,
-                                  style: TextStyleUtil.manrope14w400(
-                                      color: context.black03),
+                                  style: TextStyleUtil.manrope14w500(
+                                    color: context.black03,
+                                  ),
                                 )
                               ],
                             ),
@@ -264,11 +297,23 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                         ),
                       );
                     } else {
-                      return IconButton(
-                          onPressed: () {
-                            controller.pickBanner();
-                          },
-                          icon: const Icon(Icons.edit));
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          onPressed: controller.pickBanner,
+                          style: TextButton.styleFrom(
+                            foregroundColor: context.primary01,
+                            padding: EdgeInsets.symmetric(vertical: 4.kh),
+                          ),
+                          icon: const Icon(Icons.edit_outlined, size: 20),
+                          label: Text(
+                            StringConstant.edit,
+                            style: TextStyleUtil.manrope14w600(
+                              color: context.primary01,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   }),
                   20.kheightBox,
@@ -291,12 +336,14 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                             arguments: "latLong")!
                         .then((value) {
                       if (value != null) {
-                        List<String> addressWithLatLong = value;
+                        final List<String> addressWithLatLong = value;
                         final lat =
                             double.tryParse(addressWithLatLong.first) ?? 0.0;
                         final long =
                             double.tryParse(addressWithLatLong[1]) ?? 0.0;
-                        final address = addressWithLatLong[2] ?? "";
+                        final address = addressWithLatLong.length > 2
+                            ? addressWithLatLong[2]
+                            : "";
 
                         controller.moveToNewLatLng(lat, long, address: address);
 
@@ -421,7 +468,7 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       controller: controller.averagePriceController,
                       fillColor: context.loginSignupTextfieldColor,
                       border: Border.all(color: context.black07),
-                      hintText: StringConstant.enterAddress),
+                      hintText: StringConstant.enterPrice),
                   20.kheightBox,
                   Text(
                     StringConstant.description,
@@ -433,71 +480,11 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
                       fillColor: context.loginSignupTextfieldColor,
                       border: Border.all(color: context.black07),
                       hintText: StringConstant.enterDescription),
-                  10.kheightBox,
-                  Row(
-                    children: [
-                      Text(
-                        StringConstant.cuisine,
-                        style: TextStyleUtil.manrope14w500(),
-                      ),
-                      Text(
-                        "*",
-                        style: TextStyleUtil.manrope14w500(
-                            color: context.primary01),
-                      )
-                    ],
-                  ),
-                  10.kheightBox,
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: context.borderColor2),
-                        borderRadius: BorderRadius.circular(8.kw)),
-                    padding: EdgeInsets.symmetric(horizontal: 10.kw),
-                    child: Row(
-                      children: [
-                        Expanded(child: Obx(() {
-                          return DropdownButtonFormField<CuisineModel>(
-                            validator: (CuisineModel? model) {
-                              if (model == null) {
-                                return "Not selected cuisine!";
-                              }
-                              return null;
-                            },
-                            value: controller.initialCuisineModels.isNotEmpty
-                                ? controller.initialCuisineModels.first
-                                : null,
-                            dropdownColor: Colors.white,
-                            style: TextStyleUtil.manrope16w400(),
-                            onChanged: (val) {
-                              if (val != null) {
-                                controller.initialCuisineModels.value = [];
-                                controller.initialCuisineModels.add(val);
-                              }
-                            },
-                            items: controller.cuisines
-                                .map<DropdownMenuItem<CuisineModel>>(
-                                    (CuisineModel value) {
-                              return DropdownMenuItem<CuisineModel>(
-                                value: value,
-                                child: Text(value.name ?? "Unknown"),
-                              );
-                            }).toList(),
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(0),
-                              hintText: StringConstant.selectCuisine,
-                              hintStyle: TextStyleUtil.manrope14w400(
-                                  color: context.black04),
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          );
-                        })),
-                      ],
-                    ),
-                  ),
-                  40.kheightBox,
+                  20.kheightBox,
+                  Divider(height: 1, thickness: 1, color: context.borderColor1),
+                  20.kheightBox,
+                  _cuisineBlock(context, controller),
+                  32.kheightBox,
                   SafeArea(
                     child: CustomRedElevatedButton(
                         buttonText: StringConstant.save,
@@ -516,4 +503,170 @@ class EditResturantDetailsView extends GetView<EditResturantDetailsController> {
           ),
         ));
   }
+}
+
+Widget _cuisineBlock(
+  BuildContext context,
+  EditResturantDetailsController controller,
+) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Icon(Icons.restaurant_menu_outlined, size: 20, color: context.primary01),
+          6.kwidthBox,
+          Text(
+            StringConstant.cuisine,
+            style: TextStyleUtil.manrope14w500(),
+          ),
+          Text(
+            "*",
+            style: TextStyleUtil.manrope14w500(color: context.primary01),
+          ),
+        ],
+      ),
+      6.kheightBox,
+      Text(
+        StringConstant.cuisineSelectionHint,
+        style: TextStyleUtil.manrope12w400(color: context.black03)
+            .copyWith(height: 1.4),
+      ),
+      12.kheightBox,
+      Obx(() {
+        if (controller.multiSelectCuisineItems.isEmpty) {
+          return _cuisineLoadingPlaceholder(context);
+        }
+        final h = MediaQuery.sizeOf(context).height;
+        return Container(
+          key: ValueKey(
+            controller.initialCuisineModels
+                .map((CuisineModel e) => e.id ?? '')
+                .join(','),
+          ),
+          padding: EdgeInsets.fromLTRB(4.kh, 2.kh, 4.kh, 10.kh),
+          decoration: BoxDecoration(
+            color: context.loginSignupTextfieldColor,
+            borderRadius: BorderRadius.circular(12.kw),
+            border: Border.all(color: context.borderColor1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 12,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: MultiSelectDialogField<CuisineModel>(
+            listType: MultiSelectListType.LIST,
+            searchable: true,
+            searchHint: StringConstant.searchCuisines,
+            separateSelectedItems: false,
+            searchIcon: const Icon(Icons.search, size: 22),
+            closeSearchIcon: const Icon(Icons.close, size: 20),
+            dialogHeight: (h * 0.52).clamp(320.0, 520.0),
+            backgroundColor: context.white,
+            barrierColor: Colors.black26,
+            initialValue: List<CuisineModel>.from(
+              controller.initialCuisineModels,
+            ),
+            validator: (List<CuisineModel>? c) {
+              if (c == null || c.isEmpty) {
+                return StringConstant.restaurantCuisineCannotBeEmpty;
+              }
+              return null;
+            },
+            items: controller.multiSelectCuisineItems,
+            title: Text(
+              StringConstant.selectCuisine,
+              style: TextStyleUtil.manrope18w600(color: context.black01),
+            ),
+            selectedColor: context.primary01,
+            unselectedColor: context.black04.withValues(alpha: 0.4),
+            checkColor: context.white,
+            itemsTextStyle: TextStyleUtil.manrope14w400(color: context.black01),
+            selectedItemsTextStyle:
+                TextStyleUtil.manrope14w500(color: context.black01),
+            searchTextStyle: TextStyleUtil.manrope14w400(),
+            searchHintStyle: TextStyleUtil.manrope14w400(color: context.black04),
+            chipDisplay: MultiSelectChipDisplay(
+              height: 40.kh,
+              scroll: true,
+              icon: Icon(Icons.check_rounded, size: 18, color: context.primary01),
+              textStyle: TextStyleUtil.manrope12w600(color: context.primary01),
+              chipColor: context.primary07,
+              alignment: Alignment.centerLeft,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                  color: context.primary01.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.kw),
+            ),
+            buttonIcon: Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: 24,
+              color: context.primary01,
+            ),
+            buttonText: Text(
+              controller.initialCuisineModels.isEmpty
+                  ? StringConstant.selectCuisine
+                  : '${controller.initialCuisineModels.length} ${StringConstant.selectedCountSuffix}',
+              style: TextStyleUtil.manrope14w500(
+                color: controller.initialCuisineModels.isEmpty
+                    ? context.black04
+                    : context.black01,
+              ),
+            ),
+            confirmText: Text(
+              StringConstant.done,
+              style: TextStyleUtil.manrope16w600(color: context.primary01),
+            ),
+            cancelText: Text(
+              StringConstant.cancel,
+              style: TextStyleUtil.manrope16w500(color: context.black03),
+            ),
+            onConfirm: (List<CuisineModel> results) {
+              controller.initialCuisineModels.value = results;
+            },
+          ),
+        );
+      }),
+    ],
+  );
+}
+
+/// Shown while cuisine options are being fetched.
+Widget _cuisineLoadingPlaceholder(BuildContext context) {
+  return Container(
+    height: 56.kh,
+    padding: EdgeInsets.symmetric(horizontal: 16.kw),
+    decoration: BoxDecoration(
+      color: context.loginSignupTextfieldColor,
+      borderRadius: BorderRadius.circular(12.kw),
+      border: Border.all(color: context.borderColor1),
+    ),
+    child: Row(
+      children: [
+        SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.2,
+            color: context.primary01,
+          ),
+        ),
+        14.kwidthBox,
+        Expanded(
+          child: Text(
+            StringConstant.loadingCuisines,
+            style: TextStyleUtil.manrope14w500(color: context.black03),
+          ),
+        ),
+      ],
+    ),
+  );
 }

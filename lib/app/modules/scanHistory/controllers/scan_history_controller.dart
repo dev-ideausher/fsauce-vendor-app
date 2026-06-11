@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/loyalty_model.dart';
-import '../../../models/scan_redemption_model.dart';
 import '../../../services/dio/api_service.dart';
 
 class ScanHistoryController extends GetxController {
@@ -34,5 +33,16 @@ class ScanHistoryController extends GetxController {
 
   String formatScanDate(String date) {
     return DateFormat("dd MMM yyyy, hh:mm").format(DateTime.parse(date));
+  }
+
+  /// API sends camelCase (e.g. vipOffer); naive capitalize-first would show "Vipoffer".
+  String formatTypeOfRedeemLabel(String? typeOfRedeem) {
+    if (typeOfRedeem == null || typeOfRedeem.isEmpty) return '';
+    switch (typeOfRedeem) {
+      case 'vipOffer':
+        return 'VIP Offer';
+      default:
+        return typeOfRedeem.capitalizeFirst ?? typeOfRedeem;
+    }
   }
 }

@@ -8,9 +8,53 @@ import 'package:fsauce_vendor_app/app/services/dialog_helper.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:intl/src/intl/date_format.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/feature_model.dart';
+
+/// Parses vendor timing strings such as `06:00 PM`, `6:09 AM`, or compact `9AM` / `9 am`.
+TimeOfDay _parseTimingToTimeOfDay(String raw) {
+  final spaced = raw.trim().replaceAll(RegExp(r'\s+'), ' ');
+
+  // Hour-only compact forms ("9AM", "9 am") blow up old code: substring(0,2) becomes "9a".
+  // Only branch when there's no ':' (avoids ambiguity with malformed values).
+  if (!spaced.contains(':')) {
+    final compact =
+        spaced.replaceAll(RegExp(r'\s+'), '').toUpperCase(); // e.g. 9AM, 11PM
+    final hm = RegExp(r'^(\d{1,2})(AM|PM)$').firstMatch(compact);
+    if (hm != null) {
+      try {
+        final dt = DateFormat(
+          'ha',
+          'en_US',
+        ).parseStrict('${hm.group(1)}${hm.group(2)}');
+        return TimeOfDay(hour: dt.hour, minute: dt.minute);
+      } catch (_) {}
+    }
+  }
+
+  const patterns = [
+    'hh:mm a',
+    'h:mm a',
+    'HH:mm:ss',
+    'H:mm:ss',
+    'HH:mm',
+    'H:mm',
+  ];
+  for (final pattern in patterns) {
+    try {
+      final dt = DateFormat(pattern, 'en_US').parseStrict(spaced);
+      return TimeOfDay(hour: dt.hour, minute: dt.minute);
+    } catch (_) {
+      try {
+        final dt = DateFormat(pattern, 'en_US').parse(spaced);
+        return TimeOfDay(hour: dt.hour, minute: dt.minute);
+      } catch (_) {}
+    }
+  }
+  debugPrint('Could not parse time label "$raw", defaulting to 12:00');
+  return const TimeOfDay(hour: 12, minute: 0);
+}
 
 class FeaturesAndTimingsController extends GetxController {
   //TODO: Implement FeaturesAndTimingsController
@@ -79,60 +123,46 @@ class FeaturesAndTimingsController extends GetxController {
             .forEach((String e, FilterOptionController optionController) {
           if (e == "Monday" && timing.day == "Monday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Tuesday" && timing.day == "Tuesday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Wednesday" && timing.day == "Wednesday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Thursday" && timing.day == "Thursday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Friday" && timing.day == "Friday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Saturday" && timing.day == "Saturday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           } else if (e == "Sunday" && timing.day == "Sunday") {
             optionController.isActivated = timing.isActive;
-            optionController.openingTime = TimeOfDay(
-                hour: int.parse(timing.startTime.substring(0, 2)),
-                minute: int.parse(timing.startTime.substring(3, 4)));
-            optionController.closingTime = TimeOfDay(
-                hour: int.parse(timing.closeTime.substring(0, 2)),
-                minute: int.parse(timing.closeTime.substring(3, 4)));
+            optionController.openingTime =
+                _parseTimingToTimeOfDay(timing.startTime);
+            optionController.closingTime =
+                _parseTimingToTimeOfDay(timing.closeTime);
           }
         });
       }

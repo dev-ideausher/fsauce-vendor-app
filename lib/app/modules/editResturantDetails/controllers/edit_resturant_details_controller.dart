@@ -326,6 +326,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:map_picker/map_picker.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../models/cuisine_model.dart';
 
@@ -356,6 +357,8 @@ class EditResturantDetailsController extends GetxController {
   RxString selectedLogoImage = ''.obs;
 
   RxList<CuisineModel> cuisines = <CuisineModel>[].obs;
+  RxList<MultiSelectItem<CuisineModel>> multiSelectCuisineItems =
+      <MultiSelectItem<CuisineModel>>[].obs;
   RxList<CuisineModel> initialCuisineModels = <CuisineModel>[].obs;
 
   String restaurantLogo = "";
@@ -365,8 +368,13 @@ class EditResturantDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCuisines();
-    getInitialRestaurantDetails();
+    _loadEditData();
+  }
+
+  /// Load cuisine catalog before profile so [multiSelectCuisineItems] and selections stay in sync.
+  Future<void> _loadEditData() async {
+    await getCuisines();
+    await getInitialRestaurantDetails();
   }
 
   // ================= API =================
@@ -375,6 +383,14 @@ class EditResturantDetailsController extends GetxController {
     if (response.data['status']) {
       cuisines.value = (response.data['data'] as List)
           .map((e) => CuisineModel.fromJson(e))
+          .toList();
+      multiSelectCuisineItems.value = cuisines
+          .map(
+            (e) => MultiSelectItem<CuisineModel>(
+              e,
+              e.name ?? 'Unnamed Cuisine',
+            ),
+          )
           .toList();
     }
   }
@@ -395,9 +411,7 @@ class EditResturantDetailsController extends GetxController {
       restaurantLogo = details.restaurantLogo;
       restaurantBanner = details.restaurantBanner;
 
-      if (details.cuisine.isNotEmpty) {
-        initialCuisineModels.value = [details.cuisine.first];
-      }
+      initialCuisineModels.value = List<CuisineModel>.from(details.cuisine);
 
       // ✅ READ GEOJSON COORDINATES
       final position = data['position'];
@@ -438,6 +452,18 @@ class EditResturantDetailsController extends GetxController {
     if (file != null) selectedBannerImage.value = file.path;
   }
 
+  Future<String?> _uploadRestaurantMedia(String filePath) async {
+    try {
+      final response = await APIManager.uploadFile(filePath: filePath);
+      if (response.data['status'] == true && response.data['data'] != null) {
+        return response.data['data'].toString();
+      }
+    } catch (e) {
+      debugPrint('uploadRestaurantMedia: $e');
+    }
+    return null;
+  }
+
   // ================= MAP DRAG =================
   Future<void> updateDragLocation({String address = ""}) async {
     resturLat.value = cameraPosition.target.latitude;
@@ -472,11 +498,31 @@ class EditResturantDetailsController extends GetxController {
 
   // ================= SAVE =================
   Future<void> updateDetails() async {
+    String logoUrl = restaurantLogo;
+    String bannerUrl = restaurantBanner;
+
+    if (selectedLogoImage.isNotEmpty) {
+      final uploaded = await _uploadRestaurantMedia(selectedLogoImage.value);
+      if (uploaded == null || uploaded.isEmpty) {
+        Get.snackbar('Error', StringConstant.somethingWentWrong);
+        return;
+      }
+      logoUrl = uploaded;
+    }
+    if (selectedBannerImage.isNotEmpty) {
+      final uploaded = await _uploadRestaurantMedia(selectedBannerImage.value);
+      if (uploaded == null || uploaded.isEmpty) {
+        Get.snackbar('Error', StringConstant.somethingWentWrong);
+        return;
+      }
+      bannerUrl = uploaded;
+    }
+
     final response = await APIManager.updateVendor(
       restaurantDetails: RestaurantDetails(
         restaurantName: restaurantNameController.text,
-        restaurantLogo: restaurantLogo,
-        restaurantBanner: restaurantBanner,
+        restaurantLogo: logoUrl,
+        restaurantBanner: bannerUrl,
         location: addressController.text,
         avgPrice: int.parse(averagePriceController.text),
         description: descriptionController.text,
@@ -492,6 +538,11 @@ class EditResturantDetailsController extends GetxController {
     );
 
     if (response.data['status']) {
+      restaurantLogo = logoUrl;
+      restaurantBanner = bannerUrl;
+      selectedLogoImage.value = '';
+      selectedBannerImage.value = '';
+      await Get.find<HomeController>().getRestaurantDetails();
       Get.back();
       DialogHelper.showSuccess(
         StringConstant.detailsUpdatedSuccessfully,

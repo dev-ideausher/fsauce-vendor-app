@@ -98,7 +98,6 @@ class ReviewFilterBottomSheet extends StatelessWidget {
                   buttonText: StringConstant.next,
                   onPressed: () {
                     Get.back();
-                    controller.getRatings();
                   }),
             ],
           ),

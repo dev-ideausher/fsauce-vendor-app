@@ -5,6 +5,7 @@ import 'package:fsauce_vendor_app/app/components/common_image_view.dart';
 import 'package:fsauce_vendor_app/app/components/custom_app_bar.dart';
 import 'package:fsauce_vendor_app/app/constants/image_constant.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
+import 'package:fsauce_vendor_app/app/modules/home/controllers/home_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/dio/api_service.dart';
 import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
@@ -137,6 +138,9 @@ class _QrScanViewState extends State<QrScanView> {
         var response = await APIManager.scanLoyaltyCard(data: cardData);
         if (response.data['status']) {
           Get.back();
+          if (Get.isRegistered<HomeController>()) {
+            Get.find<HomeController>().getDashboardData();
+          }
           Get.bottomSheet(const AddedSuccessfullBottomSheet(
               subTitle: StringConstant.redeemedSuccessfully));
         } else {

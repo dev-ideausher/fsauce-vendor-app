@@ -15,7 +15,9 @@ class CreatePushNotificationController extends GetxController {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController scheduledDateController = TextEditingController();
+  TextEditingController scheduledTimeController = TextEditingController();
   Rx<DateTime> selectedDate = DateTime.now().obs;
+  TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
 
   final formKey = GlobalKey<FormState>();
 
@@ -27,19 +29,41 @@ class CreatePushNotificationController extends GetxController {
     // Listen for changes to enable Save button
     titleController.addListener(validateForm);
     scheduledDateController.addListener(validateForm);
+    scheduledTimeController.addListener(validateForm);
   }
 
   @override
   void onClose() {
     titleController.dispose();
     scheduledDateController.dispose();
+    scheduledTimeController.dispose();
     super.onClose();
   }
 
   void validateForm() {
     isActive.value = titleController.text.isNotEmpty &&
         titleController.text.length <= 25 &&
-        scheduledDateController.text.isNotEmpty;
+        scheduledDateController.text.isNotEmpty &&
+        scheduledTimeController.text.isNotEmpty;
+  }
+
+  String _formatTimeOfDay(BuildContext context, TimeOfDay t) {
+    final m = MediaQuery.of(context);
+    return MaterialLocalizations.of(context).formatTimeOfDay(
+      t,
+      alwaysUse24HourFormat: m.alwaysUse24HourFormat,
+    );
+  }
+
+  DateTime _combinedScheduled() {
+    final d = selectedDate.value;
+    return DateTime(
+      d.year,
+      d.month,
+      d.day,
+      _selectedTime.hour,
+      _selectedTime.minute,
+    );
   }
 
   Future<void> pickDate(BuildContext context) async {
@@ -53,7 +77,7 @@ class CreatePushNotificationController extends GetxController {
           data: ThemeData.light().copyWith(
             primaryColor: context.primary01,
             colorScheme: ColorScheme.light(primary: context.primary01),
-            dialogBackgroundColor: Colors.white,
+            dialogTheme: const DialogThemeData(backgroundColor: Colors.white),
           ),
           child: child!,
         );
@@ -64,6 +88,38 @@ class CreatePushNotificationController extends GetxController {
       selectedDate.value = pickedDate;
       scheduledDateController.text =
           "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+      if (scheduledTimeController.text.isEmpty) {
+        _selectedTime = const TimeOfDay(hour: 9, minute: 0);
+        if (!context.mounted) return;
+        scheduledTimeController.text = _formatTimeOfDay(context, _selectedTime);
+      }
+      validateForm();
+    }
+  }
+
+  Future<void> pickTime(BuildContext context) async {
+    if (scheduledDateController.text.isEmpty) {
+      DialogHelper.showError(StringConstant.scheduleDateRequired);
+      return;
+    }
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: context.primary01,
+            colorScheme: ColorScheme.light(primary: context.primary01),
+            dialogTheme: const DialogThemeData(backgroundColor: Colors.white),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      _selectedTime = picked;
+      if (!context.mounted) return;
+      scheduledTimeController.text = _formatTimeOfDay(context, picked);
       validateForm();
     }
   }
@@ -141,18 +197,18 @@ class CreatePushNotificationController extends GetxController {
     if (!formKey.currentState!.validate()) return;
 
     try {
-      /// Normalize dates (ignore time)
-      final DateTime today = DateTime.now();
-      final DateTime selected = selectedDate.value;
+      final DateTime scheduled = _combinedScheduled();
+      if (!scheduled.isAfter(DateTime.now())) {
+        DialogHelper.showError(StringConstant.scheduleMustBeInFuture);
+        return;
+      }
 
-      final bool isScheduled = !(today.year == selected.year &&
-          today.month == selected.month &&
-          today.day == selected.day);
+      final bool isScheduled = scheduled.isAfter(DateTime.now());
       var response = await APIManager.addPushNotification(
         data: {
           "title": titleController.text.trim(),
           "isSheduled": isScheduled,
-          "sheduledDate": selected.toIso8601String(),
+          "sheduledDate": scheduled.toIso8601String(),
         },
       );
 
@@ -185,14 +241,24 @@ class CreatePushNotificationController extends GetxController {
   }
 
   String? titleValidator(String? val) {
-    if (val == null || val.isEmpty)
+    if (val == null || val.isEmpty) {
       return StringConstant.notificationTitleEmpty;
-    if (val.length > 25) return StringConstant.max25CharsAllowed;
+    }
+    if (val.length > 25) {
+      return StringConstant.max25CharsAllowed;
+    }
     return null;
   }
 
   String? scheduledDateValidator(String? val) {
     if (val == null || val.isEmpty) return StringConstant.scheduleDateRequired;
+    return null;
+  }
+
+  String? scheduledTimeValidator(String? val) {
+    if (val == null || val.isEmpty) {
+      return StringConstant.scheduleTimeRequired;
+    }
     return null;
   }
 }

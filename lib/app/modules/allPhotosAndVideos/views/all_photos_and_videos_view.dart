@@ -14,189 +14,301 @@ import 'package:get/get.dart';
 import '../controllers/all_photos_and_videos_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+bool _isRemoteImageUrl(String url) {
+  final path = Uri.tryParse(url)?.path.toLowerCase() ?? url.toLowerCase();
+  return path.endsWith('.jpg') ||
+      path.endsWith('.jpeg') ||
+      path.endsWith('.png') ||
+      path.endsWith('.gif') ||
+      path.endsWith('.webp');
+}
+
+bool _isRemoteVideoUrl(String url) {
+  final path = Uri.tryParse(url)?.path.toLowerCase() ?? url.toLowerCase();
+  return path.endsWith('.mp4') ||
+      path.endsWith('.mov') ||
+      path.endsWith('.webm') ||
+      path.endsWith('.m4v');
+}
+
 class AllPhotosAndVideosView extends GetView<AllPhotosAndVideosController> {
   const AllPhotosAndVideosView({super.key});
+
+  static double _thumbSize() => 118.kw;
+
   @override
   Widget build(BuildContext context) {
+    final thumb = _thumbSize();
+
+    Widget remoteTile(String uploadUrl, int index) {
+      if (_isRemoteImageUrl(uploadUrl)) {
+        return InkWell(
+          onLongPress: () => controller.confirmDeleteImage(index),
+          borderRadius: BorderRadius.circular(8.kw),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.kw),
+            child: SizedBox(
+              width: thumb,
+              height: thumb,
+              child: CommonImageView(
+                url: uploadUrl,
+                width: thumb,
+                height: thumb,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      }
+      if (_isRemoteVideoUrl(uploadUrl)) {
+        return InkWell(
+          onTap: () => launchUrl(Uri.parse(uploadUrl)),
+          borderRadius: BorderRadius.circular(8.kw),
+          child: Container(
+            width: thumb,
+            height: thumb,
+            decoration: BoxDecoration(
+              color: context.loginSignupTextfieldColor,
+              border: Border.all(color: context.black07),
+              borderRadius: BorderRadius.circular(8.kw),
+            ),
+            child: Icon(Icons.videocam, color: context.black03, size: 36.kw),
+          ),
+        );
+      }
+      return InkWell(
+        onLongPress: () => controller.confirmDeleteImage(index),
+        borderRadius: BorderRadius.circular(8.kw),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.kw),
+          child: SizedBox(
+            width: thumb,
+            height: thumb,
+            child: CommonImageView(
+              url: uploadUrl,
+              width: thumb,
+              height: thumb,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: StringConstant.allPhotosAndVideos,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.kw),
-          height: 1000.kh,
-          width: 800.kw,
-          child: Column(
-            children: [
-              Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(16.kw, 16.kh, 16.kw, 8.kh),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    StringConstant.restaurantImageAndVideos,
-                    style: TextStyleUtil.manrope14w500(),
+                  Row(
+                    children: [
+                      Text(
+                        StringConstant.restaurantImageAndVideos,
+                        style: TextStyleUtil.manrope14w500(),
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyleUtil.manrope14w500(
+                            color: context.primary01),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "*",
-                    style:
-                        TextStyleUtil.manrope14w500(color: context.primary01),
-                  )
-                ],
-              ),
-              12.kheightBox,
-              Obx(() {
-                if (controller.restaurantUploads.isNotEmpty) {
-                  return SizedBox(
-                    height: 250.kh,
-                    width: 600.kw,
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (ctx, index) {
-                          if (controller.restaurantUploads[index]
-                              .endsWith(".jpg")) {
-                            return InkWell(
-                              onLongPress: () {
-                                controller.confirmDeleteImage(index);
-                              },
-                              child: CommonImageView(
-                                url: controller.restaurantUploads[index],
-                              ),
-                            );
-                          } else if (controller.restaurantUploads[index]
-                              .endsWith(".mp4")) {
-                            return InkWell(
-                              onTap: () {
-                                launchUrl(Uri.parse(
-                                    controller.restaurantUploads[index]));
-                              },
-                              child: Container(
-                                  height: 400.kh,
-                                  width: 120.kw,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(4.kh),
-                                  ),
-                                  child: const Center(
-                                      child: Icon(Icons.videocam))),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
-                        separatorBuilder: (ctx, index) {
-                          return 20.kwidthBox;
-                        },
-                        itemCount: controller.restaurantUploads.length),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
-              12.kheightBox,
-              Obx(() {
-                if (controller.selectedFiles.isNotEmpty) {
-                  return SizedBox(
-                    height: 250.kh,
-                    width: 600.kw,
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (ctx, index) {
-                          if (controller
-                              .isImage(controller.selectedFiles[index])) {
-                            return Stack(children: [
-                              Image.file(
-                                File(controller.selectedFiles[index]),
-                                fit: BoxFit.contain,
-                              ),
-                              Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: IconButton(
-                                      onPressed: () {
-                                        controller.selectedFiles
-                                            .removeAt(index);
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        size: 20,
-                                      ))),
-                            ]);
-                          } else {
-                            return Stack(children: [
-                              Container(
-                                  height: 400.kh,
-                                  width: 120.kw,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(4.kh),
-                                  ),
-                                  child: const Center(
-                                      child: Icon(Icons.videocam))),
-                              Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: IconButton(
-                                      onPressed: () {
-                                        controller.selectedFiles
-                                            .removeAt(index);
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        size: 20,
-                                      ))),
-                            ]);
-                          }
-                        },
-                        separatorBuilder: (ctx, index) {
-                          return 20.kwidthBox;
-                        },
-                        itemCount: controller.selectedFiles.length),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
-              12.kheightBox,
-              InkWell(
-                onTap: () {
-                  controller.pickMultipleFiles();
-                },
-                child: Container(
-                  height: 160.kh,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: context.black07),
-                      borderRadius: BorderRadius.circular(8.kw),
-                      color: context.loginSignupTextfieldColor),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  8.kheightBox,
+                  Obx(() {
+                    if (controller.restaurantUploads.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.file_upload_outlined),
-                        2.kwidthBox,
-                        Text(
-                          StringConstant.uploadPhotosAndVideos,
-                          style: TextStyleUtil.manrope14w400(
-                              color: context.black03),
-                        )
+                        SizedBox(
+                          height: thumb + 2.kh,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.restaurantUploads.length,
+                            separatorBuilder: (_, __) => 12.kwidthBox,
+                            itemBuilder: (ctx, index) {
+                              return remoteTile(
+                                controller.restaurantUploads[index],
+                                index,
+                              );
+                            },
+                          ),
+                        ),
+                        16.kheightBox,
                       ],
+                    );
+                  }),
+                  Obx(() {
+                    if (controller.selectedFiles.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: thumb + 2.kh,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.selectedFiles.length,
+                            separatorBuilder: (_, __) => 12.kwidthBox,
+                            itemBuilder: (ctx, index) {
+                              final path = controller.selectedFiles[index];
+                              if (controller.isImage(path)) {
+                                return Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(8.kw),
+                                      child: SizedBox(
+                                        width: thumb,
+                                        height: thumb,
+                                        child: Image.file(
+                                          File(path),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -6,
+                                      right: -6,
+                                      child: Material(
+                                        color: context.white,
+                                        shape: const CircleBorder(),
+                                        elevation: 1,
+                                        child: InkWell(
+                                          customBorder: const CircleBorder(),
+                                          onTap: () => controller.selectedFiles
+                                              .removeAt(index),
+                                          child: Icon(
+                                            Icons.close_rounded,
+                                            size: 20.kw,
+                                            color: context.black02,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    width: thumb,
+                                    height: thumb,
+                                    decoration: BoxDecoration(
+                                      color: context.loginSignupTextfieldColor,
+                                      border:
+                                          Border.all(color: context.black07),
+                                      borderRadius:
+                                          BorderRadius.circular(8.kw),
+                                    ),
+                                    child: Icon(
+                                      Icons.videocam,
+                                      color: context.black03,
+                                      size: 36.kw,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -6,
+                                    right: -6,
+                                    child: Material(
+                                      color: context.white,
+                                      shape: const CircleBorder(),
+                                      elevation: 1,
+                                      child: InkWell(
+                                        customBorder: const CircleBorder(),
+                                        onTap: () => controller.selectedFiles
+                                            .removeAt(index),
+                                        child: Icon(
+                                          Icons.close_rounded,
+                                          size: 20.kw,
+                                          color: context.black02,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        16.kheightBox,
+                      ],
+                    );
+                  }),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8.kw),
+                    onTap: controller.pickMultipleFiles,
+                    child: Container(
+                      width: double.infinity,
+                      constraints: BoxConstraints(minHeight: 152.kh),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 24.kh,
+                        horizontal: 16.kw,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: context.black07),
+                        borderRadius: BorderRadius.circular(8.kw),
+                        color: context.loginSignupTextfieldColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.file_upload_outlined,
+                            color: context.black03,
+                            size: 22.kw,
+                          ),
+                          8.kwidthBox,
+                          Flexible(
+                            child: Text(
+                              StringConstant.uploadPhotosAndVideos,
+                              textAlign: TextAlign.center,
+                              style: TextStyleUtil.manrope14w400(
+                                color: context.black03,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: context.white,
+              border: Border(
+                top: BorderSide(color: context.borderColor1, width: 1),
+              ),
+            ),
+            child: SafeArea(
+              top: false,
+              minimum: EdgeInsets.fromLTRB(16.kw, 12.kh, 16.kw, 16.kh),
+              child: CustomRedElevatedButton(
+                buttonText: StringConstant.save,
+                height: 56.kh,
+                width: double.infinity,
+                onPressed: controller.uploadAllImagesAndVideos,
+              ),
+            ),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: CustomRedElevatedButton(
-          buttonText: StringConstant.save,
-          height: 56.kh,
-          width: 100.w,
-          onPressed: () {
-            controller.uploadAllImagesAndVideos();
-          }),
     );
   }
 }

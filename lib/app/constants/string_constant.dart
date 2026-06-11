@@ -341,6 +341,11 @@ class StringConstant {
   static const String notificationTitle = "Notification Title";
   static const String scheduleDate = "Schedule Date";
   static const String enterScheduleDate = "Enter schedule date";
+  static const String scheduleTime = "Schedule Time";
+  static const String selectScheduleTime = "Select schedule time";
+  static const String scheduleMustBeInFuture =
+      "Schedule must be in the future.";
+  static const String scheduleTimeRequired = "Schedule time cannot be empty!";
   static const String ratingAndFeedbackManagement =
       "Rating & Feedback Management";
   static const String deleteReview = "Delete Review";
@@ -408,8 +413,8 @@ class StringConstant {
   static const String subscriptions = "Subscriptions";
   static const String buySubscriptionText =
       "Buy subscription plan to avail exclusive features.";
-  static const String plansAvailableText = "Platinum Plan Available";
-  // "Silver, Gold and Platinum Plans Available";
+  static const String plansAvailableText =
+      "Silver, Gold and Platinum Plans Available";
   static const String silverPlan = "Silver Plan";
   static const String goldPlan = "Gold Plan";
   static const String platinumPlan = "Platinum Plan";
@@ -474,6 +479,12 @@ class StringConstant {
 
   static const String cuisine = "Cuisine";
   static const String selectCuisine = "Select Cuisine";
+  static const String cuisineSelectionHint =
+      "You can select multiple cuisine types";
+  static const String loadingCuisines = "Loading cuisines…";
+  static const String searchCuisines = "Search cuisines";
+  static const String done = "Done";
+  static const String selectedCountSuffix = "selected";
   static const String streetNameNo = "Street Name/No.";
   static const String cityTown = "City/Town";
   static const String postCode = "Post code";

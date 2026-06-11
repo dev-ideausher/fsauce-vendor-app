@@ -16,7 +16,7 @@ class DealsBottomSheet extends GetView<VipOffersController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.w,
+      width: double.infinity,
       padding: EdgeInsets.all(16.kw),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -60,7 +60,7 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                 : Container(),
             coupon.typeOfOffer != "Normal offer" ? 8.kheightBox : Container(),
             Container(
-              width: 100.w,
+              width: double.infinity,
               padding: EdgeInsets.only(top: 10.kh),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -74,16 +74,22 @@ class DealsBottomSheet extends GetView<VipOffersController> {
                   20.kheightBox,
                   Padding(
                     padding: EdgeInsets.only(
-                        left: 14.kw, right: 2.kw, bottom: 10.kh),
+                        left: 14.kw, right: 14.kw, bottom: 10.kh),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CommonImageView(
                           svgPath: ImageConstant.percentOff,
                         ),
-                        20.kwidthBox,
-                        Text(
-                          coupon.title,
-                          style: TextStyleUtil.manrope16w600(),
+                        12.kwidthBox,
+                        Expanded(
+                          child: Text(
+                            coupon.title,
+                            style: TextStyleUtil.manrope16w600(),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                          ),
                         ),
                       ],
                     ),
