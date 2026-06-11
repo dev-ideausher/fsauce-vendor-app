@@ -7,12 +7,9 @@ import 'package:get/get.dart';
 
 import '../../../constants/string_constant.dart';
 import '../../../models/login_model.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/snackbar.dart';
-import '../../../services/storage.dart';
 
 class LoginEmailVerificationController extends GetxController {
   Timer? _timer;
@@ -77,37 +74,12 @@ class LoginEmailVerificationController extends GetxController {
     }
   }
 
-  Future<void> gotoProfileSetupScreen() async{
+  Future<void> gotoProfileSetupScreen() async {
     try {
-      // Ensure token is fetched and saved before calling onboardVendor
       await auth.handleGetContact();
-      
       final response = await APIManager.onboardVendor();
-      final LoginModel loginModel = LoginModel.fromJson(response.data);
-      if (loginModel.status ?? false) {
-        if ((loginModel.user?.restaurantName ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.location ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.features ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.timing ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.media ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else {
-          Get.find<GetStorageService>().isLoggedIn = true;
-          Get.offAllNamed(Routes.NAV_BAR);
-        }
-      } else {
-        showMySnackbar(msg: loginModel.message ?? "Login message");
-      }
+      await auth.navigateAfterVendorOnboarding(
+          LoginModel.fromJson(response.data));
     } catch (e) {
       debugPrint(e.toString());
     }

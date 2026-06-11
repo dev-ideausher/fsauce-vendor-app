@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'app_interceptors.dart';
 import 'endpoints.dart';
@@ -20,7 +21,16 @@ class DioClient {
           const Duration(milliseconds: Endpoints.receiveTimeout)
       ..options.responseType = ResponseType.json
       ..interceptors.add(AppInterceptors(
-          isOverlayLoader: isOverlayLoader, showSnakbar: showSnakbar));
+          isOverlayLoader: isOverlayLoader, showSnakbar: showSnakbar))
+      ..interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: true,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+      ));
   }
 
 // Get:-----------------------------------------------------------------------

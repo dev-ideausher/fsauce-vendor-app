@@ -104,6 +104,8 @@ class LoginModelUser {
   String? firebaseUid;
   String? firebaseSignInProvider;
   bool? isActive;
+  /// Vendor moderation status from API (`user.status`), e.g. `approved`.
+  String? approvalStatus;
   List<LoginModelUserTiming?>? timing;
   String? createdAt;
   String? updatedAt;
@@ -130,6 +132,7 @@ class LoginModelUser {
     this.firebaseUid,
     this.firebaseSignInProvider,
     this.isActive,
+    this.approvalStatus,
     this.timing,
     this.createdAt,
     this.updatedAt,
@@ -170,6 +173,7 @@ class LoginModelUser {
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     isActive = json['isActive'];
+    approvalStatus = json['status']?.toString();
     if (json['timing'] != null) {
       final v = json['timing'];
       final arr0 = <LoginModelUserTiming>[];
@@ -218,6 +222,7 @@ class LoginModelUser {
     data['firebaseUid'] = firebaseUid;
     data['firebaseSignInProvider'] = firebaseSignInProvider;
     data['isActive'] = isActive;
+    data['status'] = approvalStatus;
     if (timing != null) {
       final v = timing;
       final arr0 = [];

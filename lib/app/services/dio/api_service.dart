@@ -13,7 +13,7 @@ class APIManager {
           .post(Endpoints.baseUrl, data: jsonEncode(body));
 
   static Future<Response> onboardVendor() async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true)
           .get(Endpoints.onboardVendor);
 
   static Future<Response> updateVendor({
@@ -200,12 +200,10 @@ class APIManager {
     });
   }
 
-  static Future<Response> getRatings(
-      {int rating = 5, required String id}) async {
+  static Future<Response> getRatings({required String id}) async {
     return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
         .get(Endpoints.getRatings, queryParameters: {
       'id': id,
-      'rating': rating,
     });
   }
 

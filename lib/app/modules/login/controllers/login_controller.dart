@@ -144,7 +144,6 @@ class LoginController extends GetxController {
     // For example, let's enforce a minimum length of 8 characters and at least one uppercase letter, one lowercase letter, one digit, and one special character.
     final RegExp upperCaseRegExp = RegExp(r'[A-Z]');
     final RegExp lowerCaseRegExp = RegExp(r'[a-z]');
-    final RegExp digitRegExp = RegExp(r'[0-9]');
     final RegExp specialCharacterRegExp = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
 
     if (value.length < 8) {
@@ -161,10 +160,6 @@ class LoginController extends GetxController {
 
     if (!lowerCaseRegExp.hasMatch(value)) {
       return 'Password must contain at least one lowercase letter';
-    }
-
-    if (!digitRegExp.hasMatch(value)) {
-      return 'Password must contain at least one digit';
     }
 
     if (!specialCharacterRegExp.hasMatch(value)) {

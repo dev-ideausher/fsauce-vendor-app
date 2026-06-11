@@ -303,40 +303,59 @@ class Auth extends GetxService {
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
   }
 
+  /// Backend says this vendor account already exists / is approved — do not
+  /// force the profile wizard based on missing logo/media/etc.
+  bool _vendorEstablishedPerBackend(LoginModelUser? user) {
+    if (user == null) return false;
+    if (user.isNewUser == false) return true;
+    final s = user.approvalStatus?.toLowerCase();
+    return s == 'approved';
+  }
+
+  /// Shared routing after `vendor/onboarding` for login and email verification flows.
+  Future<void> navigateAfterVendorOnboarding(LoginModel loginModel) async {
+    if (!(loginModel.status ?? false)) {
+      showMySnackbar(msg: loginModel.message ?? "Login message");
+      return;
+    }
+
+    await NotificationService.to
+        .subscribeToCurrentUserTopic(loginModel.user?.Id ?? '');
+
+    if (_vendorEstablishedPerBackend(loginModel.user)) {
+      Get.find<GetStorageService>().isLoggedIn = true;
+      Get.offAllNamed(Routes.NAV_BAR);
+      return;
+    }
+
+    final user = loginModel.user;
+    if ((user?.restaurantName ?? "").isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.restaurantLogo ?? "").isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.restaurantBanner ?? "").isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.avgPrice.toString() ?? "").isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.location ?? "").isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.features ?? []).isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.timing ?? []).isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else if ((user?.media ?? []).isEmpty) {
+      Get.offAllNamed(Routes.PROFILE_SETUP);
+    } else {
+      Get.find<GetStorageService>().isLoggedIn = true;
+      Get.offAllNamed(Routes.NAV_BAR);
+    }
+  }
+
   Future<void> gotoHomeScreen() async {
     try {
       final response = await APIManager.onboardVendor();
-      final LoginModel loginModel = LoginModel.fromJson(response.data);
-      if (loginModel.status ?? false) {
-        await NotificationService.to
-            .subscribeToCurrentUserTopic(loginModel.user?.Id ?? '');
-
-        if ((loginModel.user?.restaurantName ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantLogo ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.restaurantBanner ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.avgPrice.toString() ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.location ?? "").isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.features ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.timing ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else if ((loginModel.user?.media ?? []).isEmpty) {
-          Get.offAllNamed(Routes.PROFILE_SETUP);
-        } else {
-          await NotificationService.to
-              .subscribeToCurrentUserTopic(loginModel.user?.Id ?? '');
-
-          Get.find<GetStorageService>().isLoggedIn = true;
-          Get.offAllNamed(Routes.NAV_BAR);
-        }
-      } else {
-        showMySnackbar(msg: loginModel.message ?? "Login message");
-      }
+      await navigateAfterVendorOnboarding(
+          LoginModel.fromJson(response.data));
     } catch (e) {
       debugPrint(e.toString());
     }

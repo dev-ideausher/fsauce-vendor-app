@@ -24,6 +24,7 @@ class FsvTextfield extends StatelessWidget {
   final TextAlign? textAlign;
   final TextAlignVertical? textAlignVertical;
   final List<TextInputFormatter>? inputFormatters;
+  final EdgeInsets? scrollPadding;
 
   const FsvTextfield({
     super.key,
@@ -54,11 +55,13 @@ class FsvTextfield extends StatelessWidget {
     this.textAlignVertical,
     this.isCounterTextNeeded = false,
     this.isSuffixNeeded,
+    this.scrollPadding,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      scrollPadding: scrollPadding ?? const EdgeInsets.all(20.0),
       textAlign: textAlign ?? TextAlign.start,
       textAlignVertical: textAlignVertical,
       enabled: enabled,
@@ -66,7 +69,8 @@ class FsvTextfield extends StatelessWidget {
       maxLines: maxLines ?? 1,
       maxLength: maxLength,
       onTap: onTap,
-      textInputAction: (maxLines ?? 1) > 1 ? TextInputAction.newline : TextInputAction.done,
+      textInputAction:
+          (maxLines ?? 1) > 1 ? TextInputAction.newline : TextInputAction.done,
       inputFormatters: [
         FilteringTextInputFormatter.deny(RegExp(r'^\s')),
         ...?inputFormatters,

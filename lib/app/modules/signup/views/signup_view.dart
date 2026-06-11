@@ -17,13 +17,22 @@ class SignupView extends GetView<SignupController> {
 
   @override
   Widget build(BuildContext context) {
+    final viewInsets = MediaQuery.viewInsetsOf(context);
+    final bottomPad = 16.0 + viewInsets.bottom;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-            child: Padding(
-          padding: EdgeInsets.only(left: 16.kw, right: 16.kw, top: 88.kh),
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: EdgeInsets.only(
+            left: 16.kw,
+            right: 16.kw,
+            top: 88.kh,
+            bottom: bottomPad,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 StringConstant.createAccount,
@@ -199,7 +208,7 @@ class SignupView extends GetView<SignupController> {
                   ],
                 );
               }),
-              const Spacer(),
+              24.kheightBox,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -272,23 +281,6 @@ class SignupView extends GetView<SignupController> {
                           color: context.primary01,
                         ),
                       ),
-                      TextSpan(
-                        text: StringConstant.and,
-                        style: TextStyleUtil.manrope12w400(
-                          color: context.black01,
-                        ),
-                      ),
-                      TextSpan(
-                        text: StringConstant.contentPolicy,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            controller.goToTermsAndConditions(
-                                type: StringConstant.contentPolicy);
-                          },
-                        style: TextStyleUtil.manrope12w400(
-                          color: context.primary01,
-                        ),
-                      ),
                     ])),
                   ),
                 ],
@@ -296,6 +288,8 @@ class SignupView extends GetView<SignupController> {
               30.kheightBox,
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
