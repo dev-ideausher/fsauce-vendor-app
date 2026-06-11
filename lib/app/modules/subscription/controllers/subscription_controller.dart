@@ -44,6 +44,50 @@ class SubscriptionController extends GetxController {
 
   RxBool isCancelled = false.obs;
 
+  /// When [getVendorSubscriptionList] returns `status: false`, we treat the vendor as having
+  /// no subscription and must not infer "current plan" from catalog `isActive` or stale profile.
+  RxBool vendorApiReportsNoSubscription = false.obs;
+
+  /// Upgrade flow only applies to non-yearly subscriptions (existing API field `subscriptionType`).
+  bool get showUpgradeSubscriptionOption {
+    final t = subscriptionPlans.value.subscriptionType?.toLowerCase() ?? '';
+    return !t.contains('year');
+  }
+
+  /// Plans shown on the picker: monthly subscribers upgrading see **yearly** catalog entries only.
+  List<AllPlanModelData> get visibleCatalogPlans {
+    subscriptionPlans.value;
+    vendorApiReportsNoSubscription.value;
+    showList.value;
+    final plans = List<AllPlanModelData>.from(allPlans);
+
+    final sub = subscriptionPlans.value;
+    final subType = sub.subscriptionType?.toLowerCase() ?? '';
+    final hasActiveVendorSubscription = !vendorApiReportsNoSubscription.value &&
+        sub.isActive == true &&
+        sub.isCancelled != true;
+
+    if (showList.value &&
+        hasActiveVendorSubscription &&
+        subType.contains('month')) {
+      return plans
+          .where((p) =>
+              (p.billedFrequency?.toLowerCase() ?? '').contains('year'))
+          .toList();
+    }
+    return plans;
+  }
+
+  void clearSelectedPlanIfNotVisible() {
+    final visible = visibleCatalogPlans;
+    final selId = selectedPlan.value.Id;
+    if (selId != null &&
+        selId.isNotEmpty &&
+        !visible.any((p) => p.Id == selId)) {
+      selectedPlan.value = AllPlanModelData();
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -58,7 +102,7 @@ class SubscriptionController extends GetxController {
       return formatter.format(dateTime);
     } catch (e) {
       // Handle any parsing errors
-      print('Error parsing date: $e');
+      debugPrint('Error parsing date: $e');
       return 'Invalid date';
     }
   }
@@ -67,17 +111,23 @@ class SubscriptionController extends GetxController {
     try {
       var response = await APIManager.getVendorSubscriptionList();
       if (response.data['status']) {
+        vendorApiReportsNoSubscription.value = false;
         Get.find<HomeController>().getRestaurantDetails();
         showList.value = false;
         subscriptionPlans.value = PlanModel.fromJson(response.data).data ?? PlanModelData();
 
         isCancelled.value = subscriptionPlans.value.isCancelled ?? false;
+        // Needed when user taps Upgrade: catalog must be loaded (otherwise showList is empty).
+        getAllPlans();
       } else {
+        vendorApiReportsNoSubscription.value = true;
+        subscriptionPlans.value = PlanModelData();
+        isCancelled.value = false;
         showList.value = true;
         getAllPlans();
       }
     } catch (e) {
-      print("An error occurred while getting subscription plans: $e");
+      debugPrint("An error occurred while getting subscription plans: $e");
     }
   }
 
@@ -128,16 +178,16 @@ class SubscriptionController extends GetxController {
       showMySnackbar(msg: error.error.message.toString());
       return;
     } catch (e) {
-      print(e);
+      debugPrint('$e');
       return;
     }
 
     final token = tokenData.id;
     if (token.isNotEmpty) {
-      print("Token is not empty: $token");
+      debugPrint("Token is not empty: $token");
       final String encryptToken = encryptAESCryptoJS(jsonEncode({"token": token, "default": "true"}));
       try {
-        print("Below is the encrypt token: $encryptToken");
+        debugPrint("Below is the encrypt token: $encryptToken");
         final response = await APIManager.addCard(data: {
           "token": encryptToken,
         });
@@ -145,12 +195,12 @@ class SubscriptionController extends GetxController {
           await getCardList();
           Get.back();
         } else {
-          print("-------> ${response.data}");
+          debugPrint("-------> ${response.data}");
           DialogHelper.showError(response.data['message'] ?? "");
         }
       } catch (e) {
-        print("Error while adding card: ${e.toString()}");
-        DialogHelper.showError(e.toString() ?? "");
+        debugPrint("Error while adding card: ${e.toString()}");
+        DialogHelper.showError(e.toString());
       }
     }
   }
@@ -158,7 +208,7 @@ class SubscriptionController extends GetxController {
   Future<void> getCardList() async {
     try {
       final response = await APIManager.getCardDataList();
-      print("GetCardList Response Data: ${response.data}");
+      debugPrint("GetCardList Response Data: ${response.data}");
       if (response.statusCode == 200) {
         cardsList.assignAll([]);
         for (Map<String, dynamic> cardData in response.data['data']) {
@@ -180,8 +230,8 @@ class SubscriptionController extends GetxController {
         } else {
           selectedCard.value = CardModel();
         }
-        print("Cards fetched: ${cardsList.length}");
-        print("Selected Card ID: ${selectedCard.value.id}");
+        debugPrint("Cards fetched: ${cardsList.length}");
+        debugPrint("Selected Card ID: ${selectedCard.value.id}");
         cardsList.refresh();
         selectedCard.refresh();
       } else {
@@ -190,8 +240,8 @@ class SubscriptionController extends GetxController {
       }
       return;
     } catch (e) {
-      print("An error occurred while getting card list: $e");
-      DialogHelper.showError(e.toString() ?? "");
+      debugPrint("An error occurred while getting card list: $e");
+      DialogHelper.showError(e.toString());
       return;
     }
   }
@@ -203,7 +253,7 @@ class SubscriptionController extends GetxController {
         onYesTap: () async {
           String id = card.id ?? "";
           if (id.isNotEmpty) {
-            print("Entered dialog for delete card");
+            debugPrint("Entered dialog for delete card");
             await delCard(card);
           } else if (id.isEmpty) {
             Get.snackbar(StringConstant.error, "Cannot delete card");
@@ -214,7 +264,7 @@ class SubscriptionController extends GetxController {
 
   Future<void> delCard(CardModel card) async {
     String id = card.id ?? "";
-    print("Here is the id: $id");
+    debugPrint("Here is the id: $id");
     try {
       if (id.isNotEmpty) {
         final response = await APIManager.deleteCard(id);
@@ -225,7 +275,7 @@ class SubscriptionController extends GetxController {
         }
       }
     } catch (e) {
-      print("An error occurred while deleting card: ${e.toString()}");
+      debugPrint("An error occurred while deleting card: ${e.toString()}");
       DialogHelper.showError(e.toString());
     }
   }
@@ -315,7 +365,7 @@ class SubscriptionController extends GetxController {
         return;
       }
     } catch (e) {
-      print("An error occurred while cancelling subscription! ${e.toString()}");
+      debugPrint("An error occurred while cancelling subscription! ${e.toString()}");
       Get.snackbar(StringConstant.error, e.toString());
     }
   }
@@ -337,8 +387,62 @@ class SubscriptionController extends GetxController {
       final res = await APIManager.getSubscriptionPlans();
       AllPlanModel allPlanModel = AllPlanModel.fromJson(res.data);
       allPlans.value = allPlanModel.data!;
+      clearSelectedPlanIfNotVisible();
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  /// True when this catalog [plan] matches the vendor's **actual** subscription.
+  ///
+  /// Catalog `plan.isActive` means "plan offered / enabled", **not** "vendor is subscribed";
+  /// never use it for this badge.
+  bool isCurrentSubscriptionPlan(AllPlanModelData plan) {
+    if (vendorApiReportsNoSubscription.value) {
+      return false;
+    }
+
+    final vendorSub = subscriptionPlans.value;
+    final vendorSubscriptionLive =
+        vendorSub.isActive == true && vendorSub.isCancelled != true;
+
+    if (vendorSubscriptionLive) {
+      final pn = vendorSub.planName?.trim().toLowerCase();
+      final tn = plan.title?.trim().toLowerCase();
+      if (pn != null && tn != null && pn.isNotEmpty && pn == tn) {
+        return true;
+      }
+      if ((vendorSub.planName == null || vendorSub.planName!.trim().isEmpty) &&
+          vendorSub.price != null &&
+          plan.price != null &&
+          vendorSub.price == plan.price) {
+        final vt = vendorSub.subscriptionType?.toLowerCase() ?? '';
+        final bt = plan.billedFrequency?.toLowerCase() ?? '';
+        if (vt.isNotEmpty && bt.isNotEmpty) {
+          if (vt.contains('year') && bt.contains('year')) return true;
+          if (vt.contains('month') && bt.contains('month')) return true;
+        }
+      }
+    }
+
+    if (Get.isRegistered<HomeController>()) {
+      final sub =
+          Get.find<HomeController>().restaurantDetails.value.subscriptionModel;
+      final subscriptionLooksLive = sub != null &&
+          sub.isActive == true &&
+          sub.isCancelled != true;
+      if (subscriptionLooksLive) {
+        final pid = sub.plan?.toString().trim();
+        final catalogId = plan.Id?.toString().trim();
+        if (pid != null &&
+            catalogId != null &&
+            pid.isNotEmpty &&
+            pid == catalogId) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

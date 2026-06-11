@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fsauce_vendor_app/app/components/current_plan_card.dart';
 import 'package:fsauce_vendor_app/app/components/custom_red_elevated_button.dart';
 import 'package:fsauce_vendor_app/app/components/empty_widget.dart';
 import 'package:fsauce_vendor_app/app/components/plan_card.dart';
 import 'package:fsauce_vendor_app/app/constants/string_constant.dart';
-import 'package:fsauce_vendor_app/app/models/plan_model.dart';
-import 'package:fsauce_vendor_app/app/models/subscription_model.dart';
 import 'package:fsauce_vendor_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:fsauce_vendor_app/app/services/colors.dart';
 import 'package:fsauce_vendor_app/app/services/custom_button.dart';
@@ -24,6 +21,9 @@ class SubscriptionView extends GetView<SubscriptionController> {
         backgroundColor: context.black07,
         appBar: AppBar(
           backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: context.black01),
           leading: IconButton(
             onPressed: () {
               Get.back();
@@ -35,57 +35,45 @@ class SubscriptionView extends GetView<SubscriptionController> {
           centerTitle: true,
           title: Text(
             StringConstant.subscriptions,
-            style: TextStyleUtil.manrope18w600(),
+            style: TextStyleUtil.manrope18w600(color: context.black01),
           ),
         ),
-        floatingActionButton: Obx(() {
-          if (controller.showList.value) {
-            return CustomRedElevatedButton(
-              buttonText: controller.selectedPlan.value.title != null
-                  ? StringConstant.purchasePlan
-                  : "Select a plan",
-              buttonColor: controller.selectedPlan.value.title != null
-                  ? null
-                  : context.black05,
-              height: 56.kh,
-              width: MediaQuery.of(context).size.width * 0.9,
-              onPressed: () {
-                if (controller.selectedPlan.value.title != null) {
-                  controller.goToPurchasePlanView();
-                }
-              },
-            );
-          } else {
-            return Container();
-          }
-        }),
-        body: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              10.kheightBox,
-              Obx(() {
-                if (controller.showList.value) {
-                  return Column(
-                    children: [
-                      Text(
-                        StringConstant.buySubscriptionText,
-                        style: TextStyleUtil.manrope16w600(),
-                      ),
-                      4.kheightBox,
-                      Text(
-                        StringConstant.plansAvailableText,
-                        style: TextStyleUtil.manrope14w500(
-                            color: ColorUtil.kBlack04),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Container();
-                }
-              }),
-              12.kheightBox,
-              Obx(() {
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    10.kheightBox,
+                    Obx(() {
+                      if (controller.showList.value) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.kw),
+                          child: Column(
+                            children: [
+                              Text(
+                                StringConstant.buySubscriptionText,
+                                textAlign: TextAlign.center,
+                                style: TextStyleUtil.manrope16w600(
+                                    color: context.black01),
+                              ),
+                              6.kheightBox,
+                              Text(
+                                StringConstant.plansAvailableText,
+                                textAlign: TextAlign.center,
+                                style: TextStyleUtil.manrope14w500(
+                                    color: context.black03),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    }),
+                    12.kheightBox,
+                    Obx(() {
                 if (!controller.showList.value) {
                   final home = Get.find<HomeController>();
                   final subscription =
@@ -173,7 +161,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                 ),
                                 8.kheightBox,
                                 Text(
-                                    "Valid till ${controller.formatDateString(validTill) ?? "18 March 2026"}",
+                                    "Valid till ${validTill.isNotEmpty ? controller.formatDateString(validTill) : "18 March 2026"}",
                                     style: TextStyleUtil.manrope16w500(
                                         color: context.black03)),
                                 20.kheightBox,
@@ -181,38 +169,51 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    FsvButton(
-                                      isBorder: true,
-                                      height: 40.kh,
-                                      width: 144.kw,
-                                      padding: const EdgeInsets.all(0),
-                                      labelTextStyle:
-                                          TextStyleUtil.manrope14w500(
-                                              color: context.primary01),
-                                      label: controller.isCancelled.value
-                                          ? StringConstant.cancelled
-                                          : StringConstant.cancel,
-                                      onPressed: () {
-                                        controller.isCancelled.value
-                                            ? () {}
-                                            : controller
-                                                .confirmCancelSubscription();
-                                      },
+                                    Expanded(
+                                      child: FsvButton(
+                                        isBorder: true,
+                                        height: 40.kh,
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.all(0),
+                                        labelTextStyle:
+                                            TextStyleUtil.manrope14w500(
+                                                color: context.primary01),
+                                        label: controller.isCancelled.value
+                                            ? StringConstant.cancelled
+                                            : StringConstant.cancel,
+                                        onPressed: () {
+                                          controller.isCancelled.value
+                                              ? () {}
+                                              : controller
+                                                  .confirmCancelSubscription();
+                                        },
+                                      ),
                                     ),
-                                    FsvButton(
-                                      height: 40.kh,
-                                      width: 144.kw,
-                                      padding: const EdgeInsets.all(0),
-                                      label: StringConstant.upgrade,
-                                      labelTextStyle:
-                                          TextStyleUtil.manrope14w500(
-                                              color: context.white),
-                                      onPressed: () {
-                                        controller.isCancelled.value
-                                            ? () {}
-                                            : controller.showList.value = true;
-                                      },
-                                    ),
+                                    if (controller
+                                        .showUpgradeSubscriptionOption) ...[
+                                      12.kwidthBox,
+                                      Expanded(
+                                        child: FsvButton(
+                                          height: 40.kh,
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.all(0),
+                                          label: StringConstant.upgrade,
+                                          labelTextStyle:
+                                              TextStyleUtil.manrope14w500(
+                                                  color: context.white),
+                                          onPressed: () {
+                                            if (controller.isCancelled.value) {
+                                              return;
+                                            }
+                                            controller.showList.value = true;
+                                            if (controller.allPlans.isEmpty) {
+                                              controller.getAllPlans();
+                                            }
+                                            controller.clearSelectedPlanIfNotVisible();
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ],
                                 )
                               ],
@@ -225,31 +226,54 @@ class SubscriptionView extends GetView<SubscriptionController> {
                 } else if (controller.showList.value) {
                   return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 8.kh, horizontal: 16.kw),
+                      padding: EdgeInsets.fromLTRB(16.kw, 4.kh, 16.kw, 8.kh),
                       shrinkWrap: true,
                       itemBuilder: (ctx, index) {
-                        return PlanCard(plan: controller.allPlans[index])
-                            .paddingOnly(
-                                bottom: controller.allPlans.length == index + 1
-                                    ? 100.kh
-                                    : 0);
+                        final plans = controller.visibleCatalogPlans;
+                        return PlanCard(plan: plans[index]);
                       },
                       separatorBuilder: (ctx, index) {
-                        return 4.kheightBox;
+                        return 12.kheightBox;
                       },
-                      itemCount: controller.allPlans.length);
-                  return SizedBox();
+                      itemCount: controller.visibleCatalogPlans.length);
                 } else if (controller.allPlans.isEmpty) {
                   return Center(child: EmptyWidget());
                 } else {
                   return Container();
                 }
               }),
-              // Add bottom padding to ensure content is visible above floating button
-              SizedBox(height: 80.kh),
-            ],
-          ),
+                    SizedBox(height: 8.kh),
+                  ],
+                ),
+              ),
+            ),
+            Obx(() {
+              if (!controller.showList.value) {
+                return const SizedBox.shrink();
+              }
+              return SafeArea(
+                top: false,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16.kw, 8.kh, 16.kw, 12.kh),
+                  child: CustomRedElevatedButton(
+                    buttonText: controller.selectedPlan.value.title != null
+                        ? StringConstant.purchasePlan
+                        : "Select a plan",
+                    buttonColor: controller.selectedPlan.value.title != null
+                        ? null
+                        : context.black05,
+                    height: 56.kh,
+                    width: double.infinity,
+                    onPressed: () {
+                      if (controller.selectedPlan.value.title != null) {
+                        controller.goToPurchasePlanView();
+                      }
+                    },
+                  ),
+                ),
+              );
+            }),
+          ],
         ));
   }
 }

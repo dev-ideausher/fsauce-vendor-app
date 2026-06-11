@@ -7,114 +7,173 @@ import 'package:fsauce_vendor_app/app/services/responsive_size.dart';
 import 'package:fsauce_vendor_app/app/services/text_style_util.dart';
 import 'package:get/get.dart';
 
-import '../models/plan_model.dart';
-
 class PlanCard extends StatelessWidget {
-  AllPlanModelData plan;
+  final AllPlanModelData plan;
 
-  PlanCard({required this.plan, super.key});
+  const PlanCard({required this.plan, super.key});
+
+  static const double _radioGutter = 40;
+
+  String _formatPrice() {
+    final p = (plan.price ?? 0).toDouble();
+    return p.toStringAsFixed(2);
+  }
+
+  String _billingSuffix() {
+    final f = plan.billedFrequency?.toLowerCase() ?? '';
+    if (f.contains('year')) return 'year';
+    if (f.contains('month')) return 'month';
+    if (f.isNotEmpty) return plan.billedFrequency!.trim();
+    return '';
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    List<String?> features = plan.features ?? [];
+    final List<String?> features = plan.features ?? [];
     final controller = Get.find<SubscriptionController>();
+    final primary = context.primary01;
+
     return Container(
-      padding: EdgeInsets.only(bottom: 16.kh),
-      decoration: BoxDecoration(
+        padding: EdgeInsets.fromLTRB(16.kw, 16.kh, 16.kw, 20.kh),
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [BoxShadow(color: context.black05, blurRadius: 4)]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          12.kheightBox,
-          Row(
-            children: <Widget>[
-              Obx(() {
-                return Radio<AllPlanModelData>(
-                    activeColor: context.primary01,
-                    value: plan,
-                    groupValue: controller.selectedPlan.value,
-                    onChanged: (AllPlanModelData? model) {
-                      if (model != null) {
-                        controller.selectedPlan.value = model;
-                      }
-                    });
-              }),
-              32.kwidthBox,
-              Text(
-                plan.title ?? "",
-                style: TextStyleUtil.manrope18w600(),
-              ),
-              Expanded(child: Container()),
-              controller.selectedPlan.value.Id == plan.Id
-                  ? Container(
-                      padding: EdgeInsets.all(8.kw),
-                      decoration: BoxDecoration(
-                          color: context.primary03,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.kw),
-                              bottomLeft: Radius.circular(8.kw))),
-                      child: Center(
-                          child: Text(StringConstant.currentPlan,
-                              style: TextStyleUtil.manrope12w400(
-                                  color: Colors.white))))
-                  : Container(),
-            ],
-          ),
-          10.kheightBox,
-          features.isNotEmpty
-              ? IntrinsicWidth(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisSize: MainAxisSize
-                          .min, // Ensures the Column takes up only the space it needs
-                      children: List.generate(features.length, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 4.0), // Add padding between items
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Icon(
-                                Icons.circle,
-                                size: 4,
-                                color: context.black03,
-                              ),
-                              8.kwidthBox,
-                              Text(
-                                features[index] ?? "",
-                                style: TextStyleUtil.manrope14w400(
-                                    color: context.black03),
-                              )
-                            ],
-                          ),
-                        );
-                      }),
+          borderRadius: BorderRadius.circular(12.kw),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Obx(() {
+              final isCurrent = controller.isCurrentSubscriptionPlan(plan);
+              return Stack(
+                clipBehavior: Clip.none,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      _radioGutter,
+                      2.kh,
+                      isCurrent ? 118.kw : _radioGutter,
+                      0,
+                    ),
+                    child: Text(
+                      plan.title ?? "",
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleUtil.manrope18w600(color: context.black01),
                     ),
                   ),
-                )
-              : const SizedBox(),
-          28.kheightBox,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "\$ ${plan.price.toString()} ",
-                style: TextStyleUtil.manrope20w600(color: context.primary01),
-              ),
-              Text(
-                "/ ${plan.billedFrequency ?? ""}",
-                style: TextStyleUtil.manrope20w600(color: context.black04),
-              )
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Radio<AllPlanModelData>(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      visualDensity: VisualDensity.compact,
+                      activeColor: primary,
+                      value: plan,
+                      groupValue: controller.selectedPlan.value,
+                      onChanged: (AllPlanModelData? model) {
+                        if (model != null) {
+                          controller.selectedPlan.value = model;
+                        }
+                      },
+                    ),
+                  ),
+                  if (isCurrent)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.kw,
+                          vertical: 4.kh,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.primary03,
+                          borderRadius: BorderRadius.circular(6.kw),
+                        ),
+                        child: Text(
+                          StringConstant.currentPlan,
+                          textAlign: TextAlign.center,
+                          style: TextStyleUtil.manrope12w400(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            }),
+            14.kheightBox,
+            if (features.isNotEmpty) ...[
+              ...List.generate(features.length, (index) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 8.kh),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: (MediaQuery.sizeOf(context).width - 32.kw)
+                            .clamp(200.0, 520.0),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 6.kh),
+                            child: Container(
+                              width: 4,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: context.black03,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                          10.kwidthBox,
+                          Expanded(
+                            child: Text(
+                              features[index] ?? "",
+                              textAlign: TextAlign.center,
+                              style: TextStyleUtil.manrope14w400(
+                                color: context.black03,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ],
-          ),
-        ],
-      ),
+            20.kheightBox,
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "\$ ${_formatPrice()}",
+                    style: TextStyleUtil.manrope20w600(color: primary),
+                  ),
+                  Text(
+                    _billingSuffix().isEmpty
+                        ? ""
+                        : " / ${_billingSuffix()}",
+                    style: TextStyleUtil.manrope20w600(color: context.black04),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
     );
   }
 }
