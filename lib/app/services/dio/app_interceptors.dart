@@ -12,6 +12,8 @@ import 'exceptions.dart';
 import 'jwt_decoder.dart';
 
 class AppInterceptors extends Interceptor {
+  static const _retryKey = 'authTokenRetry';
+
   bool isOverlayLoader;
   bool showSnakbar;
 
@@ -20,29 +22,30 @@ class AppInterceptors extends Interceptor {
   @override
   FutureOr<dynamic> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (options.path.contains("getPrivacyPolicy") ||
-        options.path.contains("getTermsAndConditions") ||
-        options.uri.toString().contains("googleapis.com") ||
-        options.uri.toString().contains("maps.googleapis.com")) {
+    if (_isPublicRequest(options)) {
       super.onRequest(options, handler);
       return;
     }
 
     isOverlayLoader ? DialogHelper.showLoading() : null;
-    if (Get.find<GetStorageService>().encjwToken.isEmpty) {
-      super.onRequest(options, handler);
-    } else {
-      await Helpers.validateToken(
-        onSuccess: () {
-          options.headers.addAll({
-            "Authorization":
-                "Bearer ${Get.find<GetStorageService>().encjwToken}",
-            // "type": "app"
-          });
-          super.onRequest(options, handler);
-        },
-      );
+
+    final token = await Helpers.getValidFirebaseToken();
+    if (token == null) {
+      isOverlayLoader ? DialogHelper.hideDialog() : null;
+      Helpers.handleSessionExpired();
+      handler.reject(DioException(
+        requestOptions: options,
+        type: DioExceptionType.cancel,
+        error: 'Session Expired. Please Login Again',
+      ));
+      return;
     }
+
+    options.headers.addAll({
+      "Authorization": "Bearer $token",
+      // "type": "app"
+    });
+    super.onRequest(options, handler);
   }
 
   @override
@@ -55,7 +58,25 @@ class AppInterceptors extends Interceptor {
   @override
   Future<dynamic> onError(
       DioException err, ErrorInterceptorHandler handler) async {
-    super.onError(err, handler);
+    if (_shouldRefreshToken(err)) {
+      final retryCount = err.requestOptions.extra[_retryKey] == true;
+      if (!retryCount) {
+        try {
+          final token = await Helpers.refreshFirebaseToken();
+          if (token != null) {
+            final retryOptions = err.requestOptions;
+            retryOptions.extra[_retryKey] = true;
+            retryOptions.headers['Authorization'] = 'Bearer $token';
+
+            final response = await retry(retryOptions);
+            isOverlayLoader ? DialogHelper.hideDialog() : null;
+            return handler.resolve(response);
+          }
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      }
+    }
 
     try {
       final errorMessage = DioExceptions.fromDioError(err).toString();
@@ -67,28 +88,26 @@ class AppInterceptors extends Interceptor {
       debugPrint(e.toString());
     }
 
-    // try {
-    //   print('${err.response?.statusCode}\n${err.response!.data['message']}');
-    //   if (err.response?.statusCode == 500 &&
-    //       err.response!.data['message'] ==
-    //           'Firebase ID token has expired. Get a fresh ID token from your client app and try again (auth/id-token-expired). See https://firebase.google.com/docs/auth/admin/verify-id-tokens for details on how to retrieve an ID token.') {
-    //     if (await refreshToken()) {
-    //       return handler.resolve(await retry(err.requestOptions));
-    //     }
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
-
-    return handler.next;
+    return handler.next(err);
   }
 
   Future<Response<dynamic>> retry(RequestOptions requestOptions) async {
+    final dio = Dio(BaseOptions(
+      baseUrl: requestOptions.baseUrl,
+      connectTimeout: requestOptions.connectTimeout,
+      receiveTimeout: requestOptions.receiveTimeout,
+      responseType: requestOptions.responseType,
+    ));
     final options = Options(
       method: requestOptions.method,
       headers: requestOptions.headers,
+      contentType: requestOptions.contentType,
+      responseType: requestOptions.responseType,
+      sendTimeout: requestOptions.sendTimeout,
+      receiveTimeout: requestOptions.receiveTimeout,
+      extra: requestOptions.extra,
     );
-    return Dio().request<dynamic>(requestOptions.path,
+    return dio.request<dynamic>(requestOptions.path,
         data: requestOptions.data,
         queryParameters: requestOptions.queryParameters,
         options: options);
@@ -96,42 +115,86 @@ class AppInterceptors extends Interceptor {
 
   Future<bool> refreshToken() async {
     try {
-      Get.find<GetStorageService>().encjwToken =
-          (await FirebaseAuth.instance.currentUser?.getIdToken(true))!;
-      print('hello from app_interceptor : ${true}');
-      return true;
+      return await Helpers.refreshFirebaseToken() != null;
     } catch (e) {
-      print('hello from app_interceptor : ${false}');
-
       return false;
     }
+  }
+
+  bool _isPublicRequest(RequestOptions options) {
+    return options.path.contains("getPrivacyPolicy") ||
+        options.path.contains("getTermsAndConditions") ||
+        options.uri.toString().contains("googleapis.com") ||
+        options.uri.toString().contains("maps.googleapis.com");
+  }
+
+  bool _shouldRefreshToken(DioException err) {
+    final statusCode = err.response?.statusCode;
+    final message = _errorMessage(err.response?.data).toLowerCase();
+    return (statusCode == 400 ||
+            statusCode == 401 ||
+            statusCode == 403 ||
+            statusCode == 500) &&
+        (message.contains('firebase') ||
+            message.contains('auth token') ||
+            message.contains('id-token-expired') ||
+            message.contains('unauthorized'));
+  }
+
+  String _errorMessage(dynamic data) {
+    if (data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    return data?.toString() ?? '';
   }
 }
 
 class Helpers {
+  static const _tokenRefreshBuffer = Duration(minutes: 5);
+
   static bool _tokenIsValid() {
-    return Get.find<GetStorageService>().encjwToken.isNotEmpty
-        ? JwtDecoder.isValid(Get.find<GetStorageService>().encjwToken)
-        : false;
+    final token = Get.find<GetStorageService>().encjwToken;
+    if (token.isEmpty) return false;
+
+    try {
+      return JwtDecoder.getRemainingTime(token) > _tokenRefreshBuffer;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Future<bool> validateToken({required Function() onSuccess}) async {
-    if (_tokenIsValid()) {
+    final token = await getValidFirebaseToken();
+    if (token != null) {
       onSuccess();
       return true;
-    } else {
-      try {
-        Get.find<GetStorageService>().encjwToken =
-            (await FirebaseAuth.instance.currentUser?.getIdToken(true))!;
-        onSuccess();
-        return true;
-      } catch (e) {
-        showMySnackbar(
-            msg: "Session Expired. Please Login Again", title: 'Error');
-        Get.find<GetStorageService>().logout();
-        Get.offAllNamed(Routes.ONBOARDING);
-        return false;
-      }
     }
+    handleSessionExpired();
+    return false;
+  }
+
+  static Future<String?> getValidFirebaseToken() async {
+    if (_tokenIsValid()) {
+      return Get.find<GetStorageService>().encjwToken;
+    }
+
+    return refreshFirebaseToken();
+  }
+
+  static Future<String?> refreshFirebaseToken() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return null;
+
+    final token = await user.getIdToken(true);
+    if (token == null || token.isEmpty) return null;
+
+    Get.find<GetStorageService>().encjwToken = token;
+    return token;
+  }
+
+  static void handleSessionExpired() {
+    showMySnackbar(msg: "Session Expired. Please Login Again", title: 'Error');
+    Get.find<GetStorageService>().logout();
+    Get.offAllNamed(Routes.ONBOARDING);
   }
 }

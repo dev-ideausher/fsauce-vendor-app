@@ -208,7 +208,7 @@ class CreatePushNotificationController extends GetxController {
         data: {
           "title": titleController.text.trim(),
           "isSheduled": isScheduled,
-          "sheduledDate": scheduled.toIso8601String(),
+          "sheduledDate": scheduled.toUtc().toIso8601String(),
         },
       );
 

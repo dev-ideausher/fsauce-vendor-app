@@ -26,35 +26,20 @@ class LoyaltyCardPreviewView extends GetView<LoyaltyCardPreviewController> {
             child: Column(
               children: [
                 Obx(() {
+                  final homeController = Get.find<HomeController>();
+                  final loyaltyController = Get.find<LoyaltyController>();
                   return LoyaltyCard(
-                      brandName: Get.find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .restaurantName ??
-                          "",
-                      offer: Get.find<LoyaltyController>()
-                          .cardTitleController
-                          .text,
-                      brandColor: ColorUtil.hexToColor(
-                          Get.find<LoyaltyController>()
-                              .backgroundColor
-                              .value
-                              .toString()),
+                      brandName:
+                          homeController.restaurantDetails.value.restaurantName,
+                      offer: loyaltyController.cardTitleController.text,
+                      brandColor: loyaltyController.backgroundColor.value,
                       onAddPressed: () {
                         //ToDo: on Add Pressed.
                       },
-                      textColor: ColorUtil.hexToColor(
-                          Get.find<LoyaltyController>()
-                              .textColor
-                              .value
-                              .toString()),
-                      noOfStamps:
-                          Get.find<LoyaltyController>().noOfStamps.value,
-                      brandLogo: Get.find<HomeController>()
-                              .restaurantDetails
-                              .value
-                              .restaurantLogo ??
-                          ""
+                      textColor: loyaltyController.textColor.value,
+                      noOfStamps: loyaltyController.noOfStamps.value,
+                      brandLogo:
+                          homeController.restaurantDetails.value.restaurantLogo
                       // "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png"
                       );
                 }),

@@ -246,7 +246,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                                       Border.all(color: context.borderColor1))),
                           10.kwidthBox,
                           Text(
-                            "#${controller.backgroundColor.value.toString().substring(10, 16).toUpperCase()}",
+                            _colorToHex(controller.backgroundColor.value),
                             style: TextStyleUtil.manrope14w400(),
                           ),
                           const Spacer(),
@@ -295,7 +295,7 @@ class LoyaltyView extends GetView<LoyaltyController> {
                                       Border.all(color: context.borderColor1))),
                           10.kwidthBox,
                           Text(
-                            "#${controller.textColor.value.toString().substring(10, 16).toUpperCase()}",
+                            _colorToHex(controller.textColor.value),
                             style: TextStyleUtil.manrope14w400(),
                           ),
                           const Spacer(),
@@ -358,6 +358,16 @@ class LoyaltyView extends GetView<LoyaltyController> {
               )),
         ));
   }
+}
+
+String _colorToHex(Color color) {
+  final int red = (color.r * 255).round();
+  final int green = (color.g * 255).round();
+  final int blue = (color.b * 255).round();
+
+  String hexPart(int value) => value.toRadixString(16).padLeft(2, '0');
+
+  return "#${hexPart(red)}${hexPart(green)}${hexPart(blue)}".toUpperCase();
 }
 
 class ColorPickerDialog extends StatelessWidget {

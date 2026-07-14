@@ -14,145 +14,130 @@ class LoyaltyReviewCard extends StatelessWidget {
   const LoyaltyReviewCard({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.kw),
-      decoration: BoxDecoration(
-          color: ColorUtil.hexToColor(
-              Get.find<LoyaltyController>().backgroundColor.value.toString()),
-          borderRadius: BorderRadius.circular(8.kh)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 64.kh,
-            width: 64.kw,
-            padding: EdgeInsets.all(4.kw),
-            decoration: BoxDecoration(
-                color: context.white,
-                borderRadius: BorderRadius.circular(8.kw)),
-            child: Obx(() {
-              return CommonImageView(
+    return Obx(() {
+      final homeController = Get.find<HomeController>();
+      final loyaltyController = Get.find<LoyaltyController>();
+      final textColor = loyaltyController.textColor.value;
+
+      return Container(
+        padding: EdgeInsets.all(16.kw),
+        decoration: BoxDecoration(
+            color: loyaltyController.backgroundColor.value,
+            borderRadius: BorderRadius.circular(8.kh)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 64.kh,
+              width: 64.kw,
+              padding: EdgeInsets.all(4.kw),
+              decoration: BoxDecoration(
+                  color: context.white,
+                  borderRadius: BorderRadius.circular(8.kw)),
+              child: CommonImageView(
                 fit: BoxFit.cover,
-                url: Get.find<HomeController>()
-                    .restaurantDetails
-                    .value
-                    .restaurantLogo,
+                url: homeController.restaurantDetails.value.restaurantLogo,
                 //"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/1200px-Dominos_pizza_logo.svg.png",
-              );
-            }),
-          ),
-          16.kheightBox,
-          Obx(() {
-            return Text(
-              Get.find<HomeController>().restaurantDetails.value.restaurantName,
-              style: TextStyleUtil.manrope24w700(
-                  color: ColorUtil.hexToColor(Get.find<LoyaltyController>()
-                      .textColor
-                      .value
-                      .toString())),
-            );
-          }),
-          Obx(() {
-            return Text(
-              'Valid Till ${DateFormat('dd MMM yyyy').format(DateTime.parse(
-                Get.find<LoyaltyController>().validTill.toString(),
-              ))}',
-              style: TextStyleUtil.manrope14w400(
-                  color: ColorUtil.hexToColor(Get.find<LoyaltyController>()
-                      .textColor
-                      .value
-                      .toString())),
-            );
-          }),
-          24.kheightBox,
-          Text(
-            "${Get.find<LoyaltyController>().noOfStamps.value} orders left to get reward",
-            style: TextStyleUtil.manrope16w600(color: context.white),
-          ),
-          16.kheightBox,
-          GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
-              mainAxisSpacing: 16.kh,
-              crossAxisSpacing: 16.kw,
-            ),
-            itemCount: Get.find<LoyaltyController>().noOfStamps.value + 1,
-            itemBuilder: (context, index) {
-              final bool isGift =
-                  index == Get.find<LoyaltyController>().noOfStamps.value;
-              return isGift ? _giftBox(context) : _stampBox(context);
-            },
-          ),
-          32.kheightBox,
-          Text(
-            "Reward",
-            style: TextStyleUtil.manrope18w600(color: context.white),
-          ),
-          8.kheightBox,
-          Text(
-            Get.find<LoyaltyController>().cardTitleController.text,
-            style: TextStyleUtil.manrope16w500(
-                color: ColorUtil.hexToColor(
-                    Get.find<LoyaltyController>().textColor.value.toString())),
-          ),
-          40.kheightBox,
-          Container(
-            padding: EdgeInsets.all(8.kw),
-            decoration: BoxDecoration(
-                color: context.white, borderRadius: BorderRadius.circular(8)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "1 point earned on 07/04/2024\nwere credited",
-                  style: TextStyleUtil.manrope14w400(),
-                ),
-                16.kwidthBox,
-                Container(
-                  height: 42,
-                  width: 1,
-                  decoration: BoxDecoration(color: context.black01),
-                ),
-                16.kwidthBox,
-                Text(
-                  StringConstant.history,
-                  style: TextStyleUtil.manrope14w400(),
-                ),
-                Icon(
-                  Icons.keyboard_arrow_right_sharp,
-                  size: 16.kh,
-                )
-              ],
-            ),
-          ),
-          38.kheightBox,
-          SizedBox(
-            height: 56.kh,
-            width: 100.w,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: context.primary06,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28.0),
-                ),
               ),
+            ),
+            16.kheightBox,
+            Text(
+              homeController.restaurantDetails.value.restaurantName,
+              style: TextStyleUtil.manrope24w700(color: textColor),
+            ),
+            Text(
+              'Valid Till ${DateFormat('dd MMM yyyy').format(DateTime.parse(
+                loyaltyController.validTill.toString(),
+              ))}',
+              style: TextStyleUtil.manrope14w400(color: textColor),
+            ),
+            24.kheightBox,
+            Text(
+              "${loyaltyController.noOfStamps.value} orders left to get reward",
+              style: TextStyleUtil.manrope16w600(color: textColor),
+            ),
+            16.kheightBox,
+            GridView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                mainAxisSpacing: 16.kh,
+                crossAxisSpacing: 16.kw,
+              ),
+              itemCount: loyaltyController.noOfStamps.value + 1,
+              itemBuilder: (context, index) {
+                final bool isGift = index == loyaltyController.noOfStamps.value;
+                return isGift ? _giftBox(context) : _stampBox(context);
+              },
+            ),
+            32.kheightBox,
+            Text(
+              "Reward",
+              style: TextStyleUtil.manrope18w600(color: textColor),
+            ),
+            8.kheightBox,
+            Text(
+              loyaltyController.cardTitleController.text,
+              style: TextStyleUtil.manrope16w500(color: textColor),
+            ),
+            40.kheightBox,
+            Container(
+              padding: EdgeInsets.all(8.kw),
+              decoration: BoxDecoration(
+                  color: context.white, borderRadius: BorderRadius.circular(8)),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Redeem",
-                      style:
-                          TextStyleUtil.manrope16w500(color: context.black03)),
+                  Text(
+                    "1 point earned on 07/04/2024\nwere credited",
+                    style: TextStyleUtil.manrope14w400(),
+                  ),
+                  16.kwidthBox,
+                  Container(
+                    height: 42,
+                    width: 1,
+                    decoration: BoxDecoration(color: context.black01),
+                  ),
+                  16.kwidthBox,
+                  Text(
+                    StringConstant.history,
+                    style: TextStyleUtil.manrope14w400(),
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right_sharp,
+                    size: 16.kh,
+                  )
                 ],
               ),
             ),
-          )
-        ],
-      ),
-    );
+            38.kheightBox,
+            SizedBox(
+              height: 56.kh,
+              width: 100.w,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: context.primary06,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Redeem",
+                        style: TextStyleUtil.manrope16w500(
+                            color: context.black03)),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 
   /// ---------------- STAMP BOX ----------------

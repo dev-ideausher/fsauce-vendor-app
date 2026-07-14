@@ -50,6 +50,7 @@ class SignupView extends GetView<SignupController> {
               6.kheightBox,
               FsvTextfield(
                 hintText: StringConstant.enterEmailId,
+                keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
                   FilteringTextInputFormatter.deny(RegExp(r'\s'))
                 ],

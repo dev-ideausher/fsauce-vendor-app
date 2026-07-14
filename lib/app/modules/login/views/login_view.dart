@@ -55,6 +55,7 @@ class LoginView extends GetView<LoginController> {
                   6.kheightBox,
                   FsvTextfield(
                     hintText: StringConstant.enterEmailId,
+                    keyboardType: TextInputType.emailAddress,
                     controller: controller.emailController,
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(RegExp(r'\s'))
